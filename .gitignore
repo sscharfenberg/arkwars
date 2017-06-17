@@ -3,3 +3,4 @@ node_modules
 config/.env
 server/logs
 report.html
+server/public/assets
