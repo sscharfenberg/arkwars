@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./app/client/app/App.scss"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AACA,GACI,mBACA,YAHO","file":"app.d590098645dff3ed23816d5c9bc89366.css","sourcesContent":["$size: 20px;\r\nh1 {\r\n    background: palegoldenrod;\r\n    padding: $size;\r\n}\r\n\n\n\n// WEBPACK FOOTER //\n// ./app/client/app/App.scss"],"sourceRoot":""}

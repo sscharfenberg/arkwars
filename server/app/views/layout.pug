@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        include webpack.includes/app.head.pug
+        title= `${title} | ${h.appName}`
+    body
+        h1 #{h.appName}
+        .content
+            block content
+                p This is the default!
+        block scripts
+            include webpack.includes/app.footer.pug
