@@ -74,5 +74,8 @@ module.exports = {
         , timings: true // Add timing information
     }
 
+    // directory with jest coverage reports
+    , jestCoverageDir: path.join( appDirectory, "coverage" )
+
 
 };

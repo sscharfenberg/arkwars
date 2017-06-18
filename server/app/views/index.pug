@@ -1,4 +1,10 @@
 extends layout
 
+block head
+    include webpack.includes/app.head.pug
+
 block content
     div#app
+
+block scripts
+    include webpack.includes/app.footer.pug

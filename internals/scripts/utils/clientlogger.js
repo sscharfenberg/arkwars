@@ -13,7 +13,7 @@ moment.locale( "de" );
 
 
 exports.info = ( message ) => {
-    console.log( chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) ) + chalk.blue(   ` 📞 INFO 📞 → ${message}` ) );
+    console.log( chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) ) + chalk.white(   ` 📞 INFO 📞 → ${message}` ) );
 };
 
 exports.debug = ( message ) => {
@@ -26,4 +26,8 @@ exports.warn = ( message ) => {
 
 exports.error = ( message ) => {
     console.log( chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) ) + chalk.red(    ` 💀 ERROR 💀 → ${message}` ) );
+};
+
+exports.success = ( message ) => {
+    console.log( chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) ) + chalk.blue( ` 👍 SUCCESS 👍 → ${message}` ) );
 };

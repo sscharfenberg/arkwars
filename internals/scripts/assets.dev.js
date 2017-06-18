@@ -11,8 +11,7 @@
 process.env.BABEL_ENV = "development";
 process.env.NODE_ENV = "development";
 
-const path              = require( "path" ); // https://www.npmjs.com/package/path
-const fs                = require( "fs-extra" ); // https://www.npmjs.com/package/fs-extra
+
 const chalk             = require( "chalk" ); // https://www.npmjs.com/package/chalk
 const webpack           = require( "webpack" ); // https://www.npmjs.com/package/webpack
 const webpackDevServer  = require( "webpack-dev-server" ); // https://webpack.js.org/configuration/dev-server/
@@ -22,8 +21,6 @@ const config            = require( "../config" );
 let compiler            = webpack( webpackConfig );
 let initialCompile      = true;
 
-
-logger.debug( `[node] preparing webpack dev server for ${chalk.yellow(process.env.NODE_ENV.toUpperCase())}` );
 
 // https://webpack.js.org/configuration/dev-server/
 // start the dev server
@@ -46,7 +43,7 @@ let devServer = new webpackDevServer( compiler, {
 devServer.listen( config.webPackPort, "localhost", ( err ) => {
     if( err ) throw err;
     logger.debug( `[webpack] now serving files on port ${chalk.yellow(config.webPackPort)}.` );
-    logger.info( `[node] site is now in ${chalk.yellow(process.env.NODE_ENV.toUpperCase())} mode.` );
+    logger.success( `[webpack] site is now in ${chalk.yellow(process.env.NODE_ENV.toUpperCase())} mode.` );
     logger.info( `[webpack] pug footer include points to webpack-dev-server for Hot-Module-Reloading.` );
     logger.info( `[webpack] css is served via webpack-dev-server injected as style blob into head.` );
 } );

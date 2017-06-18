@@ -8,91 +8,66 @@
  * @exports {winston.Logger} logger
  *
  **********************************************************************************************************************/
-const moment            = require( "moment" );              // https://momentjs.com/
-const path              = require( "path" );                // https://nodejs.org/api/path.html
-const winston           = require( "winston" );             // https://github.com/winstonjs/winston
+const fs                = require( "fs-extra" ); // https://nodejs.org/api/fs.html
+const path              = require( "path" ); // https://nodejs.org/api/path.html
+const moment            = require( "moment" ); // https://momentjs.com/
+const chalk             = require( "chalk" ); // https://www.npmjs.com/package/chalk
 
-
-/*
- * Format a log-message
- *
- * single line if there are no params.meta
- *
- * @param {object} params - contains all data that we need
- * @returns {string} msg - formatted string
- *
- */
-const formatLogLine = ( params ) => {
-    let msg = moment().format( "DD.MM.YYYY HH:mm:ss.SSSS" ) +
-        " [" + params.level.toUpperCase() + "] → " +
-        params.message;
-    if ( params.meta && Object.keys( params.meta ).length ) {
-        msg += "\n" + JSON.stringify( params.meta, null, 2 );
-    }
-    return msg;
+// Make sure any symlinks in the project folder are resolved:
+// https://github.com/facebookincubator/create-react-app/issues/637
+const appDirectory = fs.realpathSync( process.cwd() );
+let logFilePath = path.join( appDirectory, "server", "logs", moment().format("YYYYMMDD") + ".console.log" );
+const cleanChalkedMessage = message => {
+    // https://stackoverflow.com/questions/25245716/remove-all-ansi-colors-styles-from-strings#answer-29497680
+    // remove ANSI escape codes that got inserted by chalk.
+    message = message.replace( /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, "" );
+    return `[${moment().format( "dddd, DD.MM.YYYY HH:mm:ss.SSSS" )}] ${message}\r\n`;
 };
 
 
-/*
- * winston.transports.Console
- *
- */
-const consoleTransport = new ( winston.transports.Console )( {
-    colorize: true
-    , handleExceptions: true
-    , json: false
-    , level: "silly"
-    , formatter( params ) {
-        let message = formatLogLine( params );
-        switch( params.level ){
-            case "error":
-                return `💀 ${message} 💀`;
-                break;
-            case "warning":
-                return `🔥 ${message} 🔥`;
-                break;
-            case "info":
-                return `🔑 ${message} 🔑`;
-                break;
-            case "debug":
-                return `🔧 ${message} 🔧`;
-                break;
-        }
-    }
-} );
+moment.locale( "de" ); // TODO: make config setting
 
 
-/*
- * winston.transports.File
- * https://github.com/winstonjs/winston/blob/master/docs/transports.md#file-transport
- *
- */
-const fileTransport = new ( winston.transports.File )( {
-    filename: path.join( __dirname, "..", "..", "..", "logs", moment().format("YYYYMMDD") + ".console.log" )
-    , json: false
-    , zippedArchive: true
-    , handleExceptions: true
-    , level: "debug"
-    , formatter( params ) {
-        return formatLogLine( params );
-    }
-} );
+exports.info = ( message ) => {
+    const data = `📞 INFO 📞 → ${message}`;
+    console.log( `${chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) )} ${chalk.white( data )}` );
+    fs.appendFile( logFilePath, cleanChalkedMessage( data ), "utf8", ( err ) => {
+        if ( err ) throw err;
+    } );
+};
 
 
-/*
- * create winston.Logger
- *
- */
-const logger = new winston.Logger( {
-    transports: [
-        consoleTransport
-        , fileTransport
-    ]
-} );
-
-// no exit on unhandled exceptions, keep going.
-logger.exitOnError = false;
+exports.debug = ( message ) => {
+    const data = `🔧 DEBUG 🔧 → ${message}`;
+    console.log( `${chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) )} ${chalk.cyan( data )}` );
+    fs.appendFile( logFilePath, cleanChalkedMessage( data ), "utf8", ( err ) => {
+        if ( err ) throw err;
+    } );
+};
 
 
-module.exports = logger;
+exports.warn = ( message ) => {
+    const data = `🔥 WARN 🔥 → ${message}`;
+    console.log( `${chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) )} ${chalk.yellow( data )}` );
+    fs.appendFile( logFilePath, cleanChalkedMessage( data ), "utf8", ( err ) => {
+        if ( err ) throw err;
+    } );
+};
 
+
+exports.error = ( message ) => {
+    const data = `💀 ERROR 💀 → ${message}`;
+    console.log( `${chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) )} ${chalk.red( data )}` );
+    fs.appendFile( logFilePath, cleanChalkedMessage( data ), "utf8", ( err ) => {
+        if ( err ) throw err;
+    } );
+};
+
+
+exports.success = ( message ) => {
+    const data = `👍 SUCCESS 👍 → ${message}`;
+    console.log( `${chalk.magenta( moment().format( "HH:mm:ss.SSSS" ) )} ${chalk.blue( data )}` );
+    fs.appendFile( logFilePath, cleanChalkedMessage( data ), "utf8", ( err ) => {
+        if ( err ) throw err;
+    } );
+};

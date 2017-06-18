@@ -43,7 +43,7 @@ exports.catchErrors = ( fn ) => {
 exports.notFound = ( req, res, next ) => {
     const err = new Error( "Not Found" );
     err.status = 404;
-    logger.error( `404 Not Found: "${req.path}"` );
+    logger.error( `[Node] 404 Not Found: "${req.path}"` );
     next( err );
 };
 
@@ -90,7 +90,7 @@ exports.developmentErrors = ( err, req, res, next ) => {
     };
     res.status( errorDetails.status );
     if( err.status !== 404 ) { // we have already handled 404s above.
-        logger.error( `${errorDetails.status} ${errorDetails.message}\r\n"${req.path}"\r\n${err.stack}` );
+        logger.error( `[Node] ${errorDetails.status} ${errorDetails.message}\r\n"${req.path}"\r\n${err.stack}` );
     }
     res.format( { // Based on the `Accept` http header
         "text/html": () => { // Render template
@@ -121,5 +121,8 @@ exports.productionErrors = ( err, req, res, next ) => {
         , title: err.message
         , error: {}
     } );
+    if( err.status !== 404 ) { // we have already handled 404s above.
+        logger.error( `[Node] ${err.status} ${err.message}\r\n"${req.path}"\r\n${err.stack}` );
+    }
 };
 
