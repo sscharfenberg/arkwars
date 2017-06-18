@@ -7,6 +7,7 @@ import "./App.scss";
 moment.locale("de");
 console.log( moment().format("dddd, DD.MM.YYYY HH:mm:ss"));
 
+
 class App extends Component {
     render() {
         return (
@@ -19,6 +20,7 @@ class App extends Component {
         );
     }
 }
+
 
 export default App;
 

@@ -13,7 +13,6 @@ const webpack                       = require( "webpack" ); // https://www.npmjs
 const ExtractTextPlugin             = require( "extract-text-webpack-plugin" ); // https://github.com/webpack-contrib/extract-text-webpack-plugin
 const HtmlWebpackPlugin             = require( "html-webpack-plugin" ); // https://www.npmjs.com/package/html-webpack-plugin
 const HtmlWebpackHarddiskPlugin     = require( "html-webpack-harddisk-plugin" ); // https://www.npmjs.com/package/html-webpack-harddisk-plugin
-const ManifestPlugin                = require( "webpack-manifest-plugin" ); // https://www.npmjs.com/package/webpack-manifest-plugin
 const config                        = require( "../config" );
 const extractCss                    = new ExtractTextPlugin( {
     filename: "[name].[contenthash].css"
@@ -40,8 +39,8 @@ const webpackConfig = {
 
 
     // https://webpack.js.org/configuration/module/
-    // =================================================================================================================
     , module: {
+
         // An array of Rules which are matched to requests when modules are created.
         // These rules can modify how the module is created.
         // They can apply loaders to the module, or modify the parser.
@@ -107,7 +106,8 @@ const webpackConfig = {
             }
 
         ]
-    } // ===============================================================================================================
+
+    }
 
 
     // https://webpack.js.org/configuration/resolve/
@@ -145,15 +145,6 @@ const webpackConfig = {
         // so we can update paths to webpack-dev-server js files in pug script include
         , new HtmlWebpackHarddiskPlugin()
 
-        // https://www.npmjs.com/package/webpack-manifest-plugin
-        // Generate a manifest file which contains a mapping of all asset filenames
-        // to their corresponding output file so that tools can pick it up without
-        // having to parse `index.html`.
-        , new ManifestPlugin( {
-            fileName: "asset-manifest.json"
-            , writeToFileEmit: true
-        } )
-
         // Moment.js is an extremely popular library that bundles large locale files
         // by default due to how Webpack interprets its code. This is a practical
         // solution that requires the user to opt into importing specific locales.
@@ -163,40 +154,39 @@ const webpackConfig = {
 
     ]
 
+
 };
+
 
 // https://github.com/jantimon/html-webpack-plugin
 // https://github.com/jaketrent/html-webpack-template
 for ( let chunk in config.chunks ) {
     let isProd = process.env.NODE_ENV === "production";
     webpackConfig.plugins.push(
-        // write the pug STYLE includes (head)
-        new HtmlWebpackPlugin( {
-            // Webpack require path to the template.
+        new HtmlWebpackPlugin( { // write the pug STYLE includes (head)
             template: path.join( config.projectRoot, "internals", "webpack", "templates", `${chunk}.head.ejs` )
             , filename: path.join( config.projectRoot, "server", "app", "views", "webpack.includes", `${chunk}.head.pug` )
             , showErrors: true
             , inject: false
             , alwaysWriteToDisk: true
             , meta: {
-                isProd: isProd
+                isProd: isProd // make sure we have information in the template if prod or dev
                 , webPackPort: config.webPackPort
             }
         } )
-        // write the pug SCRIPT includes (footer)
-        , new HtmlWebpackPlugin( {
-            // Webpack require path to the template.
+        , new HtmlWebpackPlugin( { // write the pug SCRIPT includes (footer)
             template: path.join( config.projectRoot, "internals", "webpack", "templates", `${chunk}.footer.ejs` )
             , filename: path.join( config.projectRoot, "server", "app", "views", "webpack.includes", `${chunk}.footer.pug` )
             , showErrors: true
             , inject: false
             , alwaysWriteToDisk: true
             , meta: {
-                isProd: isProd
+                isProd: isProd // make sure we have information in the template if prod or dev
                 , webPackPort: config.webPackPort
             }
         } )
     );
 }
+
 
 module.exports = webpackConfig;

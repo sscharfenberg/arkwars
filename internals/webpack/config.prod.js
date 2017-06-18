@@ -13,8 +13,10 @@ const CompressionWebpackPlugin  = require( "compression-webpack-plugin" ); // ht
 const VisualizerPlugin          = require( "webpack-visualizer-plugin" ); // https://www.npmjs.com/package/webpack-visualizer-plugin
 const baseWebpackConfig         = require( "./config.base" ); // base webpack config
 const config                    = require( "../config" );
+
 // import environmental variables from our .env file to process.env
 require( "dotenv" ).config( { path: path.join( config.projectRoot, "config", ".env" ) } );
+
 
 let webpackConfig = merge( baseWebpackConfig, {
 
@@ -44,14 +46,6 @@ let webpackConfig = merge( baseWebpackConfig, {
                 comments: false
             }
             , sourceMap: true
-//            , "mangle": {
-//                "except": [
-//                    "$super"
-//                    , "$"
-//                    , "exports"
-//                    , "require"
-//                ]
-//            }
         } )
 
         // Compression Plugin - generates *.gz files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,14 +80,14 @@ let webpackConfig = merge( baseWebpackConfig, {
             , entryOnly: true
         } )
 
+        // https://github.com/chrisbateman/webpack-visualizer
         , new VisualizerPlugin( {
-            filename: "../../../report.html"
+            filename: "../../../bundle-report.html"
         } )
 
     ]
 
 } );
-
 
 
 module.exports = webpackConfig;

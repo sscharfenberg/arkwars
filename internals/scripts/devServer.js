@@ -11,17 +11,19 @@
 process.env.BABEL_ENV = "development";
 process.env.NODE_ENV = "development";
 
-const fs                = require( "fs-extra" );
 const path              = require( "path" ); // https://www.npmjs.com/package/path
+const fs                = require( "fs-extra" ); // https://www.npmjs.com/package/fs-extra
+const chalk             = require( "chalk" ); // https://www.npmjs.com/package/chalk
 const webpack           = require( "webpack" ); // https://www.npmjs.com/package/webpack
 const webpackDevServer  = require( "webpack-dev-server" ); // https://webpack.js.org/configuration/dev-server/
-const webpackConfig     = require( "../webpack/config.dev" ); // webpack DEVELOPMENT config
+const webpackConfig     = require( "../webpack/config.dev" );
 const logger            = require( "./utils/clientlogger" );
 const config            = require( "../config" );
+let compiler            = webpack( webpackConfig );
+let initialCompile      = true;
 
-let compiler = webpack( webpackConfig );
 
-logger.info( `[node] preparing webpack dev server for ${process.env.NODE_ENV.toUpperCase()}` );
+logger.debug( `[node] preparing webpack dev server for ${chalk.yellow(process.env.NODE_ENV.toUpperCase())}` );
 
 // https://webpack.js.org/configuration/dev-server/
 // start the dev server
@@ -40,30 +42,18 @@ let devServer = new webpackDevServer( compiler, {
 } );
 
 
-
 // serve files on webPackPort
-devServer.listen( config.webPackPort, "localhost", function( err ) {
+devServer.listen( config.webPackPort, "localhost", ( err ) => {
     if( err ) throw err;
+    logger.debug( `[webpack] now serving files on port ${chalk.yellow(config.webPackPort)}.` );
+    logger.info( `[node] site is now in ${chalk.yellow(process.env.NODE_ENV.toUpperCase())} mode.` );
+    logger.info( `[webpack] pug footer include points to webpack-dev-server for Hot-Module-Reloading.` );
+    logger.info( `[webpack] css is served via webpack-dev-server injected as style blob into head.` );
+} );
 
-//    let chunkUrl = `http://localhost:${config.webPackPort}/app.js`;
-//    let webpackLibUrl = `http://localhost:${config.webPackPort}/webpack-dev-server.js`;
-//    let template = `script(src="${webpackLibUrl}" defer)
-//script(src="${chunkUrl}" defer)`;
-//    let targetPath = path.join( config.projectRoot, "server", "app", "views", "webpack.includes", "scripts.pug" );
-//
-//    // change the blade template that has the script tags with localhost URLs ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//    fs.writeFile( targetPath, template, "utf8", err => {
-//        if (err ) {
-//            throw err;
-//        } else {
-//            logger.info( "[node] changed pug script include file to point to webpack dev server URLs." );
-//        }
-//    } );
 
-    setTimeout( function() {
-        console.log();
-        logger.info( `[webpack] now serving files on port ${config.webPackPort} ...` );
-        logger.debug( `[node] site is now in ${process.env.NODE_ENV.toUpperCase()} mode.` );
-    }, 2000 );
-
-} ); // ================================================================================================================
+// log finished compilations to console
+compiler.plugin( "done", () => {
+    logger.debug( `[webpack] ${initialCompile ? "initial" : "change"} compilation done:` );
+    initialCompile = false;
+} );

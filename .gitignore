@@ -2,5 +2,6 @@ node_modules
 .idea
 config/.env
 server/logs
-report.html
+bundle-report.html
 server/public/assets
+coverage

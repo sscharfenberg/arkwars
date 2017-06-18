@@ -22,7 +22,7 @@ const flash             = require( "connect-flash" );                   // https
 const routes            = require( "./app/routes/index" );              // Express routes
 const accessLogger      = require( "./app/handlers/logger/access" );    // Access logging
 const errorHandlers     = require( "./app/handlers/error" );            // Error handling
-const templateHelpers   = require( "./app/helpers/template" );          // Template helpers
+const templateHelpers   = require( "./app/utils/template" );            // Template helpers
 
 // create our Express app
 const app = express();
@@ -81,6 +81,10 @@ app.use( ( req, res, next ) => {
 
 // log client access to the app in Apache Combined Emoji format
 app.use( accessLogger );
+
+
+
+
 
 // after passing all of the above middleware, handle our routes
 app.use( "/", routes );

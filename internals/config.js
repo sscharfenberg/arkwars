@@ -25,7 +25,7 @@ module.exports = {
     , buildDir: path.join( appDirectory, "server", "public", "assets" )
 
     // used by both client and server
-    , title: pkg.app.name
+    , appTitle: pkg.app.name
     , browsers: pkg.browsers
 
     // banner for js, css
@@ -56,28 +56,23 @@ module.exports = {
     // folder for pug script includes. we need this because of hash names.
     , pugScriptInclude: path.join( appDirectory, "server", "app", "views", "webpack.includes" )
 
-    // https://webpack.js.org/configuration/stats/
-    , webPackStats: {
-        colors: true
-        // Add built modules information
-        , modules: false
-        // Add children information
-        , children: false
-        // Add chunk information (setting this to `false` allows for a less verbose output)
-        , chunks: true
-        // Add built modules information to chunk information
-        , chunkModules: false
-        // Display the entry points with the corresponding bundles
-        , entrypoints: true
-        // Add timing information
-        , timings: true
-    }
-
     , webPackPort: 8000 // make sure this is different from the node server port.
 
     // webpack chunk entrypoints
     , chunks: {
         app: path.join( appDirectory, "client", "index.js" )
     }
+
+    // https://webpack.js.org/configuration/stats/
+    , webPackStats: {
+        colors: true
+        , modules: false // Add built modules information
+        , children: false // Add children information
+        , chunks: true // Add chunk information (setting this to `false` allows for a less verbose output)
+        , chunkModules: false // Add built modules information to chunk information
+        , entrypoints: true // Display the entry points with the corresponding bundles
+        , timings: true // Add timing information
+    }
+
 
 };

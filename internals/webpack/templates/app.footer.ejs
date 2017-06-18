@@ -4,5 +4,6 @@
 script(src="/public/assets/<%= key %>.<%= htmlWebpackPlugin.files.chunks[key].hash %>.js" defer)
     <% } else { %>
 script(src="http://localhost:<%= htmlWebpackPlugin.options.meta.webPackPort %>/<%= key %>.js" defer)
+script(src="http://localhost:<%= htmlWebpackPlugin.options.meta.webPackPort %>/webpack-dev-server.js" defer)
     <% } %>
 <% } %>
