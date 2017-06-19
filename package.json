@@ -18,7 +18,7 @@
         "npm": ">= 5.0.3"
     },
     "scripts": {
-        "start@server": "node server/nodemon.js",
+        "start": "node server/nodemon.js",
         "assets:prod@client": "node internals/scripts/assets.prod.js",
         "assets:dev@client": "node internals/scripts/assets.dev.js",
         "assets.cleanup@client": "node internals/scripts/assets.cleanup.js",
@@ -45,11 +45,12 @@
         "react-dom": "^15.6.1"
     },
     "devDependencies": {
+        "autoprefixer": "^7.1.1",
         "babel-cli": "^6.24.1",
         "babel-loader": "^7.0.0",
+        "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
         "babel-preset-env": "^1.5.2",
         "babel-preset-react": "^6.24.1",
-        "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
         "chalk": "^1.1.3",
         "compression-webpack-plugin": "^0.4.0",
         "css-loader": "^0.28.4",
@@ -63,6 +64,8 @@
         "html-webpack-plugin": "^2.28.0",
         "jest": "^20.0.4",
         "node-sass": "^4.5.3",
+        "postcss-flexbugs-fixes": "^3.0.0",
+        "postcss-loader": "^2.0.6",
         "sass-loader": "^6.0.6",
         "style-loader": "^0.18.2",
         "webpack": "^2.6.1",
@@ -73,10 +76,12 @@
     "babel": {
         "presets": [
             "react"
-        ]
-        ,  "env": {
+        ],
+        "env": {
             "test": {
-                "plugins": [ "transform-es2015-modules-commonjs" ]
+                "plugins": [
+                    "transform-es2015-modules-commonjs"
+                ]
             }
         }
     },

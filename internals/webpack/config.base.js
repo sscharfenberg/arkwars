@@ -13,6 +13,8 @@ const webpack                       = require( "webpack" ); // https://www.npmjs
 const ExtractTextPlugin             = require( "extract-text-webpack-plugin" ); // https://github.com/webpack-contrib/extract-text-webpack-plugin
 const HtmlWebpackPlugin             = require( "html-webpack-plugin" ); // https://www.npmjs.com/package/html-webpack-plugin
 const HtmlWebpackHarddiskPlugin     = require( "html-webpack-harddisk-plugin" ); // https://www.npmjs.com/package/html-webpack-harddisk-plugin
+const autoprefixer                  = require( "autoprefixer" ); // https://github.com/postcss/autoprefixer
+const postCssFlexboxFixes           = require( "postcss-flexbugs-fixes" ); // https://github.com/luisrudge/postcss-flexbugs-fixes
 const config                        = require( "../config" );
 const extractCss                    = new ExtractTextPlugin( {
     filename: "[name].[contenthash].css"
@@ -87,14 +89,26 @@ const webpackConfig = {
                 , loader: extractCss.extract( {
                     fallback: [ "style-loader" ] // use style-loader in development
                     , use: [
-                        {
+                        { // https://github.com/webpack-contrib/css-loader
                             loader: "css-loader"
                             , options: { // https://github.com/webpack-contrib/css-loader#options
                                 sourceMap: true
                                 , minimize: true
                             }
                         }
-                        , {
+                        , { // https://github.com/postcss/postcss-loader
+                            loader: "postcss-loader"
+                            , options: {
+                                sourceMap: true
+                                , plugins: [
+                                    autoprefixer( {
+                                       browsers: config.browsers
+                                    } )
+                                    , postCssFlexboxFixes
+                                ]
+                            }
+                        }
+                        , { // https://github.com/webpack-contrib/sass-loader
                             loader: "sass-loader"
                             , options: {
                                 sourceMap: true
@@ -150,7 +164,7 @@ const webpackConfig = {
         // solution that requires the user to opt into importing specific locales.
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
         // You can remove this if you don't use Moment.js:
-        , new webpack.IgnorePlugin( /^\.\/locale$/, /moment$/ ),
+        , new webpack.IgnorePlugin( /^\.\/locale$/, /moment$/ )
 
     ]
 
