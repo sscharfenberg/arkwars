@@ -21,7 +21,7 @@
         "start": "node server/nodemon.js",
         "assets:prod@client": "node internals/scripts/assets.prod.js",
         "assets:dev@client": "node internals/scripts/assets.dev.js",
-        "assets.cleanup@client": "node internals/scripts/assets.cleanup.js",
+        "assets:cleanup@client": "node internals/scripts/assets.cleanup.js",
         "test@client": "node internals/scripts/test.js --env=jsdom --coverage",
         "test:watch@client": "node internals/scripts/test.js --env=jsdom --watch"
     },
@@ -66,7 +66,9 @@
         "node-sass": "^4.5.3",
         "postcss-flexbugs-fixes": "^3.0.0",
         "postcss-loader": "^2.0.6",
+        "sass-lint": "^1.10.2",
         "sass-loader": "^6.0.6",
+        "sasslint-webpack-plugin": "^1.0.4",
         "style-loader": "^0.18.2",
         "webpack": "^2.6.1",
         "webpack-dev-server": "^2.4.5",

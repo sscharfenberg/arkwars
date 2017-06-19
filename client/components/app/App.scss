@@ -1,0 +1,21 @@
+@import "theme/config";
+@import "theme/functions";
+
+$size: 20px;
+
+body {
+    font-family: map-get($fonts, "system");
+}
+
+h1 {
+    display: flex;
+
+    padding: $size;
+
+    background: map-get($brand, "viking");
+
+    &[lang="pt"] {
+        padding: 5px;
+    }
+}
+

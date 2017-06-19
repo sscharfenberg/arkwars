@@ -1,0 +1,116 @@
+/***********************************************************************************************************************
+ *
+ * mixins that can be used in other scss files
+ *
+ **********************************************************************************************************************/
+@import "./variables";
+@import "./functions";
+
+// retina image
+@mixin retina-image($filename, $background-size, $extension: png, $retina-filename: null, $retina-suffix: _2x) {
+    background-image: url("#{$filename}.#{$extension}");
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+    only screen and (min--moz-device-pixel-ratio: 1.5),
+    only screen and (-o-min-device-pixel-ratio: 3/2),
+    only screen and (min-resolution: 144dpi),
+    only screen and (min-resolution: 1.5dppx) {
+        @if $retina-filename {
+            background-image: url("#{$retina-filename}.#{$extension}");
+        } @else {
+            background-image: url("#{$filename}#{$retina-suffix}.#{$extension}");
+        }
+        background-size: $background-size;
+    }
+}
+
+
+/// Responsive breakpoint manager
+/// @access public
+/// @param {String} $breakpoint - Breakpoint
+/// @requires $breakpoints
+@mixin respond-to($breakpoint) {
+    $raw-query: map-get($ivu-breakpoints, $breakpoint);
+
+    @if $raw-query {
+        $query: if(
+                type-of($raw-query) == 'string',
+                unquote($raw-query),
+                inspect($raw-query)
+        );
+
+        @media #{$query} {
+            @content;
+        }
+    } @else {
+        @error 'No value found for `#{$breakpoint}`. '
+         + 'Please make sure it is defined in `$mp-breakpsoints` map.';
+    }
+}
+
+
+@mixin font-family($family: $ivu-font-family-text) {
+    .fonts-loaded & {
+        font-family: $family;
+    }
+}
+
+
+// Modern micro CLEARFIX provides an easy way to contain floats without adding additional markup.
+//
+// Example usage:
+//    // Contain all floats within .wrapper
+//    .wrapper {
+//      @extend %clearfix;
+//      .content,
+//      .sidebar {
+//        float : left;
+//      }
+//    }
+%clearfix {
+    zoom                : 1;
+
+    &::before,
+    &::after {
+        display         : block;
+
+        overflow        : hidden;
+        height          : 0;
+
+        content         : "\0020";
+    }
+
+    &::after {
+        clear           : both;
+    }
+}
+
+
+// mixin for our default scrollbar. webkit only, because JS solutions suck. gief standard pls.
+%ui-scrollbar {
+    &::-webkit-scrollbar {
+        width           : 8px;
+        height          : 8px;
+
+        background      : $ivu-color-light1;
+    }
+
+    &::-webkit-scrollbar-track {
+        background      : transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border          : 1px solid $ivu-black;
+
+        background      : linear-gradient(to bottom, $ivu-color-med1 0%, $ivu-color-scrollbar 50%, $ivu-color-med1 100%);
+        border-radius   : 5px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        box-shadow      : inset 0 0 100px rgba($ivu-white, 0.2);
+    }
+
+    &::-webkit-scrollbar-thumb:active {
+        background      : linear-gradient(to bottom, $ivu-color-scrollbar 0%, $ivu-color-med1 50%, $ivu-color-scrollbar 100%);
+    }
+}

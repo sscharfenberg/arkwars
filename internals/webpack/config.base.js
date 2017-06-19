@@ -15,6 +15,7 @@ const HtmlWebpackPlugin             = require( "html-webpack-plugin" ); // https
 const HtmlWebpackHarddiskPlugin     = require( "html-webpack-harddisk-plugin" ); // https://www.npmjs.com/package/html-webpack-harddisk-plugin
 const autoprefixer                  = require( "autoprefixer" ); // https://github.com/postcss/autoprefixer
 const postCssFlexboxFixes           = require( "postcss-flexbugs-fixes" ); // https://github.com/luisrudge/postcss-flexbugs-fixes
+const sassLintPlugin                = require( "sasslint-webpack-plugin" ); // https://github.com/alleyinteractive/sasslint-webpack-plugin
 const config                        = require( "../config" );
 const extractCss                    = new ExtractTextPlugin( {
     filename: "[name].[contenthash].css"
@@ -94,6 +95,8 @@ const webpackConfig = {
                             , options: { // https://github.com/webpack-contrib/css-loader#options
                                 sourceMap: true
                                 , minimize: true
+                                , root: path.join( config.projectRoot, "client" )
+                                , url: true // Enable/Disable url() handling
                             }
                         }
                         , { // https://github.com/postcss/postcss-loader
@@ -112,7 +115,9 @@ const webpackConfig = {
                             loader: "sass-loader"
                             , options: {
                                 sourceMap: true
-                                , minimize: true
+                                , includePaths: [
+                                    path.join( config.projectRoot, "client" )
+                                ]
                             }
                         }
                     ]
@@ -165,6 +170,25 @@ const webpackConfig = {
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
         // You can remove this if you don't use Moment.js:
         , new webpack.IgnorePlugin( /^\.\/locale$/, /moment$/ )
+
+
+        , new sassLintPlugin( {
+            configFile: path.join( config.projectRoot, "config", ".sass-lint.yml" )
+            // Array of files to ignore, must be full path, Default: none
+            , ignoreFiles: []
+            // Array of plugins to ignore, Default: none (example: extract-text-webpack-plugin)
+            , ignorePlugins: [ "extract-text-webpack-plugin", "html-webpack-plugin" ]
+            // Change the glob pattern for finding files. Default: (**/*.s?(a|c)ss)
+            , glob: "**/*.scss"
+            //  Suppress warnings, errors will still show. Default: false
+            , quiet: false
+            // Have Webpack's build process die on warning. Default: false
+            , failOnWarning: false
+            // Have Webpack's build process die on error. Default: false
+            , failOnError: true
+            // Quites output normally for testing purposes, Default: 'false' Caution do not use this unless you are catching errors via Webpack CLI!
+            , testing: false
+        } )
 
     ]
 
