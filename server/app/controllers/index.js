@@ -9,6 +9,6 @@
  *
  **********************************************************************************************************************/
 
-exports.homePage = ( req, res ) => {
-    res.render( "index", { title: "Homepage" } );
+exports.homePage = (req, res) => {
+    res.render("index", { title: "Homepage" });
 };

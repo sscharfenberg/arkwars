@@ -3,10 +3,8 @@ import moment from "moment";
 import "moment/locale/de"; // import the locale even though webpack ignores moment/locale
 import "./App.scss";
 
-
 moment.locale("de");
-console.log( moment().format("dddd, DD.MM.YYYY HH:mm:ss"));
-
+console.log(moment().format("dddd, DD.MM.YYYY HH:mm:ss"));
 
 class App extends Component {
     render() {
@@ -21,6 +19,4 @@ class App extends Component {
     }
 }
 
-
 export default App;
-

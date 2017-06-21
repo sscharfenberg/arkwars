@@ -11,7 +11,7 @@
  * @exports {ExpressMiddleWare} productionErrors
  *
  **********************************************************************************************************************/
-const logger    = require( "./logger/console" );
+const logger = require("./logger/console");
 
 /*
  * Catch Errors Handler
@@ -22,12 +22,11 @@ const logger    = require( "./logger/console" );
  * to our express middleware with next()
  *
  */
-exports.catchErrors = ( fn ) => {
-    return function( req, res, next ) {
-        return fn( req, res, next ).catch( next );
+exports.catchErrors = fn => {
+    return function(req, res, next) {
+        return fn(req, res, next).catch(next);
     };
 };
-
 
 /*
  * Not Found Error Handler
@@ -40,13 +39,12 @@ exports.catchErrors = ( fn ) => {
  * @param {MiddleWare} next http://expressjs.com/en/guide/using-middleware.html
  *
  */
-exports.notFound = ( req, res, next ) => {
-    const err = new Error( "Not Found" );
+exports.notFound = (req, res, next) => {
+    const err = new Error("Not Found");
     err.status = 404;
-    logger.error( `[Node] 404 Not Found: "${req.path}"` );
-    next( err );
+    logger.error(`[Node] 404 Not Found: "${req.path}"`);
+    next(err);
 };
-
 
 /*
  * MongoDB Validation Error Handler
@@ -59,14 +57,13 @@ exports.notFound = ( req, res, next ) => {
  * @param {MiddleWare} next http://expressjs.com/en/guide/using-middleware.html
  *
  */
-exports.flashValidationErrors = ( err, req, res, next ) => {
-    if ( !err.errors ) return next( err );
+exports.flashValidationErrors = (err, req, res, next) => {
+    if (!err.errors) return next(err);
     // validation errors look like
-    const errorKeys = Object.keys( err.errors );
-    errorKeys.forEach( key => req.flash( "error", err.errors[key].message ) );
-    res.redirect( "back" );
+    const errorKeys = Object.keys(err.errors);
+    errorKeys.forEach(key => req.flash("error", err.errors[key].message));
+    res.redirect("back");
 };
-
 
 /*
  * Development Error Handler
@@ -80,28 +77,36 @@ exports.flashValidationErrors = ( err, req, res, next ) => {
  * @param {MiddleWare} next http://expressjs.com/en/guide/using-middleware.html
  *
  */
-exports.developmentErrors = ( err, req, res, next ) => {
+exports.developmentErrors = (err, req, res, next) => {
     err.stack = err.stack || "";
     const errorDetails = {
-        message: err.message
-        , status: err.status || 500
-        , stackHighlighted: err.stack.replace( /[a-z_-\d]+.js:\d+:\d+/gi, "<mark>$&</mark>" )
-        , title: err.message
+        message: err.message,
+        status: err.status || 500,
+        stackHighlighted: err.stack.replace(
+            /[a-z_-\d]+.js:\d+:\d+/gi,
+            "<mark>$&</mark>"
+        ),
+        title: err.message
     };
-    res.status( errorDetails.status );
-    if( err.status !== 404 ) { // we have already handled 404s above.
-        logger.error( `[Node] ${errorDetails.status} ${errorDetails.message}\r\n"${req.path}"\r\n${err.stack}` );
+    res.status(errorDetails.status);
+    if (err.status !== 404) {
+        // we have already handled 404s above.
+        logger.error(
+            `[Node] ${errorDetails.status} ${errorDetails.message}\r\n"${req.path}"\r\n${err.stack}`
+        );
     }
-    res.format( { // Based on the `Accept` http header
-        "text/html": () => { // Render template
-            res.render( "error", errorDetails );
+    res.format({
+        // Based on the `Accept` http header
+        "text/html": () => {
+            // Render template
+            res.render("error", errorDetails);
+        },
+        "application/json": () => {
+            // Ajax call, send JSON back
+            res.json(errorDetails);
         }
-        , "application/json": () => { // Ajax call, send JSON back
-            res.json( errorDetails );
-        }
-    } );
+    });
 };
-
 
 /*
  * Production Error Handler
@@ -114,15 +119,17 @@ exports.developmentErrors = ( err, req, res, next ) => {
  * @param {MiddleWare} next http://expressjs.com/en/guide/using-middleware.html
  *
  */
-exports.productionErrors = ( err, req, res, next ) => {
-    res.status( err.status || 500 );
-    res.render( "error", {
-        message: err.message
-        , title: err.message
-        , error: {}
-    } );
-    if( err.status !== 404 ) { // we have already handled 404s above.
-        logger.error( `[Node] ${err.status} ${err.message}\r\n"${req.path}"\r\n${err.stack}` );
+exports.productionErrors = (err, req, res, next) => {
+    res.status(err.status || 500);
+    res.render("error", {
+        message: err.message,
+        title: err.message,
+        error: {}
+    });
+    if (err.status !== 404) {
+        // we have already handled 404s above.
+        logger.error(
+            `[Node] ${err.status} ${err.message}\r\n"${req.path}"\r\n${err.stack}`
+        );
     }
 };
-
