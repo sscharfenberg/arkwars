@@ -70,7 +70,7 @@ const webpackConfig = {
 
             {
                 // https://github.com/babel/babel-loader
-                test: /\.(js)$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules|vendor|bower_components/,
                 loader: require.resolve("babel-loader"),
                 options: {
@@ -130,6 +130,17 @@ const webpackConfig = {
                         }
                     ]
                 })
+            },
+
+            {
+                // https://github.com/webpack-contrib/file-loader
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: require.resolve("file-loader"),
+                query: {
+                    name: "[name].[hash].[ext]",
+                    publicPath: "/public/assets/",
+                    outputPath: "fonts/"
+                }
             }
         ]
     },

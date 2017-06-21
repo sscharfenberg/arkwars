@@ -1,5 +1,7 @@
-@import "theme/config";
-@import "theme/functions";
+@import "theme/abstracts/config";
+@import "theme/abstracts/functions";
+
+@import "theme/base/typography"; // @font-face declarations
 
 $size: 20px;
 
@@ -13,6 +15,7 @@ h1 {
     padding: $size;
 
     background: map-get($brand, "viking");
+    font-family: map-get($fonts, "text");
 
     &[lang="pt"] {
         padding: 5px;

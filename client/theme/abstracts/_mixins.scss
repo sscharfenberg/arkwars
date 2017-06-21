@@ -3,24 +3,26 @@
  * mixins that can be used in other scss files
  *
  **********************************************************************************************************************/
-@import "./variables";
-@import "./functions";
+@import "theme/abstracts/config";
+@import "theme/abstracts/functions";
+// sass-lint:disable no-vendor-prefixes
+
 
 // retina image
 @mixin retina-image($filename, $background-size, $extension: png, $retina-filename: null, $retina-suffix: _2x) {
     background-image: url("#{$filename}.#{$extension}");
 
     @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-    only screen and (min--moz-device-pixel-ratio: 1.5),
-    only screen and (-o-min-device-pixel-ratio: 3/2),
-    only screen and (min-resolution: 144dpi),
-    only screen and (min-resolution: 1.5dppx) {
-        @if $retina-filename {
-            background-image: url("#{$retina-filename}.#{$extension}");
-        } @else {
-            background-image: url("#{$filename}#{$retina-suffix}.#{$extension}");
-        }
-        background-size: $background-size;
+        only screen and (min--moz-device-pixel-ratio: 1.5),
+        only screen and (-o-min-device-pixel-ratio: 3/2),
+        only screen and (min-resolution: 144dpi),
+        only screen and (min-resolution: 1.5dppx) {
+            @if $retina-filename {
+                background-image: url("#{$retina-filename}.#{$extension}");
+            } @else {
+                background-image: url("#{$filename}#{$retina-suffix}.#{$extension}");
+            }
+            background-size: $background-size;
     }
 }
 
@@ -30,26 +32,25 @@
 /// @param {String} $breakpoint - Breakpoint
 /// @requires $breakpoints
 @mixin respond-to($breakpoint) {
-    $raw-query: map-get($ivu-breakpoints, $breakpoint);
+    $raw-query: map-get($breakpoints, $breakpoint);
 
     @if $raw-query {
         $query: if(
-                type-of($raw-query) == 'string',
-                unquote($raw-query),
-                inspect($raw-query)
+            type-of($raw-query) == "string",
+            unquote($raw-query),
+            inspect($raw-query)
         );
 
         @media #{$query} {
             @content;
         }
     } @else {
-        @error 'No value found for `#{$breakpoint}`. '
-         + 'Please make sure it is defined in `$mp-breakpsoints` map.';
+        @error "No value found for `#{$breakpoint}`. Please make sure it is defined in `$breakpsoints` map.";
     }
 }
 
 
-@mixin font-family($family: $ivu-font-family-text) {
+@mixin font-family($family: map-get($fonts, "text")) {
     .fonts-loaded & {
         font-family: $family;
     }
@@ -92,7 +93,7 @@
         width           : 8px;
         height          : 8px;
 
-        background      : $ivu-color-light1;
+        background      : map-get($brand, "christine");
     }
 
     &::-webkit-scrollbar-track {
@@ -100,17 +101,18 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        border          : 1px solid $ivu-black;
+        border          : 1px solid map-get($gray, "black");
 
-        background      : linear-gradient(to bottom, $ivu-color-med1 0%, $ivu-color-scrollbar 50%, $ivu-color-med1 100%);
+        background      : linear-gradient(to bottom, map-get($brand, "gorse") 0%, map-get($brand, "viking") 50%, map-get($brand, "gorse") 100%);
         border-radius   : 5px;
+
+        &:active {
+            background      : linear-gradient(to bottom, map-get($brand, "gorse") 0%, map-get($brand, "viking") 40%, map-get($brand, "viking") 60%, map-get($brand, "gorse") 100%);
+        }
+
+        &:hover {
+            box-shadow      : inset 0 0 100px map-get($gray, "iron");
+        }
     }
 
-    &::-webkit-scrollbar-thumb:hover {
-        box-shadow      : inset 0 0 100px rgba($ivu-white, 0.2);
-    }
-
-    &::-webkit-scrollbar-thumb:active {
-        background      : linear-gradient(to bottom, $ivu-color-scrollbar 0%, $ivu-color-med1 50%, $ivu-color-scrollbar 100%);
-    }
 }
