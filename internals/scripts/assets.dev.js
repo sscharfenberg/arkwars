@@ -17,6 +17,7 @@ const webpackDevServer = require("webpack-dev-server"); // https://webpack.js.or
 const webpackConfig = require("../webpack/config.dev");
 const logger = require("./utils/clientlogger");
 const config = require("../config");
+console.log(webpackConfig);
 let compiler = webpack(webpackConfig);
 let initialCompile = true;
 

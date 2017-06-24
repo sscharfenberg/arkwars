@@ -71,6 +71,7 @@ module.exports = {
         , chunks: false // Add chunk information (setting this to `false` allows for a less verbose output)
         , chunkModules: false // Add built modules information to chunk information
         , entrypoints: true // Display the entry points with the corresponding bundles
+        , publicPath: false
         , timings: true // Add timing information
     }
 

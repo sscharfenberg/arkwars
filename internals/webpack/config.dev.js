@@ -12,6 +12,7 @@ const baseWebpackConfig = require("./config.base"); // base webpack config
 const config = require("../config");
 
 let webpackConfig = merge(baseWebpackConfig, {
+
     // https://webpack.js.org/configuration/devtool/
     // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
     // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
@@ -22,6 +23,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         publicPath: `http://localhost:${config.webPackPort}`,
         filename: "[name].js"
     },
+
 
     // https://webpack.js.org/configuration/plugins/
     // https://webpack.js.org/plugins/
@@ -37,6 +39,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
         new webpack.HotModuleReplacementPlugin()
     ]
+
 });
 
 module.exports = webpackConfig;

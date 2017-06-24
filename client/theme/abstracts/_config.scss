@@ -12,13 +12,13 @@ $brand: (
     , "christine": #df740c
 );
 
-$gray: (
+$grey: (
     "white": #fff
     , "mystic": #eaf0f2
     , "iron": #cdd0d0
     , "abbey": #4c4f56
     , "bunker": #182226
-    , "ebony": #0c141f
+    , "ebony": #06060f
     , "black": #000
 );
 
@@ -37,13 +37,28 @@ $breakpoints: (
 );
 
 
-$ui-shadow-1dp: 0 1px 1.5px 0 rgba(map-get($gray, "black"), 0.12),
-                0 1px 1px 0 rgba(map-get($gray, "black"), 0.24);
-$ui-shadow-2dp: 0 2px 2px 0 rgba(map-get($gray, "black"), 0.14),
-                0 3px 1px -2px rgba(map-get($gray, "black"), 0.2),
-                0 1px 5px 0 rgba(map-get($gray, "black"), 0.12);
-$ui-shadow-4dp: 0 4px 5px 0 rgba(map-get($gray, "black"), 0.14),
-                0 1px 10px 0 rgba(map-get($gray, "black"), 0.12),
-                0 2px 4px -1px rgba(map-get($gray, "black"), 0.2);
+$ui-shadow-1dp: 0 1px 1.5px 0 rgba(map-get($grey, "black"), 0.12),
+                0 1px 1px 0 rgba(map-get($grey, "black"), 0.24);
+$ui-shadow-2dp: 0 2px 2px 0 rgba(map-get($grey, "black"), 0.14),
+                0 3px 1px -2px rgba(map-get($grey, "black"), 0.2),
+                0 1px 5px 0 rgba(map-get($grey, "black"), 0.12);
+$ui-shadow-4dp: 0 4px 5px 0 rgba(map-get($grey, "black"), 0.14),
+                0 1px 10px 0 rgba(map-get($grey, "black"), 0.12),
+                0 2px 4px -1px rgba(map-get($grey, "black"), 0.2);
+
+
+/***********************************************************************************************************************
+ *
+ * VENDOR configuration
+ *
+ **********************************************************************************************************************/
+
+//
+// normalize-scss Variables
+//
+// The font size set on the root html element.
+$base-font-size: 16px !default;
+// The default font family.
+$base-font-family: map-get($fonts, "system") !default;
 
 

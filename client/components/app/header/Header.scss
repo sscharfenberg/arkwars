@@ -1,0 +1,12 @@
+/***********************************************************************************************************************
+ *
+ * Header Component
+ *
+ **********************************************************************************************************************/
+@import "theme/abstracts/config";
+@import "theme/abstracts/functions";
+@import "theme/abstracts/mixins";
+
+.aw-header {
+    background: map-get($brand, "christine");
+}

@@ -1,24 +1,31 @@
+/***********************************************************************************************************************
+ *
+ * Header Component
+ *
+ **********************************************************************************************************************/
 @import "theme/abstracts/config";
 @import "theme/abstracts/functions";
 
+/*
+ * normalize-scss, based on normalize.css
+ * https://www.npmjs.com/package/normalize-scss
+ */
+@import "normalize-scss/sass/normalize/import-now";
+
+
+
+
 @import "theme/base/typography"; // @font-face declarations
 
-$size: 20px;
+@import "components/app/header/Header";
+
+
 
 body {
+    background: map-get($grey, "ebony") url("./backgroundtile.svg");
+
     font-family: map-get($fonts, "system");
 }
 
-h1 {
-    display: flex;
 
-    padding: $size;
-
-    background: map-get($brand, "viking");
-    font-family: map-get($fonts, "text");
-
-    &[lang="pt"] {
-        padding: 5px;
-    }
-}
 

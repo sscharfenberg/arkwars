@@ -15,7 +15,7 @@ const logger = require("./app/handlers/logger/console");
 
 const monitor = nodemon({
     script: path.join(__dirname, "start.js"),
-    ext: "js json jsx",
+    ext: "js json jsx pug",
     ignore: [
         "server/public/",
         "client/**/*",

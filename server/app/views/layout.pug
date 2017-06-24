@@ -1,9 +1,26 @@
 block head
     include webpack.includes/app.head.pug
 body
-    h1 #{h.appName}
-    .content
-        block content
-            p This is the default!
+    header.aw-header
+        .aw-header__logo logo
+        .aw-header__title ArkWars
+        ul.aw-header__meta
+            li.aw-header__user
+                | Sven!
+            li.aw-header__action
+                a.aw-header__login Login
+            li.aw-header__action
+                a.aw-header__register Register
+            li.aw-header__action
+                a.aw-header__register Logout
+            li.aw-header__action
+                button.aw-header__menu-btn Menu
+    .aw-main-wrapper
+        h1 #{h.appName}
+        .content
+            block content
+                p This is the default!
+
     block scripts
         include webpack.includes/app.footer.pug
+

@@ -125,6 +125,7 @@ const webpackConfig = {
                                 sourceMap: true,
                                 includePaths: [
                                     path.join(config.projectRoot, "client")
+                                    , path.join(config.projectRoot, "node_modules")
                                 ]
                             }
                         }
@@ -134,14 +135,42 @@ const webpackConfig = {
 
             {
                 // https://github.com/webpack-contrib/file-loader
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                test: /\.(woff|woff2)$/,
                 loader: require.resolve("file-loader"),
                 query: {
                     name: "[name].[hash].[ext]",
                     publicPath: "/public/assets/",
                     outputPath: "fonts/"
                 }
+            },
+
+            {
+                // https://www.npmjs.com/package/svgo-loader
+                test: /\.(svg)$/,
+                use: [
+                    {
+                        loader: require.resolve("file-loader"),
+                        query: {
+                            name: "[name].[hash].[ext]",
+                            publicPath: "/public/assets/",
+                            outputPath: "images/"
+                        }
+                    },
+                    {
+                        loader: require.resolve("svgo-loader"),
+                        options: {
+                            plugins: [
+                                {removeTitle: false},
+                                {convertColors: {shorthex: false}},
+                                {convertPathData: false}
+                            ]
+                        }
+                    }
+                ]
+
+
             }
+
         ]
     },
 

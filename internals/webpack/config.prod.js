@@ -60,7 +60,7 @@ let webpackConfig = merge(baseWebpackConfig, {
             // is taken from zlib (or zopfli for zopfli). Defaults to "gzip".
             algorithm: "gzip",
             //  All assets matching this RegExp are processed. Defaults to every asset.
-            test: new RegExp("\\.(js|css)$"),
+            test: new RegExp("\\.(js|css|svg)$"),
             // Only assets bigger than this size are processed. In bytes. Defaults to 0.
             threshold: 4096,
             // Only assets that compress better that this ratio are processed. Defaults to 0.8.

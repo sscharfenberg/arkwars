@@ -25,16 +25,7 @@ logger.debug(
 );
 
 // clean up paths.
-fs.emptyDirSync(config.buildDir);
-logger.info(
-    `[node] emptied assets directory:\n${chalk.yellow(config.buildDir)}`
-);
-fs.emptyDirSync(config.pugScriptInclude);
-logger.info(
-    `[node] emptied pug script include template directory:\n${chalk.yellow(
-        config.pugScriptInclude
-    )}`
-);
+//require("./assets.cleanup");
 
 webpack(webpackConfig, (err, stats) => {
     if (err) {

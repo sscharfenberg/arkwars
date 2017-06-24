@@ -5,6 +5,8 @@ import "./App.scss";
 
 moment.locale("de");
 console.log(moment().format("dddd, DD.MM.YYYY HH:mm:ss"));
+let componentsToMount = document.querySelectorAll(".aw-component");
+console.log( componentsToMount );
 
 class App extends Component {
     render() {
