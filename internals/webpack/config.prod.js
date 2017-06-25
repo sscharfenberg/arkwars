@@ -10,7 +10,7 @@ const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://webpack.js.org/
 const merge = require("webpack-merge"); // https://www.npmjs.com/package/webpack-merge
 const CompressionWebpackPlugin = require("compression-webpack-plugin"); // https://www.npmjs.com/package/compression-webpack-plugin
-const VisualizerPlugin = require("webpack-visualizer-plugin"); // https://www.npmjs.com/package/webpack-visualizer-plugin
+
 const baseWebpackConfig = require("./config.base"); // base webpack config
 const config = require("../config");
 
@@ -79,10 +79,6 @@ let webpackConfig = merge(baseWebpackConfig, {
             entryOnly: true
         }),
 
-        // https://github.com/chrisbateman/webpack-visualizer
-        new VisualizerPlugin({
-            filename: "../../../bundle-report.html"
-        })
     ]
 });
 

@@ -3,8 +3,8 @@
  * mixins that can be used in other scss files
  *
  **********************************************************************************************************************/
-@import "theme/abstracts/config";
-@import "theme/abstracts/functions";
+@import "config";
+@import "functions";
 // sass-lint:disable no-vendor-prefixes
 
 
@@ -12,17 +12,18 @@
 @mixin retina-image($filename, $background-size, $extension: png, $retina-filename: null, $retina-suffix: _2x) {
     background-image: url("#{$filename}.#{$extension}");
 
-    @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+    @media
+        only screen and (-webkit-min-device-pixel-ratio: 1.5),
         only screen and (min--moz-device-pixel-ratio: 1.5),
         only screen and (-o-min-device-pixel-ratio: 3/2),
         only screen and (min-resolution: 144dpi),
         only screen and (min-resolution: 1.5dppx) {
-            @if $retina-filename {
-                background-image: url("#{$retina-filename}.#{$extension}");
-            } @else {
-                background-image: url("#{$filename}#{$retina-suffix}.#{$extension}");
-            }
-            background-size: $background-size;
+        @if $retina-filename {
+            background-image: url("#{$retina-filename}.#{$extension}");
+        } @else {
+            background-image: url("#{$filename}#{$retina-suffix}.#{$extension}");
+        }
+        background-size: $background-size;
     }
 }
 
@@ -69,20 +70,20 @@
 //      }
 //    }
 %clearfix {
-    zoom                : 1;
+    zoom: 1;
 
     &::before,
     &::after {
-        display         : block;
+        display: block;
 
-        overflow        : hidden;
-        height          : 0;
+        overflow: hidden;
+        height: 0;
 
-        content         : "\0020";
+        content: "\0020";
     }
 
     &::after {
-        clear           : both;
+        clear: both;
     }
 }
 
@@ -90,28 +91,28 @@
 // mixin for our default scrollbar. webkit only, because JS solutions suck. gief standard pls.
 %ui-scrollbar {
     &::-webkit-scrollbar {
-        width           : 8px;
-        height          : 8px;
+        width: 8px;
+        height: 8px;
 
-        background      : map-get($brand, "christine");
+        background: map-get($brand, "christine");
     }
 
     &::-webkit-scrollbar-track {
-        background      : transparent;
+        background: transparent;
     }
 
     &::-webkit-scrollbar-thumb {
-        border          : 1px solid map-get($grey, "black");
+        border: 1px solid map-get($grey, "black");
 
-        background      : linear-gradient(to bottom, map-get($brand, "gorse") 0%, map-get($brand, "viking") 50%, map-get($brand, "gorse") 100%);
-        border-radius   : 5px;
+        background: linear-gradient(to bottom, map-get($brand, "gorse") 0%, map-get($brand, "viking") 50%, map-get($brand, "gorse") 100%);
+        border-radius: 5px;
 
         &:active {
-            background      : linear-gradient(to bottom, map-get($brand, "gorse") 0%, map-get($brand, "viking") 40%, map-get($brand, "viking") 60%, map-get($brand, "gorse") 100%);
+            background: linear-gradient(to bottom, map-get($brand, "gorse") 0%, map-get($brand, "viking") 40%, map-get($brand, "viking") 60%, map-get($brand, "gorse") 100%);
         }
 
         &:hover {
-            box-shadow      : inset 0 0 100px map-get($grey, "iron");
+            box-shadow: inset 0 0 100px map-get($grey, "iron");
         }
     }
 

@@ -10,17 +10,10 @@
  **********************************************************************************************************************/
 const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
-const ExtractTextPlugin = require("extract-text-webpack-plugin"); // https://github.com/webpack-contrib/extract-text-webpack-plugin
+
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // https://www.npmjs.com/package/html-webpack-plugin
 const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin"); // https://www.npmjs.com/package/html-webpack-harddisk-plugin
-const autoprefixer = require("autoprefixer"); // https://github.com/postcss/autoprefixer
-const postCssFlexboxFixes = require("postcss-flexbugs-fixes"); // https://github.com/luisrudge/postcss-flexbugs-fixes
-const sassLintPlugin = require("sasslint-webpack-plugin"); // https://github.com/alleyinteractive/sasslint-webpack-plugin
 const config = require("../config");
-const extractCss = new ExtractTextPlugin({
-    filename: "[name].[contenthash].css",
-    disable: process.env.NODE_ENV === "development"
-});
 
 const webpackConfig = {
     // Don't attempt to continue if there are any errors.
@@ -82,95 +75,10 @@ const webpackConfig = {
                                 targets: { browsers: config.browsers },
                                 useBuiltIns: true // https://github.com/babel/babel-preset-env#usebuiltins
                             }
-                        ],
-                        "react"
+                        ]
                     ]
                 }
-            },
-
-            {
-                // extract scss into a seperate file
-                test: /\.scss$/,
-                loader: extractCss.extract({
-                    fallback: ["style-loader"], // use style-loader in development
-                    use: [
-                        {
-                            // https://github.com/webpack-contrib/css-loader
-                            loader: "css-loader",
-                            options: {
-                                // https://github.com/webpack-contrib/css-loader#options
-                                sourceMap: true,
-                                minimize: true,
-                                root: path.join(config.projectRoot, "client"),
-                                url: true // Enable/Disable url() handling
-                            }
-                        },
-                        {
-                            // https://github.com/postcss/postcss-loader
-                            loader: "postcss-loader",
-                            options: {
-                                sourceMap: true,
-                                plugins: [
-                                    autoprefixer({
-                                        browsers: config.browsers
-                                    }),
-                                    postCssFlexboxFixes
-                                ]
-                            }
-                        },
-                        {
-                            // https://github.com/webpack-contrib/sass-loader
-                            loader: "sass-loader",
-                            options: {
-                                sourceMap: true,
-                                includePaths: [
-                                    path.join(config.projectRoot, "client")
-                                    , path.join(config.projectRoot, "node_modules")
-                                ]
-                            }
-                        }
-                    ]
-                })
-            },
-
-            {
-                // https://github.com/webpack-contrib/file-loader
-                test: /\.(woff|woff2)$/,
-                loader: require.resolve("file-loader"),
-                query: {
-                    name: "[name].[hash].[ext]",
-                    publicPath: "/public/assets/",
-                    outputPath: "fonts/"
-                }
-            },
-
-            {
-                // https://www.npmjs.com/package/svgo-loader
-                test: /\.(svg)$/,
-                use: [
-                    {
-                        loader: require.resolve("file-loader"),
-                        query: {
-                            name: "[name].[hash].[ext]",
-                            publicPath: "/public/assets/",
-                            outputPath: "images/"
-                        }
-                    },
-                    {
-                        loader: require.resolve("svgo-loader"),
-                        options: {
-                            plugins: [
-                                {removeTitle: false},
-                                {convertColors: {shorthex: false}},
-                                {convertPathData: false}
-                            ]
-                        }
-                    }
-                ]
-
-
             }
-
         ]
     },
 
@@ -197,8 +105,6 @@ const webpackConfig = {
     // https://webpack.js.org/configuration/plugins/
     // https://webpack.js.org/plugins/
     plugins: [
-        extractCss,
-
         // https://www.npmjs.com/package/html-webpack-harddisk-plugin
         // webpack-dev-server does not write to disk. use harddisk plugin to force write to disk
         // so we can update paths to webpack-dev-server js files in pug script include
@@ -209,32 +115,7 @@ const webpackConfig = {
         // solution that requires the user to opt into importing specific locales.
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
         // You can remove this if you don't use Moment.js:
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-
-        new sassLintPlugin({
-            configFile: path.join(
-                config.projectRoot,
-                "config",
-                ".sass-lint.yml"
-            ),
-            // Array of files to ignore, must be full path, Default: none
-            ignoreFiles: [],
-            // Array of plugins to ignore, Default: none (example: extract-text-webpack-plugin)
-            ignorePlugins: [
-                "extract-text-webpack-plugin",
-                "html-webpack-plugin"
-            ],
-            // Change the glob pattern for finding files. Default: (**/*.s?(a|c)ss)
-            glob: "**/*.scss",
-            //  Suppress warnings, errors will still show. Default: false
-            quiet: false,
-            // Have Webpack's build process die on warning. Default: false
-            failOnWarning: false,
-            // Have Webpack's build process die on error. Default: false
-            failOnError: true,
-            // Quites output normally for testing purposes, Default: 'false' Caution do not use this unless you are catching errors via Webpack CLI!
-            testing: false
-        })
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ]
 };
 
@@ -243,31 +124,6 @@ const webpackConfig = {
 for (let chunk in config.chunks) {
     let isProd = process.env.NODE_ENV === "production";
     webpackConfig.plugins.push(
-        new HtmlWebpackPlugin({
-            // write the pug STYLE includes (head)
-            template: path.join(
-                config.projectRoot,
-                "internals",
-                "webpack",
-                "templates",
-                `${chunk}.head.ejs`
-            ),
-            filename: path.join(
-                config.projectRoot,
-                "server",
-                "app",
-                "views",
-                "webpack.includes",
-                `${chunk}.head.pug`
-            ),
-            showErrors: true,
-            inject: false,
-            alwaysWriteToDisk: true,
-            meta: {
-                isProd: isProd, // make sure we have information in the template if prod or dev
-                webPackPort: config.webPackPort
-            }
-        }),
         new HtmlWebpackPlugin({
             // write the pug SCRIPT includes (footer)
             template: path.join(

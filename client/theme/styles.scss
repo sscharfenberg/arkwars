@@ -1,0 +1,23 @@
+/***********************************************************************************************************************
+ *
+ * Header Component
+ *
+ **********************************************************************************************************************/
+@import "abstracts/config";
+@import "abstracts/functions";
+
+/*
+ * normalize-scss, based on normalize.css
+ * https://www.npmjs.com/package/normalize-scss
+ */
+@import "normalize-scss/sass/normalize/import-now";
+
+@import "base/typography"; // @font-face declarations
+
+@import "components/header";
+
+body {
+    background: map-get($grey, "ebony") image("backgroundtile.svg");
+    font-family: map-get($fonts, "system");
+}
+

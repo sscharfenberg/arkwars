@@ -4,7 +4,7 @@
  *
  **********************************************************************************************************************/
 // sass-lint:disable indentation
-@import "theme/abstracts/functions";
+@import "functions";
 
 $brand: (
     "viking": #6fc3df
@@ -37,14 +37,17 @@ $breakpoints: (
 );
 
 
-$ui-shadow-1dp: 0 1px 1.5px 0 rgba(map-get($grey, "black"), 0.12),
-                0 1px 1px 0 rgba(map-get($grey, "black"), 0.24);
-$ui-shadow-2dp: 0 2px 2px 0 rgba(map-get($grey, "black"), 0.14),
-                0 3px 1px -2px rgba(map-get($grey, "black"), 0.2),
-                0 1px 5px 0 rgba(map-get($grey, "black"), 0.12);
-$ui-shadow-4dp: 0 4px 5px 0 rgba(map-get($grey, "black"), 0.14),
-                0 1px 10px 0 rgba(map-get($grey, "black"), 0.12),
-                0 2px 4px -1px rgba(map-get($grey, "black"), 0.2);
+$ui-shadow-1dp:
+    0 1px 1.5px 0 rgba(map-get($grey, "black"), 0.12),
+    0 1px 1px 0 rgba(map-get($grey, "black"), 0.24);
+$ui-shadow-2dp:
+    0 2px 2px 0 rgba(map-get($grey, "black"), 0.14),
+    0 3px 1px -2px rgba(map-get($grey, "black"), 0.2),
+    0 1px 5px 0 rgba(map-get($grey, "black"), 0.12);
+$ui-shadow-4dp:
+    0 4px 5px 0 rgba(map-get($grey, "black"), 0.14),
+    0 1px 10px 0 rgba(map-get($grey, "black"), 0.12),
+    0 2px 4px -1px rgba(map-get($grey, "black"), 0.2);
 
 
 /***********************************************************************************************************************
