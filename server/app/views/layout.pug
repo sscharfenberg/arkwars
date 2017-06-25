@@ -7,8 +7,10 @@ html(lang="de")
         link(rel='stylesheet', href='/public/assets/styles.css')
 body
     header.aw-header
-        .aw-header__logo logo
-        .aw-header__title ArkWars
+        button.aw-header__menu-btn Menu
+        .aw-header__title
+            .aw-header__title-logo logo
+            .aw-header__title-text= h.appName
         ul.aw-header__meta
             li.aw-header__user
                 | Sven!
@@ -18,8 +20,6 @@ body
                 a.aw-header__register Register
             li.aw-header__action
                 a.aw-header__register Logout
-            li.aw-header__action
-                button.aw-header__menu-btn Menu
     .aw-main-wrapper
         h1 #{h.appName}
         .content

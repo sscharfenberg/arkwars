@@ -4,5 +4,6 @@ config/.env
 server/logs
 bundle-report.html
 server/public/assets
+server/app/views/webpack.includes
 coverage
 *.log

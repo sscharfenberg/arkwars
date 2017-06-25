@@ -9,7 +9,8 @@
 const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://webpack.js.org/
 const merge = require("webpack-merge"); // https://www.npmjs.com/package/webpack-merge
-const CompressionWebpackPlugin = require("compression-webpack-plugin"); // https://www.npmjs.com/package/compression-webpack-plugin
+// https://www.npmjs.com/package/compression-webpack-plugin
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
 const baseWebpackConfig = require("./config.base"); // base webpack config
 const config = require("../config");
@@ -77,8 +78,7 @@ let webpackConfig = merge(baseWebpackConfig, {
             raw: false,
             // if true, the banner will only be added to the entry chunks
             entryOnly: true
-        }),
-
+        })
     ]
 });
 

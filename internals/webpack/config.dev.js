@@ -9,6 +9,7 @@
 const webpack = require("webpack"); // https://webpack.js.org/
 const merge = require("webpack-merge"); // https://www.npmjs.com/package/webpack-merge
 const baseWebpackConfig = require("./config.base"); // base webpack config
+const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin"); // https://www.npmjs.com/package/html-webpack-harddisk-plugin
 const config = require("../config");
 
 let webpackConfig = merge(baseWebpackConfig, {
@@ -26,7 +27,11 @@ let webpackConfig = merge(baseWebpackConfig, {
     // https://webpack.js.org/configuration/plugins/
     // https://webpack.js.org/plugins/
     plugins: [
-        // Define Plugin ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // https://www.npmjs.com/package/html-webpack-harddisk-plugin
+        // webpack-dev-server does not write to disk. use harddisk plugin to force write to disk
+        // so we can update paths to webpack-dev-server js files in pug script include
+        new HtmlWebpackHarddiskPlugin(),
+
         // https://webpack.js.org/plugins/define-plugin/
         new webpack.DefinePlugin({
             "process.env": {
@@ -36,7 +41,7 @@ let webpackConfig = merge(baseWebpackConfig, {
 
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
         new webpack.HotModuleReplacementPlugin()
-    ]
+   ]
 });
 
 module.exports = webpackConfig;

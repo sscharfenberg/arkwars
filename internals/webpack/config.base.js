@@ -10,9 +10,7 @@
  **********************************************************************************************************************/
 const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
-
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // https://www.npmjs.com/package/html-webpack-plugin
-const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin"); // https://www.npmjs.com/package/html-webpack-harddisk-plugin
 const config = require("../config");
 
 const webpackConfig = {
@@ -105,10 +103,7 @@ const webpackConfig = {
     // https://webpack.js.org/configuration/plugins/
     // https://webpack.js.org/plugins/
     plugins: [
-        // https://www.npmjs.com/package/html-webpack-harddisk-plugin
-        // webpack-dev-server does not write to disk. use harddisk plugin to force write to disk
-        // so we can update paths to webpack-dev-server js files in pug script include
-        new HtmlWebpackHarddiskPlugin(),
+
 
         // Moment.js is an extremely popular library that bundles large locale files
         // by default due to how Webpack interprets its code. This is a practical
