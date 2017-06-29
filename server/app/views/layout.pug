@@ -7,12 +7,18 @@ html(lang="de")
         link(rel='stylesheet', href='/public/assets/styles.css')
 body
     header.aw-header
-        button.aw-header__menu-btn Menu
+        .aw-header__games-menu
+            button.aw-header__games-menu-btn Menu
         .aw-header__title
-            .aw-header__title-logo logo
+            .aw-header__title-logo
+                != h.icon("rocket-ship")
             .aw-header__title-text= h.appName
-        ul.aw-header__meta
-            li.aw-header__user
+        ul.aw-header__actions
+            li.aw-header__action
+                a.aw-header__games Games
+            li.aw-header__action
+                a.aw-header__language-switcher Language
+            li.aw-header__action
                 | Sven!
             li.aw-header__action
                 a.aw-header__login Login

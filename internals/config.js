@@ -66,7 +66,7 @@ module.exports = {
 
     // webpack chunk entrypoints
     chunks: {
-        app: path.join(appDirectory, "client", "index.js")
+        app: path.join(appDirectory, "client", "app.js")
     },
 
     // https://webpack.js.org/configuration/stats/
@@ -98,6 +98,10 @@ module.exports = {
         images: {
             in: [path.join(appDirectory, "client", "theme", "images", "**/*")],
             out: path.join(appDirectory, "server", "public", "assets", "images")
+        },
+        icons: {
+            in: [path.join(appDirectory, "client", "theme", "icons", "**/*")],
+            out: path.join(appDirectory, "server", "public", "assets", "icons")
         }
     }
 };

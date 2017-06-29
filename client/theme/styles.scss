@@ -17,7 +17,10 @@
 @import "components/header";
 
 body {
-    background: map-get($grey, "ebony") image("backgroundtile.svg");
+    background: map-get($grey, "ebony") icon("backgroundtile.svg");
     font-family: map-get($fonts, "system");
-}
 
+    &.fonts-loaded {
+        font-family: map-get($fonts, "text");
+    }
+}

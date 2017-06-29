@@ -20,11 +20,11 @@ const config = require("../../config");
  * copy all static resources to /public/assets
  */
 gulp.task("sync:all", function(callback) {
-    return run(["sync:fonts", "sync:images"], callback);
+    return run(["sync:fonts", "sync:images", "sync:icons"], callback);
 });
 
 /*
- * copy fonts from /client/theme/fonts/ to /public/assets/fonts/
+ * copy fonts from /client/theme/fonts/ to /server/public/assets/fonts/
  */
 gulp.task("sync:fonts", function() {
     console.log();
@@ -49,9 +49,8 @@ gulp.task("sync:fonts", function() {
 });
 
 /*
- * copy images from /client/theme/images/ to /public/assets/images/
+ * copy images from /client/theme/images/ to /server/public/assets/images/
  */
-//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 gulp.task("sync:images", function() {
     console.log();
     logger.info(`[gulp] syncing ${chalk.blue("images")} to build dir.\n`);
@@ -75,6 +74,39 @@ gulp.task("sync:images", function() {
         .pipe(
             size({
                 title: "IMG -",
+                showFiles: true // comment this out if it becomes too verbose.
+            })
+        )
+        .pipe(livereload());
+});
+
+
+/*
+ * copy icons from /client/theme/icons/ to /server/public/assets/icons/
+ */
+gulp.task("sync:icons", function() {
+    console.log();
+    logger.info(`[gulp] syncing ${chalk.blue("icons")} to build dir.\n`);
+
+    return gulp
+        .src(config.paths.icons.in)
+        .pipe(
+            plumber({
+                errorHandler: notify.onError("<%= error.message %>")
+            })
+        )
+        .pipe(newer(config.paths.icons.out))
+        .pipe(
+            imagemin({
+                progressive: true,
+                interlaced: true,
+                verbose: true // comment this out if it becomes too verbose.
+            })
+        )
+        .pipe(gulp.dest(config.paths.icons.out))
+        .pipe(
+            size({
+                title: "ICON -",
                 showFiles: true // comment this out if it becomes too verbose.
             })
         )

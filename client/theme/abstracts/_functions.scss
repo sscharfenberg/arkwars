@@ -22,6 +22,15 @@
     @return asset($base, "images/", $path);
 }
 
+// Returns URL to an icon based on its path
+// @param {String} $path - icon path
+// @param {String} $base [$base-url] - base URL
+// @return {Url}
+// @require $base-url
+@function icon($path, $base: "./") {
+    @return asset($base, "icons/", $path);
+}
+
 // Returns URL to a font based on its path
 // @param {String} $path - font path
 // @param {String} $base [$base-url] - base URL
