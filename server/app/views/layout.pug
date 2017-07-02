@@ -19,9 +19,23 @@ body
             li.aw-header__action
                 a.aw-header__link(href="", aria-label="Games")
                     != h.icon("games")
+                ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
+                    li.aw-header__submenu-item
+                        a.aw-header__submenu-item-link(href="/game/1/") G1 (Alpha)
+                    li.aw-header__submenu-item
+                        a.aw-header__submenu-item-link(href="/game/2/") G2 (Beta)
             li.aw-header__action
-                a.aw-header__link(href="", aria-label="Change Language")
+                a.aw-header__link.active(href="", aria-label="Change Language")
                     != h.icon("language")
+                ul.aw-header__submenu.aw-header__submenu--left.aw-header__submenu--medium(aria-hidden="true")
+                    li.aw-header__submenu-item
+                        a.aw-header__submenu-item-link(href="/language/en/")
+                            != h.image("flags/en.svg")
+                            | English
+                    li.aw-header__submenu-item
+                        a.aw-header__submenu-item-link(href="/language/de/")
+                            != h.image("flags/de.svg")
+                            | Deutsch
             li.aw-header__action
                 a.aw-header__link(href="/auth/login/")
                     != h.icon("key")
@@ -33,6 +47,11 @@ body
             li.aw-header__action
                 a.aw-header__link.aw-header__link--circle(href="/auth/profile/")
                     img.aw-header__avatar(src="/public/assets/images/user-anon.svg")
+                ul.aw-header__submenu.aw-header__submenu--right.aw-header__submenu--medium(aria-hidden="true")
+                    li.aw-header__submenu-item
+                        a.aw-header__submenu-item-link(href="/game/1/") Profile
+                    li.aw-header__submenu-item
+                        a.aw-header__submenu-item-link(href="/game/2/") Something else
             li.aw-header__action
                 a.aw-header__link(href="/auth/logout/")
                     != h.icon("power")
