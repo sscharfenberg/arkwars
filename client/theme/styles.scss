@@ -1,10 +1,8 @@
 /***********************************************************************************************************************
  *
- * Header Component
+ * MAIN SASS FILE
  *
  **********************************************************************************************************************/
-@import "abstracts/config";
-@import "abstracts/functions";
 
 /*
  * normalize-scss, based on normalize.css
@@ -12,15 +10,10 @@
  */
 @import "normalize-scss/sass/normalize/import-now";
 
+@import "base/framework";
 @import "base/typography"; // @font-face declarations
 
 @import "components/header";
+@import "components/icon";
 
-body {
-    background: map-get($grey, "ebony") icon("backgroundtile.svg");
-    font-family: map-get($fonts, "system");
 
-    &.fonts-loaded {
-        font-family: map-get($fonts, "text");
-    }
-}

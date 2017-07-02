@@ -55,60 +55,65 @@ gulp.task("sync:images", function() {
     console.log();
     logger.info(`[gulp] syncing ${chalk.blue("images")} to build dir.\n`);
 
-    return gulp
-        .src(config.paths.images.in)
-        .pipe(
-            plumber({
-                errorHandler: notify.onError("<%= error.message %>")
-            })
-        )
-        .pipe(newer(config.paths.images.out))
-        .pipe(
-            imagemin({
-                progressive: true,
-                interlaced: true,
-                verbose: true // comment this out if it becomes too verbose.
-            })
-        )
-        .pipe(gulp.dest(config.paths.images.out))
-        .pipe(
-            size({
-                title: "IMG -",
-                showFiles: true // comment this out if it becomes too verbose.
-            })
-        )
-        .pipe(livereload());
+    return (gulp
+            .src(config.paths.images.in)
+            .pipe(
+                plumber({
+                    errorHandler: notify.onError("<%= error.message %>")
+                })
+            )
+            //        .pipe(newer(config.paths.images.out))
+            .pipe(
+                imagemin([
+                    imagemin.gifsicle({ interlaced: true }),
+                    imagemin.jpegtran({ progressive: true }),
+                    imagemin.optipng({ optimizationLevel: 5 }),
+                    imagemin.svgo()
+                ])
+            )
+            .pipe(gulp.dest(config.paths.images.out))
+            .pipe(
+                size({
+                    title: "IMG -",
+                    showFiles: true // comment this out if it becomes too verbose.
+                })
+            )
+            .pipe(livereload()) );
 });
 
-
 /*
- * copy icons from /client/theme/icons/ to /server/public/assets/icons/
+ * copy SVGs from /client/theme/icons/ to /server/public/assets/icons/
  */
 gulp.task("sync:icons", function() {
     console.log();
     logger.info(`[gulp] syncing ${chalk.blue("icons")} to build dir.\n`);
 
-    return gulp
-        .src(config.paths.icons.in)
-        .pipe(
-            plumber({
-                errorHandler: notify.onError("<%= error.message %>")
-            })
-        )
-        .pipe(newer(config.paths.icons.out))
-        .pipe(
-            imagemin({
-                progressive: true,
-                interlaced: true,
-                verbose: true // comment this out if it becomes too verbose.
-            })
-        )
-        .pipe(gulp.dest(config.paths.icons.out))
-        .pipe(
-            size({
-                title: "ICON -",
-                showFiles: true // comment this out if it becomes too verbose.
-            })
-        )
-        .pipe(livereload());
+    return (gulp
+            .src(config.paths.icons.in)
+            .pipe(
+                plumber({
+                    errorHandler: notify.onError("<%= error.message %>")
+                })
+            )
+            //        .pipe(newer(config.paths.images.out))
+            .pipe(
+                imagemin([
+                    imagemin.gifsicle({ interlaced: true }),
+                    imagemin.jpegtran({ progressive: true }),
+                    imagemin.optipng({ optimizationLevel: 5 }),
+                    imagemin.svgo({
+                        plugins: [
+                            { addClassesToSVGElement: { className: "aw-icon" } }
+                        ]
+                    })
+                ])
+            )
+            .pipe(gulp.dest(config.paths.icons.out))
+            .pipe(
+                size({
+                    title: "ICON -",
+                    showFiles: true // comment this out if it becomes too verbose.
+                })
+            )
+            .pipe(livereload()) );
 });

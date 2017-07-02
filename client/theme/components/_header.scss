@@ -10,42 +10,121 @@
 .aw-header {
     display: flex;
     position: relative;
-    justify-content: space-between;
+
+    box-sizing: border-box;
     width: 100%;
-    height: 48px;
+    padding: 10px 15px;
 
     background: map-get($grey, "bunker");
 
-    &__games-menu-btn {
-        background: map-get($brand, "christine");
+    // 1 - main menu button
+    &__menu {
+        display: flex;
+        align-items: center;
     }
 
+    &__menu-btn {
+        position: relative;
+
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border: 0;
+
+        background: none;
+        cursor: pointer;
+
+        > span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            border: 1px solid map-get($text, "header");
+            margin-bottom: 5px;
+
+            background: transparent;
+            border-radius: 3px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+
+    // 2 - title and logo
     &__title {
         display: flex;
-        position: absolute;
-
-        top: 0;
-        bottom: 0;
-        left: 50%;
         align-items: center;
-        transform: translateX(-50%);
 
-        color: map-get($grey, "white");
+        margin-left: 18px;
+
+        color: map-get($brand, "viking");
+        text-decoration: none;
     }
 
     &__title-logo {
         width: 24px;
         height: 24px;
-        margin-right: 12px;
     }
 
+
+    // 3 - meta links: login, logout, profile, languages, games
     &__actions {
         display: flex;
+        align-items: center;
+        justify-content: flex-end;
 
         padding: 0;
         margin: 0;
+        flex-grow: 1;
 
-        color: map-get($grey, "white");
         list-style: none;
     }
+
+    &__action {
+        margin-right: 8px;
+
+        .aw-icon {
+            width: 20px;
+            height: 20px;
+
+            color: map-get($text, "header");
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+
+        padding: 5px 10px;
+
+        background: map-get($grey, "raven");
+        color: map-get($text, "header");
+
+        text-decoration: none;
+
+        &--circle {
+            padding: 2px;
+
+            border-radius: 15px;
+        }
+
+        > span {
+            margin-left: 5px;
+        }
+    }
+
+    &__avatar {
+        width: 26px;
+        height: 26px;
+
+        background: map-get($grey, "raven");
+        color: map-get($text, "header");
+        border-radius: 13px;
+    }
+
 }

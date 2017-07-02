@@ -96,7 +96,9 @@ module.exports = {
             out: path.join(appDirectory, "server", "public", "assets", "fonts")
         },
         images: {
-            in: [path.join(appDirectory, "client", "theme", "images", "**/*")],
+            in: [
+                path.join(appDirectory, "client", "theme", "images", "**/*")
+            ],
             out: path.join(appDirectory, "server", "public", "assets", "images")
         },
         icons: {

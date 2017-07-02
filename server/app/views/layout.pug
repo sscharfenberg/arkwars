@@ -7,25 +7,36 @@ html(lang="de")
         link(rel='stylesheet', href='/public/assets/styles.css')
 body
     header.aw-header
-        .aw-header__games-menu
-            button.aw-header__games-menu-btn Menu
+        .aw-header__menu
+            button.aw-header__menu-btn(aria-label="Main Menu")
+                span
+                span
+                span
         .aw-header__title
-            .aw-header__title-logo
-                != h.icon("rocket-ship")
-            .aw-header__title-text= h.appName
+            a.aw-header__title-logo(href="/")
+                != h.image("logo.svg")
         ul.aw-header__actions
             li.aw-header__action
-                a.aw-header__games Games
+                a.aw-header__link(href="", aria-label="Games")
+                    != h.icon("games")
             li.aw-header__action
-                a.aw-header__language-switcher Language
+                a.aw-header__link(href="", aria-label="Change Language")
+                    != h.icon("language")
             li.aw-header__action
-                | Sven!
+                a.aw-header__link(href="/auth/login/")
+                    != h.icon("key")
+                    span Login
             li.aw-header__action
-                a.aw-header__login Login
+                a.aw-header__link(href="/auth/register/")
+                    != h.icon("lightbulb")
+                    span Register
             li.aw-header__action
-                a.aw-header__register Register
+                a.aw-header__link.aw-header__link--circle(href="/auth/profile/")
+                    img.aw-header__avatar(src="/public/assets/images/user-anon.svg")
             li.aw-header__action
-                a.aw-header__register Logout
+                a.aw-header__link(href="/auth/logout/")
+                    != h.icon("power")
+                    span Logout
     .aw-main-wrapper
         h1 #{h.appName}
         .content

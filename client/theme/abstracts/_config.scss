@@ -4,7 +4,7 @@
  *
  **********************************************************************************************************************/
 // sass-lint:disable indentation
-@import "functions";
+
 
 $brand: (
     "viking": #6fc3df
@@ -16,7 +16,11 @@ $grey: (
     "white": #fff
     , "mystic": #eaf0f2
     , "iron": #cdd0d0
+    , "fog": #b7b7af
+    , "charcoal": #757c84
+    , "asher": #555f61
     , "abbey": #4c4f56
+    , "raven": #373d3f
     , "bunker": #182226
     , "ebony": #06060f
     , "black": #000
@@ -26,6 +30,11 @@ $fonts: (
     "system": #{-apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif}
     , "text": #{"Roboto", sans-serif}
     , "headline": #{"Roboto", sans-serif}
+);
+
+$text: (
+    "light": map-get($grey, "mystic")
+    , "header": map-get($grey, "iron")
 );
 
 $breakpoints: (

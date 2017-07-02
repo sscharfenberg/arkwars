@@ -22,9 +22,6 @@ logger.debug(
     )}`
 );
 
-// clean up paths.
-//require("./assets.cleanup");
-
 webpack(webpackConfig, (err, stats) => {
     if (err) {
         throw err;

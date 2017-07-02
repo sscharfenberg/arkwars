@@ -1,0 +1,17 @@
+/***********************************************************************************************************************
+ *
+ * SVG Icon Component
+ *
+ **********************************************************************************************************************/
+@import "../abstracts/config";
+@import "../abstracts/functions";
+@import "../abstracts/mixins";
+
+.aw-icon {
+    display: inline-block;
+
+    width: 24px;
+    height: 24px;
+
+    fill: currentColor;
+}
