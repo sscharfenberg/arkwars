@@ -1,6 +1,7 @@
 //import moment from "moment";
 //import "moment/locale/de"; // import the locale even though webpack ignores moment/locale
 import fontLoader from "./components/font-loader";
+import dropdown from "./components/dropdown";
 
 
 
@@ -11,3 +12,5 @@ import fontLoader from "./components/font-loader";
 
 
 fontLoader();
+
+dropdown();
