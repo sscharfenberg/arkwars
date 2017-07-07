@@ -2,8 +2,6 @@
  *
  *  Header dropdown menues. very basic
  *
- *  @type Module
- *
  ******************************************************************************************************************** */
 const SELECTOR_SUBMENU = ".aw-header__submenu";
 const SELECTOR_SUBMENU_TRIGGER = ".aw-header__submenu-trigger";
@@ -66,9 +64,9 @@ const initializeDropdowns = () => {
             let openMenuLinks = document.querySelectorAll("." + CLASSNAME_OPEN);
             ev.preventDefault();
             if (!this.classList.contains(CLASSNAME_OPEN)) {
-                if (openMenuLinks.length > 0) {
-                    for (let j = 0; j < openMenuLinks.length; j++) {
-                        hide(openMenuLinks[j]);
+                if (openMenuLinks.length > 0) { // if there where open menus before click
+                    for (let j = 0; j < openMenuLinks.length; j++) { // loop open menus
+                        hide(openMenuLinks[j]); // and hide them
                     }
                 }
                 show(this); // show this submenu

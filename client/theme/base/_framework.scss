@@ -9,10 +9,12 @@
 
 
 body {
-    background: map-get($grey, "ebony") image("backgroundtile.svg");
-    color: map-get($text, "light");
+    background: palette("grey", "ebony") image("backgroundtile.svg");
+    color: palette("text", "light");
 
     font-family: map-get($fonts, "system");
+
+    @extend %ui-scrollbar;
 
     &.fonts-loaded {
         font-family: map-get($fonts, "text");

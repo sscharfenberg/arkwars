@@ -15,7 +15,7 @@
     width: 100%;
     padding: 10px 15px;
 
-    background: map-get($grey, "bunker");
+    background: palette("grey", "bunker");
 
     //
     // 1 - main menu button
@@ -36,12 +36,11 @@
         background: none;
         cursor: pointer;
 
-
         > span {
             display: block;
             width: 100%;
             height: 3px;
-            border: 1px solid map-get($text, "header");
+            border: 1px solid palette("text", "light");
             margin-bottom: 4px;
 
             background: transparent;
@@ -55,8 +54,8 @@
         }
 
         &:hover > span {
-            background-color: map-get($grey, "abbey");
-            border-color: map-get($brand, "viking");
+            background-color: palette("grey", "abbey");
+            border-color: palette("brand", "viking");
         }
 
     }
@@ -70,7 +69,7 @@
 
         margin-left: 18px;
 
-        color: map-get($brand, "viking");
+        color: palette("brand", "viking");
         text-decoration: none;
     }
 
@@ -110,14 +109,15 @@
         }
     }
 
+
     &__link {
         display: flex;
         align-items: center;
 
         padding: 5px 10px;
 
-        background: map-get($grey, "raven");
-        color: map-get($text, "header");
+        background: palette("grey", "raven");
+        color: palette("text", "light");
 
         text-decoration: none;
         transition: background-color 150ms linear, color 150ms linear;
@@ -134,8 +134,8 @@
 
         &:hover,
         &--active {
-            background: map-get($grey, "ebony");
-            color: map-get($brand, "viking");
+            background: palette("grey", "ebony");
+            color: palette("brand", "viking");
         }
     }
 
@@ -144,7 +144,7 @@
         width: 26px;
         height: 26px;
 
-        color: map-get($text, "header");
+        color: palette("text", "header");
         border-radius: 13px;
     }
 
@@ -201,7 +201,7 @@
             border-width: 0 #{$arrowSize} #{$arrowSize};
             border-style: solid;
 
-            border-color: transparent transparent map-get($grey, "abbey") transparent;
+            border-color: transparent transparent palette("brand", "viking") transparent;
 
             content: " ";
         }
@@ -242,7 +242,7 @@
 
     &__submenu-item {
         display: block;
-        border: 2px solid map-get($grey, "abbey");
+        border: 2px solid palette("grey", "abbey");
         border-bottom-width: 0;
 
         &:last-child {
@@ -256,37 +256,39 @@
 
         padding: 5px 10px;
 
-        background-color: map-get($grey, "raven");
-        color: map-get($text, "header");
+        background-color: palette("grey", "raven");
+        color: palette("grey", "iron");
 
         text-decoration: none;
 
         transition: background-color 150ms linear;
-
-        &:hover {
-            background-color: map-get($grey, "bunker");
-
-            > svg {
-                filter: none;
-            }
-        }
 
         > svg {
             display: inline-block;
 
             width: 30px;
             height: 15px;
-            border: 1px solid map-get($grey, "white");
+            border: 1px solid palette("grey", "white");
             margin-right: 8px;
 
             filter: grayscale(70%);
             border-radius: 2px;
         }
+
+        &:hover {
+            background-color: palette("grey", "bunker");
+
+            > svg {
+                filter: none;
+            }
+        }
     }
 
 }
 
-
+/*
+ * Animation for opening dropdowns (hardware accelerated)
+ */
 @keyframes openSubmenu {
     from {
         opacity: 0;
@@ -299,6 +301,9 @@
     }
 }
 
+/*
+ * Animation for closing dropdowns (hardware accelerated)
+ */
 @keyframes closeSubmenu {
     from {
         opacity: 1;
