@@ -5,7 +5,9 @@
  **********************************************************************************************************************/
 // sass-lint:disable indentation
 
-
+/*
+ * color palette
+ */
 $palettes: (
     "brand": (
         "base": #6fc3df
@@ -35,6 +37,9 @@ $palettes: (
     )
 );
 
+/*
+ * animation speeds for transition-duration and animation-duration
+ */
 $animation-speeds: (
     "quick": 150ms
     , "fast": 250ms
@@ -44,8 +49,12 @@ $animation-speeds: (
     , "delayed": 1500ms
 );
 
+/*
+ * font
+ */
 $fonts: (
     "system": #{-apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif}
+    , "mono": #{Courier, monospace}
     , "text": #{"Roboto", sans-serif}
     , "headline": #{"Roboto", sans-serif}
 );

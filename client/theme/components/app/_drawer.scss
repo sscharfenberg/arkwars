@@ -1,0 +1,44 @@
+/***********************************************************************************************************************
+ *
+ * Drawer Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+.aw-drawer {
+    display: none;
+    opacity: 0;
+
+    flex: 0 0 24rem;
+
+    background: palette("brand", "christine");
+
+    &--open {
+        display: block;
+        opacity: 1;
+    }
+
+    &--opening,
+    &--closing {
+        display: block;
+
+        backface-visibility: visible !important;
+        opacity: 1;
+
+        // this must be synched with ANIMATION_DURATION in client/components/app/drawer.js
+        animation-duration: map-get($animation-speeds, "quick");
+        animation-fill-mode: both;
+    }
+
+    &--opening {
+        animation-name: openDrawer;
+    }
+
+    &--closing {
+        animation-name: closeDrawer;
+    }
+
+}
+

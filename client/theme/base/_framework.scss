@@ -16,15 +16,25 @@ html {
 
 
 body {
-    background: palette("grey", "ebony") image("backgroundtile.svg");
+    background: palette("grey", "ebony") image("bg-circuit-board.svg");
     color: palette("text", "light");
 
     font-family: map-get($fonts, "system");
     font-size: 1.6rem;
 
-    @extend %ui-scrollbar;
+    @extend %scrollbar;
 
     &.fonts-loaded {
         font-family: map-get($fonts, "text");
     }
+}
+
+
+.aw-main-wrapper {
+    display: flex;
+}
+
+
+.aw-content {
+    //transform: translateX(-24rem);
 }

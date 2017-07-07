@@ -9,7 +9,8 @@
 
 .aw-header {
     display: flex;
-    position: relative;
+    position: sticky;
+    top: 0;
 
     box-sizing: border-box;
     width: 100%;
@@ -20,6 +21,7 @@
     @include respond-to("small") {
         padding: 10px 15px;
     }
+
 
     /*
      * 1 - main menu button ============================================================================================
@@ -248,7 +250,7 @@
             backface-visibility: visible !important;
             opacity: 1;
 
-            // this must be synched with ANIMATION_DURATION in client/components/app/header/submenu.js
+            // this must be synched with ANIMATION_DURATION in client/components/app/header.js
             animation-duration: map-get($animation-speeds, "quick");
             animation-fill-mode: both;
         }

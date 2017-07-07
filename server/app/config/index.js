@@ -9,7 +9,7 @@
  * this config file is used by the server, not the client.
  *
  **********************************************************************************************************************/
-const pkg = require( "../package.json" );
+const pkg = require( "../../../package.json" );
 const appConfig = {
     "app": {
         "title": pkg.app.name

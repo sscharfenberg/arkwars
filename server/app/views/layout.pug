@@ -15,7 +15,7 @@ body
         .aw-header__title
             a.aw-header__title-link(href="/")
                 != h.image("logo.svg")
-                span Arkwars
+                span= h.appName
         ul.aw-header__actions
             li.aw-header__action
                 a.aw-header__link.aw-header__submenu-trigger(href="", aria-label="Change Language")
@@ -58,8 +58,9 @@ body
                     != h.icon("power")
                     span Logout
     .aw-main-wrapper
-        h1 #{h.appName}
-        .content
+        .aw-drawer.aw-drawer--open Drawer
+        .aw-content
+            h1= h.appName
             block content
                 p This is the default!
 
