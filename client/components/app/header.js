@@ -1,8 +1,9 @@
 /** ********************************************************************************************************************
  *
- *  Header dropdown menues. very basic
+ *  Header functions
+ *  @exports {function} initializeSubmenus
  *
- ******************************************************************************************************************** */
+ **********************************************************************************************************************/
 const SELECTOR_SUBMENU = ".aw-header__submenu";
 const SELECTOR_SUBMENU_TRIGGER = ".aw-header__submenu-trigger";
 const CLASSNAME_OPEN = "aw-header__link--active";
@@ -14,7 +15,7 @@ const ANIMATION_DURATION = 150; // needs to by synched to css value of @keyframe
  * @function hide a submenu by link
  * @param {DOMNode} node - link that should be manipulated.
  */
-const hide = node => {
+const hideSubmenu = node => {
     node.classList.add(CLASSNAME_CLOSING);
     setTimeout(() => {
         node.classList.remove(CLASSNAME_OPEN, CLASSNAME_CLOSING);
@@ -26,7 +27,7 @@ const hide = node => {
  * @function show a submenu by link
  * @param {DOMNode} node - link that should be manipulated.
  */
-const show = node => {
+const showSubmenu = node => {
     node.classList.add(CLASSNAME_OPEN, CLASSNAME_OPENING);
     setTimeout(() => {
         node.classList.remove(CLASSNAME_OPENING);
@@ -46,15 +47,15 @@ const getSubmenuByLink = link => {
 /*
  * @function initialize dropdowns
  */
-const initializeDropdowns = () => {
+const initializeSubmenus = () => {
     const submenus = document.querySelectorAll(SELECTOR_SUBMENU);
     const triggers = document.querySelectorAll(SELECTOR_SUBMENU_TRIGGER);
 
-    // only initialize if there are submenus, triggers and a trigger for each submenu.
+    // fail silently if no submenus, no triggers or # of triggers/submenus is different
     if (
-        submenus.length !== triggers.length || // only check sums to avoid overhead
         submenus.length === 0 ||
-        triggers.length === 0
+        triggers.length === 0 ||
+        submenus.length !== triggers.length
     )
         return;
 
@@ -63,18 +64,21 @@ const initializeDropdowns = () => {
         triggers[i].onclick = function(ev) {
             let openMenuLinks = document.querySelectorAll("." + CLASSNAME_OPEN);
             ev.preventDefault();
+            // was it open before click?
             if (!this.classList.contains(CLASSNAME_OPEN)) {
-                if (openMenuLinks.length > 0) { // if there where open menus before click
-                    for (let j = 0; j < openMenuLinks.length; j++) { // loop open menus
-                        hide(openMenuLinks[j]); // and hide them
+                // if there where open menus before click
+                if (openMenuLinks.length > 0) {
+                    // loop open menus
+                    for (let j = 0; j < openMenuLinks.length; j++) {
+                        hideSubmenu(openMenuLinks[j]); // and hide them
                     }
                 }
-                show(this); // show this submenu
+                showSubmenu(this); // show this submenu
             } else {
-                hide(this); // hide this submenu
+                hideSubmenu(this); // hide this submenu
             }
         };
     }
 };
 
-export default initializeDropdowns;
+export { initializeSubmenus };

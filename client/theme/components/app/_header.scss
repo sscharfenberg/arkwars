@@ -3,9 +3,9 @@
  * Header Component
  *
  **********************************************************************************************************************/
-@import "../abstracts/config";
-@import "../abstracts/functions";
-@import "../abstracts/mixins";
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
 
 .aw-header {
     display: flex;
@@ -13,13 +13,17 @@
 
     box-sizing: border-box;
     width: 100%;
-    padding: 10px 15px;
+    padding: 5px 10px;
 
     background: palette("grey", "bunker");
 
-    //
-    // 1 - main menu button
-    //
+    @include respond-to("small") {
+        padding: 10px 15px;
+    }
+
+    /*
+     * 1 - main menu button ============================================================================================
+     */
     &__menu {
         display: flex;
         align-items: center;
@@ -28,59 +32,116 @@
     &__menu-btn {
         position: relative;
 
-        width: 34px;
-        height: 34px;
+        width: 2.4rem;
+        height: 2.4rem;
         padding: 0;
         border: 0;
 
         background: none;
+        outline: 0;
         cursor: pointer;
+
+
+        @include respond-to("small") {
+            width: 3.4rem;
+            height: 3.4rem;
+        }
 
         > span {
             display: block;
             width: 100%;
-            height: 3px;
+            height: 2px;
             border: 1px solid palette("text", "light");
             margin-bottom: 4px;
 
             background: transparent;
             border-radius: 3px;
 
-            transition: border-color 150ms linear, background-color 150ms linear;
+            transition: border-color map-get($animation-speeds, "quick") linear, background-color map-get($animation-speeds, "quick") linear;
+
+            @include respond-to("small") {
+                height: 3px;
+            }
 
             &:last-child {
                 margin-bottom: 0;
             }
         }
 
-        &:hover > span {
+        &:hover > span,
+        &:focus > span {
             background-color: palette("grey", "abbey");
             border-color: palette("brand", "viking");
         }
 
     }
 
-    //
-    // 2 - title and logo
-    //
+    /*
+     * 2 - title and logo ==============================================================================================
+     */
     &__title {
         display: flex;
         align-items: center;
 
-        margin-left: 18px;
+        margin-left: 10px;
 
         color: palette("brand", "viking");
         text-decoration: none;
+
+        @include respond-to("small") {
+            margin-left: 18px;
+        }
+
+        @include respond-to("xlarge") {
+            position: absolute;
+            left: 50%;
+
+            margin-left: 0;
+
+            transform: translateX(-50%);
+        }
     }
 
-    &__title-logo {
-        width: 24px;
-        height: 24px;
+    &__title-link {
+        display: flex;
+        align-items: center;
+
+        text-decoration: none;
+
+        > svg { // logo
+            width: 24px;
+            height: 24px;
+
+            @include respond-to("medium") {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        > span { // this is the text ${appName}
+            display: none;
+            margin-left: 12px;
+
+            color: palette("brand", "viking");
+
+            font-size: 2.4rem;
+            font-weight: 300;
+
+            transition: text-shadow map-get($animation-speeds, "quick") linear;
+
+            @include respond-to("medium") {
+                display: block;
+            }
+
+            &:hover {
+                text-shadow: map-get($shadows, "light1dp");
+            }
+        }
     }
 
-    //
-    // 3 - meta links: login, logout, profile, languages, games
-    //
+    /*
+     * 3 - meta links: login, logout, profile, languages, games ========================================================
+     */
     &__actions {
         display: flex;
         align-items: center;
@@ -109,18 +170,21 @@
         }
     }
 
-
     &__link {
         display: flex;
         align-items: center;
 
-        padding: 5px 10px;
+        padding: 5px;
 
         background: palette("grey", "raven");
         color: palette("text", "light");
 
         text-decoration: none;
-        transition: background-color 150ms linear, color 150ms linear;
+        transition: background-color map-get($animation-speeds, "quick") linear, color map-get($animation-speeds, "quick") linear;
+
+        @include respond-to("small") {
+            padding: 5px 10px;
+        }
 
         &--circle {
             padding: 2px;
@@ -129,7 +193,13 @@
         }
 
         > span {
-            margin-left: 5px;
+            display: none;
+
+            @include respond-to("large") {
+                display: block;
+
+                margin-left: 5px;
+            }
         }
 
         &:hover,
@@ -148,9 +218,9 @@
         border-radius: 13px;
     }
 
-    //
-    // submenues
-    //
+    /*
+     * 3.1 submenus ====================================================================================================
+     */
     &__submenu {
         $arrowSize: 6px;
 
@@ -178,7 +248,8 @@
             backface-visibility: visible !important;
             opacity: 1;
 
-            animation-duration: 150ms;
+            // this must be synched with ANIMATION_DURATION in client/components/app/header/submenu.js
+            animation-duration: map-get($animation-speeds, "quick");
             animation-fill-mode: both;
         }
 
@@ -201,7 +272,7 @@
             border-width: 0 #{$arrowSize} #{$arrowSize};
             border-style: solid;
 
-            border-color: transparent transparent palette("brand", "viking") transparent;
+            border-color: transparent transparent palette("grey", "abbey") transparent;
 
             content: " ";
         }
@@ -218,7 +289,10 @@
             left: 0;
 
             &::before {
-                left: 14px;
+                left: 10px;
+                @include respond-to("small") {
+                    left: 14px;
+                }
             }
         }
 
@@ -261,7 +335,7 @@
 
         text-decoration: none;
 
-        transition: background-color 150ms linear;
+        transition: background-color map-get($animation-speeds, "quick") linear;
 
         > svg {
             display: inline-block;
@@ -287,7 +361,7 @@
 }
 
 /*
- * Animation for opening dropdowns (hardware accelerated)
+ * Animation for opening dropdowns =====================================================================================
  */
 @keyframes openSubmenu {
     from {
@@ -302,7 +376,7 @@
 }
 
 /*
- * Animation for closing dropdowns (hardware accelerated)
+ * Animation for closing dropdowns =====================================================================================
  */
 @keyframes closeSubmenu {
     from {

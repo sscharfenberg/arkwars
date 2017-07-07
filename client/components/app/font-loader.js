@@ -15,7 +15,7 @@ let switchToLoaded = () => {
 
 export default () => {
     // Optimization for Repeat Views
-    if( sessionStorage && sessionStorage.foutFontsLoaded ) {
+    if (sessionStorage && sessionStorage.foutFontsLoaded) {
         switchToLoaded();
         return;
     }

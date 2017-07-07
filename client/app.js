@@ -1,16 +1,14 @@
 //import moment from "moment";
 //import "moment/locale/de"; // import the locale even though webpack ignores moment/locale
-import fontLoader from "./components/font-loader";
-import dropdown from "./components/dropdown";
-
-
+import fontLoader from "./components/app/font-loader";
+import { initializeSubmenus } from "./components/app/header";
 
 //moment.locale("de");
 //console.log(moment().format("dddd, DD.MM.YYYY HH:mm:ss"));
 //let componentsToMount = document.querySelectorAll(".aw-component");
 //console.log( componentsToMount );
 
-
 fontLoader();
 
-dropdown();
+// component checks if it needs to be initialized and returns if not.
+initializeSubmenus();
