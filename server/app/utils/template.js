@@ -22,10 +22,31 @@ exports.dump = obj => JSON.stringify(obj, null, 2);
 //exports.staticMap = ([lng, lat]) => `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=800x150&key=${process.env.MAP_KEY}&markers=${lat},${lng}&scale=2`;
 
 // inserting a SVG image
-exports.image = path => fs.readFileSync(`./server/public/assets/images/${path}`);
+exports.image = path =>
+    fs.readFileSync(`./server/public/assets/images/${path}`);
 
-// inserting a SVG icon
-exports.icon = name => fs.readFileSync(`./server/public/assets/icons/${name}.svg`);
+/*
+ * inserting a SVG icon with <use>
+ * @usage:
+ * != h.icon("games", ["small"])
+ */
+exports.icon = (name, modifiers) => {
+    modifiers = modifiers || [];
+    modifiers = modifiers.map(modifier => {
+        return "aw-icon--" + modifier;
+    });
+    return `<svg class="aw-icon ${modifiers.join(
+        " "
+    )}"><use xlink:href="#${name}"></use></svg>`;
+};
+
+exports.spritesheet = () =>
+    fs
+        .readFileSync(`./server/public/assets/icons/sprite.svg`, {
+            encoding: "utf-8"
+        })
+        .replace("<svg", '<svg class="aw-icon-sprite"')
+        .replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
 
 // Some details about the site
 exports.appName = cfg.app.title;

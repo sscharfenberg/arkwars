@@ -6,6 +6,7 @@ html(lang="de")
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel='stylesheet', href='/public/assets/styles.css')
 body
+    != h.spritesheet()
     header.aw-header
         .aw-header__menu
             button.aw-header__menu-btn(aria-label="Main Menu")
@@ -57,13 +58,25 @@ body
                 a.aw-header__link(href="/auth/logout/")
                     != h.icon("power")
                     span Logout
-    .aw-main-wrapper
-        .aw-drawer.aw-drawer--open Drawer
-        .aw-content
+    #main.aw-main-wrapper
+        .aw-drawer Drawer
+        #content.aw-content
             h1= h.appName
             block content
                 p This is the default!
-
+            footer.aw-footer
+                address.aw-footer__meta
+                    | handcrafted with
+                    span ❤
+                    | by Sven Scharfenberg
+                ul.aw-footer__list
+                    li.aw-footer__list-item
+                        a.aw-footer__link(href="/privacy-policy/") Privacy Policy
+                    li.aw-footer__list-item
+                        a.aw-footer__link(href="/imprint/") Imprint
+                    li.aw-footer__list-item
+                        a#footerJumpTop.aw-footer__link.aw-footer__link--icon(href="#main")
+                            != h.icon("arrow_up")
     block scripts
         include webpack.includes/app.footer.pug
 

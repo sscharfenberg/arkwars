@@ -9,11 +9,21 @@
 
 .aw-drawer {
     display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
     opacity: 0;
 
-    flex: 0 0 24rem;
+    width: 24rem;
 
     background: palette("brand", "christine");
+
+
+    @include respond-to("medium") {
+        position: relative;
+        flex: 0 0 24rem;
+    }
 
     &--open {
         display: block;
@@ -27,8 +37,8 @@
         backface-visibility: visible !important;
         opacity: 1;
 
-        // this must be synched with ANIMATION_DURATION in client/components/app/drawer.js
-        animation-duration: map-get($animation-speeds, "quick");
+        // this must be synched with ANIMATION_DURATION in components/app/drawer.js
+        animation-duration: map-get($animation-speeds, "fast");
         animation-fill-mode: both;
     }
 
@@ -42,3 +52,30 @@
 
 }
 
+/*
+ * Animation for opening dropdowns =====================================================================================
+ */
+@keyframes openDrawer {
+    from {
+        visibility: visible;
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/*
+ * Animation for closing dropdowns =====================================================================================
+ */
+@keyframes closeDrawer {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        visibility: hidden;
+        transform: translate3d(-100%, 0, 0);
+    }
+}

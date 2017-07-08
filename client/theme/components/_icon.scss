@@ -15,3 +15,8 @@
 
     fill: currentColor;
 }
+
+// hidden sprite sheet. we inline the svg containing the <symbol>s, and reference them via <use>
+.aw-icon-sprite {
+    display: none;
+}

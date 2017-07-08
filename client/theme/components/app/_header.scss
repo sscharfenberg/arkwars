@@ -9,16 +9,19 @@
 
 .aw-header {
     display: flex;
-    position: sticky;
+    position: fixed;
     top: 0;
+    z-index: z("header");
 
     box-sizing: border-box;
     width: 100%;
+    height: 4rem;
     padding: 5px 10px;
 
     background: palette("grey", "bunker");
 
     @include respond-to("small") {
+        height: 5.4rem;
         padding: 10px 15px;
     }
 
@@ -59,7 +62,11 @@
             background: transparent;
             border-radius: 3px;
 
-            transition: border-color map-get($animation-speeds, "quick") linear, background-color map-get($animation-speeds, "quick") linear;
+            transition:
+                border-color map-get($animation-speeds, "fast") linear,
+                background-color map-get($animation-speeds, "fast") linear,
+                transform map-get($animation-speeds, "fast") linear,
+                opacity map-get($animation-speeds, "fast") linear;
 
             @include respond-to("small") {
                 height: 3px;
@@ -70,10 +77,41 @@
             }
         }
 
-        &:hover > span,
-        &:focus > span {
+        &:hover > span {
             background-color: palette("grey", "abbey");
             border-color: palette("brand", "viking");
+        }
+
+        &--open {
+            &:hover > span {
+                background-color: palette("brand", "gorse");
+            }
+            > span {
+                background-color: palette("brand", "viking");
+                border-color: palette("brand", "viking");
+
+                &:nth-child(1) {
+                    transform: translateY(8px) rotate(45deg);
+                }
+
+                &:nth-child(2) {
+                    opacity: 0;
+                }
+
+                &:nth-child(3) {
+                    transform: translateY(-8px) rotate(-45deg);
+                }
+            }
+
+            @include respond-to("small") {
+                > span:nth-child(1) {
+                    transform: translateY(9px) rotate(45deg);
+                }
+
+                > span:nth-child(3) {
+                    transform: translateY(-9px) rotate(-45deg);
+                }
+            }
         }
 
     }
@@ -129,7 +167,7 @@
             font-size: 2.4rem;
             font-weight: 300;
 
-            transition: text-shadow map-get($animation-speeds, "quick") linear;
+            transition: text-shadow map-get($animation-speeds, "fast") linear;
 
             @include respond-to("medium") {
                 display: block;
@@ -182,7 +220,7 @@
         color: palette("text", "light");
 
         text-decoration: none;
-        transition: background-color map-get($animation-speeds, "quick") linear, color map-get($animation-speeds, "quick") linear;
+        transition: background-color map-get($animation-speeds, "fast") linear, color map-get($animation-speeds, "fast") linear;
 
         @include respond-to("small") {
             padding: 5px 10px;
@@ -251,7 +289,7 @@
             opacity: 1;
 
             // this must be synched with ANIMATION_DURATION in client/components/app/header.js
-            animation-duration: map-get($animation-speeds, "quick");
+            animation-duration: map-get($animation-speeds, "fast");
             animation-fill-mode: both;
         }
 
@@ -337,7 +375,7 @@
 
         text-decoration: none;
 
-        transition: background-color map-get($animation-speeds, "quick") linear;
+        transition: background-color map-get($animation-speeds, "fast") linear;
 
         > svg {
             display: inline-block;

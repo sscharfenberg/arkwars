@@ -7,5 +7,5 @@
  **********************************************************************************************************************/
 require( "./internals/scripts/gulp/styles");
 require( "./internals/scripts/gulp/sync");
-require( "./internals/scripts/gulp/buildAssets-prod");
+require( "./internals/scripts/gulp/icons");
 require( "./internals/scripts/gulp/watchAssets-dev");

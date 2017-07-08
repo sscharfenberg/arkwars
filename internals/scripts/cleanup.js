@@ -35,4 +35,4 @@ const cleanup = () => {
     logger.debug("[todo] add database cleanup");
 };
 
-module.exports = cleanup;
+module.exports = cleanup();

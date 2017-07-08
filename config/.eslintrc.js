@@ -18,7 +18,7 @@ module.exports = {
         quotes: [2, "double"],
         "linebreak-style": [1, "windows"],
         semi: [2, "always"],
-        "comma-style": [2, "first"],
+        "comma-style": [2, "last"],
         "no-undef": 2,
         "no-console": ["error", { allow: ["log", "warn", "error"] }],
         "comma-spacing": [2, { before: false, after: true }],

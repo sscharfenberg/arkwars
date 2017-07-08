@@ -10,17 +10,15 @@ const livereload = require("gulp-livereload"); // https://www.npmjs.com/package/
 const config = require("../../config");
 const reportChange = require("../utils/reportChange");
 const logger = require("../utils/clientlogger");
-const cleanup = require("../cleanup.js");
+
 
 /*
  * copy all static resources to /public/assets
  */
 gulp.task("watch", function() {
 
-    cleanup();
-
     // copy assets to server dir
-    run(["sync:all", "styles:build"]);
+    run(["build:static", "styles:build"]);
 
     // gulp.watch
     gulp

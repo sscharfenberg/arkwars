@@ -41,8 +41,8 @@ $palettes: (
  * animation speeds for transition-duration and animation-duration
  */
 $animation-speeds: (
-    "quick": 150ms
-    , "fast": 250ms
+    "fast": 150ms
+    , "quick": 250ms
     , "medium": 450ms
     , "portly": 650ms
     , "slow": 1000ms
@@ -70,6 +70,7 @@ $breakpoints: (
 $z-layers: (
     "bottomless": -9999
     , "default": 0
+    , "header": 5
     , "dropdown": 200
     , "overlay": 1000
     , "modal": 2000

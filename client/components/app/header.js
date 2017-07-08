@@ -47,7 +47,7 @@ const getSubmenuByLink = link => {
 /*
  * @function initialize dropdowns
  */
-const initializeSubmenus = () => {
+const initSubmenus = () => {
     const submenus = document.querySelectorAll(SELECTOR_SUBMENU);
     const triggers = document.querySelectorAll(SELECTOR_SUBMENU_TRIGGER);
 
@@ -79,6 +79,7 @@ const initializeSubmenus = () => {
             }
         };
     }
+
 };
 
-export { initializeSubmenus };
+export { initSubmenus };

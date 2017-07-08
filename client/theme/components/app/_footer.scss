@@ -1,0 +1,85 @@
+/***********************************************************************************************************************
+ *
+ * Header Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+.aw-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+    padding: 0.5rem 1rem;
+    margin-top: 4rem;
+
+    background: palette("grey", "bunker");
+    color: palette("grey", "charcoal");
+
+    @include respond-to("medium") {
+        flex-direction: row;
+    }
+
+    &__meta {
+        order: 1;
+        font-style: normal;
+
+        > span {
+            display: inline-block;
+            margin: 0 0.5rem;
+
+            color: palette("brand", "christine");
+        }
+
+        @include respond-to("medium") {
+            order: 0;
+        }
+    }
+
+    &__list {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        padding: 0;
+        margin: 0.5rem 0 1rem;
+
+        list-style: none;
+
+        @include respond-to("medium") {
+            justify-content: flex-end;
+            margin: 0;
+        }
+    }
+
+    &__list-item {
+        margin: 0 0 0 1rem;
+    }
+
+    &__link {
+        display: block;
+
+        padding: 5px 10px;
+        color: palette("grey", "charcoal");
+
+        text-decoration: none;
+
+        transition: background-color map-get($animation-speeds, "fast") linear;
+
+        &--icon {
+            padding: 0 10px;
+
+            > svg {
+                margin-bottom: -0.5rem; // yeah ...
+            }
+        }
+
+        &:hover {
+            background-color: palette("grey", "raven");
+        }
+    }
+
+}

@@ -16,13 +16,16 @@ html {
 
 
 body {
+    overflow-y: hidden;
+    height: 100%;
+
     background: palette("grey", "ebony") image("bg-circuit-board.svg");
     color: palette("text", "light");
 
     font-family: map-get($fonts, "system");
     font-size: 1.6rem;
-
-    @extend %scrollbar;
+    line-height: 1.4;
+    font-weight: 300;
 
     &.fonts-loaded {
         font-family: map-get($fonts, "text");
@@ -32,9 +35,20 @@ body {
 
 .aw-main-wrapper {
     display: flex;
-}
+    position: relative;
+    height: calc(100vh - 4rem);
+    padding-top: 4rem;
 
+    @include respond-to("small") {
+        height: calc(100vh - 5.4rem);
+        padding-top: 5.4rem;
+    }
+}
 
 .aw-content {
-    //transform: translateX(-24rem);
+    overflow-y: scroll;
+    height: 100%;
+    flex-grow: 1;
+    @extend %scrollbar;
 }
+

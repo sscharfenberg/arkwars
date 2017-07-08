@@ -5,8 +5,8 @@
  **********************************************************************************************************************/
 
 const config = {
-    DEBUG: true
+    DEBUG: true,
+    LOCALSTORAGE_KEY: "aw-app"
 };
 
 export default config;
-
