@@ -21,8 +21,8 @@
         "start": "node server/nodemon.js",
         "build.static": "gulp build:static",
         "watch": "gulp watch",
-        "js.dev": "node internals/scripts/js.dev.js",
         "js.prod": "node internals/scripts/js.prod.js",
+        "js.dev": "node internals/scripts/js.dev.js",
         "styles.build": "gulp styles:build",
         "styles.lint": "gulp styles:lint",
         "sync.fonts": "gulp sync:fonts",
@@ -33,6 +33,7 @@
         "test.client.watch": "node internals/scripts/test.js --env=jsdom --watch"
     },
     "dependencies": {
+        "axios": "^0.16.2",
         "body-parser": "^1.17.2",
         "compression": "^1.6.2",
         "connect-flash": "^0.1.1",

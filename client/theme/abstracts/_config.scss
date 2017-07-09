@@ -19,7 +19,7 @@ $palettes: (
         "base": #757c84
         , "white": #fff
         , "mystic": #eaf0f2
-        , "iron": #cdd0d0
+        , "iron": #afb2b2
         , "fog": #b7b7af
         , "charcoal": #757c84
         , "asher": #555f61
@@ -33,7 +33,16 @@ $palettes: (
         "base": #cdd0d0
         , "lighter": #eaf0f2
         , "light": #cdd0d0
+        , "tint": #939393
+        , "subdued": #737676
         , "dark": #182226
+    )
+    , "progress": (
+        "1": #86e01e
+        , "2": #cbd81c
+        , "3": #f2b01e
+        , "4": #f27011
+        , "5": #f63a0f
     )
 );
 
@@ -64,7 +73,8 @@ $breakpoints: (
     "small": 480px
     , "medium": 768px
     , "large": 1024px
-    , "xlarge": 1224px
+    , "xlarge": 1240px
+    , "max": 1440px
 );
 
 $z-layers: (

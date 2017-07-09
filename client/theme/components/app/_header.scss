@@ -83,10 +83,13 @@
         }
 
         &--open {
+
             &:hover > span {
+                opacity: 1;
                 background-color: palette("brand", "gorse");
             }
             > span {
+                opacity: 0.4;
                 background-color: palette("brand", "viking");
                 border-color: palette("brand", "viking");
 
@@ -233,11 +236,17 @@
         }
 
         > span {
-            display: none;
+            &:not(.keep) {
+                display: none;
 
-            @include respond-to("large") {
-                display: block;
+                @include respond-to("large") {
+                    display: block;
 
+                    margin-left: 5px;
+                }
+            }
+
+            &.keep {
                 margin-left: 5px;
             }
         }
@@ -371,7 +380,7 @@
         padding: 5px 10px;
 
         background-color: palette("grey", "raven");
-        color: palette("grey", "iron");
+        color: palette("text", "light");
 
         text-decoration: none;
 
@@ -389,9 +398,15 @@
             border-radius: 2px;
         }
 
-        &:hover {
+        &:hover:not(&--active) {
             background-color: palette("grey", "bunker");
+            > svg {
+                filter: none;
+            }
+        }
 
+        &--active {
+            background-color: palette("grey", "black");
             > svg {
                 filter: none;
             }

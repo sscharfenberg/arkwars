@@ -27,7 +27,7 @@ body
                     != h.icon("language")
                 ul.aw-header__submenu.aw-header__submenu--left.aw-header__submenu--medium(aria-hidden="true")
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(href="/language/en/")
+                        a.aw-header__submenu-item-link.aw-header__submenu-item-link--active(href="/language/en/")
                             != h.image("flags/en.svg")
                             | English
                     li.aw-header__submenu-item
@@ -37,11 +37,12 @@ body
             li.aw-header__action
                 a.aw-header__link.aw-header__submenu-trigger(href="", aria-label="Games")
                     != h.icon("games")
+                    span.keep g1
                 ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(href="/game/1/") G1 (Alpha)
+                        a.aw-header__submenu-item-link.aw-header__submenu-item-link--active(href="/game/1/", data-gameid="1") g1 (Alpha)
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(href="/game/2/") G2 (Beta)
+                        a.aw-header__submenu-item-link(href="/game/2/", data-gameid="2") g2 (Beta)
             li.aw-header__action
                 a.aw-header__link(href="/auth/login/")
                     != h.icon("key")
@@ -64,24 +65,62 @@ body
                     span Logout
 
     .aw-main-wrapper
-        section.aw-drawer
+        section.aw-drawer(aria-hidden="true")
+
             ul.aw-drawer__list
-                li.aw-drawer__list-item(data-game) Game 1
-                li.aw-drawer__list-item(data-time) Servertime
-                li.aw-drawer__list-item(data-tick) Tick
+
+                li.aw-drawer__list-item.aw-drawer__list-item--info
+                    .aw-drawer__info
+                        .aw-drawer__info-label server time
+                        .aw-drawer__info-value
+                            time(datetime="2017-07-09T14:09:43.616Z", data-server-time) 00:00
+                    .aw-drawer__info.aw-drawer__info--darker
+                        .aw-drawer__info-label local time
+                        .aw-drawer__info-value
+                            time(datetime="", data-my-time) 00:00
                 li.aw-drawer__list-item
-                    a.aw-drawer__link Empire
+                    .aw-drawer__turn
+                        .aw-drawer__turn-current
+                            .aw-drawer__turn-current-label Aktuelle Runde
+                            .aw-turn
+                                != h.icon("turn", ["turn"])
+                                .aw-turn__value 21
+                        .aw-drawer__turn-next
+                            .aw-drawer__turn-next-label Nächste Runde
+                            .aw-drawer__turn-next-progress
+                                .aw-progress.aw-progress-turn(data-max="15", data-value="14")
+                                    != h.progressbar(15,14)
+                            .aw-drawer__turn-next-time
+                                time(datetime="2017-07-09T14:10:43.616Z", data-time-next-turn) 00:00
+
                 li.aw-drawer__list-item
-                    a.aw-drawer__link Fleets
+                    a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire/")
+                        != h.icon("empire", ["small"])
+                        | Empire
                 li.aw-drawer__list-item
-                    a.aw-drawer__link Shipyards
+                    a.aw-drawer__link(href="/game/1/fleets/")
+                        != h.icon("fleet", ["small"])
+                        | Fleets
                 li.aw-drawer__list-item
-                    a.aw-drawer__link Research
+                    a.aw-drawer__link(href="/game/1/shipyards/")
+                        != h.icon("build", ["small"])
+                        | Shipyards
                 li.aw-drawer__list-item
-                    a.aw-drawer__link Universe
+                    a.aw-drawer__link(href="/game/1/research/")
+                        != h.icon("research", ["small"])
+                        | Research
+                li.aw-drawer__list-item
+                    a.aw-drawer__link(href="/game/1/starchart/")
+                        != h.icon("starchart", ["small"])
+                        | Starchart
+                li.aw-drawer__list-item
+                    a.aw-drawer__link(href="/game/1/galnet/")
+                        != h.icon("galnet", ["small"])
+                        | GalNet
+
                 li.aw-drawer__list-item.aw-drawer__list-item--spacer
                 li.aw-drawer__list-item
-                    a.aw-drawer__link Help
+                    a.aw-drawer__link(href="/help/") Help
 
         section#content.aw-content
 

@@ -1,0 +1,4 @@
+<svg viewBox="0 0 100 4" preserveAspectRatio="none" class="aw-progress__bar">
+    <path class="aw-progress__bar-background" d="M 0,2 L 100,2" stroke="#000" stroke-width="1" fill-opacity="0" />
+    <path class="aw-progress__bar-value __COLORCLASS__" d="M 0,2 L 100,2" stroke="#000" stroke-width="4" fill-opacity="0" style="stroke-dasharray: 100, 100; stroke-dashoffset: __DASHOFFSET__;" />
+</svg>

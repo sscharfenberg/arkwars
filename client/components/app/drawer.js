@@ -29,6 +29,7 @@ const openDrawer = (drawer, button) => {
     setTimeout(() => {
         drawer.classList.remove(CLASSNAME_OPENING);
         drawer.classList.add(CLASSNAME_OPEN);
+        drawer.setAttribute("aria-hidden", "false");
         settings.drawerOpen = true;
         saveSettings(cfg.LOCALSTORAGE_KEY, settings);
     }, ANIMATION_DURATION);
@@ -46,6 +47,7 @@ const closeDrawer = (drawer, button) => {
     cfg.DEBUG && console.log("closing drawer");
     setTimeout(() => {
         drawer.classList.remove(CLASSNAME_OPEN, CLASSNAME_CLOSING);
+        drawer.setAttribute("aria-hidden", "true");
         settings.drawerOpen = false;
         saveSettings(cfg.LOCALSTORAGE_KEY, settings);
     }, ANIMATION_DURATION);

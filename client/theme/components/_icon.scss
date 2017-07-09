@@ -10,10 +10,25 @@
 .aw-icon {
     display: inline-block;
 
-    width: 24px;
-    height: 24px;
+    width: 2.4rem;
+    height: 2.4rem;
 
     fill: currentColor;
+
+    &--small {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    &--tiny {
+        width: 1.6rem;
+        height: 1.6rem;
+    }
+
+    &--large {
+        width: 3.2rem;
+        height: 3.2rem;
+    }
 }
 
 // hidden sprite sheet. we inline the svg containing the <symbol>s, and reference them via <use>

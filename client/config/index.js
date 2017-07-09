@@ -6,7 +6,11 @@
 
 const config = {
     DEBUG: true,
-    LOCALSTORAGE_KEY: "aw-app"
+    LOCALSTORAGE_KEY: "aw-app",
+    LOCALES: {
+        SUPPORT: ["en", "de"],
+        DEFAULT: "en"
+    }
 };
 
 export default config;

@@ -4,9 +4,7 @@
  *
  * simple template helpers for use in .pug views
  *
- * @exports {function} dump
- * @exports {function} icon
- * @exports {string} siteName
+ * @exports {dump, image, icon, spritesheet, progressbar, appName}
  *
  **********************************************************************************************************************/
 const fs = require("fs"); // https://nodejs.org/api/fs.html
@@ -27,6 +25,8 @@ exports.image = path =>
 
 /*
  * inserting a SVG icon with <use>
+ * @param {string} name
+ * @param {array} modifiers - array of strings
  * @usage:
  * != h.icon("games", ["small"])
  */
@@ -40,13 +40,38 @@ exports.icon = (name, modifiers) => {
     )}"><use xlink:href="#${name}"></use></svg>`;
 };
 
+/*
+ * insert inline spritesheet into body.
+ * this means we don't use caching for this, but we avoid a lot of problems.
+ */
 exports.spritesheet = () =>
     fs
         .readFileSync(`./server/public/assets/icons/sprite.svg`, {
             encoding: "utf-8"
         })
         .replace("<svg", '<svg class="aw-icon-sprite"')
-        .replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
+        .replace('<?xml version="1.0" encoding="UTF-8"?>', "");
+
+/*
+ * progressbar helper function
+ */
+exports.progressbar = (max, value) => {
+    let pct;
+    let colorClass = "aw-progress__bar-value--";
+    let svg = fs.readFileSync("./server/public/assets/images/progressbar.svg", {
+        encoding: "utf-8"
+    });
+    if (value > max) value = max; // just to make sure.
+    pct = parseInt(100 - parseInt(value, 10) / parseInt(max, 10) * 100, 10);
+    if (pct > 0 && pct <= 20) colorClass += "1";
+    if (pct > 21 && pct <= 40) colorClass += "2";
+    if (pct > 41 && pct <= 60) colorClass += "3";
+    if (pct > 61 && pct <= 80) colorClass += "4";
+    if (pct > 81) colorClass += "5";
+    svg = svg.replace("__DASHOFFSET__", pct);
+    svg = svg.replace("__COLORCLASS__", colorClass);
+    return svg;
+};
 
 // Some details about the site
 exports.appName = cfg.app.title;

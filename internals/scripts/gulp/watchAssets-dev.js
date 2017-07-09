@@ -31,7 +31,7 @@ gulp.task("watch", function() {
         .watch(config.paths.images.in, ["sync:images"])
         .on("change", reportChange);
     gulp
-        .watch(config.paths.icons.in, ["sync:icons"])
+        .watch(config.paths.icons.in, ["icons"])
         .on("change", reportChange);
 
     // do initial webpack compilation and start webpack-dev-server

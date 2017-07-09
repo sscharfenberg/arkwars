@@ -1,0 +1,36 @@
+/***********************************************************************************************************************
+ *
+ * Progress Component
+ * renders a progress bar
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+.aw-progress {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    //background: palette("grey", "white");
+
+    &__bar {
+        width: 100%;
+    }
+
+    &__bar-background {
+        stroke: palette("grey", "asher");
+    }
+
+    &__bar-value {
+        stroke: palette("grey", "asher");
+
+        &--1 { stroke: palette("progress", "1"); }
+        &--2 { stroke: palette("progress", "2"); }
+        &--3 { stroke: palette("progress", "3"); }
+        &--4 { stroke: palette("progress", "4"); }
+        &--5 { stroke: palette("progress", "5"); }
+    }
+}

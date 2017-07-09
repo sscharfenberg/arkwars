@@ -56,6 +56,9 @@
         animation-name: closeDrawer;
     }
 
+    /*
+     * 0. drawer list. this is our main wrapper ========================================================================
+     */
     &__list {
         display: flex;
         flex-direction: column;
@@ -66,19 +69,123 @@
 
         list-style: none;
     }
-
     &__list-item {
         border-top: 2px solid palette("grey", "ebony");
 
         &--spacer {
             flex-grow: 1;
         }
+
+        &--info {
+            padding: 1rem;
+
+            @include respond-to("small") {
+                padding: 1.5rem;
+            }
+        }
+    }
+
+    /*
+     * 1. info section in the drawer - server time, your time ==========================================================
+     */
+    &__info {
+        display: flex;
+        justify-content: space-between;
+
+        color: palette("text", "tint");
+
+        &--darker {
+            color: palette("text", "subdued");
+        }
+    }
+
+    /*
+     * 2. turn section: current turn, progress until next turn. ========================================================
+     */
+    &__turn {
+        padding: 1rem;
+
+        @include respond-to("small") {
+            padding: 1.5rem;
+        }
+    }
+    &__turn-current {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &__turn-next {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        margin-top: 0.5rem;
+    }
+    &__turn-next-label {
+        flex: 0 0 100%;
+    }
+    &__turn-next-progress {
+        display: flex;
+        align-items: center;
+        flex: 0 0 calc(100% - 7.5rem);
+    }
+
+    /*
+     * 3. links to game areas. =========================================================================================
+     */
+    &__link {
+        display: flex;
+        align-items: center;
+
+        padding: 0.5rem 1rem;
+        border-top: 0.5rem solid transparent;
+        border-bottom: 0.5rem solid transparent;
+
+        background-color: palette("grey", "bunker");
+        color: palette("text", "light");
+        text-decoration: none;
+
+        transition:
+            background-color map-get($animation-speeds, "fast") linear,
+            color map-get($animation-speeds, "fast") linear;
+
+        &:hover,
+        &--active {
+            background: palette("grey", "ebony");
+            color: palette("brand", "viking");
+
+            > .aw-icon {
+                color: palette("brand", "christine");
+            }
+        }
+
+        > .aw-icon {
+            margin-right: 0.5rem;
+
+            transition: color map-get($animation-speeds, "fast") linear;
+        }
+
+        @include respond-to("small") {
+            padding: 1.5rem;
+
+            > .aw-icon {
+                width: 2.4rem;
+                height: 2.4rem;
+                margin-right: 1rem;
+            }
+        }
+
+        &--active {
+            border-top-color: palette("brand", "gorse");
+            border-bottom-color: palette("brand", "gorse");
+        }
     }
 
 }
 
 /*
- * Animation for opening dropdowns =====================================================================================
+ * Animation for opening drawer ========================================================================================
  */
 @keyframes openDrawer {
     from {
@@ -92,7 +199,7 @@
 }
 
 /*
- * Animation for closing dropdowns =====================================================================================
+ * Animation for closing drawer ========================================================================================
  */
 @keyframes closeDrawer {
     from {
