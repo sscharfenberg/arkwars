@@ -24,7 +24,7 @@ exports.pulse = async (req, res) => {
         , game
         , turn: {
             duration: 15
-            , currentNumber: 21
+            , currentNumber: 22
             , nextTime: now.add(10, "minutes").toISOString()
         }
     });

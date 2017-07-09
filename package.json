@@ -1,7 +1,7 @@
 {
     "name": "arkwars",
     "description": "Frontend and Backend for Arkwars - a strategic turn-based game of galactic conquest. NodeJS/MongoDB Backend, React Frontend.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "url": "https://arkwars.io",
     "author": {
         "name": "Sven Scharfenberg",
