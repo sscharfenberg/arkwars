@@ -177,6 +177,7 @@
             "text-emphasis-style",
             "text-emphasis-position",
             "text-decoration",
+            "text-decoration-skip",
             "text-indent",
             "text-justify",
             "text-outline",
@@ -196,7 +197,6 @@
             "white-space",
             "tab-size",
             "text-overflow",
-            "text-decoration",
             "vertical-align",
             "direction",
 

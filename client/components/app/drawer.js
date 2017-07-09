@@ -24,11 +24,11 @@ const ANIMATION_DURATION = 150;
 const openDrawer = (drawer, button) => {
     let settings = loadSettings(cfg.LOCALSTORAGE_KEY);
     drawer.classList.add(CLASSNAME_OPENING);
+    button.classList.add(CLASSNAME_BTN_OPEN);
     cfg.DEBUG && console.log("opening drawer");
     setTimeout(() => {
         drawer.classList.remove(CLASSNAME_OPENING);
         drawer.classList.add(CLASSNAME_OPEN);
-        button.classList.add(CLASSNAME_BTN_OPEN);
         settings.drawerOpen = true;
         saveSettings(cfg.LOCALSTORAGE_KEY, settings);
     }, ANIMATION_DURATION);

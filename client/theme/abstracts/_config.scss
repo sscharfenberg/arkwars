@@ -71,13 +71,18 @@ $z-layers: (
     "bottomless": -9999
     , "default": 0
     , "header": 5
+    , "drawer": 6
     , "dropdown": 200
     , "overlay": 1000
     , "modal": 2000
 );
 
 $shadows: (
-    "light1dp": #{0 0 15px map-get(map-get($palettes, "brand"), "christine")}
+    "shine1dp": #{0 0 15px map-get(map-get($palettes, "brand"), "christine")}
+    , "light1dp": #{1px 1.5px 0 rgba(#fff, 0.12), 0 1px 1px 0 rgba(#fff, 0.24)}
+    , "light2dp": #{0 2px 2px 0 rgba(#fff, 0.14), 0 3px 1px -2px rgba(#fff, 0.2), 0 1px 5px 0 rgba(#fff, 0.12)}
+    , "light4dp": #{0 4px 5px 0 rgba(#fff, 0.14), 0 1px 10px 0 rgba(#fff, 0.12), 0 2px 4px -1px rgba(#fff, 0.2)}
+    , "light1dpsimple": #{0 2px 15px 0 rgba(#fff, 0.26)}
 );
 
 

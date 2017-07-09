@@ -7,16 +7,20 @@ html(lang="de")
         link(rel='stylesheet', href='/public/assets/styles.css')
 body
     != h.spritesheet()
+
     header.aw-header
+
         .aw-header__menu
             button.aw-header__menu-btn(aria-label="Main Menu")
                 span
                 span
                 span
+
         .aw-header__title
             a.aw-header__title-link(href="/")
                 != h.image("logo.svg")
                 span= h.appName
+
         ul.aw-header__actions
             li.aw-header__action
                 a.aw-header__link.aw-header__submenu-trigger(href="", aria-label="Change Language")
@@ -58,12 +62,34 @@ body
                 a.aw-header__link(href="/auth/logout/")
                     != h.icon("power")
                     span Logout
-    #main.aw-main-wrapper
-        .aw-drawer Drawer
-        #content.aw-content
-            h1= h.appName
-            block content
-                p This is the default!
+
+    .aw-main-wrapper
+        section.aw-drawer
+            ul.aw-drawer__list
+                li.aw-drawer__list-item(data-game) Game 1
+                li.aw-drawer__list-item(data-time) Servertime
+                li.aw-drawer__list-item(data-tick) Tick
+                li.aw-drawer__list-item
+                    a.aw-drawer__link Empire
+                li.aw-drawer__list-item
+                    a.aw-drawer__link Fleets
+                li.aw-drawer__list-item
+                    a.aw-drawer__link Shipyards
+                li.aw-drawer__list-item
+                    a.aw-drawer__link Research
+                li.aw-drawer__list-item
+                    a.aw-drawer__link Universe
+                li.aw-drawer__list-item.aw-drawer__list-item--spacer
+                li.aw-drawer__list-item
+                    a.aw-drawer__link Help
+
+        section#content.aw-content
+
+            main.aw-content__inner
+                h1= h.appName
+                block content
+                    p This is the default!
+
             footer.aw-footer
                 address.aw-footer__meta
                     | handcrafted with
@@ -77,6 +103,6 @@ body
                     li.aw-footer__list-item
                         a#footerJumpTop.aw-footer__link.aw-footer__link--icon(href="#main")
                             != h.icon("arrow_up")
+
     block scripts
         include webpack.includes/app.footer.pug
-

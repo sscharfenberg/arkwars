@@ -56,7 +56,7 @@
             display: block;
             width: 100%;
             height: 2px;
-            border: 1px solid palette("text", "light");
+            border: 1px solid palette("grey", "charcoal");
             margin-bottom: 4px;
 
             background: transparent;
@@ -165,7 +165,7 @@
             color: palette("brand", "viking");
 
             font-size: 2.4rem;
-            font-weight: 300;
+            font-weight: 400;
 
             transition: text-shadow map-get($animation-speeds, "fast") linear;
 
@@ -174,7 +174,7 @@
             }
 
             &:hover {
-                text-shadow: map-get($shadows, "light1dp");
+                text-shadow: map-get($shadows, "shine1dp");
             }
         }
     }
