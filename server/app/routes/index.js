@@ -15,8 +15,8 @@ const { catchErrors } = require("../handlers/error");
 
 router.get("/", indexController.homePage);
 
-router.get("/api/pulse/:game",
-    catchErrors(apiController.pulse)
+router.get("/api/game/:game/status/",
+    catchErrors(apiController.gameStatus)
     // TODO: check if user is allowed
 );
 

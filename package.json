@@ -30,7 +30,9 @@
         "icons": "gulp icons",
         "cleanup": "node internals/scripts/cleanup.js",
         "test.client": "node internals/scripts/test.js --env=jsdom --coverage",
-        "test.client.watch": "node internals/scripts/test.js --env=jsdom --watch"
+        "test.client.watch": "node internals/scripts/test.js --env=jsdom --watch",
+        "db.prune": "node internals/scripts/seed.js --prune",
+        "db.seed.mockdata": "node internals/scripts/seed.js --seed"
     },
     "dependencies": {
         "axios": "^0.16.2",
@@ -43,6 +45,7 @@
         "express": "^4.15.3",
         "express-session": "^1.15.3",
         "fs-extra": "^3.0.1",
+        "helmet": "^3.6.1",
         "moment": "^2.18.1",
         "mongoose": "^4.11.1",
         "morgan": "^1.8.2",

@@ -73,7 +73,7 @@ body
                     .aw-drawer__info
                         .aw-drawer__info-label server time
                         .aw-drawer__info-value
-                            time(datetime="2017-07-09T14:09:43.616Z", data-server-time) 00:00
+                            time(datetime="2017-07-10T19:41:05.133Z", data-server-time) 00:00
                     .aw-drawer__info.aw-drawer__info--darker
                         .aw-drawer__info-label local time
                         .aw-drawer__info-value
@@ -91,7 +91,7 @@ body
                                 .aw-progress.aw-progress-turn(data-max="15", data-value="14")
                                     != h.progressbar(15,14)
                             .aw-drawer__turn-next-time
-                                time(datetime="2017-07-09T14:10:43.616Z", data-time-next-turn) 00:00
+                                time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
 
                 li.aw-drawer__list-item
                     a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire/")
@@ -128,6 +128,9 @@ body
                 h1= h.appName
                 block content
                     p This is the default!
+
+                h3 Session Data
+                pre= h.dump(session)
 
             footer.aw-footer
                 address.aw-footer__meta

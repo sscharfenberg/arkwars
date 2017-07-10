@@ -13,6 +13,7 @@ const path = require("path"); // https://nodejs.org/api/path.html
 const express = require("express"); // http://expressjs.com/
 const compression = require("compression"); // https://github.com/expressjs/compression
 const session = require("express-session"); // https://www.npmjs.com/package/express-session
+const helmet = require("helmet"); // https://helmetjs.github.io/docs/
 const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
 const MongoStore = require("connect-mongo")(session); // https://www.npmjs.com/package/connect-mongo
 const cookieParser = require("cookie-parser"); // https://www.npmjs.com/package/cookie-parser
@@ -27,8 +28,8 @@ const templateHelpers = require("./app/utils/template"); // Template helpers
 // create our Express app
 const app = express();
 
-// disable x-powered-by header
-app.disable("x-powered-by");
+// set specific headers.
+app.use(helmet());
 
 // view engine setup
 // https://pugjs.org/
@@ -78,6 +79,7 @@ app.use((req, res, next) => {
     res.locals.flashes = req.flash();
     res.locals.user = req.user || null;
     res.locals.currentPath = req.path;
+    res.locals.session = req.session;
     next();
 });
 

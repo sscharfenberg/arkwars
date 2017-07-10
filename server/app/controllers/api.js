@@ -5,27 +5,40 @@
  * @exports {ExpressController} pulse
  *
  **********************************************************************************************************************/
-const moment = require("moment");
+const moment = require("moment"); // https://momentjs.com/
+const mongoose = require("mongoose"); // http://mongoosejs.com/
+const Game = mongoose.model("Game");
+const logger = require("../handlers/logger/console");
 
 /*
  * `pulse` - server returns generic game-data
  * @returns:
- * {string} serverTime
- * {int} game number
- * {int} current turn
- * {string} time of next turn
+ * {int} number - game number
+ * {String.ISO8601} serverTime
+ * {int} turn - current game turn
+ * {int} turnDuration - in minutes
+ * {String.ISO8601} nextProcess - time when the next turn is processed.
  */
-exports.pulse = async (req, res) => {
-    let game = req.params.game || 0;
-    let now = moment();
+exports.gameStatus = async (req, res, next) => {
+    const gameNumber = req.params.game || 0;
+    const now = moment();
+    const game = await Game.findOne({ number: gameNumber });
 
-    res.json({
-        serverTime: now.toISOString()
-        , game
-        , turn: {
-            duration: 15
-            , currentNumber: 22
-            , nextTime: now.add(10, "minutes").toISOString()
-        }
-    });
+    if (game) {
+        res.json({
+            number: game.number
+            , active: game.active
+            , processing: game.processing
+            , serverTime: now.toISOString()
+            , turn: game.turn
+            , turnDuration: game.turnDuration
+            , turnDue: game.turnDue
+        });
+    } else {
+        const err = new Error("Game not found.");
+        err.status = 500;
+        logger.error(`[Node] 500 Game not found: "${req.path}"`);
+        next(err);
+    }
+
 };

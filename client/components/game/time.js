@@ -20,6 +20,11 @@ const SELECTOR_TURN = ".aw-turn__value";
 const DATA_MAX = "data-max";
 const DATA_VALUE = "data-value";
 const DATA_GAMEID = "data-gameid";
+// cycle duration in seconds. too big, and the data can be vary too much from the real server data
+// too small, and we overload the client by too many dom manipulations, and we start to get out of synch
+// because of all the calculations
+const CYCLE_DURATION = 10;
+const DELAY_NO_NEW_TURN = 60 * 2;
 
 /*
  * get current game from DOM
@@ -146,9 +151,6 @@ const updateProgress = (max, value) => {
 
     if (value === max) {
         _nextTurn.textContent = "Jetzt"; // TODO: i18n
-        // TODO
-        // problem: asking the server when we do the last update is imprecise. maybe the server isn't ready yet.
-        // TODO FIND A WAY TO DO THIS PULSE WHEN THE SERVER IS DONE WITH THE TURN
         doServerPulse();
     }
 };
@@ -184,16 +186,21 @@ const doServerPulse = () => {
 
     cfg.DEBUG && console.log(`requesting pulse from server for g${gameNumber}`);
     axios
-        .get(`/api/pulse/${gameNumber}`)
+        .get(`/api/game/${gameNumber}/status/`)
         .then(response => {
             let turn = getCurrentTurn();
-            let delay = 60 * 2;
-            if ( response.status === 200 ) {
+            if (response.status === 200) {
                 let data = response.data;
                 cfg.DEBUG && console.log("recieved pulse:", data);
-                if (turn === data.turn.currentNumber) {
-                    cfg.DEBUG && console.warn("same turn. do pulse again.");
-                    setTimeout( () => doServerPulse(), 1000 * delay);
+
+                if (turn === data.turn || data.processing) {
+                    cfg.DEBUG &&
+                        console.warn(
+                            `no new turn data. trying again in ${DELAY_NO_NEW_TURN}s.`
+                        );
+                    // TODO: VISUALIZE THIS SPECIFICALLY
+                    data.serverTime && updateServerTime(data.serverTime);
+                    setTimeout(() => doServerPulse(), 1000 * DELAY_NO_NEW_TURN);
                 } else {
                     applyServerPulse(data);
                 }
@@ -208,18 +215,27 @@ const doServerPulse = () => {
  * apply server data in DOM
  * @params {object} pulse
  */
-const applyServerPulse = pulse => {
-    let max = pulse.turn.duration;
-    let now = moment();
-    let nextTurn = moment(pulse.turn.nextTime);
-    let value = Math.round(nextTurn.diff(now, "minutes", true));
-    let turn = getCurrentTurn();
-    console.log(`minutes to turn processing ${value}/${max}`);
+const applyServerPulse = game => {
+    const max = game.turnDuration;
+    const now = moment();
+    const turn = getCurrentTurn();
+    const nextTurn = moment(game.turnDue);
+    const serverTime = moment(game.serverTime) || now;
+    let value = Math.round(nextTurn.diff(serverTime, "minutes", true));
+
+    game.serverTime && updateServerTime(game.serverTime);
+    if (value > max || value < 0) return;
+
+    cfg.DEBUG && console.log("applying new turn data from server");
+    cfg.DEBUG &&
+        console.log(
+            `${value} minutes until turn processing (duration: ${max} minutes)`
+        );
+
     updateYourTime();
-    updateServerTime(pulse.serverTime);
     updateNextTurnTime(nextTurn.toISOString());
-    if (turn !== pulse.turn.currentNumber) {
-        updateCurrentTurn(pulse.turn.currentNumber);
+    if (turn !== game.turn) {
+        updateCurrentTurn(game.turn);
     }
     updateProgress(max, max - value);
 };
@@ -229,7 +245,6 @@ const initTime = () => {
     const _myTime = document.querySelector(SELECTOR_MY_TIME);
     const _progress = document.querySelector(SELECTOR_PROGRESS);
     const _nextTurn = document.querySelector(SELECTOR_TIME_NEXT_TURN);
-    const pulse = 20; // cycle duration in seconds
 
     // fail silently if there is no time that needs to be updated.
     if (
@@ -243,15 +258,10 @@ const initTime = () => {
     // locale comes from server lang attribute on html element
     moment.locale(getCurrentLocale());
 
-    setInterval(() => domUpdateCollection(pulse), 1000 * pulse);
-
-    // TODO: ASK SERVER
-
-    //console.log(_serverTime);
-    //console.log(_myTime);
-    //console.log(_progress);
-    //console.log(_nextTurn);
-    //console.log(isoTime);
+    setInterval(
+        () => domUpdateCollection(CYCLE_DURATION),
+        1000 * CYCLE_DURATION
+    );
 
     updateYourTime();
     updateServerTime(

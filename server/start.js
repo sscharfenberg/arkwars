@@ -18,7 +18,9 @@ require("dotenv").config({ path: "./config/.env" });
  * connect and prepare MongoDB
  *
  */
-mongoose.connect(process.env.DATABASE); // Connect to our MongoDB
+mongoose.connect(process.env.DATABASE, {
+    useMongoClient: true // http://mongoosejs.com/docs/connections.html#use-mongo-client
+}); // Connect to our MongoDB
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection
     .on("error", err => {
@@ -27,6 +29,8 @@ mongoose.connection
     .on("connected", () => {
         logger.success("[node] Successfully connected to MongoDB.");
     });
+
+require("./app/models/Game");
 
 /*
  * start the application
