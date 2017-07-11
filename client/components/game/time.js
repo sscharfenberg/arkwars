@@ -59,7 +59,7 @@ const getCurrentLocale = () => {
  * @returns {int} turn
  */
 const getCurrentTurn = () => {
-    const turn = document.querySelector(SELECTOR_TURN).textContent;
+    const turn = document.querySelectorAll(SELECTOR_TURN)[0].textContent;
     return turn ? parseInt(turn, 10) : 0;
 };
 
@@ -83,12 +83,14 @@ const updateYourTime = time => {
  * @param {string} time - ISO 8601 string
  */
 const updateServerTime = time => {
-    const _serverTime = document.querySelector(SELECTOR_SERVER_TIME);
-    const _progress = document.querySelector(SELECTOR_PROGRESS);
-    const oldText = _serverTime.textContent;
+    const _serverTime = document.querySelectorAll(SELECTOR_SERVER_TIME);
+    const _progress = document.querySelectorAll(SELECTOR_PROGRESS)[0];
+    const oldText = _serverTime[0].textContent;
     const display = moment(time).format("LT");
-    _serverTime.textContent = display;
-    _serverTime.setAttribute("datetime", time);
+    for (let domNode of _serverTime) {
+        domNode.textContent = display;
+        domNode.setAttribute("datetime", time);
+    }
     // update progress only if servertime changes
     // do not update progress for the first time when we update the textContent
     if (oldText !== display && oldText !== "00:00") {
@@ -104,9 +106,11 @@ const updateServerTime = time => {
  * @param {string} time - ISO 8601 string
  */
 const updateNextTurnTime = time => {
-    const _nextTurnTime = document.querySelector(SELECTOR_TIME_NEXT_TURN);
-    _nextTurnTime.textContent = moment(time).format("LT");
-    _nextTurnTime.setAttribute("datetime", time);
+    const _nextTurnTime = document.querySelectorAll(SELECTOR_TIME_NEXT_TURN);
+    for (let domNode of _nextTurnTime) {
+        domNode.textContent = moment(time).format("LT");
+        domNode.setAttribute("datetime", time);
+    }
 };
 
 /*
@@ -115,9 +119,9 @@ const updateNextTurnTime = time => {
  * @param {int} value - minutes passed in current turn
  */
 const updateProgress = (max, value) => {
-    const _progress = document.querySelector(SELECTOR_PROGRESS);
-    const _path = document.querySelector(SELECTOR_PROGRESSBAR_VALUE);
-    const _nextTurn = document.querySelector(SELECTOR_TIME_NEXT_TURN);
+    const _progress = document.querySelectorAll(SELECTOR_PROGRESS);
+    const _path = document.querySelectorAll(SELECTOR_PROGRESSBAR_VALUE);
+    const _nextTurn = document.querySelectorAll(SELECTOR_TIME_NEXT_TURN);
     let colorClass = "aw-progress__bar-value--";
     let pct;
 
@@ -136,21 +140,30 @@ const updateProgress = (max, value) => {
                 pct}%, dashoffset ${pct}.`
         );
 
-    // modify DOM
-    _progress.setAttribute(DATA_MAX, max);
-    _progress.setAttribute(DATA_VALUE, value);
-    _path.classList.remove(
-        "aw-progress__bar-value--1",
-        "aw-progress__bar-value--2",
-        "aw-progress__bar-value--3",
-        "aw-progress__bar-value--4",
-        "aw-progress__bar-value--5"
-    );
-    _path.classList.add(colorClass);
-    _path.setAttribute("stroke-dashoffset", `${pct}`);
+    // update progress data attributes
+    for (let domNode of _progress) {
+        domNode.setAttribute(DATA_MAX, max);
+        domNode.setAttribute(DATA_VALUE, value);
+    }
 
+    // update path
+    for (let domNode of _path) {
+        domNode.classList.remove(
+            "aw-progress__bar-value--1",
+            "aw-progress__bar-value--2",
+            "aw-progress__bar-value--3",
+            "aw-progress__bar-value--4",
+            "aw-progress__bar-value--5"
+        );
+        domNode.classList.add(colorClass);
+        domNode.setAttribute("stroke-dashoffset", `${pct}`);
+    }
+
+    // next turn time
     if (value === max) {
-        _nextTurn.textContent = "Jetzt"; // TODO: i18n
+        for (let domNode of _nextTurn) {
+            domNode.textContent = "Jetzt"; // TODO: i18n
+        }
         doServerPulse();
     }
 };
@@ -241,10 +254,10 @@ const applyServerPulse = game => {
 };
 
 const initTime = () => {
-    const _serverTime = document.querySelector(SELECTOR_SERVER_TIME);
-    const _myTime = document.querySelector(SELECTOR_MY_TIME);
-    const _progress = document.querySelector(SELECTOR_PROGRESS);
-    const _nextTurn = document.querySelector(SELECTOR_TIME_NEXT_TURN);
+    const _serverTime = document.querySelectorAll(SELECTOR_SERVER_TIME);
+    const _myTime = document.querySelectorAll(SELECTOR_MY_TIME);
+    const _progress = document.querySelectorAll(SELECTOR_PROGRESS);
+    const _nextTurn = document.querySelectorAll(SELECTOR_TIME_NEXT_TURN);
 
     // fail silently if there is no time that needs to be updated.
     if (
@@ -265,10 +278,10 @@ const initTime = () => {
 
     updateYourTime();
     updateServerTime(
-        moment(_serverTime.getAttribute("datetime")).toISOString()
+        moment(_serverTime[0].getAttribute("datetime")).toISOString()
     );
     updateNextTurnTime(
-        moment(_nextTurn.getAttribute("datetime")).toISOString()
+        moment(_nextTurn[0].getAttribute("datetime")).toISOString()
     );
 };
 

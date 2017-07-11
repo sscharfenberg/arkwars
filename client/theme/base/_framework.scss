@@ -37,10 +37,15 @@ body {
 .aw-main-wrapper {
     display: flex;
     position: relative;
-    height: calc(100vh - 4rem);
-    padding-top: 4rem;
+    height: calc(100vh - 7rem);
+    padding-top: 7rem;
 
     @include respond-to("small") {
+        height: calc(100vh - 8.4rem);
+        padding-top: 8.4rem;
+    }
+
+    @media all and (min-width: #{map-get($breakpoints, "medium") + 1}) {
         height: calc(100vh - 5.4rem);
         padding-top: 5.4rem;
     }

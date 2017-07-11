@@ -63,6 +63,17 @@ body
                 a.aw-header__link(href="/auth/logout/")
                     != h.icon("power")
                     span Logout
+        .aw-header__turn
+            .aw-turn
+                != h.icon("turn", ["turn"])
+                .aw-turn__value 21
+            .aw-header__server-time
+                time(datetime="2017-07-10T19:41:05.133Z", data-server-time) 00:00
+            .aw-header__turn-next-progress
+                .aw-progress.aw-progress-turn(data-max="15", data-value="14")
+                    != h.progressbar(15, 14)
+            .aw-header__turn-next-time
+                time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
 
     .aw-main-wrapper
         section.aw-drawer(aria-hidden="true")
@@ -78,7 +89,7 @@ body
                         .aw-drawer__info-label local time
                         .aw-drawer__info-value
                             time(datetime="", data-my-time) 00:00
-                li.aw-drawer__list-item
+                li.aw-drawer__list-item.aw-drawer__list-item--turn
                     .aw-drawer__turn
                         .aw-drawer__turn-current
                             .aw-drawer__turn-current-label Aktuelle Runde
