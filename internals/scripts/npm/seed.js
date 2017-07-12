@@ -8,10 +8,10 @@
 const mongoose = require("mongoose");
 const path = require("path"); // https://nodejs.org/api/path.html
 const fs = require("fs");
-const config = require("../config");
-const logger = require("./utils/clientlogger");
-const Game = require("../../server/app/models/Game");
-const games = require("../mockdata/games");
+const config = require("../../config");
+const logger = require("../utils/clientlogger");
+const Game = require("../../../server/app/models/Game");
+const games = require("../../mockdata/games");
 require("dotenv").config({
     path: path.join(config.projectRoot, "config", ".env")
 });

@@ -10,6 +10,8 @@
 const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("./app/handlers/logger/console");
+const cron = require("./app/utils/cron.js");
+const errorHandlers = require("./app/handlers/error"); // Error handling
 
 // import environmental variables from our .env file to process.env
 require("dotenv").config({ path: "./config/.env" });
@@ -27,10 +29,14 @@ mongoose.connection
         logger.error(err.message);
     })
     .on("connected", () => {
-        logger.success("[node] Successfully connected to MongoDB.");
+        logger.success("[Mongoose] Successfully connected to MongoDB.");
     });
 
+
+// require mongoose schemas
 require("./app/models/Game");
+
+errorHandlers.catchErrors(cron.startup());
 
 /*
  * start the application

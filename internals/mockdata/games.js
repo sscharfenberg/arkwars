@@ -20,7 +20,7 @@ module.exports = [
     {
         "number": 3,
         "active": true,
-        "processing": false,
+        "processing": true,
         "turn": 9865,
         "turnDue": moment().add(4, "minutes").toISOString(),
         "turnDuration": 120

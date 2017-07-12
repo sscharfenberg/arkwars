@@ -7,8 +7,8 @@
  **********************************************************************************************************************/
 const fs = require("fs-extra"); // https://www.npmjs.com/package/fs-extra
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
-const logger = require("./utils/clientlogger");
-const config = require("../config");
+const logger = require("../utils/clientlogger");
+const config = require("../../config");
 
 const cleanup = () => {
     // build dir with with webpack-generated assets

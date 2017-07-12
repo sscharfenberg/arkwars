@@ -27,7 +27,7 @@ const monitor = nodemon({
 });
 
 monitor.on("start", () => {
-    logger.success("[nodemon] app starting.");
+    logger.success("[nodemon] server starting up.");
 });
 
 monitor.on("quit", () => {

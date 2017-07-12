@@ -8,4 +8,4 @@
 require( "./internals/scripts/gulp/styles");
 require( "./internals/scripts/gulp/sync");
 require( "./internals/scripts/gulp/icons");
-require( "./internals/scripts/gulp/watchAssets-dev");
+require( "./internals/scripts/gulp/watch");

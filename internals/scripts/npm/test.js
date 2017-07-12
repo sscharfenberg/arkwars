@@ -13,8 +13,8 @@ process.env.PUBLIC_URL = "";
 const path = require("path"); // https://www.npmjs.com/package/path
 const jest = require("jest"); // https://facebook.github.io/jest/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
-const logger = require("./utils/clientlogger");
-const config = require("../config");
+const logger = require("../utils/clientlogger");
+const config = require("../../config");
 const argv = process.argv.slice(2);
 
 logger.info(

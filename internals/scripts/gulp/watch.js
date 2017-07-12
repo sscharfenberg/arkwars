@@ -35,7 +35,7 @@ gulp.task("watch", function() {
         .on("change", reportChange);
 
     // do initial webpack compilation and start webpack-dev-server
-    require("../js.dev");
+    require("../npm/js.dev");
 
     console.log();
     logger.success(`[gulp] now watching for file changes\n`);
