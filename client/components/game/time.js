@@ -172,8 +172,10 @@ const updateProgress = (max, value) => {
  * update "current turn"
  */
 const updateCurrentTurn = turn => {
-    const _turn = document.querySelector(SELECTOR_TURN);
-    _turn.textContent = turn ? turn : "0";
+    const _turn = document.querySelectorAll(SELECTOR_TURN);
+    for (let domNode of _turn) {
+        domNode.textContent = turn ? turn : "0";
+    }
 };
 
 /*

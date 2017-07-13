@@ -10,7 +10,7 @@
 const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("./app/handlers/logger/console");
-const cron = require("./app/utils/cron.js");
+const cron = require("./app/handlers/cron");
 const errorHandlers = require("./app/handlers/error"); // Error handling
 
 // import environmental variables from our .env file to process.env

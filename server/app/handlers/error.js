@@ -42,7 +42,7 @@ exports.catchErrors = fn => {
 exports.notFound = (req, res, next) => {
     const err = new Error("Not Found");
     err.status = 404;
-    logger.error(`[Node] 404 Not Found: "${req.path}"`);
+    logger.error(`[Express] 404 Not Found: "${req.path}"`);
     next(err);
 };
 

@@ -6,8 +6,10 @@
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
-const logger = require("../handlers/logger/console");
-const errorHandlers = require("../handlers/error"); // Error handling
+const cron = require("node-schedule"); // https://www.npmjs.com/package/node-schedule
+const logger = require("./logger/console");
+const errorHandlers = require("./error"); // Error handling
+const turnHandlers = require("./turn");
 require("../models/Game");
 const Game = mongoose.model("Game");
 
@@ -15,8 +17,21 @@ const Game = mongoose.model("Game");
  * schedule game turn
  * @param {object} game - Game model object from mongo
  */
-const scheduleGameTurn = async game => {
-    logger.debug(`TODO: schedule g${game.number} turn processing.`);
+const scheduleGameTurn = game => {
+    const dueDate = moment(game.turnDue).toDate();
+    logger.info(
+        `scheduling turn ${chalk.cyan(game.turn + 1)} for ${chalk.red(
+            "g" + game.number
+        )} @${chalk.yellow(moment(game.turnDue).format("DD.MM.YYYY HH:mm:ss.SSSS"))}`
+    );
+    cron.scheduleJob(dueDate, function() {
+        logger.info(
+            `scheduler triggering turn processing for ${chalk.red(
+                "g" + game.number
+            )}, turn ${game.turn + 1}`
+        );
+        errorHandlers.catchErrors(turnHandlers.processTurnData(game));
+    });
 };
 
 /*
@@ -26,9 +41,11 @@ const scheduleGameTurn = async game => {
 const confirmGameIntegrity = async game => {
     let doUpdate = false;
     logger.info(
-        `${chalk.cyan("g" + game.number)} => turn due: ${moment(
-            game.turnDue
-        ).format("LLLL")}, duration ${game.turnDuration} mins.`
+        `${chalk.red("g" + game.number)}, current turn ${chalk.cyan(
+            game.turn
+        )}. turn ${chalk.cyan(game.turn + 1)} due: ${chalk.yellow(
+            moment(game.turnDue).format("DD.MM.YYYY HH:mm:ss.SSSS")
+        )}, duration ${game.turnDuration} mins.`
     );
     // turn processing was interrupted. fuck.
     if (game.processing) {
@@ -48,7 +65,7 @@ const confirmGameIntegrity = async game => {
         await Game.findOneAndUpdate({ _id: game._id }, game, {
             runValidators: true
         }).exec();
-        logger.success(`game data for g${game.number} updated.`);
+        logger.debug(`game data for g${game.number} updated.`);
     }
 };
 
@@ -56,7 +73,7 @@ const confirmGameIntegrity = async game => {
  * `startup` - script that sets up the server ticks
  * @callee /server/start.js - called on server start / restart
  */
-const startup = async () => {
+exports.startup = async () => {
     const games = await Game.find({ active: true });
     moment.locale("de");
     logger.info(
@@ -67,7 +84,7 @@ const startup = async () => {
     if (games.length > 0) {
         games.forEach(game => {
             errorHandlers.catchErrors(confirmGameIntegrity(game));
-            errorHandlers.catchErrors(scheduleGameTurn(game));
+            scheduleGameTurn(game);
         });
     } else {
         console.info("no active games in db.");
@@ -77,4 +94,3 @@ const startup = async () => {
 // export the functions.
 exports.confirmGameIntegrity = confirmGameIntegrity;
 exports.scheduleGameTurn = scheduleGameTurn;
-exports.startup = startup;
