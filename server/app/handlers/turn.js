@@ -7,7 +7,7 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../handlers/logger/console");
-const errorHandlers = require("./error"); // Error handling
+const { catchErrors } = require("./error"); // Error handling
 const cronHandler = require("../handlers/cron");
 require("../models/Game");
 const Game = mongoose.model("Game");
@@ -39,7 +39,7 @@ const processTurnData = async game => {
     );
 
     // process game data
-    errorHandlers.catchErrors(processGameTurn(game, startTime));
+    catchErrors(processGameTurn(game, startTime));
 
     // after the game data has been processed, set new due data (full duration!)
     game.turnDue = moment().add(game.turnDuration, "minutes").toISOString();

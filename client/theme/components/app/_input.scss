@@ -1,0 +1,92 @@
+/***********************************************************************************************************************
+ *
+ * <input> Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+/*
+ * input fields for full width, narrow forms (max 768px width) =========================================================
+ */
+.aw-narrowform-input {
+    display: inline-block;
+    position: relative;
+
+    box-sizing: border-box;
+    width: 100%;
+
+    @include respond-to("small") {
+        display: inline-flex;
+    }
+
+    &__input {
+        box-sizing: border-box;
+
+        width: 100%;
+        padding: 1rem 1rem 1rem 0.5rem;
+        border: 0;
+        border-left: 5px solid transparent;
+
+        background: palette("grey", "iron");
+        line-height: 1.4;
+
+        transition:
+            background map-get($animation-speeds, "fast") linear,
+            border-left-color map-get($animation-speeds, "fast") linear,
+            color map-get($animation-speeds, "fast") linear;
+
+        &:focus {
+            background: palette("grey", "white");
+            color: palette("grey", "black");
+            outline: 0;
+            border-left-color: palette("brand", "viking");
+
+            &::placeholder {
+                color: palette("text", "tint");
+            }
+        }
+
+        &::placeholder {
+            color: transparent;
+
+            transition: color map-get($animation-speeds, "fast") linear;
+        }
+
+        @include respond-to("small") {
+            width: auto;
+            flex: 1;
+        }
+    }
+
+    &__label {
+        display: block;
+
+        box-sizing: border-box;
+        overflow: hidden;
+
+        padding: 1rem;
+
+        background: palette("grey", "asher");
+        color: palette("text", "light");
+        text-shadow: 0 1px 0 rgba(palette("text", "light"), 0.4);
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        &--captcha svg path {
+            fill: palette("grey", "white");
+        }
+
+        @include respond-to("small") {
+            flex: 0 0 20rem;
+        }
+
+        @include respond-to("medium") {
+            flex: 0 0 30rem;
+            text-align: right;
+        }
+    }
+
+}

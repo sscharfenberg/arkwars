@@ -237,7 +237,7 @@
         &--circle {
             padding: 2px;
 
-            border-radius: 15px;
+            border-radius: 50%;
         }
 
         > span {
@@ -265,11 +265,11 @@
 
     // user avatar and user account menu
     &__avatar {
-        width: 26px;
-        height: 26px;
+        width: 28px;
+        height: 28px;
 
         color: palette("text", "header");
-        border-radius: 13px;
+        border-radius: 14px;
     }
 
     /*

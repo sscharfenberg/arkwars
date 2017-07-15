@@ -2,7 +2,6 @@
  *
  * MAIN APPLICATION
  *
- * @type {Node.js}
  * @exports {Express} app
  *
  * Bootstrap our application
@@ -13,6 +12,7 @@ const path = require("path"); // https://nodejs.org/api/path.html
 const express = require("express"); // http://expressjs.com/
 const compression = require("compression"); // https://github.com/expressjs/compression
 const session = require("express-session"); // https://www.npmjs.com/package/express-session
+const expressValidator = require("express-validator"); // https://www.npmjs.com/package/express-validator
 const helmet = require("helmet"); // https://helmetjs.github.io/docs/
 const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
 const MongoStore = require("connect-mongo")(session); // https://www.npmjs.com/package/connect-mongo
@@ -48,7 +48,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // validate data middleWare
-//app.use(expressValidator());
+app.use(expressValidator());
 
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());

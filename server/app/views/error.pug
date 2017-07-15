@@ -1,6 +1,7 @@
 extends layout
 
 block content
-    h2 #{status}#{message ? " - " + message : ""}
+    main.aw-content__inner
+    h1 #{status}#{message ? " - " + message : ""}
     pre.error!= stackHighlighted
-    div#app
+

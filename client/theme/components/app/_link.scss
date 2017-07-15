@@ -1,0 +1,25 @@
+/***********************************************************************************************************************
+ *
+ * <a> Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+.aw-textlink {
+    border-bottom: 3px solid palette("brand", "viking");
+
+    color: palette("grey", "fog");
+    text-decoration: none;
+
+    transition:
+        color map-get($animation-speeds, "fast") linear,
+        border-color map-get($animation-speeds, "fast") linear;
+
+    &:hover,
+    &:focus {
+        color: palette("grey", "white");
+        border-color: palette("grey", "white");
+    }
+}

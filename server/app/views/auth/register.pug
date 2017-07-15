@@ -1,0 +1,62 @@
+extends ../layout
+
+block content
+    main.aw-content__inner.aw-content__inner--narrow
+        h1= title
+        form.aw-narrowform(action="/auth/register" method="POST")
+
+            .aw-narrowform__row
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label(for="name") Username
+                    input.aw-narrowform-input__input(type="text", name="name", id="name", placeholder="Enter username.", required, aria-required="true")
+                .aw-narrowform__row-description
+                    | Your username is visible to other users.
+
+            .aw-narrowform__row.error
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label(for="email") E-Mail
+                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder="Enter your E-Mail address.", value="asd@asd", required, aria-required="true")
+                .aw-narrowform__error-message This is not a valid E-Mail address.
+                .aw-narrowform__row-description
+                    | Your E-Mail is used to
+                    |
+                    strong log in
+                    | ,
+                    | and to send you passwords. It is never shown to other users.
+
+            .aw-narrowform__row
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label(for="password") Password
+                    input.aw-narrowform-input__input(type="password", name="password", id="password", placeholder="Enter password.", required, aria-required="true")
+                .aw-narrowform__row-description
+                    | Make sure that your password is unique and safe.
+
+            .aw-narrowform__row
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label.aw-narrowform-input__label--captcha(for="captcha")
+                        != captcha
+                    input.aw-narrowform-input__input(type="text", name="captcha", id="captcha", placeholder="Please convince us you are not a robot ^.^", required, aria-required="true")
+                .aw-narrowform__row-description
+                    | Type the letters from the image above.
+
+            .aw-narrowform__row.error
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label(for="accept_conditions") Accept Conditions
+                    .aw-narrowform-input__input
+                        .aw-checkbox
+                            input(type="checkbox", name="accept_conditions", id="accept_conditions", aria-required="true")
+                            label(for="accept_conditions")
+                .aw-narrowform__row-description
+                    | Accept our
+                    |
+                    a.aw-textlink(href="") terms and conditions
+                    | , please.
+
+            .aw-narrowform__row
+                .aw-narrowform__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("lightbulb", ["small"])
+                        | Register
+
+block scripts
+    include ../webpack.includes/app.footer.pug

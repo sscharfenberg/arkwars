@@ -8,7 +8,7 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const cron = require("node-schedule"); // https://www.npmjs.com/package/node-schedule
 const logger = require("./logger/console");
-const errorHandlers = require("./error"); // Error handling
+const { catchErrors } = require("./error"); // Error handling
 const turnHandlers = require("./turn");
 require("../models/Game");
 const Game = mongoose.model("Game");
@@ -30,7 +30,7 @@ const scheduleGameTurn = game => {
                 "g" + game.number
             )}, turn ${game.turn + 1}`
         );
-        errorHandlers.catchErrors(turnHandlers.processTurnData(game));
+        catchErrors(turnHandlers.processTurnData(game));
     });
 };
 
@@ -83,7 +83,7 @@ exports.startup = async () => {
     // this is incredibly verbose. it is also really important.
     if (games.length > 0) {
         games.forEach(game => {
-            errorHandlers.catchErrors(confirmGameIntegrity(game));
+            catchErrors(confirmGameIntegrity(game));
             scheduleGameTurn(game);
         });
     } else {

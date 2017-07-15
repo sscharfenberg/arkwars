@@ -1,0 +1,46 @@
+/***********************************************************************************************************************
+ *
+ * <button> Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+.aw-btn {
+    padding: 1rem 3rem;
+
+    border: 0;
+    background-color: palette("grey", "raven");
+    color: palette("text", "light");
+
+    cursor: pointer;
+    transition:
+        background map-get($animation-speeds, "fast") linear,
+        color map-get($animation-speeds, "fast") linear;
+
+    &:active,
+    &:focus {
+        outline: 0;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: palette("grey", "iron");
+        color: palette("text", "dark");
+    }
+
+    &:active {
+        background-color: palette("brand", "viking");
+        color: palette("grey", "black");
+    }
+
+    &--icon {
+        display: inline-flex;
+        align-items: center;
+
+        .aw-icon {
+            margin-right: 0.5rem;
+        }
+    }
+}

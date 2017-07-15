@@ -26,6 +26,7 @@ $palettes: (
         , "abbey": #4c4f56
         , "raven": #373d3f
         , "bunker": #151e21
+        , "sunken": #141721
         , "ebony": #06060f
         , "black": #000
     )
@@ -43,6 +44,11 @@ $palettes: (
         , "3": #f2b01e
         , "4": #f27011
         , "5": #f63a0f
+    )
+    , "state": (
+        "success": #4b9b29
+        , "warning": #f2b01e
+        , "error": #c82a05
     )
 );
 
@@ -79,7 +85,9 @@ $breakpoints: (
 
 $z-layers: (
     "bottomless": -9999
+    , "background": -1
     , "default": 0
+    , "form": 1
     , "header": 5
     , "drawer": 6
     , "dropdown": 200

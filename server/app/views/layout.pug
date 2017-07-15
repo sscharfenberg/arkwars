@@ -135,13 +135,13 @@ body
 
         section#content.aw-content
 
-            main.aw-content__inner
-                h1= h.appName
-                block content
+            block content
+                main.aw-content__inner
+                    h1= title
                     p This is the default!
 
-                h3 Session Data
-                pre= h.dump(session)
+            h3 Session Data
+            pre= h.dump(session)
 
             footer.aw-footer
                 address.aw-footer__meta

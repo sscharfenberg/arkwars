@@ -1,0 +1,72 @@
+/***********************************************************************************************************************
+ *
+ * Auth Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+
+.aw-narrowform {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem;
+    margin: 0 auto;
+
+    background: palette("grey", "sunken");
+
+    &__row {
+        box-sizing: border-box;
+        margin-bottom: 2rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        @include respond-to("small") {
+            align-items: center;
+            flex-direction: row;
+        }
+
+        &.error {
+            .aw-narrowform-input__label {
+                background: palette("state", "error");
+                color: palette("grey", "white");
+            }
+
+            .aw-narrowform-input__input {
+                background: palette("grey", "mystic");
+                color: palette("state", "error");
+            }
+        }
+    }
+
+    &__row-description {
+        margin-top: 0.5rem;
+        color: palette("text", "tint");
+    }
+
+    &__error-message {
+        margin-top: 0.5rem;
+        color: lighten(palette("state", "error"), 35%);
+
+        text-align: right;
+    }
+
+    &__submit {
+        //.aw-btn {
+        //    color: palette("brand", "gorse");
+        //}
+
+        @include respond-to("small") {
+            margin-left: 20rem;
+        }
+
+        @include respond-to("medium") {
+            margin-left: 30rem;
+        }
+    }
+
+}
+
