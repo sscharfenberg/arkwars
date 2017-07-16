@@ -1,0 +1,64 @@
+/***********************************************************************************************************************
+ *
+ * Flash Messages
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+.aw-flash {
+    box-sizing: border-box;
+    max-width: map-get($breakpoints, "max");
+    padding: 0.5rem 0.5rem 0;
+    margin: 0 auto;
+
+    animation: slideIn forwards 0.1s ease-in-out 2;
+    animation-timing-function: cubic-bezier(0.01, 1.68, 0.58, 1);
+
+    @include respond-to("small") {
+        padding: 1.5rem 1.5rem 0;
+    }
+
+    &__message {
+        display: flex;
+
+        box-sizing: border-box;
+        width: 100%;
+        max-width: map-get($breakpoints, "medium");
+        padding: 0.5rem;
+        border: 5px solid transparent;
+        margin: 0 auto;
+
+        background: palette("grey", "mystic");
+        color: palette("grey", "black");
+
+        font-weight: 400;
+
+        @include respond-to("small") {
+            padding: 1.5rem;
+        }
+
+        &--success {
+            border-color: palette("state", "success");
+        }
+        &--warning {
+            border-color: palette("state", "warning");
+        }
+        &--error {
+            border-color: palette("state", "error");
+        }
+        &--info {
+            border-color: palette("brand", "viking");
+        }
+    }
+
+    &__text {
+        flex: 1;
+    }
+
+    p {
+        margin: 0;
+    }
+}
+

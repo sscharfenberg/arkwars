@@ -11,7 +11,12 @@ const Game = mongoose.model("Game");
 const logger = require("../handlers/logger/console");
 
 /*
- * `pulse` - server returns generic game-data
+ * get game status
+ *
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ *
  * @returns:
  * {int} number - game number
  * {String.ISO8601} serverTime

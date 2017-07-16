@@ -20,10 +20,12 @@ const cookieParser = require("cookie-parser"); // https://www.npmjs.com/package/
 const bodyParser = require("body-parser"); // https://www.npmjs.com/package/body-parser
 const passport = require("passport"); // https://github.com/jaredhanson/passport
 const flash = require("connect-flash"); // https://www.npmjs.com/package/connect-flash
+const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const routes = require("./app/routes/index"); // Express routes
 const accessLogger = require("./app/handlers/logger/access"); // Access logging
 const errorHandlers = require("./app/handlers/error"); // Error handling
 const templateHelpers = require("./app/utils/template"); // Template helpers
+
 
 // create our Express app
 const app = express();
@@ -47,6 +49,12 @@ app.use(bodyParser.json());
 // https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// setup i18n
+i18n.configure({
+    locales:["en", "de"],
+    directory: path.join(__dirname, "app", "lang")
+});
+
 // validate data middleWare
 app.use(expressValidator());
 
@@ -66,6 +74,10 @@ app.use(
 );
 
 // // Passport JS is what we use to handle our logins
+const User = require("./app/models/User");
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -75,6 +87,15 @@ app.use(flash());
 
 // pass variables to our templates + all requests
 app.use((req, res, next) => {
+    let locale = "en";
+    if (req.session && req.session.locale) {
+        locale = req.session.locale;
+    }
+    if (req.user && req.user.locale) {
+        locale = req.user.locale;
+    }
+    req.session.locale = locale;
+    i18n.setLocale(locale);
     res.locals.h = templateHelpers;
     res.locals.flashes = req.flash();
     res.locals.user = req.user || null;

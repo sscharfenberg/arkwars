@@ -43,4 +43,27 @@
             margin-right: 0.5rem;
         }
     }
+
+    &--close {
+        width: 3.2rem;
+        height: 3.2rem;
+        padding: 0;
+        margin-left: 1rem;
+
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }

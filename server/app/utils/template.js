@@ -8,6 +8,7 @@
  *
  **********************************************************************************************************************/
 const fs = require("fs"); // https://nodejs.org/api/fs.html
+const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const cfg = require("../config");
 
 // moment.js is a handy library for displaying dates. We need this in our templates to display things like "Posted 5 minutes ago"
@@ -75,3 +76,8 @@ exports.progressbar = (max, value) => {
 
 // Some details about the site
 exports.appName = cfg.app.title;
+
+// i18n translate fn, make them available with current locale in templates
+exports.__ = key => {
+    return i18n.__(key);
+};

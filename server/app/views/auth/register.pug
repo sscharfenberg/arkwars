@@ -5,58 +5,58 @@ block content
         h1= title
         form.aw-narrowform(action="/auth/register" method="POST")
 
-            .aw-narrowform__row
+            .aw-narrowform__row(class=`${errors && errors.username ? "error" : ""}`)
                 .aw-narrowform-input
-                    label.aw-narrowform-input__label(for="name") Username
-                    input.aw-narrowform-input__input(type="text", name="name", id="name", placeholder="Enter username.", required, aria-required="true")
-                .aw-narrowform__row-description
-                    | Your username is visible to other users.
+                    label.aw-narrowform-input__label(for="username")= h.__("PAGE_REG_USERNAME_LABEL")
+                    input.aw-narrowform-input__input(type="text", name="username", id="username", placeholder=h.__("PAGE_REG_USERNAME_PLACEHOLDER"), required, aria-required="true", value=(data && data.username))
+                if errors && errors.username
+                    .aw-narrowform__error-message= errors.username.msg
+                .aw-narrowform__row-description= h.__("PAGE_REG_USERNAME_DESCRIPTION")
 
-            .aw-narrowform__row.error
+            .aw-narrowform__row(class=`${errors && errors.email ? "error" : ""}`)
                 .aw-narrowform-input
-                    label.aw-narrowform-input__label(for="email") E-Mail
-                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder="Enter your E-Mail address.", value="asd@asd", required, aria-required="true")
-                .aw-narrowform__error-message This is not a valid E-Mail address.
-                .aw-narrowform__row-description
-                    | Your E-Mail is used to
-                    |
-                    strong log in
-                    | ,
-                    | and to send you passwords. It is never shown to other users.
+                    label.aw-narrowform-input__label(for="email")= h.__("PAGE_REG_EMAIL_LABEL")
+                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder=(h.__("PAGE_REG_EMAIL_PLACEHOLDER")), required, aria-required="true", value=(data && data.email))
+                if errors && errors.email
+                    .aw-narrowform__error-message= errors.email.msg
+                .aw-narrowform__row-description!= h.__("PAGE_REG_EMAIL_DESCRIPTION")
 
-            .aw-narrowform__row
+            .aw-narrowform__row(class=`${errors && errors.password ? "error" : ""}`)
                 .aw-narrowform-input
-                    label.aw-narrowform-input__label(for="password") Password
-                    input.aw-narrowform-input__input(type="password", name="password", id="password", placeholder="Enter password.", required, aria-required="true")
-                .aw-narrowform__row-description
-                    | Make sure that your password is unique and safe.
+                    label.aw-narrowform-input__label(for="password")= h.__("PAGE_REG_PWD_LABEL")
+                    input.aw-narrowform-input__input(type="password", name="password", id="password", placeholder=(h.__("PAGE_REG_PWD_PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
+                if errors && errors.password
+                    .aw-narrowform__error-message= errors.password.msg
+                .aw-narrowform__row-description!= h.__("PAGE_REG_PWD_DESCRIPTION")
 
-            .aw-narrowform__row
+            .aw-narrowform__row(class=`${errors && errors.captcha ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label.aw-narrowform-input__label--captcha(for="captcha")
                         != captcha
-                    input.aw-narrowform-input__input(type="text", name="captcha", id="captcha", placeholder="Please convince us you are not a robot ^.^", required, aria-required="true")
-                .aw-narrowform__row-description
-                    | Type the letters from the image above.
+                    input.aw-narrowform-input__input(type="text", name="captcha", id="captcha", placeholder=(h.__("PAGE_REG_CAPTCHA_PLACEHOLDER")), required, aria-required="true", value=(data && data.captcha))
+                if errors && errors.captcha
+                    .aw-narrowform__error-message= errors.captcha.msg
+                .aw-narrowform__row-description!= h.__("PAGE_REG_CAPTCHA_DESCRIPTION")
 
-            .aw-narrowform__row.error
+            .aw-narrowform__row(class=`${errors && errors.accept_conditions ? "error" : ""}`)
                 .aw-narrowform-input
-                    label.aw-narrowform-input__label(for="accept_conditions") Accept Conditions
+                    label.aw-narrowform-input__label(for="accept_conditions")= h.__("PAGE_REG_ACCEPT_LABEL")
                     .aw-narrowform-input__input
                         .aw-checkbox
-                            input(type="checkbox", name="accept_conditions", id="accept_conditions", aria-required="true")
+                            input(type="checkbox", name="accept_conditions", id="accept_conditions", value="1", checked=(data && data.accept_conditions), aria-checked=(data && data.accept_conditions))
                             label(for="accept_conditions")
-                .aw-narrowform__row-description
-                    | Accept our
-                    |
-                    a.aw-textlink(href="") terms and conditions
-                    | , please.
+                if errors && errors.accept_conditions
+                    .aw-narrowform__error-message= errors.accept_conditions.msg
+                .aw-narrowform__row-description!= h.__("PAGE_REG_ACCEPT_DESCRIPTION")
 
             .aw-narrowform__row
                 .aw-narrowform__submit
                     button.aw-btn.aw-btn--icon(type="submit")
                         != h.icon("lightbulb", ["small"])
-                        | Register
+                        != h.__("PAGE_REG_SUBMIT")
+
+            pre= h.dump(data)
+
 
 block scripts
     include ../webpack.includes/app.footer.pug

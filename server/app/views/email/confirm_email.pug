@@ -1,0 +1,9 @@
+extends email_layout
+
+block content
+    h2 Hello @#{user.username}, welcome to Arkwars!
+    p You have registered an account on arkwars.io. Please click the following button to confirm your email and activate your account. Please note this link is only valid for the next hour.
+    +button(confirmURL, 'Activate my account →')
+    p If you can't click the above button please visit #{confirmURL}
+    br
+    p If you #{title} didn't request this email, please ignore it.

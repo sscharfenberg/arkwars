@@ -2,8 +2,6 @@
  *
  * APPLICATION CONFIG
  *
- * @type {Node.js}
- *
  * main configuration file for server and buld scripts.
  * this file does NOT include sensitive information and can be safely committed to git.
  * sensitive information is found in .env
