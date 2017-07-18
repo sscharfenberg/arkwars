@@ -1,4 +1,10 @@
 {
+    "AUTH_ADMIN_REQUIRED": "Diese Seite erfordert Administratoren - Berechtigungen.",
+    "AUTH_MOD_REQUIRED": "Diese Seite erfordert Moderatoren - Berechtigungen.",
+    "AUTH_LOGIN_REQUIRED": "Sie müssen eingeloggt sein um diese Funktion oder Seite zu verwenden.",
+
+    "APP_SWITCH_LANG_InvalidLocale": "Diese Sprache unterstützen wir leider nicht.",
+
     "PAGE_INDEX_HEADLINE": "Willkommen bei Arkwars!",
     "PAGE_INDEX_TEXT1": "DEUTSCH weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen Semikoli, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg.",
 
@@ -22,6 +28,7 @@
     "PAGE_LOGIN_MissingUsernameError": "Benutzername wurde nicht angegeben.",
     "PAGE_LOGIN_UserExistsError": "Ein Benutzer mit dieser E-Mail Adresse ist bereits registriert.",
     "PAGE_LOGIN_NotConfirmedError": "Sie haben Ihre E-Mail Adresse noch nicht bestätigt. Bitte überprüfen Sie Ihren Mail-Eingang.",
+    "PAGE_LOGIN_Suspended": "Sie können aktuell nicht einloggen da Ihr Konto gesperrt wurde. Ablauf der Sperre: ",
     "PAGE_LOGIN_SUCCESS": "Erfolgreich eingeloggt.",
     "PAGE_LOGOUT_SUCCESS": "Sie sind erfolgreich ausgeloggt.",
 
@@ -57,5 +64,5 @@
     "REG_CONFIRM_SUCCESS": "Ihr Benutzerkonto wurde aktiviert.",
     "REG_CONFIRM_FAILED": "Bestätigungs Marker ist ungültig oder abgelaufen.",
 
-    "APP_SWITCH_LANG_InvalidLocale": "Diese Sprache unterstützen wir leider nicht."
+    "PAGE_PROFILE_TITLE": "Mein Profil"
 }

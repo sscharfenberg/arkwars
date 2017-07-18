@@ -14,25 +14,21 @@ const apiController = require("../controllers/api");
 const userController = require("../controllers/user");
 const authController = require("../controllers/auth");
 const adminController = require("../controllers/admin");
+const profileController = require("../controllers/user/profile");
 const { catchErrors } = require("../handlers/error");
 
 router.get("/", indexController.homePage);
 
-
 // TODO: check if user is allowed
-router.get(
-    "/api/game/:game/status",
-    catchErrors(apiController.gameStatus)
-);
+router.get("/api/game/:game/status", catchErrors(apiController.gameStatus));
 
+router.get("/language/:lang", catchErrors(userController.switchLanguage));
 
 router.get(
-    "/language/:lang",
-    catchErrors(userController.switchLanguage)
+    "/profile",
+    authController.isLoggedIn,
+    profileController.showProfile
 );
-
-
-router.get("/profile", (req, res) => { res.render("profile", {title: "My Profile"})});
 
 /*
  * auth routes =========================================================================================================
@@ -48,21 +44,15 @@ router.post(
     catchErrors(userController.sendConfirmationEmail) // 3. send confirmation email
 );
 // confirm email
-router.get(
-    "/auth/confirm/:token",
-    catchErrors(userController.confirmEmail)
-);
-// show login form
-router.get("/auth/login", authController.showLoginForm);
-// do login
-router.post("/auth/login", authController.login);
+router.get("/auth/confirm/:token", catchErrors(userController.confirmEmail));
+router.get("/auth/login", authController.showLoginForm); // show login form
+router.post("/auth/login", authController.login); // do login
 router.get("/auth/logout", authController.logout);
 
 /*
  * admin routes ========================================================================================================
- * TODO: isAdmin middleware!
  */
-
+router.use("/admin/", authController.isAdmin);
 router.get(
     "/admin/mock/email/:template",
     catchErrors(adminController.showEmail)

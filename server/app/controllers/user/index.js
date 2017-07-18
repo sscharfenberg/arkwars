@@ -11,9 +11,11 @@ const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const User = mongoose.model("User");
-const logger = require("../handlers/logger/console");
-const mail = require("../handlers/mail");
-const cfg = require("../config");
+const logger = require("../../handlers/logger/console");
+const userValidators = require("../../utils/validators/user");
+const mail = require("../../handlers/mail");
+const cfg = require("../../config");
+
 
 
 /*
@@ -26,7 +28,7 @@ const getCaptcha = (text = undefined) => {
     const options = {
         height: 26,
         size: 4,
-        ignoreChars: "0Oo11i8B",
+        ignoreChars: "0Ool1Ii8B",
         noise: 0
     };
     if (text) {
@@ -61,39 +63,15 @@ exports.showRegistration = (req, res) => {
  */
 exports.validateRegistration = async (req, res, next) => {
     logger.info("recieved registration data: " + JSON.stringify(req.body));
-    // username
-    req.sanitizeBody("username").trim();
-    req
-        .checkBody("username", i18n.__("PAGE_REG_ERROR_UsernameEmpty"))
-        .notEmpty();
-    req
-        .checkBody("username", i18n.__("PAGE_REG_ERROR_UsernameOutOfBounds"))
-        .isLength({ min: 3, max: 20 });
 
-    // email
-    req.checkBody("email", i18n.__("PAGE_REG_ERROR_EmailEmpty")).notEmpty();
-    req.checkBody("email", i18n.__("PAGE_REG_ERROR_EmailInvalid")).isEmail();
-    // password
-    req
-        .checkBody("password", i18n.__("PAGE_REG_ERROR_PasswordEmpty"))
-        .notEmpty();
-    req
-        .checkBody("password", i18n.__("PAGE_REG_ERROR_PasswordOutOfBounds"))
-        .isLength({ min: 6, max: 32 });
-    // captcha
-    req.checkBody("captcha", i18n.__("PAGE_REG_ERROR_CaptchaEmpty")).notEmpty();
-    req
-        .checkBody("captcha", i18n.__("PAGE_REG_ERROR_CaptchaMismatch"))
-        .equals(req.session.captcha);
-    // accept conditions
-    req
-        .checkBody("accept_conditions", i18n.__("PAGE_REG_ERROR_AcceptEmpty"))
-        .notEmpty();
+    // default validators
+    req = userValidators.defaultValidators(req);
 
     const validatorPromise = req.getValidationResult();
-    const userPromise = User.findOne({ username: req.body.username });
-    const emailPromise = User.findOne({ email: req.body.email });
-    const [results, userName, email] = await Promise.all([
+
+    const userPromise = userValidators.userPromise(req);
+    const emailPromise = userValidators.emailPromise(req);
+    const [results, existingUser, existingEmail] = await Promise.all([
         validatorPromise,
         userPromise,
         emailPromise
@@ -102,36 +80,24 @@ exports.validateRegistration = async (req, res, next) => {
     let errorList = results.array();
 
     // username has already been registered.
-    if (userName) {
-        const error = {
-            param: "username",
-            msg: i18n.__("PAGE_REG_ERROR_UsernameTaken"),
-            value: req.body.username
-        };
-        errorMap.username = error;
-        errorList.push(error);
+    if (existingUser) {
+        const errors = userValidators.userNameExists(req);
+        errorMap.username = errors;
+        errorList.push(errors);
     }
 
     // email has already been registered.
-    if (email) {
-        const error = {
-            param: "email",
-            msg: i18n.__("PAGE_REG_ERROR_EmailTaken"),
-            value: req.body.email
-        };
-        errorMap.email = error;
-        errorList.push(error);
+    if (existingEmail) {
+        const errors = userValidators.emailExists(req);
+        errorMap.email = errors;
+        errorList.push(errors);
     }
 
     // check if username is blacklisted.
     if (
         cfg.app.blacklistedUsernames.includes(req.body.username.toLowerCase())
     ) {
-        const error = {
-            param: "username",
-            msg: i18n.__("PAGE_REG_ERROR_UsernameBlacklisted"),
-            value: req.body.email
-        };
+        const error = userValidators.userNameBlacklisted(req)
         errorMap.username = error;
         errorList.push(error);
         logger.debug(
@@ -230,7 +196,7 @@ exports.confirmEmail = async (req, res) => {
         `[App] email confirmation request. user: ${JSON.stringify(user)}`
     );
     if (!user) {
-        req.flash("error", i18n.__("REG_CONFIRM_SUCCESS"));
+        req.flash("error", i18n.__("REG_CONFIRM_FAILED"));
         return res.redirect("/auth/login");
     }
 
@@ -243,7 +209,7 @@ exports.confirmEmail = async (req, res) => {
             "@" + user.username
         )} has been activated.`
     );
-    req.flash("success", i18n.__("REG_CONFIRM_FAILED"));
+    req.flash("success", i18n.__("REG_CONFIRM_SUCCESS"));
     res.redirect("/auth/login");
 };
 

@@ -222,7 +222,7 @@ const doServerPulse = () => {
             }
         })
         .catch(error => {
-            console.warn(error);
+            cfg.DEBUG && console.warn(error);
         });
 };
 

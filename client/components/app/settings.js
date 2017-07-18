@@ -1,9 +1,10 @@
 /** ********************************************************************************************************************
  *
  * drawer with left navigation
- * @exports {function} initializeDrawer
+ * @exports { defaultSettings, saveSettings, loadSettings }
  *
  **********************************************************************************************************************/
+//import axios from "axios";
 import cfg from "../../config";
 
 const defaultSettings = {

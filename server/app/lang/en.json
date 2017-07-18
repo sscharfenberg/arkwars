@@ -1,4 +1,10 @@
 {
+    "AUTH_ADMIN_REQUIRED": "This page requires admin access.",
+    "AUTH_MOD_REQUIRED": "This page requires moderator access.",
+    "AUTH_LOGIN_REQUIRED": "You need to be logged in to access the requested resource.",
+
+    "APP_SWITCH_LANG_InvalidLocale": "This locale does not exist.",
+
     "PAGE_INDEX_HEADLINE": "Welcome to Arkwars!",
     "PAGE_INDEX_TEXT1": "EWNGLISCH eit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen Semikoli, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg.",
 
@@ -22,6 +28,7 @@
     "PAGE_LOGIN_MissingUsernameError": "No username was given",
     "PAGE_LOGIN_UserExistsError": "A user with the given username is already registered",
     "PAGE_LOGIN_NotConfirmedError": "You have not yet confirmed your E-Mail address. Please check your inbox!",
+    "PAGE_LOGIN_Suspended": "Your account has been suspended until ",
     "PAGE_LOGIN_SUCCESS": "Successfully logged in.",
     "PAGE_LOGOUT_SUCCESS": "You are now logged out.",
 
@@ -57,5 +64,5 @@
     "REG_CONFIRM_SUCCESS": "Your Account has been activated.",
     "REG_CONFIRM_FAILED": "Confirmation token is invalid or has expired.",
 
-    "APP_SWITCH_LANG_InvalidLocale": "This locale does not exist."
+    "PAGE_PROFILE_TITLE": "My Profile"
 }

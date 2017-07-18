@@ -44,6 +44,15 @@ const userSchema = new mongoose.Schema({
         type: Date
     },
 
+    // suspension
+    suspended: {
+        type: Boolean,
+        default: false
+    },
+    suspendedUntil: {
+        type: Date
+    },
+
     // reset password token
     resetPasswordToken: {
         type: String
@@ -66,6 +75,16 @@ const userSchema = new mongoose.Schema({
     created: {
         type: Date,
         default: moment().toISOString()
+    },
+
+    // permissions
+    admin: {
+        type: Boolean,
+        default: false
+    },
+    moderator: {
+        type: Boolean,
+        default: false
     }
 
 });
