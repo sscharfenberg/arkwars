@@ -111,7 +111,7 @@ exports.validateRegistration = async (req, res, next) => {
         const captcha = getCaptcha(req.session.captcha);
         logger.debug(`[App] validation errors: ${JSON.stringify(errorList)}`);
         req.flash("error", i18n.__("PAGE_REG_ERROR"));
-        res.render("auth/register", {
+        return res.render("auth/register", {
             title: i18n.__("PAGE_REG_TITLE"),
             session: req.session,
             // svg-captcha returns the captcha directly when we provide the text, not as captcha.data
@@ -120,7 +120,6 @@ exports.validateRegistration = async (req, res, next) => {
             errors: errorMap,
             flashes: req.flash()
         });
-        return; // there where errors, abort.
     }
 
     next(); // there where no errors - proceed to next middleware
@@ -139,7 +138,7 @@ exports.doRegistration = async (req, res, next) => {
         username: req.body.username,
         locale: req.session.locale || "en",
         emailConfirmationToken: crypto.randomBytes(20).toString("hex"),
-        emailConfirmationExpires: moment().add(1, "hour")
+        emailConfirmationExpires: moment().add(1, "hours")
     });
     const register = promisify(User.register, User);
     await register(user, req.body.password);
@@ -171,7 +170,7 @@ exports.sendConfirmationEmail = async (req, res) => {
     await mail.send({
         user,
         filename: "confirm_email",
-        subject: `Welcome to ${cfg.app.title}`,
+        subject: i18n.__("MAIL_ACTIVATION_SUBJECT", cfg.app.title),
         confirmURL
     });
     logger.info(
@@ -195,6 +194,7 @@ exports.confirmEmail = async (req, res) => {
     logger.debug(
         `[App] email confirmation request. user: ${JSON.stringify(user)}`
     );
+    console.log(req.params.token);
     if (!user) {
         req.flash("error", i18n.__("REG_CONFIRM_FAILED"));
         return res.redirect("/auth/login");

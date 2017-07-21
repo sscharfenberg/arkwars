@@ -78,6 +78,6 @@ exports.progressbar = (max, value) => {
 exports.appName = cfg.app.title;
 
 // i18n translate fn, make them available with current locale in templates
-exports.__ = key => {
-    return i18n.__(key);
+exports.__ = (key, data) => {
+    return i18n.__(key, data);
 };

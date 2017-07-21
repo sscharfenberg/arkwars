@@ -1,0 +1,10 @@
+extends ../email_layout
+
+block content
+    h2 Hallo @#{user.username}, hier kommt Ihr Aktivierungs Link!
+    p Sie haben einen neuen Aktivierungslink auf arkwars.io angefragt. Bitte klicken Sie auf den folgenden Button um Ihre Email zu bestätigen und Ihr Konto zu aktivieren. Bitte beachten Sie das der Link nur eine Stunde lang gültig ist.
+    +button(confirmURL, "Mein Konto aktivieren →")
+    p Falls Sie den Button oberhalb nicht klicken können besuchen Sie bitte
+    | #{confirmURL}
+    br
+    p Falls Sie diese E-Mail nicht angefordert haben, ignorieren Sie diese E-Mail bitte.

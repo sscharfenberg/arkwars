@@ -305,7 +305,7 @@
             }
         ],
         "selector-max-type": [
-            1,
+            2,
             {
                 "ignore": [
                     "descendant"

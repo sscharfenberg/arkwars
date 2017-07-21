@@ -3,9 +3,17 @@
  * authController
  *
  **********************************************************************************************************************/
-const passport = require("passport"); // https://github.com/jaredhanson/passport
+const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
+const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
+const mongoose = require("mongoose"); // http://mongoosejs.com/
+const passport = require("passport"); // https://github.com/jaredhanson/passport
+const logger = require("../handlers/logger/console");
+const mail = require("../handlers/mail");
+const cfg = require("../config");
+const User = mongoose.model("User");
+
 
 /*
  * show login form =====================================================================================================
@@ -18,6 +26,7 @@ exports.showLoginForm = (req, res) => {
         session: req.session
     });
 };
+
 
 /*
  * log the user in =====================================================================================================
@@ -88,6 +97,7 @@ exports.login = (req, res, next) => {
     })(req, res, next);
 };
 
+
 /*
  * log the user out ====================================================================================================
  * @param {ExpressHTTPRequest} req
@@ -143,4 +153,73 @@ exports.isLoggedIn = (req, res, next) => {
     }
     req.flash("error", i18n.__("AUTH_LOGIN_REQUIRED"));
     res.redirect("/auth/login");
+};
+
+
+/*
+ * show "resend activation email" form =================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.showResendForm = (req, res) => {
+    res.render("auth/resend", {
+        title: i18n.__("PAGE_RESEND_TITLE"),
+        session: req.session
+    });
+};
+
+
+/*
+ * validate resend request =============================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.validateResend = async (req, res, next) => {
+    logger.info(`[App] resend activation email request for ${chalk.cyan(req.body.email)}`);
+    const emailUser = await User.findOne({ email: req.body.email });
+    const errors = [];
+    if (!emailUser) {
+        errors.push(i18n.__("PAGE_RESEND_ERR_EmailNotFound"));
+    }
+    if (emailUser && emailUser.emailConfirmed && emailUser.emailConfirmationToken === "") {
+        errors.push(i18n.__("PAGE_RESEND_ERR_EmailAlreadyConfirmed"));
+    }
+    if (errors.length) {
+        return res.render("auth/resend", {
+            title: i18n.__("PAGE_RESEND_TITLE"),
+            session: req.session,
+            data: req.body,
+            errors: errors,
+            flashes: req.flash()
+        });
+    }
+    next();
+};
+
+
+/*
+ * resend activation link ==============================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.doResend = async (req, res) => {
+    const user = await User.findOne({ email: req.body.email });
+    user.emailConfirmationToken = crypto.randomBytes(20).toString("hex");
+    user.emailConfirmationExpires = moment().add(1, "hours");
+    user.emailConfirmed = false;
+    const confirmURL = `http://${req.headers
+        .host}/auth/confirm/${user.emailConfirmationToken}`;
+    await user.save();
+    await mail.send({
+        user,
+        filename: "resend_email",
+        subject: i18n.__("MAIL_RESEND_SUBJECT", cfg.app.title),
+        confirmURL
+    });
+    logger.info(
+        `[App] re-sent activation email to ${chalk.yellow(user.email)} and updated user with new confirm token.`
+    );
+    req.flash("success", i18n.__("MAIL_RESEND_SUCCESS"));
+    res.redirect("/");
 };

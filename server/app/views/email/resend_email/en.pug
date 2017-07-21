@@ -1,0 +1,10 @@
+extends ../email_layout
+
+block content
+    h2 Hello @#{user.username}, here is your activation link!
+    p You have requested a new activation link for arkwars.io. Please click the following button to confirm your email and activate your account. Please note this link is only valid for the next hour.
+    +button(confirmURL, "Activate My Account →")
+    p If you can't click the above button please visit
+    | #{confirmURL}
+    br
+    p If you didn't request this email, please ignore it.
