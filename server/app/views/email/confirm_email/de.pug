@@ -5,6 +5,13 @@ block content
     p Sie haben ein Benutzerkonto auf arkwars.io erstellt. Bitte klicken Sie auf den folgenden Button um Ihre Email zu bestätigen und Ihr Konto zu aktivieren. Bitte beachten Sie das der Link nur eine Stunde lang gültig ist.
     +button(confirmURL, "Mein Konto aktivieren →")
     p Falls Sie den Button oberhalb nicht klicken können besuchen Sie bitte
-    | #{confirmURL}
+        br
+        | #{confirmURL}
+    p Registrierter Benutzername
+        br
+        span= user.username
+    p Registrierter Benutzer
+        br
+        span= user.email
     br
     p Falls Sie diese E-Mail nicht angefordert haben, ignorieren Sie diese E-Mail bitte.

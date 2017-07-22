@@ -11,7 +11,7 @@ body
     header.aw-header
 
         .aw-header__menu
-            button.aw-header__menu-btn(aria-label="Main Menu")
+            button.aw-header__menu-btn(aria-label=(h.__("APP_LABEL_MAINMENU")))
                 span
                 span
                 span
@@ -23,7 +23,7 @@ body
 
         ul.aw-header__actions
             li.aw-header__action
-                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label="Change Language")
+                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP_LABEL_CHANGELANGUAGE")))
                     != h.icon("language")
                     span.keep #{session && session.locale ? session.locale : ""}
                 ul.aw-header__submenu.aw-header__submenu--left.aw-header__submenu--medium(aria-hidden="true")
@@ -36,7 +36,7 @@ body
                             != h.image("flags/de.svg")
                             | Deutsch
             li.aw-header__action
-                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label="Games")
+                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP_LABEL_CHANGEGAME")))
                     != h.icon("games")
                     span.keep g1
                 ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
@@ -48,11 +48,11 @@ body
                 li.aw-header__action
                     a.aw-header__link(href="/auth/login/")
                         != h.icon("key")
-                        span Login
+                        span= h.__("APP_LABEL_LOGIN")
                 li.aw-header__action
                     a.aw-header__link(href="/auth/register/")
                         != h.icon("lightbulb")
-                        span Register
+                        span= h.__("APP_LABEL_REGISTER")
             if user
                 li.aw-header__action
                     a.aw-header__link.aw-header__submenu-trigger.aw-header__link--circle(href="/auth/profile/")
@@ -65,13 +65,13 @@ body
                 li.aw-header__action
                     a.aw-header__link(href="/auth/logout/")
                         != h.icon("power")
-                        span Logout
+                        span= h.__("APP_LABEL_LOGOUT")
         .aw-header__turn
             .aw-turn
                 != h.icon("turn", ["turn"])
                 .aw-turn__value 125
             .aw-header__server-time
-                time(datetime="2017-07-10T19:41:05.133Z", data-server-time) 00:00
+                time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LLL")
             .aw-header__turn-next-progress
                 .aw-progress.aw-progress-turn(data-max="15", data-value="14")
                     != h.progressbar(15, 14)
@@ -85,22 +85,22 @@ body
 
                 li.aw-drawer__list-item.aw-drawer__list-item--info
                     .aw-drawer__info
-                        .aw-drawer__info-label server time
+                        .aw-drawer__info-label= h.__("APP_LABEL_SERVERTIME")
                         .aw-drawer__info-value
-                            time(datetime="2017-07-10T19:41:05.133Z", data-server-time) 00:00
+                            time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LLL")
                     .aw-drawer__info.aw-drawer__info--darker
-                        .aw-drawer__info-label local time
+                        .aw-drawer__info-label= h.__("APP_LABEL_LOCALTIME")
                         .aw-drawer__info-value
                             time(datetime="", data-my-time) 00:00
                 li.aw-drawer__list-item.aw-drawer__list-item--turn
                     .aw-drawer__turn
                         .aw-drawer__turn-current
-                            .aw-drawer__turn-current-label Aktuelle Runde
+                            .aw-drawer__turn-current-label= h.__("GAME_LABEL_CURRENTTURN")
                             .aw-turn
                                 != h.icon("turn", ["turn"])
                                 .aw-turn__value 21
                         .aw-drawer__turn-next
-                            .aw-drawer__turn-next-label Nächste Runde
+                            .aw-drawer__turn-next-label= h.__("GAME_LABEL_NEXTTURN")
                             .aw-drawer__turn-next-progress
                                 .aw-progress.aw-progress-turn(data-max="15", data-value="14")
                                     != h.progressbar(15,14)
@@ -110,27 +110,27 @@ body
                 li.aw-drawer__list-item
                     a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire/")
                         != h.icon("empire", ["small"])
-                        | Empire
+                        != h.__("GAME_AREA_EMPIRE")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/fleets/")
                         != h.icon("fleet", ["small"])
-                        | Fleets
+                        != h.__("GAME_AREA_FLEETS")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/shipyards/")
                         != h.icon("build", ["small"])
-                        | Shipyards
+                        != h.__("GAME_AREA_SHIPYARDS")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/research/")
                         != h.icon("research", ["small"])
-                        | Research
+                        != h.__("GAME_AREA_RESEARCH")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/starchart/")
                         != h.icon("starchart", ["small"])
-                        | Starchart
+                        != h.__("GAME_AREA_STARCHART")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/galnet/")
                         != h.icon("galnet", ["small"])
-                        | GalNet
+                        != h.__("GAME_AREA_GALNET")
 
                 li.aw-drawer__list-item.aw-drawer__list-item--spacer
                 li.aw-drawer__list-item

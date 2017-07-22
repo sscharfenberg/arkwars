@@ -5,6 +5,13 @@ block content
     p You have registered an account on arkwars.io. Please click the following button to confirm your email and activate your account. Please note this link is only valid for the next hour.
     +button(confirmURL, "Activate My Account →")
     p If you can't click the above button please visit
-    | #{confirmURL}
+        br
+        | #{confirmURL}
+    p Registered Username
+        br
+        span= user.username
+    p Registered E-Mail
+        br
+        span= user.email
     br
     p If you didn't request this email, please ignore it.

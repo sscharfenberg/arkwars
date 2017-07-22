@@ -9,7 +9,7 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const passport = require("passport"); // https://github.com/jaredhanson/passport
-const { getCaptcha } = require("../auth/captcha");
+const { getCaptcha } = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
 const mail = require("../../handlers/mail");
 const cfg = require("../../config");
@@ -45,7 +45,6 @@ exports.login = async (req, res, next) => {
         // could not authenticate. passport-local-mongoose gives use error codes back
         if (!user) {
             req.flash("error", i18n.__(`PAGE_LOGIN_${info.name}`));
-            console.log(info);
             return res.render("auth/login", {
                 title: i18n.__("PAGE_LOGIN_TITLE"),
                 session: req.session,
@@ -214,12 +213,13 @@ exports.validateResend = async (req, res, next) => {
     }
 
     if (errors.length) {
-        const captcha = getCaptcha(req.session.captcha);
+        const captcha = getCaptcha();
+        req.session.captcha = captcha.text;
         return res.render("auth/resend", {
             title: i18n.__("PAGE_RESEND_TITLE"),
             session: req.session,
             data: req.body,
-            captcha,
+            captcha: captcha.data,
             captchaFail,
             errors: errors,
             flashes: req.flash()

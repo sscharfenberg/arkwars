@@ -11,7 +11,9 @@ const fs = require("fs");
 const config = require("../../config");
 const logger = require("../utils/clientlogger");
 const Game = require("../../../server/app/models/Game");
+const User = require("../../../server/app/models/User");
 const games = require("../../mockdata/games");
+const users = require("../../mockdata/users");
 require("dotenv").config({
     path: path.join(config.projectRoot, "config", ".env")
 });
@@ -27,8 +29,14 @@ mongoose.Promise = global.Promise;
  */
 async function pruneDatabase() {
     logger.info("[node] pruning database ...");
-    await Game.remove();
-    logger.success("database pruned.");
+    try {
+        await Game.remove();
+        await User.remove();
+        logger.success("database pruned.");
+    } catch(e) {
+        logger.error("error while pruning database.");
+        logger.error(e);
+    }
     process.exit(0);
 }
 
@@ -40,14 +48,15 @@ async function seedDatabase() {
     logger.info("[node] start seeding database");
     try {
         await Game.insertMany(games);
-        logger.debug(`inserting ${games.length} games`);
+        logger.debug(`inserting ${games.length} games.`);
+        await User.insertMany(users);
+        logger.debug(`inserting ${users.length} users.`);
         logger.success("done, database seeded!");
-        process.exit(0);
     } catch(e) {
         logger.error("error while seeding database.");
         logger.error(e);
-        process.exit(0);
     }
+    process.exit(0);
 }
 
 

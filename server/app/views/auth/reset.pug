@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    main.aw-content__inner.aw-content__inner--narrow
+
+        h1= title
+
+        form.aw-narrowform(action="/auth/reset" method="POST")
+
+            .aw-narrowform__row= h.__("PAGE_RESET_INTRO")
+
+            .aw-narrowform__row(class=`${errors && errors.email ? "error" : ""}`)
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label(for="email")= h.__("PAGE_LOGIN_EMAIL_LABEL")
+                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder=(h.__("PAGE_LOGIN_EMAIL_PLACEHOLDER")), required, aria-required="true", value=(data && data.email))
+                if errors && errors.email
+                    .aw-narrowform__error-message= errors.email.msg
+                .aw-narrowform__row-description= h.__("PAGE_LOGIN_EMAIL_LABEL")
+
+            .aw-narrowform__row(class=`${errors && errors.captcha ? "error" : ""}`)
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label.aw-narrowform-input__label--captcha(for="captcha")
+                        != captcha
+                    input.aw-narrowform-input__input(type="text", name="captcha", id="captcha", placeholder=(h.__("PAGE_REG_CAPTCHA_PLACEHOLDER")), required, aria-required="true", value=(data && data.captcha))
+                if errors && errors.captcha
+                    .aw-narrowform__error-message= errors.captcha.msg
+                .aw-narrowform__row-description!= h.__("PAGE_REG_CAPTCHA_DESCRIPTION")
+
+            .aw-narrowform__row
+                .aw-narrowform__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("key", ["small"])
+                        != h.__("PAGE_RESET_SUBMIT")

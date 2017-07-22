@@ -13,6 +13,7 @@ const indexController = require("../controllers/index");
 const apiController = require("../controllers/api");
 const userController = require("../controllers/user");
 const authController = require("../controllers/auth");
+const resetController = require("../controllers/auth/reset");
 const adminController = require("../controllers/admin");
 const profileController = require("../controllers/user/profile");
 const { catchErrors } = require("../handlers/error");
@@ -53,6 +54,11 @@ router.post(
     "/auth/resend",
     catchErrors(authController.validateResend), // 1. Validate form data
     catchErrors(authController.doResend) // 2. resend activation link
+);
+router.get("/auth/reset", resetController.showResetForm);
+router.post("/auth/reset",
+    catchErrors(resetController.validateRequest), // 1. validate form data
+    resetController.doReset // 2. send reset link, update user
 );
 
 /*
