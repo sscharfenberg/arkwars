@@ -26,7 +26,6 @@ const appConfig = {
         }
         , locales: ["en", "de"]
         , blacklistedUsernames: [
-            "ash",
             "ashaltiriak",
             "admin",
             "administrator",

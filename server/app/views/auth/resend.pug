@@ -17,6 +17,15 @@ block content
                     .aw-narrowform__error-message= errors
                 .aw-narrowform__row-description= h.__("PAGE_LOGIN_EMAIL_LABEL")
 
+            .aw-narrowform__row(class=`${captchaFail ? "error" : ""}`)
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label.aw-narrowform-input__label--captcha(for="captcha")
+                        != captcha
+                    input.aw-narrowform-input__input(type="text", name="captcha", id="captcha", placeholder=(h.__("PAGE_REG_CAPTCHA_PLACEHOLDER")), required, aria-required="true", value=(data && data.captcha))
+                if captchaFail
+                    .aw-narrowform__error-message= captchaFail
+                .aw-narrowform__row-description!= h.__("PAGE_REG_CAPTCHA_DESCRIPTION")
+
             .aw-narrowform__row
                 .aw-narrowform__submit
                     button.aw-btn.aw-btn--icon(type="submit")

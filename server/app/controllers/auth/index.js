@@ -9,9 +9,10 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const passport = require("passport"); // https://github.com/jaredhanson/passport
-const logger = require("../handlers/logger/console");
-const mail = require("../handlers/mail");
-const cfg = require("../config");
+const { getCaptcha } = require("../auth/captcha");
+const logger = require("../../handlers/logger/console");
+const mail = require("../../handlers/mail");
+const cfg = require("../../config");
 const User = mongoose.model("User");
 
 
@@ -34,7 +35,7 @@ exports.showLoginForm = (req, res) => {
  * @param {ExpressHTTPResponse} res
  * @param {callback} next
  */
-exports.login = (req, res, next) => {
+exports.login = async (req, res, next) => {
     moment.locale(req.session.locale);
     passport.authenticate("local", function(err, user, info) {
         if (err) {
@@ -44,6 +45,7 @@ exports.login = (req, res, next) => {
         // could not authenticate. passport-local-mongoose gives use error codes back
         if (!user) {
             req.flash("error", i18n.__(`PAGE_LOGIN_${info.name}`));
+            console.log(info);
             return res.render("auth/login", {
                 title: i18n.__("PAGE_LOGIN_TITLE"),
                 session: req.session,
@@ -92,7 +94,8 @@ exports.login = (req, res, next) => {
             }
             req.user = user;
             req.flash("success", i18n.__("PAGE_LOGIN_SUCCESS"));
-            return res.redirect("/profile");
+            res.redirect("/profile");
+            return;
         });
     })(req, res, next);
 };
@@ -105,8 +108,9 @@ exports.login = (req, res, next) => {
  */
 exports.logout = (req, res) => {
     req.logout();
+    req.user = null; // sometimes we redirect faster than the user is logged out.
     req.flash("success", i18n.__("PAGE_LOGOUT_SUCCESS"));
-    return res.redirect("/");
+    res.redirect("/");
 };
 
 
@@ -162,9 +166,13 @@ exports.isLoggedIn = (req, res, next) => {
  * @param {ExpressHTTPResponse} res
  */
 exports.showResendForm = (req, res) => {
+    const captcha = getCaptcha();
+    req.session.captcha = captcha.text;
     res.render("auth/resend", {
         title: i18n.__("PAGE_RESEND_TITLE"),
-        session: req.session
+        session: req.session,
+        captcha: captcha.data,
+        flashes: req.flash()
     });
 };
 
@@ -179,21 +187,45 @@ exports.validateResend = async (req, res, next) => {
     logger.info(`[App] resend activation email request for ${chalk.cyan(req.body.email)}`);
     const emailUser = await User.findOne({ email: req.body.email });
     const errors = [];
+    let captchaFail = false;
     if (!emailUser) {
         errors.push(i18n.__("PAGE_RESEND_ERR_EmailNotFound"));
     }
     if (emailUser && emailUser.emailConfirmed && emailUser.emailConfirmationToken === "") {
         errors.push(i18n.__("PAGE_RESEND_ERR_EmailAlreadyConfirmed"));
     }
-    if (errors.length) {
+
+    if (req.body.captcha === "") {
+        captchaFail = i18n.__("PAGE_REG_ERROR_CaptchaEmpty");
+    } else if (req.body.captcha !== req.session.captcha) {
+        captchaFail = i18n.__("PAGE_REG_ERROR_CaptchaMismatch");
+    }
+
+    if (captchaFail) {
+        const captcha = getCaptcha(req.session.captcha);
         return res.render("auth/resend", {
             title: i18n.__("PAGE_RESEND_TITLE"),
             session: req.session,
             data: req.body,
+            captcha,
+            captchaFail,
+            flashes: req.flash()
+        });
+    }
+
+    if (errors.length) {
+        const captcha = getCaptcha(req.session.captcha);
+        return res.render("auth/resend", {
+            title: i18n.__("PAGE_RESEND_TITLE"),
+            session: req.session,
+            data: req.body,
+            captcha,
+            captchaFail,
             errors: errors,
             flashes: req.flash()
         });
     }
+
     next();
 };
 
@@ -221,5 +253,5 @@ exports.doResend = async (req, res) => {
         `[App] re-sent activation email to ${chalk.yellow(user.email)} and updated user with new confirm token.`
     );
     req.flash("success", i18n.__("MAIL_RESEND_SUCCESS"));
-    res.redirect("/");
+    return res.redirect("/");
 };

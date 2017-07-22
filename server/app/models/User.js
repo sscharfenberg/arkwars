@@ -79,12 +79,10 @@ const userSchema = new mongoose.Schema({
 
     // permissions
     admin: {
-        type: Boolean,
-        default: false
+        type: Boolean
     },
     moderator: {
-        type: Boolean,
-        default: false
+        type: Boolean
     }
 
 });

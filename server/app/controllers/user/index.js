@@ -3,7 +3,6 @@
  * userController
  *
  **********************************************************************************************************************/
-const svgCaptcha = require("svg-captcha"); // https://github.com/lemonce/svg-captcha
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const moment = require("moment"); // https://momentjs.com/
 const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
@@ -11,32 +10,11 @@ const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const User = mongoose.model("User");
+const { getCaptcha } = require("../auth/captcha");
 const logger = require("../../handlers/logger/console");
 const userValidators = require("../../utils/validators/user");
 const mail = require("../../handlers/mail");
 const cfg = require("../../config");
-
-
-
-/*
- * create a SVG captcha image. =========================================================================================
- * uses random characters or a string that is passed to the fn.
- * @param {string} text - optional
- * @returns {CaptchaObj} || {SVGObj}
- */
-const getCaptcha = (text = undefined) => {
-    const options = {
-        height: 26,
-        size: 4,
-        ignoreChars: "0Ool1Ii8B",
-        noise: 0
-    };
-    if (text) {
-        return svgCaptcha(text, options); // {SVGObj}
-    } else {
-        return svgCaptcha.create(options); // {CaptchaObj}
-    }
-};
 
 
 /*
@@ -46,11 +24,12 @@ const getCaptcha = (text = undefined) => {
  */
 exports.showRegistration = (req, res) => {
     const captcha = getCaptcha();
-    req.session.captcha = captcha.text; // TODO this should be flashed, not injected into the session
+    req.session.captcha = captcha.text;
     res.render("auth/register", {
         title: i18n.__("PAGE_REG_TITLE"),
         session: req.session,
-        captcha: captcha.data
+        captcha: captcha.data,
+        flashes: req.flash()
     });
 };
 
@@ -62,7 +41,12 @@ exports.showRegistration = (req, res) => {
  * @param {callback} next
  */
 exports.validateRegistration = async (req, res, next) => {
-    logger.info("recieved registration data: " + JSON.stringify(req.body));
+    const captcha = getCaptcha(req.session.captcha);
+    logger.info(`recieved registration data: { 
+  username: ${req.body.username}
+  email: ${req.body.email}
+  accept: ${req.body.accept_conditions}
+}`);
 
     // default validators
     req = userValidators.defaultValidators(req);
@@ -97,7 +81,7 @@ exports.validateRegistration = async (req, res, next) => {
     if (
         cfg.app.blacklistedUsernames.includes(req.body.username.toLowerCase())
     ) {
-        const error = userValidators.userNameBlacklisted(req)
+        const error = userValidators.userNameBlacklisted(req);
         errorMap.username = error;
         errorList.push(error);
         logger.debug(
@@ -106,9 +90,26 @@ exports.validateRegistration = async (req, res, next) => {
         );
     }
 
-    // if there are errors, render the template with errors.
-    if (errorList.length) {
-        const captcha = getCaptcha(req.session.captcha);
+    console.log(errorMap.captcha);
+
+    if(errorMap.captcha) {
+        const captchaError = {
+            param: errorMap.captcha.param,
+            msg: errorMap.captcha.msg,
+            value: errorMap.captcha.value
+        };
+        logger.debug(`[App] captcha error: ${JSON.stringify(captchaError)}`);
+        req.flash("error", i18n.__("PAGE_REG_ERROR"));
+        return res.render("auth/register", {
+            title: i18n.__("PAGE_REG_TITLE"),
+            session: req.session,
+            // svg-captcha returns the captcha directly when we provide the text, not as captcha.data
+            captcha,
+            data: req.body,
+            errors: {captcha: captchaError}, // only pass the captcha error if it fails.
+            flashes: req.flash()
+        });
+    } else if (errorList.length) { // if there are errors, render the template with errors.
         logger.debug(`[App] validation errors: ${JSON.stringify(errorList)}`);
         req.flash("error", i18n.__("PAGE_REG_ERROR"));
         return res.render("auth/register", {
@@ -143,6 +144,7 @@ exports.doRegistration = async (req, res, next) => {
     const register = promisify(User.register, User);
     await register(user, req.body.password);
     req.session.captcha = undefined; // cleanup
+    req.user = user;
     logger.success(`[App] saved user ${chalk.red("@" + user.username)}.`);
     next(); // no errors - proceed to next middleware
 };
@@ -192,12 +194,12 @@ exports.confirmEmail = async (req, res) => {
         emailConfirmationExpires: { $gt: moment().toISOString() }
     });
     logger.debug(
-        `[App] email confirmation request. user: ${JSON.stringify(user)}`
+        `[App] email confirmation request. token: ${req.params.token}`
     );
-    console.log(req.params.token);
     if (!user) {
         req.flash("error", i18n.__("REG_CONFIRM_FAILED"));
-        return res.redirect("/auth/login");
+        res.redirect("/auth/login");
+        return;
     }
 
     user.emailConfirmationToken = "";
@@ -224,27 +226,25 @@ exports.switchLanguage = async (req, res) => {
     if (!cfg.app.locales.includes(req.params.lang)) {
         logger.error(`[App] invalid locale: ${chalk.red(newLocale)}.`);
         req.flash("error", i18n.__("APP_SWITCH_LANG_InvalidLocale"));
-    } else {
-        req.session.locale = newLocale;
-        if (req.user) {
-            const user = await User.findOneAndUpdate(
-                { _id: req.user._id },
-                { $set: { locale: newLocale } },
-                { new: true, runValidators: true, context: "query" }
-            );
-            logger.info(
-                `[App] user ${chalk.red(
-                    "@" + user.username
-                )} locale updated in db to ${chalk.yellow(req.session.locale)}`
-            );
-        }
-        req.session.save(() => {
-            logger.info(
-                `[App] user switched locale to ${chalk.yellow(
-                    req.session.locale
-                )}`
-            );
-        });
+        return res.redirect("back");
     }
-    return res.redirect("back");
+    req.session.locale = newLocale;
+    if (req.user) {
+        const user = await User.findOneAndUpdate(
+            { _id: req.user._id },
+            { $set: { locale: newLocale } },
+            { new: true, runValidators: true, context: "query" }
+        );
+        logger.info(
+            `[App] user ${chalk.red(
+                "@" + user.username
+            )} locale updated in db to ${chalk.yellow(req.session.locale)}`
+        );
+    }
+    await req.session.save(() => {
+        logger.info(
+            `[App] user switched locale to ${chalk.yellow(req.session.locale)}`
+        );
+        return res.redirect("back");
+    });
 };

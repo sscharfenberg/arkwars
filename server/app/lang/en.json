@@ -57,7 +57,7 @@
 	"PAGE_REG_ERROR_CaptchaMismatch": "Oops! Your letters do not match the image provided.",
 	"PAGE_REG_ERROR_AcceptEmpty": "Please accept our terms and conditions.",
 	"PAGE_REG_SUCCESS": "Thanks for registering! We have sent a confirmation E-Mail to your address - please check your inbox and click on \"Activate my account\".",
-	"MAIL_ACTIVATION_SUBJECT": "Willkommen bei %s",
+	"MAIL_ACTIVATION_SUBJECT": "Welcome to %s!",
 	"REG_CONFIRM_SUCCESS": "Your Account has been activated.",
 	"REG_CONFIRM_FAILED": "Confirmation token is invalid or has expired.",
 	"PAGE_RESEND_TITLE": "Resend Activation E-Mail",
