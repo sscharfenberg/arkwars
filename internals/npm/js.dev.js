@@ -12,10 +12,10 @@ process.env.NODE_ENV = "development";
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
 const webpackDevServer = require("webpack-dev-server"); // https://webpack.js.org/configuration/dev-server/
-const webpackConfig = require("../../webpack/config.dev");
+const webpackConfig = require("../webpack/config.dev");
 const livereload = require("gulp-livereload"); // https://www.npmjs.com/package/gulp-livereload
 const logger = require("../utils/clientlogger");
-const config = require("../../config");
+const config = require("../config");
 let compiler = webpack(webpackConfig);
 let initialCompile = true;
 

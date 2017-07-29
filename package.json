@@ -1,6 +1,6 @@
 {
     "name": "arkwars",
-    "description": "Frontend and Backend for Arkwars - a strategic turn-based game of galactic conquest. NodeJS/MongoDB Backend, React Frontend.",
+    "description": "Arkwars - a strategic turn-based game of galactic conquest.",
     "version": "0.0.2",
     "url": "https://arkwars.io",
     "author": {
@@ -14,25 +14,25 @@
     },
     "license": "MIT",
     "engines": {
-        "node": ">= 8.1.4",
+        "node": ">= 8.2.1",
         "npm": ">= 5.3.0"
     },
     "scripts": {
-        "start": "node server/nodemon.js",
-        "build.static": "gulp build:static",
+        "server.start": "node server/nodemon.js",
         "watch": "gulp watch",
-        "js.prod": "node internals/scripts/npm/js.prod.js",
-        "js.dev": "node internals/scripts/npm/js.dev.js",
+        "build.static": "gulp build:static",
+        "js.prod": "node internals/npm/js.prod.js",
+        "js.dev": "node internals/npm/js.dev.js",
+        "js.test": "node internals/npm/test.js --env=jsdom --coverage",
+        "js.test.watch": "node internals/npm/test.js --env=jsdom --watch",
         "styles.build": "gulp styles:build",
         "styles.lint": "gulp styles:lint",
         "sync.fonts": "gulp sync:fonts",
         "sync.images": "gulp sync:images",
         "icons": "gulp icons",
-        "cleanup": "node internals/scripts/npm/cleanup.js",
-        "test.client": "node internals/scripts/npm/test.js --env=jsdom --coverage",
-        "test.client.watch": "node internals/scripts/npm/test.js --env=jsdom --watch",
-        "db.prune": "node internals/scripts/npm/seed.js --prune",
-        "db.seed.mockdata": "node internals/scripts/npm/seed.js --seed"
+        "cleanup.files": "gulp cleanup",
+        "server.db.prune": "node internals/npm/seed.js --prune",
+        "server.db.seed": "node internals/npm/seed.js --seed"
     },
     "dependencies": {
         "axios": "^0.16.2",
@@ -47,7 +47,7 @@
         "express-session": "^1.15.4",
         "express-validator": "^3.2.1",
         "fs-extra": "^4.0.0",
-        "helmet": "^3.7.0",
+        "helmet": "^3.8.1",
         "html-to-text": "^3.3.0",
         "i18n": "^0.8.3",
         "juice": "^4.1.0",
@@ -75,6 +75,7 @@
         "chalk": "^2.0.1",
         "compression-webpack-plugin": "^1.0.0",
         "cssnano": "^3.10.0",
+        "del": "^3.0.0",
         "eslint": "^4.3.0",
         "eslint-friendly-formatter": "^3.0.0",
         "eslint-loader": "^1.9.0",
@@ -96,7 +97,7 @@
         "gulp-stylelint": "^4.0.0",
         "gulp-svgstore": "^6.1.0",
         "html-webpack-harddisk-plugin": "^0.1.0",
-        "html-webpack-plugin": "^2.28.0",
+        "html-webpack-plugin": "^2.29.0",
         "jest": "^20.0.4",
         "normalize-scss": "^7.0.0",
         "postcss-banner": "^3.0.0",
@@ -105,8 +106,8 @@
         "stylelint-order": "^0.6.0",
         "stylelint-scss": "^1.5.1",
         "stylelint-selector-no-utility": "^1.6.1",
-        "webpack": "^3.3.0",
-        "webpack-dev-server": "^2.5.1",
+        "webpack": "^3.4.1",
+        "webpack-dev-server": "^2.6.1",
         "webpack-merge": "^4.1.0"
     },
     "babel": {
@@ -135,8 +136,8 @@
         "testURL": "http://localhost",
         "transform": {
             "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
-            "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-            "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+            "^.+\\.css$": "<rootDir>/internals/config/jest/cssTransform.js",
+            "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/internals/config/jest/fileTransform.js"
         },
         "transformIgnorePatterns": [
             "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"

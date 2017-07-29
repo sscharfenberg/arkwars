@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
  *
  * gulpfile.js
- * @type {Gulp}
  * this file simply includes the task files.
  *
  **********************************************************************************************************************/
-require( "./internals/scripts/gulp/styles");
-require( "./internals/scripts/gulp/sync");
-require( "./internals/scripts/gulp/icons");
-require( "./internals/scripts/gulp/watch");
+require( "./internals/gulp/styles");
+require( "./internals/gulp/sync");
+require( "./internals/gulp/icons");
+require( "./internals/gulp/watch");
+require( "./internals/gulp/cleanup");

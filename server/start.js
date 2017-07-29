@@ -14,7 +14,7 @@ const cron = require("./app/handlers/cron");
 const errorHandlers = require("./app/handlers/error"); // Error handling
 
 // import environmental variables from our .env file to process.env
-require("dotenv").config({ path: "./config/.env" });
+require("dotenv").config({ path: "./server/app/config/.env" });
 
 /*
  * connect and prepare MongoDB

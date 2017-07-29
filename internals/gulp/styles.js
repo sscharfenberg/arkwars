@@ -21,7 +21,7 @@ const styleLint = require("gulp-stylelint"); // https://stylelint.io/
 const sourcemaps = require("gulp-sourcemaps"); // https://www.npmjs.com/package/gulp-sourcemaps
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../utils/clientlogger");
-const config = require("../../config");
+const config = require("../config");
 
 /*
  * lints scss via style-lint

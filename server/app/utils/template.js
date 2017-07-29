@@ -47,7 +47,7 @@ exports.icon = (name, modifiers) => {
  */
 exports.spritesheet = () =>
     fs
-        .readFileSync(`./server/public/assets/icons/sprite.svg`, {
+        .readFileSync(`./server/public/assets/images/sprite.svg`, {
             encoding: "utf-8"
         })
         .replace("<svg", '<svg class="aw-icon-sprite"')

@@ -1,8 +1,7 @@
 /***********************************************************************************************************************
  *
- * APPLICATION CONFIG
+ * CLIENT CONFIG
  *
- * main configuration file for server and buld scripts.
  * this file does NOT include sensitive information and can be safely committed to git.
  * sensitive information is found in .env
  *
@@ -10,17 +9,19 @@
 const path = require("path");
 const fs = require("fs-extra");
 const moment = require("moment");
-const pkg = require("../package.json");
+const pkg = require("../../package.json");
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
-const appDirectory = fs.realpathSync(process.cwd());
+const PROJECTROOT = fs.realpathSync(process.cwd());
+const APPFOLDER = path.join(PROJECTROOT, "client");
+const BUILDDIR = path.join(PROJECTROOT, "server", "public", "assets");
 moment.locale("de");
 
 module.exports = {
-    projectRoot: appDirectory,
-    appFolder: path.join(appDirectory, "client"),
-    buildDir: path.join(appDirectory, "server", "public", "assets"),
+    projectRoot: PROJECTROOT,
+    appFolder: APPFOLDER,
+    buildDir: BUILDDIR,
 
     // used by both client and server
     appTitle: pkg.app.name,
@@ -53,7 +54,7 @@ module.exports = {
 
     // folder for pug script includes. we need this because of hash names.
     pugScriptInclude: path.join(
-        appDirectory,
+        PROJECTROOT,
         "server",
         "app",
         "views",
@@ -64,7 +65,7 @@ module.exports = {
 
     // webpack chunk entrypoints
     chunks: {
-        app: path.join(appDirectory, "client", "app.js")
+        app: path.join(PROJECTROOT, "client", "app.js")
     },
 
     // https://webpack.js.org/configuration/stats/
@@ -80,28 +81,32 @@ module.exports = {
     },
 
     // directory with jest coverage reports
-    jestCoverageDir: path.join(appDirectory, "coverage"),
+    jestCoverageDir: path.join(PROJECTROOT, "coverage"),
 
     paths: {
         css: {
-            in: [path.join(appDirectory, "client", "theme", "styles.scss")],
-            out: path.join(appDirectory, "server", "public", "assets"),
-            lint: path.join(appDirectory, "client", "theme", "**/*.scss"),
-            styleLintRc: path.join(appDirectory, "config", ".stylelintrc.json")
+            in: [path.join(PROJECTROOT, "client", "theme", "styles.scss")],
+            out: BUILDDIR,
+            lint: path.join(PROJECTROOT, "client", "theme", "**/*.scss"),
+            styleLintRc: path.join(
+                PROJECTROOT,
+                "internals",
+                "config",
+                ".stylelintrc.json"
+            )
         },
         fonts: {
-            in: [path.join(appDirectory, "client", "theme", "fonts", "**/*")],
-            out: path.join(appDirectory, "server", "public", "assets", "fonts")
+            in: [path.join(PROJECTROOT, "client", "theme", "fonts", "**/*")],
+            out: path.join(BUILDDIR, "fonts")
         },
         images: {
-            in: [
-                path.join(appDirectory, "client", "theme", "images", "**/*")
-            ],
-            out: path.join(appDirectory, "server", "public", "assets", "images")
+            in: [path.join(PROJECTROOT, "client", "theme", "images", "**/*")],
+            out: path.join(BUILDDIR, "images")
         },
         icons: {
-            in: [path.join(appDirectory, "client", "theme", "icons", "**/*")],
-            out: path.join(appDirectory, "server", "public", "assets", "icons")
-        }
+            in: [path.join(PROJECTROOT, "client", "theme", "icons", "**/*")],
+            out: path.join(BUILDDIR, "images")
+        },
+        cleanup: ["server/public/assets/**/*"]
     }
 };

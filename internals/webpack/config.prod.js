@@ -17,7 +17,7 @@ const config = require("../config");
 
 // import environmental variables from our .env file to process.env
 require("dotenv").config({
-    path: path.join(config.projectRoot, "config", ".env")
+    path: path.join(config.projectRoot, "server", "app", "config", ".env")
 });
 
 let webpackConfig = merge(baseWebpackConfig, {

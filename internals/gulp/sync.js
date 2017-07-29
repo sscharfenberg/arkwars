@@ -14,12 +14,12 @@ const size = require("gulp-size"); // https://www.npmjs.com/package/gulp-size
 const run = require("run-sequence").use(gulp); // https://www.npmjs.com/package/run-sequence
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../utils/clientlogger");
-const config = require("../../config");
+const config = require("../config");
 
 /*
  * copy all static resources to /public/assets
  */
-gulp.task("build:static", function(callback) {
+gulp.task("build:static", ["cleanup"], function(callback) {
     return run(
         ["sync:fonts", "sync:images", "icons", "styles:build"],
         callback

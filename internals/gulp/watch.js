@@ -7,7 +7,7 @@
 const gulp = require("gulp"); // https://www.npmjs.com/package/gulp
 const run = require("run-sequence").use(gulp); // https://www.npmjs.com/package/run-sequence
 const livereload = require("gulp-livereload"); // https://www.npmjs.com/package/gulp-livereload
-const config = require("../../config");
+const config = require("../config");
 const reportChange = require("../utils/reportChange");
 const logger = require("../utils/clientlogger");
 
@@ -19,6 +19,9 @@ gulp.task("watch", function() {
 
     // copy assets to server dir
     run(["build:static", "styles:build"]);
+
+    // do initial webpack compilation and start webpack-dev-server
+    require("../npm/js.dev");
 
     // gulp.watch
     gulp
@@ -33,9 +36,6 @@ gulp.task("watch", function() {
     gulp
         .watch(config.paths.icons.in, ["icons"])
         .on("change", reportChange);
-
-    // do initial webpack compilation and start webpack-dev-server
-    require("../npm/js.dev");
 
     console.log();
     logger.success(`[gulp] now watching for file changes\n`);

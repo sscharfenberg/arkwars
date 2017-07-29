@@ -35,6 +35,7 @@ const appConfig = {
             "moderator",
             "root",
             "superuser",
+            "sudo",
             "database"
         ]
     }

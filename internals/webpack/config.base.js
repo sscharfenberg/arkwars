@@ -51,6 +51,7 @@ const webpackConfig = {
                             formatter: require("eslint-friendly-formatter"),
                             configFile: path.join(
                                 config.projectRoot,
+                                "internals",
                                 "config",
                                 ".eslintrc.js"
                             )

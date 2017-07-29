@@ -55,6 +55,9 @@ strong {
 }
 
 .aw-content {
+    display: flex;
+    flex-direction: column;
+
     overflow-y: scroll;
 
     height: 100%;
@@ -63,9 +66,12 @@ strong {
     @extend %scrollbar;
 
     &__inner {
+        box-sizing: border-box;
+        width: 100%;
         max-width: map-get($breakpoints, "max");
         padding: 0.5rem;
         margin: 0 auto;
+        flex-grow: 1;
 
         @include respond-to("small") {
             padding: 1.5rem;

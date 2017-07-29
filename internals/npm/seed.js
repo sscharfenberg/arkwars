@@ -8,21 +8,23 @@
 const mongoose = require("mongoose");
 const path = require("path"); // https://nodejs.org/api/path.html
 const fs = require("fs");
-const config = require("../../config");
+const config = require("../config");
 const logger = require("../utils/clientlogger");
-const Game = require("../../../server/app/models/Game");
-const User = require("../../../server/app/models/User");
-const games = require("../../mockdata/games");
-const users = require("../../mockdata/users");
 require("dotenv").config({
-    path: path.join(config.projectRoot, "config", ".env")
+    path: path.join(config.projectRoot, "server", "app", "config", ".env")
 });
 
+// models and mockdata
+const Game = require("../../server/app/models/Game");
+const games = require("../mockdata/games");
+const User = require("../../server/app/models/User");
+const users = require("../mockdata/users");
+
+// http://mongoosejs.com/docs/connections.html#use-mongo-client
 mongoose.connect(process.env.DATABASE, {
-    useMongoClient: true // http://mongoosejs.com/docs/connections.html#use-mongo-client
+    useMongoClient: true
 });
 mongoose.Promise = global.Promise;
-
 
 /*
  * prune database and throw everything away.
@@ -33,13 +35,12 @@ async function pruneDatabase() {
         await Game.remove();
         await User.remove();
         logger.success("database pruned.");
-    } catch(e) {
+    } catch (e) {
         logger.error("error while pruning database.");
         logger.error(e);
     }
     process.exit(0);
 }
-
 
 /*
  * seed database with mock json data
@@ -52,18 +53,18 @@ async function seedDatabase() {
         await User.insertMany(users);
         logger.debug(`inserting ${users.length} users.`);
         logger.success("done, database seeded!");
-    } catch(e) {
+    } catch (e) {
         logger.error("error while seeding database.");
         logger.error(e);
     }
     process.exit(0);
 }
 
-
 if (process.argv.includes("--prune")) {
-    pruneDatabase();
+    try { pruneDatabase(); }
+    catch(err) { console.log(err) }
+
 } else if (process.argv.includes("--seed")) {
-    seedDatabase();
+    try { seedDatabase(); }
+    catch(err) { console.log(err) }
 }
-
-

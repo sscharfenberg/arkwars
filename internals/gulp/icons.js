@@ -15,7 +15,7 @@ const rename = require("gulp-rename"); // https://www.npmjs.com/package/gulp-ren
 const size = require("gulp-size"); // https://www.npmjs.com/package/gulp-size
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../utils/clientlogger");
-const config = require("../../config");
+const config = require("../config");
 
 /*
  * copy SVGs from /client/theme/icons/ to /server/public/assets/icons/
