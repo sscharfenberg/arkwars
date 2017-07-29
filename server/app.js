@@ -50,12 +50,6 @@ app.use(bodyParser.json());
 // https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// setup i18n
-i18n.configure({
-    locales: ["en", "de"],
-    directory: path.join(__dirname, "app", "lang")
-});
-
 // validate data middleWare
 app.use(expressValidator());
 
@@ -97,6 +91,14 @@ app.use(passport.session());
 // The flash middleware let's us use req.flash('error', 'Shit!')
 // which will then pass that message to the next page the user requests
 app.use(flash());
+
+// setup i18n
+i18n.configure({
+    locales: ["en", "de"],
+    objectNotation: true,
+    updateFiles: false,
+    directory: path.join(__dirname, "app", "lang")
+});
 
 // pass variables to our templates + all requests
 app.use((req, res, next) => {

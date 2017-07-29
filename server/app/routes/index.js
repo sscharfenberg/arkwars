@@ -45,10 +45,7 @@ router.post(
     catchErrors(userController.sendConfirmationEmail) // 3. send confirmation email
 );
 // confirm email
-router.get("/auth/confirm/:token",
-    catchErrors(userController.confirmEmail),
-    authController.login
-);
+router.get("/auth/confirm/:token", catchErrors(userController.confirmEmail));
 router.get("/auth/login", authController.showLoginForm); // show login form
 router.post("/auth/login", authController.login);
 router.get("/auth/logout", authController.logout);
@@ -59,7 +56,8 @@ router.post(
     catchErrors(authController.doResend) // 2. resend activation link
 );
 router.get("/auth/reset", resetController.showResetForm);
-router.post("/auth/reset",
+router.post(
+    "/auth/reset",
     catchErrors(resetController.validateRequest), // 1. validate form data
     resetController.doReset // 2. send reset link, update user
 );

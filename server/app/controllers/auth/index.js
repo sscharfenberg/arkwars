@@ -23,7 +23,7 @@ const User = mongoose.model("User");
  */
 exports.showLoginForm = (req, res) => {
     res.render("auth/login", {
-        title: i18n.__("PAGE_LOGIN_TITLE"),
+        title: i18n.__("APP.LOGIN.TITLE"),
         session: req.session
     });
 };
@@ -44,11 +44,11 @@ exports.login = async (req, res, next) => {
 
         // could not authenticate. passport-local-mongoose gives use error codes back
         if (!user) {
-            req.flash("error", i18n.__(`PAGE_LOGIN_${info.name}`));
+            req.flash("error", i18n.__(`APP.LOGIN.${info.name}`));
             return res.render("auth/login", {
-                title: i18n.__("PAGE_LOGIN_TITLE"),
+                title: i18n.__("APP.LOGIN.TITLE"),
                 session: req.session,
-                errors: i18n.__(`PAGE_LOGIN_${info.name}`),
+                errors: i18n.__(`APP.LOGIN.${info.name}`),
                 data: req.body,
                 flashes: req.flash()
             });
@@ -56,10 +56,10 @@ exports.login = async (req, res, next) => {
 
         // if the email is not yet confirmed, show error message.
         if (!user.emailConfirmed) {
-            const message = i18n.__("PAGE_LOGIN_NotConfirmedError");
+            const message = i18n.__("APP.LOGIN.NotConfirmedError");
             req.flash("error", message);
             return res.render("auth/login", {
-                title: i18n.__("PAGE_LOGIN_TITLE"),
+                title: i18n.__("APP.LOGIN.TITLE"),
                 session: req.session,
                 errors: message,
                 data: req.body,
@@ -73,12 +73,12 @@ exports.login = async (req, res, next) => {
             moment(user.suspendedUntil).diff(moment()) > 0
         ) {
             const message =
-                i18n.__("PAGE_LOGIN_Suspended") +
+                i18n.__("APP.LOGIN.Suspended") +
                 moment(user.suspendedUntil).format("LLL");
             req.flash("error", message);
             console.log(moment().locale());
             return res.render("auth/login", {
-                title: i18n.__("PAGE_LOGIN_TITLE"),
+                title: i18n.__("APP.LOGIN.TITLE"),
                 session: req.session,
                 errors: message,
                 data: req.body,
@@ -93,18 +93,11 @@ exports.login = async (req, res, next) => {
             }
             req.user = user;
             logger.info(`[App] user @${user.username} logged in.`);
-            req.flash("success", i18n.__("PAGE_LOGIN_SUCCESS"));
+            req.flash("success", i18n.__("APP.LOGIN.SUCCESS"));
             res.redirect("/profile");
         });
     })(req, res, next);
 };
-
-//exports.login = (req, res) => {
-//    req.session.user = { id: "234234234", email: "ashaltiriak@gmail.com"};
-//    req.flash("success", "logged in");
-//    console.log("logged in - user: " + req.session.user);
-//    res.redirect("/profile");
-//};
 
 
 /*
@@ -115,7 +108,7 @@ exports.login = async (req, res, next) => {
 exports.logout = (req, res) => {
     logger.info(`[App] user @${req.user.username} logging out.`);
     req.logout();
-    req.flash("success", i18n.__("PAGE_LOGOUT_SUCCESS"));
+    req.flash("success", i18n.__("APP.LOGOUT.SUCCESS"));
     res.redirect("/");
 };
 
@@ -127,7 +120,7 @@ exports.logout = (req, res) => {
  */
 exports.isAdmin = (req, res, next) => {
     if (!req.user || !req.user.admin) {
-        req.flash("error", i18n.__("AUTH_ADMIN_REQUIRED"));
+        req.flash("error", i18n.__("APP.AUTH.ADMIN_REQUIRED"));
         res.redirect("back");
     } else {
         next();
@@ -142,7 +135,7 @@ exports.isAdmin = (req, res, next) => {
  */
 exports.isMod = (req, res, next) => {
     if (!req.user || !req.user.moderator) {
-        req.flash("error", i18n.__("AUTH_MOD_REQUIRED"));
+        req.flash("error", i18n.__("APP.AUTH.MOD_REQUIRED"));
         res.redirect("back");
     } else {
         next();
@@ -160,11 +153,13 @@ exports.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         next();
     } else {
-        req.flash("error", i18n.__("AUTH_LOGIN_REQUIRED"));
+        req.flash("error", i18n.__("APP.AUTH.LOGIN_REQUIRED"));
         res.redirect("/auth/login");
     }
 };
 
+
+// TODO move resend to seperate controller. small files pls.
 
 /*
  * show "resend activation email" form =================================================================================
@@ -175,7 +170,7 @@ exports.showResendForm = (req, res) => {
     const captcha = getCaptcha();
     req.session.captcha = captcha.text;
     res.render("auth/resend", {
-        title: i18n.__("PAGE_RESEND_TITLE"),
+        title: i18n.__("APP.RESEND.TITLE"),
         session: req.session,
         captcha: captcha.data,
         flashes: req.flash()
@@ -195,22 +190,22 @@ exports.validateResend = async (req, res, next) => {
     const errors = [];
     let captchaFail = false;
     if (!emailUser) {
-        errors.push(i18n.__("PAGE_RESEND_ERR_EmailNotFound"));
+        errors.push(i18n.__("APP.RESEND.ERR_EmailNotFound"));
     }
     if (emailUser && emailUser.emailConfirmed && emailUser.emailConfirmationToken === "") {
-        errors.push(i18n.__("PAGE_RESEND_ERR_EmailAlreadyConfirmed"));
+        errors.push(i18n.__("APP.RESEND.ERR_EmailAlreadyConfirmed"));
     }
 
     if (req.body.captcha === "") {
-        captchaFail = i18n.__("PAGE_REG_ERROR_CaptchaEmpty");
+        captchaFail = i18n.__("APP.REGISTER.ERROR.CaptchaEmpty");
     } else if (req.body.captcha !== req.session.captcha) {
-        captchaFail = i18n.__("PAGE_REG_ERROR_CaptchaMismatch");
+        captchaFail = i18n.__("APP.REGISTER.ERROR.CaptchaMismatch");
     }
 
     if (captchaFail) {
         const captcha = getCaptcha(req.session.captcha);
         return res.render("auth/resend", {
-            title: i18n.__("PAGE_RESEND_TITLE"),
+            title: i18n.__("APP.RESEND.TITLE"),
             session: req.session,
             data: req.body,
             captcha,
@@ -223,7 +218,7 @@ exports.validateResend = async (req, res, next) => {
         const captcha = getCaptcha();
         req.session.captcha = captcha.text;
         return res.render("auth/resend", {
-            title: i18n.__("PAGE_RESEND_TITLE"),
+            title: i18n.__("APP.RESEND.TITLE"),
             session: req.session,
             data: req.body,
             captcha: captcha.data,
@@ -253,12 +248,12 @@ exports.doResend = async (req, res) => {
     await mail.send({
         user,
         filename: "resend_email",
-        subject: i18n.__("MAIL_RESEND_SUBJECT", cfg.app.title),
+        subject: i18n.__("APP.RESEND.MAIL_SUBJECT", cfg.app.title),
         confirmURL
     });
     logger.info(
         `[App] re-sent activation email to ${chalk.yellow(user.email)} and updated user with new confirm token.`
     );
-    req.flash("success", i18n.__("MAIL_RESEND_SUCCESS"));
+    req.flash("success", i18n.__("APP.RESEND.SUCCESS"));
     return res.redirect("/");
 };

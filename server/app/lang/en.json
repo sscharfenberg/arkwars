@@ -1,95 +1,137 @@
 {
-	"AUTH_ADMIN_REQUIRED": "This page requires admin access.",
-	"AUTH_MOD_REQUIRED": "This page requires moderator access.",
-	"AUTH_LOGIN_REQUIRED": "You need to be logged in to access the requested resource.",
-	"APP_SWITCH_LANG_InvalidLocale": "This locale does not exist.",
-	"PAGE_INDEX_HEADLINE": "Welcome to Arkwars!",
-	"PAGE_INDEX_TEXT1": "EWNGLISCH eit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen Semikoli, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg.",
-	"PAGE_LOGIN_TITLE": "Login",
-	"PAGE_LOGIN_EMAIL_LABEL": "E-Mail",
-	"PAGE_LOGIN_EMAIL_PLACEHOLDER": "Enter your E-Mail address",
-	"PAGE_LOGIN_EMAIL_DESCRIPTION": "Do not give your E-Mail to other players.",
-	"PAGE_LOGIN_PWD_LABEL": "Password",
-	"PAGE_LOGIN_PWD_PLACEHOLDER": "Enter the password",
-	"PAGE_LOGIN_PWD_DESCRIPTION": "Keep your password safe.",
-	"PAGE_LOGIN_SUBMIT": "Login",
-	"PAGE_LOGIN_FORGOTPWD": "Reset Password",
-	"PAGE_LOGIN_REGISTER": "Register an account",
-	"PAGE_LOGIN_RESEND_CONFIRMATION": "Resend activation E-Mail.",
-	"PAGE_LOGIN_MissingPasswordError": "No password was given",
-	"PAGE_LOGIN_AttemptTooSoonError": "Account is currently locked. Try again later",
-	"PAGE_LOGIN_TooManyAttemptsError": "Account locked due to too many failed login attempts",
-	"PAGE_LOGIN_NoSaltValueStoredError": "Authentication not possible. No salt value stored",
-	"PAGE_LOGIN_IncorrectPasswordError": "Password or username are incorrect",
-	"PAGE_LOGIN_IncorrectUsernameError": "Password or username are incorrect",
-	"PAGE_LOGIN_MissingUsernameError": "No username was given",
-	"PAGE_LOGIN_UserExistsError": "A user with the given username is already registered",
-	"PAGE_LOGIN_NotConfirmedError": "You have not yet confirmed your E-Mail address. Please check your inbox!",
-	"PAGE_LOGIN_Suspended": "Your account has been suspended until ",
-	"PAGE_LOGIN_SUCCESS": "Successfully logged in.",
-	"PAGE_LOGOUT_SUCCESS": "You are now logged out.",
-	"PAGE_REG_TITLE": "Registration",
-	"PAGE_REG_USERNAME_LABEL": "Username",
-	"PAGE_REG_USERNAME_PLACEHOLDER": "Enter the username",
-	"PAGE_REG_USERNAME_DESCRIPTION": "Your username is visible to other users.",
-	"PAGE_REG_EMAIL_LABEL": "E-Mail",
-	"PAGE_REG_EMAIL_PLACEHOLDER": "Enter your E-Mail address",
-	"PAGE_REG_EMAIL_DESCRIPTION": "Your E-Mail is used to <strong>log in</strong>, and to send you passwords",
-	"PAGE_REG_PWD_LABEL": "Password",
-	"PAGE_REG_PWD_PLACEHOLDER": "Enter password",
-	"PAGE_REG_PWD_DESCRIPTION": "Make sure that your password is unique and safe.",
-	"PAGE_REG_CAPTCHA_PLACEHOLDER": "Please convince us you are not a robot",
-	"PAGE_REG_CAPTCHA_DESCRIPTION": "Type the letters from the image above.",
-	"PAGE_REG_ACCEPT_LABEL": "Accept Conditions",
-	"PAGE_REG_ACCEPT_DESCRIPTION": "Accept our <a class=\"aw-textlink\" href=\"/terms_and_conditions/\">terms and conditions</a>, please",
-	"PAGE_REG_SUBMIT": "Register",
-	"PAGE_REG_ERROR": "Hang in there, skeleton - you're nearly there!",
-	"PAGE_REG_ERROR_UsernameEmpty": "Please supply a username.",
-	"PAGE_REG_ERROR_UsernameOutOfBounds": "Username needs to have between 3 and 20 characters.",
-	"PAGE_REG_ERROR_UsernameTaken": "The specified username has already been registered.",
-	"PAGE_REG_ERROR_UsernameBlacklisted": "The specified username is not allowed.",
-	"PAGE_REG_ERROR_EmailEmpty": "Please specify your E-Mail address.",
-	"PAGE_REG_ERROR_EmailInvalid": "This is not a valid E-Mail address.",
-	"PAGE_REG_ERROR_EmailTaken": "The specified E-Mail address has already been registered.",
-	"PAGE_REG_ERROR_PasswordEmpty": "please specify your password.",
-	"PAGE_REG_ERROR_PasswordOutOfBounds": "Password needs to have at least 6 and max. 32 characters.",
-	"PAGE_REG_ERROR_CaptchaEmpty": "Please enter the letters from the image above.",
-	"PAGE_REG_ERROR_CaptchaMismatch": "Oops! Your letters do not match the image provided.",
-	"PAGE_REG_ERROR_AcceptEmpty": "Please accept our terms and conditions.",
-	"PAGE_REG_SUCCESS": "Thanks for registering! We have sent a confirmation E-Mail to your address - please check your inbox and click on \"Activate my account\".",
-	"MAIL_ACTIVATION_SUBJECT": "Welcome to %s!",
-	"REG_CONFIRM_SUCCESS": "Your Account has been activated.",
-	"REG_CONFIRM_FAILED": "Confirmation token is invalid or has expired.",
-	"PAGE_RESEND_TITLE": "Resend Activation E-Mail",
-	"PAGE_RESEND_INTRO": "If the email of your user account has not yet been activated, you can request a new activation email. We will send you a link to activate your account.",
-	"PAGE_RESEND_SUBMIT": "Request email",
-	"PAGE_RESEND_ERR_EmailNotFound": "Could not find this email address in our records.",
-	"PAGE_RESEND_ERR_EmailAlreadyConfirmed": "This email has already been confirmed.",
-	"MAIL_RESEND_SUBJECT": "%s account activation",
-	"MAIL_RESEND_SUCCESS": "We have sent you a new account activation link. Please check your inbox!",
-	"PAGE_RESET_TITLE": "Reset Password",
-	"PAGE_RESET_INTRO": "If you do not remember your password, we can send you a password reset link and reset your account status.",
-	"PAGE_RESET_SUBMIT": "Request email",
-	"PAGE_RESET_ERR_EmailNotYetConfirmed": "This email has not yet been confirmed. Please check your inbox or request a new activation link.",
-	"PAGE_RESET_ERR_UserSuspended": "The account with this email is suspended until ",
-	"MAIL_FOOTER_SENTBY": "Mail sent by",
-	"MAIL_FOOTER_WHO": "Mailer",
-	"PAGE_PROFILE_TITLE": "My Profile",
-	"APP_LABEL_MAINMENU": "Main Menu",
-	"APP_LABEL_CHANGELANGUAGE": "Change language",
-	"APP_LABEL_CHANGEGAME": "Change game",
-	"APP_LABEL_LOGIN": "Login",
-	"APP_LABEL_REGISTER": "Register",
-	"APP_LABEL_LOGOUT": "Logout",
-	"APP_LABEL_SERVERTIME": "server time",
-	"APP_LABEL_LOCALTIME": "local time",
-	"GAME_LABEL_CURRENTTURN": "current turn",
-	"GAME_LABEL_NEXTTURN": "next turn",
-	"GAME_AREA_EMPIRE": "Empire",
-	"GAME_AREA_FLEETS": "Fleets",
-	"GAME_AREA_SHIPYARDS": "Shipyards",
-	"GAME_AREA_RESEARCH": "Research",
-	"GAME_AREA_STARCHART": "Starchart",
-	"GAME_AREA_GALNET": "GalNet",
-	"PAGE_LOGIN_undefined": "PAGE_LOGIN_undefined"
+    "APP": {
+
+        "AUTH": {
+            "ADMIN_REQUIRED": "This page requires admin access.",
+            "MOD_REQUIRED": "This page requires moderator access.",
+            "LOGIN_REQUIRED": "You need to be logged in to access the requested resource."
+        },
+
+        "LANGUAGE": {
+            "INVALID": "This locale does not exist."
+        },
+
+        "INDEX": {
+            "TITLE": "Home",
+            "HEADLINE": "Welcome to Arkwars!",
+            "TEXT1": "EWNGLISCH eit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen Semikoli, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg."
+        },
+
+        "LOGIN": {
+            "TITLE": "Login",
+            "EMAIL_LABEL": "E-Mail",
+            "EMAIL_PLACEHOLDER": "Enter your E-Mail address",
+            "EMAIL_DESCRIPTION": "Do not give your E-Mail to other players.",
+            "PWD_LABEL": "Password",
+            "PWD_PLACEHOLDER": "Enter the password",
+            "PWD_DESCRIPTION": "Keep your password safe.",
+            "SUBMIT": "Login",
+            "FORGOTPWD": "Reset Password",
+            "REGISTER": "Register an account",
+            "RESEND_CONFIRMATION": "Resend activation E-Mail.",
+            "MissingPasswordError": "No password was given",
+            "AttemptTooSoonError": "Account is currently locked. Try again later",
+            "TooManyAttemptsError": "Account locked due to too many failed login attempts",
+            "NoSaltValueStoredError": "Authentication not possible. No salt value stored",
+            "IncorrectPasswordError": "Password or username are incorrect",
+            "IncorrectUsernameError": "Password or username are incorrect",
+            "MissingUsernameError": "No username was given",
+            "UserExistsError": "A user with the given username is already registered",
+            "NotConfirmedError": "You have not yet confirmed your E-Mail address. Please check your inbox!",
+            "Suspended": "Your account has been suspended until ",
+            "SUCCESS": "Successfully logged in."
+        },
+
+        "LOGOUT": {
+            "SUCCESS": "You are now logged out."
+        },
+
+        "REGISTER": {
+            "TITLE": "Registration",
+            "USERNAME_LABEL": "Username",
+            "USERNAME_PLACEHOLDER": "Enter the username",
+            "USERNAME_DESCRIPTION": "Your username is visible to other users.",
+            "EMAIL_LABEL": "E-Mail",
+            "EMAIL_PLACEHOLDER": "Enter your E-Mail address",
+            "EMAIL_DESCRIPTION": "Your E-Mail is used to <strong>log in</strong>, and to send activation / confirmation links.",
+            "PWD_LABEL": "Password",
+            "PWD_PLACEHOLDER": "Enter password",
+            "PWD_DESCRIPTION": "Make sure that your password is unique and safe.",
+            "CAPTCHA_PLACEHOLDER": "Please convince us you are not a robot",
+            "CAPTCHA_DESCRIPTION": "Type the letters from the image above.",
+            "ACCEPT_LABEL": "Accept Conditions",
+            "ACCEPT_DESCRIPTION": "Accept our <a class=\"aw-textlink\" href=\"/terms_and_conditions/\">terms and conditions</a>, please",
+            "SUBMIT": "Register",
+            "ERROR": {
+                "FLASH": "Hang in there, skeleton - you're nearly there!",
+                "UsernameEmpty": "Please supply a username.",
+                "UsernameOutOfBounds": "Username needs to have between 3 and 20 characters.",
+                "UsernameTaken": "The specified username has already been registered.",
+                "UsernameBlacklisted": "The specified username is not allowed.",
+                "EmailEmpty": "Please specify your E-Mail address.",
+                "EmailInvalid": "This is not a valid E-Mail address.",
+                "EmailTaken": "The specified E-Mail address has already been registered.",
+                "PasswordEmpty": "please specify your password.",
+                "PasswordOutOfBounds": "Password needs to have at least 6 and max. 32 characters.",
+                "CaptchaEmpty": "Please enter the letters from the image above.",
+                "CaptchaMismatch": "Oops! Your letters do not match the image provided.",
+                "AcceptEmpty": "Please accept our terms and conditions."
+            },
+            "SUCCESS": "Thanks for registering! We have sent a confirmation E-Mail to your address - please check your inbox and click on \"Activate my account\".",
+            "MAIL_SUBJECT": "Welcome to %s!",
+            "CONFIRM_SUCCESS": "Your Account has been activated.",
+            "CONFIRM_FAILED": "Confirmation token is invalid or has expired."
+        },
+
+        "RESEND": {
+            "TITLE": "Resend Activation E-Mail",
+            "INTRO": "If the email of your user account has not yet been activated, you can request a new activation email. We will send you a link to activate your account.",
+            "SUBMIT": "Request email",
+            "ERR_EmailNotFound": "Could not find this email address in our records.",
+            "ERR_EmailAlreadyConfirmed": "This email has already been confirmed.",
+            "MAIL_SUBJECT": "%s account activation",
+            "SUCCESS": "We have sent you a new account activation link. Please check your inbox!"
+        },
+
+        "PAGE_RESET_TITLE": "Reset Password",
+        "PAGE_RESET_INTRO": "If you do not remember your password, we can send you a password reset link and reset your account status.",
+        "PAGE_RESET_SUBMIT": "Request email",
+        "PAGE_RESET_ERR_EmailNotYetConfirmed": "This email has not yet been confirmed. Please check your inbox or request a new activation link.",
+        "PAGE_RESET_ERR_UserSuspended": "The account with this email is suspended until ",
+        "MAIL_FOOTER_SENTBY": "Mail sent by",
+        "MAIL_FOOTER_WHO": "Mailer",
+        "PAGE_PROFILE_TITLE": "My Profile",
+        "LABEL_MAINMENU": "Main Menu",
+        "LABEL_CHANGELANGUAGE": "Change language",
+        "LABEL_CHANGEGAME": "Change game",
+        "LABEL_LOGIN": "Login",
+        "LABEL_REGISTER": "Register",
+        "LABEL_LOGOUT": "Logout",
+        "LABEL_SERVERTIME": "server time",
+        "LABEL_LOCALTIME": "local time"
+    },
+
+    "GAME": {
+        "LABEL_CURRENTTURN": "current turn",
+        "LABEL_NEXTTURN": "next turn",
+        "EMPIRE": {
+            "LABEL": "Empire"
+        },
+        "FLEETS": {
+            "LABEL": "Fleets"
+        },
+        "SHIPYARDS": {
+            "LABEL": "Shipyards"
+        },
+        "RESEARCH": {
+            "LABEL": "Research"
+        },
+        "STARCHART": {
+            "LABEL": "Starchart"
+        },
+        "GALNET": {
+            "LABEL": "GalNet"
+        }
+    }
+
 }

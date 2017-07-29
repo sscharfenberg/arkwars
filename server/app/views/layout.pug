@@ -11,7 +11,7 @@ body
     header.aw-header
 
         .aw-header__menu
-            button.aw-header__menu-btn(aria-label=(h.__("APP_LABEL_MAINMENU")))
+            button.aw-header__menu-btn(aria-label=(h.__("APP.LABEL_MAINMENU")))
                 span
                 span
                 span
@@ -23,7 +23,7 @@ body
 
         ul.aw-header__actions
             li.aw-header__action
-                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP_LABEL_CHANGELANGUAGE")))
+                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.LABEL_CHANGELANGUAGE")))
                     != h.icon("language")
                     span.keep #{session && session.locale ? session.locale : ""}
                 ul.aw-header__submenu.aw-header__submenu--left.aw-header__submenu--medium(aria-hidden="true")
@@ -36,7 +36,7 @@ body
                             != h.image("flags/de.svg")
                             | Deutsch
             li.aw-header__action
-                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP_LABEL_CHANGEGAME")))
+                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.LABEL_CHANGEGAME")))
                     != h.icon("games")
                     span.keep g1
                 ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
@@ -49,11 +49,11 @@ body
                 li.aw-header__action
                     a.aw-header__link(href="/auth/login/")
                         != h.icon("key")
-                        span= h.__("APP_LABEL_LOGIN")
+                        span= h.__("APP.LABEL_LOGIN")
                 li.aw-header__action
                     a.aw-header__link(href="/auth/register/")
                         != h.icon("lightbulb")
-                        span= h.__("APP_LABEL_REGISTER")
+                        span= h.__("APP.LABEL_REGISTER")
 
             if user
                 li.aw-header__action
@@ -67,7 +67,7 @@ body
                 li.aw-header__action
                     a.aw-header__link(href="/auth/logout/")
                         != h.icon("power")
-                        span= h.__("APP_LABEL_LOGOUT")
+                        span= h.__("APP.LABEL_LOGOUT")
 
         .aw-header__turn
             .aw-turn
@@ -88,22 +88,22 @@ body
 
                 li.aw-drawer__list-item.aw-drawer__list-item--info
                     .aw-drawer__info
-                        .aw-drawer__info-label= h.__("APP_LABEL_SERVERTIME")
+                        .aw-drawer__info-label= h.__("APP.LABEL_SERVERTIME")
                         .aw-drawer__info-value
                             time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LLL")
                     .aw-drawer__info.aw-drawer__info--darker
-                        .aw-drawer__info-label= h.__("APP_LABEL_LOCALTIME")
+                        .aw-drawer__info-label= h.__("APP.LABEL_LOCALTIME")
                         .aw-drawer__info-value
                             time(datetime="", data-my-time) 00:00
                 li.aw-drawer__list-item.aw-drawer__list-item--turn
                     .aw-drawer__turn
                         .aw-drawer__turn-current
-                            .aw-drawer__turn-current-label= h.__("GAME_LABEL_CURRENTTURN")
+                            .aw-drawer__turn-current-label= h.__("GAME.LABEL_CURRENTTURN")
                             .aw-turn
                                 != h.icon("turn", ["turn"])
                                 .aw-turn__value 21
                         .aw-drawer__turn-next
-                            .aw-drawer__turn-next-label= h.__("GAME_LABEL_NEXTTURN")
+                            .aw-drawer__turn-next-label= h.__("GAME.LABEL_NEXTTURN")
                             .aw-drawer__turn-next-progress
                                 .aw-progress.aw-progress-turn(data-max="15", data-value="14")
                                     != h.progressbar(15,14)
@@ -113,27 +113,27 @@ body
                 li.aw-drawer__list-item
                     a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire/")
                         != h.icon("empire", ["small"])
-                        != h.__("GAME_AREA_EMPIRE")
+                        != h.__("GAME.EMPIRE.LABEL")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/fleets/")
                         != h.icon("fleet", ["small"])
-                        != h.__("GAME_AREA_FLEETS")
+                        != h.__("GAME.FLEETS.LABEL")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/shipyards/")
                         != h.icon("build", ["small"])
-                        != h.__("GAME_AREA_SHIPYARDS")
+                        != h.__("GAME.SHIPYARDS.LABEL")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/research/")
                         != h.icon("research", ["small"])
-                        != h.__("GAME_AREA_RESEARCH")
+                        != h.__("GAME.RESEARCH.LABEL")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/starchart/")
                         != h.icon("starchart", ["small"])
-                        != h.__("GAME_AREA_STARCHART")
+                        != h.__("GAME.STARCHART.LABEL")
                 li.aw-drawer__list-item
                     a.aw-drawer__link(href="/game/1/galnet/")
                         != h.icon("galnet", ["small"])
-                        != h.__("GAME_AREA_GALNET")
+                        != h.__("GAME.GALNET.LABEL")
 
                 li.aw-drawer__list-item.aw-drawer__list-item--spacer
                 li.aw-drawer__list-item

@@ -26,7 +26,7 @@ exports.showRegistration = (req, res) => {
     const captcha = getCaptcha();
     req.session.captcha = captcha.text;
     res.render("auth/register", {
-        title: i18n.__("PAGE_REG_TITLE"),
+        title: i18n.__("APP.REGISTER.TITLE"),
         session: req.session,
         captcha: captcha.data,
         flashes: req.flash()
@@ -90,8 +90,6 @@ exports.validateRegistration = async (req, res, next) => {
         );
     }
 
-    console.log(errorMap.captcha);
-
     if(errorMap.captcha) {
         const captchaError = {
             param: errorMap.captcha.param,
@@ -99,9 +97,9 @@ exports.validateRegistration = async (req, res, next) => {
             value: errorMap.captcha.value
         };
         logger.debug(`[App] captcha error: ${JSON.stringify(captchaError)}`);
-        req.flash("error", i18n.__("PAGE_REG_ERROR"));
+        req.flash("error", i18n.__("APP.REGISTER.ERROR.FLASH"));
         return res.render("auth/register", {
-            title: i18n.__("PAGE_REG_TITLE"),
+            title: i18n.__("APP.REGISTER.TITLE"),
             session: req.session,
             // svg-captcha returns the captcha directly when we provide the text, not as captcha.data
             captcha,
@@ -111,9 +109,9 @@ exports.validateRegistration = async (req, res, next) => {
         });
     } else if (errorList.length) { // if there are errors, render the template with errors.
         logger.debug(`[App] validation errors: ${JSON.stringify(errorList)}`);
-        req.flash("error", i18n.__("PAGE_REG_ERROR"));
+        req.flash("error", i18n.__("APP.REGISTER.ERROR.FLASH"));
         return res.render("auth/register", {
-            title: i18n.__("PAGE_REG_TITLE"),
+            title: i18n.__("APP.REGISTER.TITLE"),
             session: req.session,
             // svg-captcha returns the captcha directly when we provide the text, not as captcha.data
             captcha,
@@ -172,13 +170,13 @@ exports.sendConfirmationEmail = async (req, res) => {
     await mail.send({
         user,
         filename: "confirm_email",
-        subject: i18n.__("MAIL_ACTIVATION_SUBJECT", cfg.app.title),
+        subject: i18n.__("APP.REGISTER.MAIL_SUBJECT", cfg.app.title),
         confirmURL
     });
     logger.info(
         `[App] sent confirmation email to ${chalk.yellow(user.email)}.`
     );
-    req.flash("success", i18n.__("PAGE_REG_SUCCESS"));
+    req.flash("success", i18n.__("APP.REGISTER.SUCCESS"));
     res.redirect("/");
 };
 
@@ -197,7 +195,7 @@ exports.confirmEmail = async (req, res) => {
         `[App] email confirmation request. token: ${req.params.token}`
     );
     if (!user) {
-        req.flash("error", i18n.__("REG_CONFIRM_FAILED"));
+        req.flash("error", i18n.__("APP.REGISTER.CONFIRM_FAILED"));
         res.redirect("/auth/login");
         return;
     }
@@ -205,14 +203,22 @@ exports.confirmEmail = async (req, res) => {
     user.emailConfirmationToken = "";
     user.emailConfirmed = true;
     await user.save();
-
     logger.success(
         `[App] account for ${chalk.red(
             "@" + user.username
         )} has been activated.`
     );
-    req.flash("success", i18n.__("REG_CONFIRM_SUCCESS"));
-    res.redirect("/auth/login");
+
+    // log in
+    req.login(user, function(err) {
+        if (err) {
+            return next(err);
+        }
+        req.user = user;
+        logger.info(`[App] user @${user.username} logged in.`);
+        req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
+        res.redirect("/profile");
+    });
 };
 
 
@@ -225,7 +231,7 @@ exports.switchLanguage = async (req, res) => {
     const newLocale = req.params.lang;
     if (!cfg.app.locales.includes(req.params.lang)) {
         logger.error(`[App] invalid locale: ${chalk.red(newLocale)}.`);
-        req.flash("error", i18n.__("APP_SWITCH_LANG_InvalidLocale"));
+        req.flash("error", i18n.__("APP.LANGUAGE.INVALID"));
         return res.redirect("back");
     }
     req.session.locale = newLocale;

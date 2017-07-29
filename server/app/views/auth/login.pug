@@ -3,36 +3,36 @@ extends ../layout
 block content
     main.aw-content__inner.aw-content__inner--narrow
 
-        h1= h.__("PAGE_LOGIN_TITLE")
+        h1= h.__("APP.LOGIN.TITLE")
 
         form.aw-narrowform(action="/auth/login" method="POST")
 
             .aw-narrowform__row(class=`${errors ? "error" : ""}`)
                 .aw-narrowform-input
-                    label.aw-narrowform-input__label(for="email")= h.__("PAGE_LOGIN_EMAIL_LABEL")
-                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder=(h.__("PAGE_LOGIN_EMAIL_PLACEHOLDER")), required, aria-required="true", value=(data && data.email))
-                .aw-narrowform__row-description= h.__("PAGE_LOGIN_EMAIL_DESCRIPTION")
+                    label.aw-narrowform-input__label(for="email")= h.__("APP.LOGIN.EMAIL_LABEL")
+                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder=(h.__("APP.LOGIN.EMAIL_PLACEHOLDER")), required, aria-required="true", value=(data && data.email))
+                .aw-narrowform__row-description= h.__("APP.LOGIN.EMAIL_DESCRIPTION")
 
             .aw-narrowform__row(class=`${errors ? "error" : ""}`)
                 .aw-narrowform-input
-                    label.aw-narrowform-input__label(for="password")= h.__("PAGE_LOGIN_PWD_LABEL")
-                    input.aw-narrowform-input__input(type="password", name="password", id="password", placeholder=(h.__("PAGE_LOGIN_PWD_PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
+                    label.aw-narrowform-input__label(for="password")= h.__("APP.LOGIN.PWD_LABEL")
+                    input.aw-narrowform-input__input(type="password", name="password", id="password", placeholder=(h.__("APP.LOGIN.PWD_PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
                 if errors
                     .aw-narrowform__error-message= errors
-                .aw-narrowform__row-description= h.__("PAGE_LOGIN_PWD_DESCRIPTION")
+                .aw-narrowform__row-description= h.__("APP.LOGIN.PWD_DESCRIPTION")
 
             .aw-narrowform__row
                 .aw-narrowform__submit
                     button.aw-btn.aw-btn--icon(type="submit")
                         != h.icon("key", ["small"])
-                        != h.__("PAGE_LOGIN_SUBMIT")
+                        != h.__("APP.LOGIN.SUBMIT")
 
             .aw-narrowform__row
                 .aw-narrowform__submit
                     p
-                        a.aw-textlink(href="/auth/reset")= h.__("PAGE_LOGIN_FORGOTPWD")
+                        a.aw-textlink(href="/auth/reset")= h.__("APP.LOGIN.FORGOTPWD")
                     p
-                        a.aw-textlink(href="/auth/register")= h.__("PAGE_LOGIN_REGISTER")
+                        a.aw-textlink(href="/auth/register")= h.__("APP.LOGIN.REGISTER")
                     p
-                        a.aw-textlink(href="/auth/resend")= h.__("PAGE_LOGIN_RESEND_CONFIRMATION")
+                        a.aw-textlink(href="/auth/resend")= h.__("APP.LOGIN.RESEND_CONFIRMATION")
 

@@ -3,31 +3,31 @@ extends ../layout
 block content
     main.aw-content__inner.aw-content__inner--narrow
 
-        h1= h.__("PAGE_RESEND_TITLE")
+        h1= h.__("APP.RESEND.TITLE")
 
         form.aw-narrowform(action="/auth/resend" method="POST")
 
-            .aw-narrowform__row= h.__("PAGE_RESEND_INTRO")
+            .aw-narrowform__row= h.__("APP.RESEND.INTRO")
 
             .aw-narrowform__row(class=`${errors ? "error" : ""}`)
                 .aw-narrowform-input
-                    label.aw-narrowform-input__label(for="email")= h.__("PAGE_LOGIN_EMAIL_LABEL")
-                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder=(h.__("PAGE_LOGIN_EMAIL_PLACEHOLDER")), required, aria-required="true", value=(data && data.email))
+                    label.aw-narrowform-input__label(for="email")= h.__("APP.LOGIN.EMAIL_LABEL")
+                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder=(h.__("APP.LOGIN.EMAIL_PLACEHOLDER")), required, aria-required="true", value=(data && data.email))
                 if errors
                     .aw-narrowform__error-message= errors
-                .aw-narrowform__row-description= h.__("PAGE_LOGIN_EMAIL_LABEL")
+                .aw-narrowform__row-description= h.__("APP.LOGIN.EMAIL_LABEL")
 
             .aw-narrowform__row(class=`${captchaFail ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label.aw-narrowform-input__label--captcha(for="captcha")
                         != captcha
-                    input.aw-narrowform-input__input(type="text", name="captcha", id="captcha", placeholder=(h.__("PAGE_REG_CAPTCHA_PLACEHOLDER")), required, aria-required="true", value=(data && data.captcha))
+                    input.aw-narrowform-input__input(type="text", name="captcha", id="captcha", placeholder=(h.__("APP.REGISTER.CAPTCHA_PLACEHOLDER")), required, aria-required="true", value=(data && data.captcha))
                 if captchaFail
                     .aw-narrowform__error-message= captchaFail
-                .aw-narrowform__row-description!= h.__("PAGE_REG_CAPTCHA_DESCRIPTION")
+                .aw-narrowform__row-description!= h.__("APP.REGISTER.CAPTCHA_DESCRIPTION")
 
             .aw-narrowform__row
                 .aw-narrowform__submit
                     button.aw-btn.aw-btn--icon(type="submit")
                         != h.icon("key", ["small"])
-                        != h.__("PAGE_RESEND_SUBMIT")
+                        != h.__("APP.RESEND.SUBMIT")
