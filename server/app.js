@@ -15,7 +15,8 @@ const session = require("express-session"); // https://www.npmjs.com/package/exp
 const expressValidator = require("express-validator"); // https://www.npmjs.com/package/express-validator
 const helmet = require("helmet"); // https://helmetjs.github.io/docs/
 const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
-const MongoStore = require("connect-mongo")(session); // https://www.npmjs.com/package/connect-mongo
+const redis = require("redis"); // https://www.npmjs.com/package/redis
+const RedisStore = require("connect-redis")(session); // https://www.npmjs.com/package/connect-mongo
 const cookieParser = require("cookie-parser"); // https://www.npmjs.com/package/cookie-parser
 const bodyParser = require("body-parser"); // https://www.npmjs.com/package/body-parser
 const passport = require("passport"); // https://github.com/jaredhanson/passport
@@ -24,8 +25,8 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const routes = require("./app/routes/index"); // Express routes
 const accessLogger = require("./app/handlers/logger/access"); // Access logging
 const errorHandlers = require("./app/handlers/error"); // Error handling
+const logger = require("./app/handlers/logger/console");
 const templateHelpers = require("./app/utils/template"); // Template helpers
-
 
 // create our Express app
 const app = express();
@@ -51,7 +52,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // setup i18n
 i18n.configure({
-    locales:["en", "de"],
+    locales: ["en", "de"],
     directory: path.join(__dirname, "app", "lang")
 });
 
@@ -61,15 +62,27 @@ app.use(expressValidator());
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());
 
-// Sessions allow us to store data on visitors from request to request
-// This keeps users logged in and allows us to send flash messages
+// Sessions Handling. use redis for session handling because faster.
+const redisClient = redis
+    .createClient({
+        url: process.env.REDIS
+    })
+    .on("ready", () => {
+        logger.success("[App] Successfully connected to Redis.");
+    })
+    .on("error", err => {
+        logger.error("[App] Error while connecting to Redis.");
+        logger.error(err);
+    });
 app.use(
     session({
         secret: process.env.SECRET,
         key: process.env.KEY,
         resave: false,
         saveUninitialized: true,
-        store: new MongoStore({ mongooseConnection: mongoose.connection })
+        store: new RedisStore({
+            client: redisClient
+        })
     })
 );
 
@@ -98,9 +111,10 @@ app.use((req, res, next) => {
     i18n.setLocale(locale);
     res.locals.h = templateHelpers;
     res.locals.flashes = req.flash();
-    res.locals.user = req.user || null;
+    //    res.locals.user = req.user || null;
     res.locals.currentPath = req.path;
     res.locals.session = req.session;
+    res.locals.user = req.user;
     next();
 });
 

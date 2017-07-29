@@ -29,7 +29,7 @@ mongoose.connection
         logger.error(err.message);
     })
     .on("connected", () => {
-        logger.success("[Mongoose] Successfully connected to MongoDB.");
+        logger.success("[App] Successfully connected to MongoDB.");
     });
 
 

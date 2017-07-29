@@ -81,7 +81,7 @@ const userSchema = new mongoose.Schema({
     admin: {
         type: Boolean
     },
-    moderator: {
+    mod: {
         type: Boolean
     }
 

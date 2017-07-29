@@ -92,12 +92,19 @@ exports.login = async (req, res, next) => {
                 return next(err);
             }
             req.user = user;
+            logger.info(`[App] user @${user.username} logged in.`);
             req.flash("success", i18n.__("PAGE_LOGIN_SUCCESS"));
             res.redirect("/profile");
-            return;
         });
     })(req, res, next);
 };
+
+//exports.login = (req, res) => {
+//    req.session.user = { id: "234234234", email: "ashaltiriak@gmail.com"};
+//    req.flash("success", "logged in");
+//    console.log("logged in - user: " + req.session.user);
+//    res.redirect("/profile");
+//};
 
 
 /*
@@ -106,8 +113,8 @@ exports.login = async (req, res, next) => {
  * @param {ExpressHTTPResponse} res
  */
 exports.logout = (req, res) => {
+    logger.info(`[App] user @${req.user.username} logging out.`);
     req.logout();
-    req.user = null; // sometimes we redirect faster than the user is logged out.
     req.flash("success", i18n.__("PAGE_LOGOUT_SUCCESS"));
     res.redirect("/");
 };
@@ -150,12 +157,12 @@ exports.isMod = (req, res, next) => {
  * @param {callback} next
  */
 exports.isLoggedIn = (req, res, next) => {
-    // first check if the user is authenticated
     if (req.isAuthenticated()) {
-        return next();
+        next();
+    } else {
+        req.flash("error", i18n.__("AUTH_LOGIN_REQUIRED"));
+        res.redirect("/auth/login");
     }
-    req.flash("error", i18n.__("AUTH_LOGIN_REQUIRED"));
-    res.redirect("/auth/login");
 };
 
 

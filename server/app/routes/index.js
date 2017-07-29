@@ -47,7 +47,7 @@ router.post(
 // confirm email
 router.get("/auth/confirm/:token", catchErrors(userController.confirmEmail));
 router.get("/auth/login", authController.showLoginForm); // show login form
-router.post("/auth/login", catchErrors(authController.login));
+router.post("/auth/login", authController.login);
 router.get("/auth/logout", authController.logout);
 router.get("/auth/resend", authController.showResendForm); // show "resend activation email" form
 router.post(
