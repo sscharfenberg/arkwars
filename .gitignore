@@ -1,9 +1,9 @@
 node_modules
 .idea
-server/app/config/.env
+.env
 server/logs
 bundle-report.html
 server/public/assets
-server/app/views/webpack.includes
+server/views/webpack.includes
 coverage
 *.log
