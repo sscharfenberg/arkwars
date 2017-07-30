@@ -9,12 +9,12 @@
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
-const logger = require("./app/handlers/logger/console");
-const cron = require("./app/handlers/cron");
-const errorHandlers = require("./app/handlers/error"); // Error handling
+const logger = require("./handlers/logger/console");
+const cron = require("./handlers/cron");
+const errorHandlers = require("./handlers/error"); // Error handling
 
 // import environmental variables from our .env file to process.env
-require("dotenv").config({ path: "./server/app/config/.env" });
+require("dotenv").config({ path: "./server/config/.env" });
 
 /*
  * connect and prepare MongoDB
@@ -34,8 +34,8 @@ mongoose.connection
 
 
 // require mongoose schemas
-require("./app/models/User");
-require("./app/models/Game");
+require("./models/User");
+require("./models/Game");
 
 errorHandlers.catchErrors(cron.startup());
 

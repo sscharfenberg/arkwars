@@ -56,7 +56,6 @@ module.exports = {
     pugScriptInclude: path.join(
         PROJECTROOT,
         "server",
-        "app",
         "views",
         "webpack.includes"
     ),

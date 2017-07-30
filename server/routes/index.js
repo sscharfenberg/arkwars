@@ -14,21 +14,24 @@ const apiController = require("../controllers/api");
 const userController = require("../controllers/user");
 const authController = require("../controllers/auth");
 const resetController = require("../controllers/auth/reset");
+const resendController = require("../controllers/auth/resend");
 const adminController = require("../controllers/admin");
-const profileController = require("../controllers/user/profile");
+const userHomeController = require("../controllers/user/home");
 const { catchErrors } = require("../handlers/error");
 
+// our homepage \o/
 router.get("/", indexController.homePage);
 
 // TODO: check if user is allowed
 router.get("/api/game/:game/status", catchErrors(apiController.gameStatus));
 
+// switch language
 router.get("/language/:lang", catchErrors(userController.switchLanguage));
-
+// user home
 router.get(
-    "/profile",
+    "/home",
     authController.isLoggedIn,
-    profileController.showProfile
+    userHomeController.showHome
 );
 
 /*
@@ -46,15 +49,19 @@ router.post(
 );
 // confirm email
 router.get("/auth/confirm/:token", catchErrors(userController.confirmEmail));
-router.get("/auth/login", authController.showLoginForm); // show login form
+// login
+router.get("/auth/login", authController.showLoginForm);
 router.post("/auth/login", authController.login);
+// logout
 router.get("/auth/logout", authController.logout);
-router.get("/auth/resend", authController.showResendForm); // show "resend activation email" form
+// resend activation email
+router.get("/auth/resend", resendController.showResendForm);
 router.post(
     "/auth/resend",
-    catchErrors(authController.validateResend), // 1. Validate form data
-    catchErrors(authController.doResend) // 2. resend activation link
+    catchErrors(resendController.validateResend), // 1. Validate form data
+    catchErrors(resendController.doResend) // 2. resend activation link
 );
+// reset password
 router.get("/auth/reset", resetController.showResetForm);
 router.post(
     "/auth/reset",

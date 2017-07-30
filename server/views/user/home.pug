@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+    main.aw-content__inner
+        h1= h.__("APP.PROFILE.TITLE")
+        p= h.__("APP.PROFILE.TEXT1")
+
+block scripts
+    include ../webpack.includes/app.footer.pug

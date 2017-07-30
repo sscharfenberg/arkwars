@@ -12,7 +12,7 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const User = mongoose.model("User");
 const { getCaptcha } = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
-const userValidators = require("../../utils/validators/user");
+const userValidators = require("../../handlers/validators/user");
 const mail = require("../../handlers/mail");
 const cfg = require("../../config");
 
@@ -217,7 +217,7 @@ exports.confirmEmail = async (req, res) => {
         req.user = user;
         logger.info(`[App] user @${user.username} logged in.`);
         req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
-        res.redirect("/profile");
+        res.redirect("/home");
     });
 };
 

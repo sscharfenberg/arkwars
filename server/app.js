@@ -22,11 +22,11 @@ const bodyParser = require("body-parser"); // https://www.npmjs.com/package/body
 const passport = require("passport"); // https://github.com/jaredhanson/passport
 const flash = require("connect-flash"); // https://www.npmjs.com/package/connect-flash
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
-const routes = require("./app/routes/index"); // Express routes
-const accessLogger = require("./app/handlers/logger/access"); // Access logging
-const errorHandlers = require("./app/handlers/error"); // Error handling
-const logger = require("./app/handlers/logger/console");
-const templateHelpers = require("./app/utils/template"); // Template helpers
+const routes = require("./routes/index"); // Express routes
+const accessLogger = require("./handlers/logger/access"); // Access logging
+const errorHandlers = require("./handlers/error"); // Error handling
+const logger = require("./handlers/logger/console");
+const templateHelpers = require("./handlers/template"); // Template helpers
 
 // create our Express app
 const app = express();
@@ -36,7 +36,7 @@ app.use(helmet());
 
 // view engine setup
 // https://pugjs.org/
-app.set("views", path.join(__dirname, "app", "views")); // set views to correct folder
+app.set("views", path.join(__dirname, "views")); // set views to correct folder
 app.set("view engine", "pug"); // set view engine to pug
 
 // https://github.com/expressjs/compression
@@ -81,7 +81,7 @@ app.use(
 );
 
 // // Passport JS is what we use to handle our logins
-const User = require("./app/models/User");
+const User = require("./models/User");
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -97,7 +97,7 @@ i18n.configure({
     locales: ["en", "de"],
     objectNotation: true,
     updateFiles: false,
-    directory: path.join(__dirname, "app", "lang")
+    directory: path.join(__dirname, "lang")
 });
 
 // pass variables to our templates + all requests

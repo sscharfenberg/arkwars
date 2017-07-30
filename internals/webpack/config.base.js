@@ -132,7 +132,6 @@ for (let chunk in config.chunks) {
             filename: path.join(
                 config.projectRoot,
                 "server",
-                "app",
                 "views",
                 "webpack.includes",
                 `${chunk}.footer.pug`

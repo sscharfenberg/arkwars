@@ -1,3 +1,148 @@
 {
-	"WELCOME": "WELCOME"
+    "APP": {
+
+        "AUTH": {
+            "ADMIN_REQUIRED": "Diese Seite erfordert Administratoren - Berechtigungen.",
+            "MOD_REQUIRED": "Diese Seite erfordert Moderatoren - Berechtigungen.",
+            "LOGIN_REQUIRED": "Sie müssen eingeloggt sein um diese Funktion oder Seite zu verwenden."
+        },
+
+        "LANGUAGE": {
+            "INVALID": "Diese Sprache unterstützen wir leider nicht."
+        },
+
+        "HEADER": {
+            "LABEL_MAINMENU": "Hauptmenü",
+            "LABEL_CHANGELANGUAGE": "Sprache wechseln",
+            "LABEL_CHANGEGAME": "Spiel wechseln",
+            "LABEL_LOGIN": "Anmelden",
+            "LABEL_REGISTER": "Registrieren",
+            "LABEL_LOGOUT": "Abmelden",
+            "LABEL_HOME": "Profil",
+            "LABEL_SERVERTIME": "Serverzeit",
+            "LABEL_LOCALTIME": "Lokale Zeit"
+        },
+
+        "INDEX": {
+            "TITLE": "Start",
+            "HEADLINE": "Willkommen bei Arkwars!",
+            "TEXT1": "DEUTSCH weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen Semikoli, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg."
+        },
+
+        "LOGIN": {
+            "TITLE": "Anmelden",
+            "EMAIL_LABEL": "E-Mail",
+            "EMAIL_PLACEHOLDER": "Bitte E-Mail eingeben",
+            "EMAIL_DESCRIPTION": "Geben Sie Ihre E-Mail Adresse nicht an andere Spieler weiter.",
+            "PWD_LABEL": "Passwort",
+            "PWD_PLACEHOLDER": "Bitte passwort eingeben",
+            "PWD_DESCRIPTION": "Schützen Sie Ihr Passwort.",
+            "SUBMIT": "Anmelden",
+            "FORGOTPWD": "Passwort zurücksetzen",
+            "REGISTER": "Konto registrieren",
+            "RESEND_CONFIRMATION": "Aktivierungs E-Mail erneut anfordern",
+            "MissingPasswordError": "Passwort wurde nicht angegeben.",
+            "AttemptTooSoonError": "Konto ist vorrübergehend gesperrt. Bitte versuchen Sie es später noch einmal.",
+            "TooManyAttemptsError": "Das Konto ist wegen zu vieler Fehlerversuche gesperrt.",
+            "NoSaltValueStoredError": "Authentifizierung nicht möglich, kein Salt gespeichert.",
+            "IncorrectPasswordError": "Passwort oder Benutzername sind nicht korrekt.",
+            "IncorrectUsernameError": "Passwort oder Benutzername sind nicht korrekt.",
+            "MissingUsernameError": "Benutzername wurde nicht angegeben.",
+            "UserExistsError": "Ein Benutzer mit dieser E-Mail Adresse ist bereits registriert.",
+            "NotConfirmedError": "Sie haben Ihre E-Mail Adresse noch nicht bestätigt. Bitte überprüfen Sie Ihren Mail-Eingang.",
+            "Suspended": "Sie können sich aktuell nicht anmelden da Ihr Konto gesperrt wurde. Ablauf der Sperre: ",
+            "SUCCESS": "Erfolgreich eingeloggt."
+        },
+
+        "LOGOUT": {
+            "SUCCESS": "Sie sind erfolgreich ausgeloggt."
+        },
+
+        "REGISTER": {
+            "TITLE": "Registrierung",
+            "USERNAME_LABEL": "Benutzername",
+            "USERNAME_PLACEHOLDER": "Bitte Benutzername angeben",
+            "USERNAME_DESCRIPTION": "Ihr Benutzername ist sichtbar für andere Benutzer.",
+            "EMAIL_LABEL": "E-Mail",
+            "EMAIL_PLACEHOLDER": "Bitte E-Mail-Adresse angeben",
+            "EMAIL_DESCRIPTION": "Ihre E-Mail-Adresse ist nötig zum <strong>einloggen</strong>, und um Ihnen Aktivierungs- und Bestätigungs-Links zu schicken.",
+            "PWD_LABEL": "Passwort",
+            "PWD_PLACEHOLDER": "Passwort eingeben",
+            "PWD_DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
+            "CAPTCHA_PLACEHOLDER": "Überzeugen Sie uns das Sie keine Maschine sind.",
+            "CAPTCHA_DESCRIPTION": "Bitte geben Sie die Zeichen aus dem Bild oben ein.",
+            "ACCEPT_LABEL": "Nutzungsedingungen",
+            "ACCEPT_DESCRIPTION": "Bitte akzeptieren Sie unseren <a class=\"aw-textlink\" href=\"/terms_and_conditions/\">Nutzungsedingungen</a>.",
+            "SUBMIT": "Registrieren",
+            "ERROR": {
+                "FLASH": "Halte durch, Skelett - du hast es fast geschafft!",
+                "UsernameEmpty": "Bitte geben Sie Ihren Benutzernamen an.",
+                "UsernameOutOfBounds": "Der Benutzernamen muss zwischen 3 und 20 Zeichen enthalten.",
+                "UsernameTaken": "Der Benutzername ist bereits vergeben.",
+                "UsernameBlacklisted": "Der Benutzername ist nicht erlaubt.",
+                "EmailEmpty": "Bitte geben Sie Ihre E-Mail Adresse an.",
+                "EmailInvalid": "Diese E-Mail Adresse scheint ungültig zu sein.",
+                "EmailTaken": "Die E-Mail Adresse wurde bereits registriert.",
+                "PasswordEmpty": "Bitte geben Sie Ihr Passwort an.",
+                "PasswordOutOfBounds": "Das Passwort muss zwischen 6 und 32 Zeichen haben.",
+                "CaptchaEmpty": "Bitte geben Sie die Zeichen aus dem Bild ein.",
+                "CaptchaMismatch": "Die Zeichen stimmen nicht mit dem Bild überein.",
+                "AcceptEmpty": "Bitte akzeptieren Sie unsere Nutzungsbedingungen."
+            },
+            "SUCCESS": "Danke für die Registrierung! Wir haben Ihnen eine Bestätigungs E-Mail geschickt - bitte überprüfen Sie Ihren Maileingang und klicken Sie auf \"Mein Konto aktivieren\".",
+            "MAIL_SUBJECT": "Willkommen bei %s!",
+            "CONFIRM_SUCCESS": "Ihr Benutzerkonto wurde aktiviert.",
+            "CONFIRM_FAILED": "Bestätigungs Marker ist ungültig oder abgelaufen."
+        },
+
+        "RESEND": {
+            "TITLE": "Aktivierungs E-Mail anfordern",
+            "INTRO": "Falls Ihr Benutzerkonto noch nicht aktiviert wurde, können Sie hier eine neue Aktivierungs E-Mail anfordern. Wir schicken Ihnen dann einen Link um das Konto zu aktivieren.",
+            "SUBMIT": "E-Mail anfordern",
+            "ERR_EmailNotFound": "Wir konnten diese E-Mail nicht finden.",
+            "ERR_EmailAlreadyConfirmed": "Diese E-Mail wurde bereits bestätigt, das Konto ist aktiviert.",
+            "MAIL_SUBJECT": "%s Konto Aktivierung",
+            "SUCCESS": "Wir haben Ihnen einen neuen Aktivierungs Link geschickt. Bitte überprüfen Sie Ihren Maileingang!"
+        },
+
+        "RESET": {
+            "TITLE": "Passwort zurücksetzen",
+            "INTRO": "Falls Sie sich nicht an Ihr Passwort erinnern können schicken wir Ihnen einen Link um das Passwort ändern.",
+            "SUBMIT": "E-Mail anfordern",
+            "ERR_EmailNotFound": "Wir konnten diese E-Mail nicht finden.",
+            "ERR_EmailNotYetConfirmed": "Diese E-Mail Adresse ist noch nicht bestätigt worden. Bitte überprüfen Sie Ihren Maileingang oder fordern Sie einen neuen Aktivierungs-Link an.",
+            "ERR_UserSuspended": "Das Benutzerkonto mit dieser E-Mail Adresse ist gesperrt. Ablauf der Sperre: "
+        },
+
+        "PROFILE": {
+            "TITLE": "Mein Profil",
+            "TEXT1": "Hier kommt der Einleitungstext für das Profil. Oder so."
+        }
+    },
+
+
+    "GAME": {
+
+        "LABEL_CURRENTTURN": "Aktuelle Runde",
+        "LABEL_NEXTTURN": "Nächste Runde",
+        "EMPIRE": {
+            "LABEL": "Imperium"
+        },
+        "FLEETS": {
+            "LABEL": "Flotten"
+        },
+        "SHIPYARDS": {
+            "LABEL": "Werftem"
+        },
+        "RESEARCH": {
+            "LABEL": "Forschung"
+        },
+        "STARCHART": {
+            "LABEL": "Sternenkarte"
+        },
+        "GALNET": {
+            "LABEL": "GalNet"
+        }
+    }
+
 }

@@ -40,7 +40,6 @@ let accessLogger = morgan(morganTokens, {
             __dirname,
             "..",
             "..",
-            "..",
             "logs",
             moment().format("YYYYMMDD") + ".access.log"
         ),

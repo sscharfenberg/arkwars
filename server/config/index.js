@@ -10,7 +10,7 @@
  *
  **********************************************************************************************************************/
 const fs = require("fs-extra");
-const pkg = require( "../../../package.json" );
+const pkg = require( "../../package.json" );
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -26,6 +26,7 @@ const appConfig = {
         }
         , locales: ["en", "de"]
         , blacklistedUsernames: [
+            "ash",
             "ashaltiriak",
             "admin",
             "administrator",

@@ -12,7 +12,6 @@ const passport = require("passport"); // https://github.com/jaredhanson/passport
 const { getCaptcha } = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
 const mail = require("../../handlers/mail");
-const cfg = require("../../config");
 const User = mongoose.model("User");
 
 
@@ -25,7 +24,7 @@ exports.showResetForm = (req, res) => {
     const captcha = getCaptcha();
     req.session.captcha = captcha.text;
     res.render("auth/reset", {
-        title: i18n.__("PAGE_RESET_TITLE"),
+        title: i18n.__("APP.RESET.TITLE"),
         session: req.session,
         captcha: captcha.data
     });
@@ -47,15 +46,15 @@ exports.validateRequest = async (req, res, next) => {
     // if there is a captcha error, abort and show only captcha error
     // make sure we don't give too much information for robots
     if (req.body.captcha === "") {
-        captchaFail = i18n.__("PAGE_REG_ERROR_CaptchaEmpty");
+        captchaFail = i18n.__("APP.REGISTER.ERROR.CaptchaEmpty");
     } else if (req.body.captcha !== req.session.captcha) {
-        captchaFail = i18n.__("PAGE_REG_ERROR_CaptchaMismatch");
+        captchaFail = i18n.__("APP.REGISTER.ERROR.CaptchaMismatch");
     }
     if (captchaFail) {
         const captcha = getCaptcha(req.session.captcha);
         errors.captcha = { msg: captchaFail };
         return res.render("auth/reset", {
-            title: i18n.__("PAGE_RESET_TITLE"),
+            title: i18n.__("APP.RESET.TITLE"),
             session: req.session,
             data: req.body,
             errors,
@@ -67,27 +66,24 @@ exports.validateRequest = async (req, res, next) => {
     // check if we found a user with that email address
     const emailUser = await User.findOne({ email: req.body.email });
     if (!emailUser) {
-        errors.email = { msg: i18n.__("PAGE_RESEND_ERR_EmailNotFound") };
+        errors.email = { msg: i18n.__("APP.RESET.ERR_EmailNotFound") };
         logger.error(
             `[App] got reset request, could not find the email "${req.body.email}".`
         );
     }
     if (!emailUser.emailConfirmed) {
-        errors.email = { msg: i18n.__("PAGE_RESET_ERR_EmailNotYetConfirmed") };
+        errors.email = { msg: i18n.__("APP.RESET.ERR_EmailNotYetConfirmed") };
         logger.error(
             `[App] got reset request, email not yet confirmed "${req.body.email}".`
         );
     }
-
-    console.log(emailUser.suspended);
-    console.log(moment(emailUser.suspendedUntil).diff(moment()));
 
     // user is suspended and suspendedUntil is > now
     if (
         emailUser.suspended &&
         moment(emailUser.suspendedUntil).diff(moment()) > 0
     ) {
-        errors.email = { msg: i18n.__("PAGE_RESET_ERR_UserSuspended") + moment(emailUser.suspendedUntil).format("LLL") };
+        errors.email = { msg: i18n.__("APP.RESET.ERR_UserSuspended") + moment(emailUser.suspendedUntil).format("LLL") };
         logger.error(
             `[App] got reset request, user with email "${chalk.cyan(req.body.email)}" is suspended .`
         );
@@ -97,7 +93,7 @@ exports.validateRequest = async (req, res, next) => {
         const captcha = getCaptcha();
         req.session.captcha = captcha.text;
         return res.render("auth/reset", {
-            title: i18n.__("PAGE_RESET_TITLE"),
+            title: i18n.__("APP.RESET.TITLE"),
             session: req.session,
             data: req.body,
             errors,

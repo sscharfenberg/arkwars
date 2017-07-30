@@ -11,7 +11,7 @@ body
     header.aw-header
 
         .aw-header__menu
-            button.aw-header__menu-btn(aria-label=(h.__("APP.LABEL_MAINMENU")))
+            button.aw-header__menu-btn(aria-label=(h.__("APP.HEADER.LABEL_MAINMENU")))
                 span
                 span
                 span
@@ -23,7 +23,7 @@ body
 
         ul.aw-header__actions
             li.aw-header__action
-                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.LABEL_CHANGELANGUAGE")))
+                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGELANGUAGE")))
                     != h.icon("language")
                     span.keep #{session && session.locale ? session.locale : ""}
                 ul.aw-header__submenu.aw-header__submenu--left.aw-header__submenu--medium(aria-hidden="true")
@@ -36,38 +36,36 @@ body
                             != h.image("flags/de.svg")
                             | Deutsch
             li.aw-header__action
-                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.LABEL_CHANGEGAME")))
+                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGEGAME")))
                     != h.icon("games")
                     span.keep g1
                 ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link.aw-header__submenu-item-link--active(href="/game/1/", data-gameid="2") g1 (Alpha)
+                        a.aw-header__submenu-item-link.aw-header__submenu-item-link--active(href="/game/1", data-gameid="2") g1 (Alpha)
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(href="/game/2/", data-gameid="2") g2 (Beta)
+                        a.aw-header__submenu-item-link(href="/game/2", data-gameid="2") g2 (Beta)
 
             if !user
                 li.aw-header__action
-                    a.aw-header__link(href="/auth/login/")
+                    a.aw-header__link(href="/auth/login")
                         != h.icon("key")
-                        span= h.__("APP.LABEL_LOGIN")
+                        span= h.__("APP.HEADER.LABEL_LOGIN")
                 li.aw-header__action
-                    a.aw-header__link(href="/auth/register/")
+                    a.aw-header__link(href="/auth/register")
                         != h.icon("lightbulb")
-                        span= h.__("APP.LABEL_REGISTER")
+                        span= h.__("APP.HEADER.LABEL_REGISTER")
 
             if user
                 li.aw-header__action
-                    a.aw-header__link.aw-header__submenu-trigger.aw-header__link--circle(href="/auth/profile/")
+                    a.aw-header__link.aw-header__submenu-trigger.aw-header__link--circle(href="/auth/profile")
                         img.aw-header__avatar(src="/public/assets/images/user-anon.svg")
                     ul.aw-header__submenu.aw-header__submenu--right.aw-header__submenu--medium(aria-hidden="true")
                         li.aw-header__submenu-item
-                            a.aw-header__submenu-item-link(href="/profile/") Profile
-                        li.aw-header__submenu-item
-                            a.aw-header__submenu-item-link(href="/auth/changepassword/") Change Password
+                            a.aw-header__submenu-item-link(href="/home")= h.__("APP.HEADER.LABEL_HOME")
                 li.aw-header__action
                     a.aw-header__link(href="/auth/logout/")
                         != h.icon("power")
-                        span= h.__("APP.LABEL_LOGOUT")
+                        span= h.__("APP.HEADER.LABEL_LOGOUT")
 
         .aw-header__turn
             .aw-turn
@@ -88,11 +86,11 @@ body
 
                 li.aw-drawer__list-item.aw-drawer__list-item--info
                     .aw-drawer__info
-                        .aw-drawer__info-label= h.__("APP.LABEL_SERVERTIME")
+                        .aw-drawer__info-label= h.__("APP.HEADER.LABEL_SERVERTIME")
                         .aw-drawer__info-value
                             time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LLL")
                     .aw-drawer__info.aw-drawer__info--darker
-                        .aw-drawer__info-label= h.__("APP.LABEL_LOCALTIME")
+                        .aw-drawer__info-label= h.__("APP.HEADER.LABEL_LOCALTIME")
                         .aw-drawer__info-value
                             time(datetime="", data-my-time) 00:00
                 li.aw-drawer__list-item.aw-drawer__list-item--turn
@@ -111,27 +109,27 @@ body
                                 time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
 
                 li.aw-drawer__list-item
-                    a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire/")
+                    a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire")
                         != h.icon("empire", ["small"])
                         != h.__("GAME.EMPIRE.LABEL")
                 li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/fleets/")
+                    a.aw-drawer__link(href="/game/1/fleets")
                         != h.icon("fleet", ["small"])
                         != h.__("GAME.FLEETS.LABEL")
                 li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/shipyards/")
+                    a.aw-drawer__link(href="/game/1/shipyards")
                         != h.icon("build", ["small"])
                         != h.__("GAME.SHIPYARDS.LABEL")
                 li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/research/")
+                    a.aw-drawer__link(href="/game/1/research")
                         != h.icon("research", ["small"])
                         != h.__("GAME.RESEARCH.LABEL")
                 li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/starchart/")
+                    a.aw-drawer__link(href="/game/1/starchart")
                         != h.icon("starchart", ["small"])
                         != h.__("GAME.STARCHART.LABEL")
                 li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/galnet/")
+                    a.aw-drawer__link(href="/game/1/galnet")
                         != h.icon("galnet", ["small"])
                         != h.__("GAME.GALNET.LABEL")
 
@@ -170,9 +168,9 @@ body
                     | by Sven Scharfenberg
                 ul.aw-footer__list
                     li.aw-footer__list-item
-                        a.aw-footer__link(href="/privacy-policy/") Privacy Policy
+                        a.aw-footer__link(href="/privacy-policy") Privacy Policy
                     li.aw-footer__list-item
-                        a.aw-footer__link(href="/imprint/") Imprint
+                        a.aw-footer__link(href="/imprint") Imprint
                     li.aw-footer__list-item
                         a#footerJumpTop.aw-footer__link.aw-footer__link--icon(href="#main")
                             != h.icon("arrow_up")
