@@ -11,13 +11,13 @@ const fs = require("fs");
 const config = require("../config");
 const logger = require("../utils/clientlogger");
 require("dotenv").config({
-    path: path.join(config.projectRoot, "server", "app", "config", ".env")
+    path: path.join(config.projectRoot, "server", "config", ".env")
 });
 
 // models and mockdata
-const Game = require("../../server/app/models/Game");
+const Game = require("../../server/models/Game");
 const games = require("../mockdata/games");
-const User = require("../../server/app/models/User");
+const User = require("../../server/models/User");
 const users = require("../mockdata/users");
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
