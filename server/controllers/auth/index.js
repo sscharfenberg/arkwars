@@ -3,15 +3,10 @@
  * authController
  *
  **********************************************************************************************************************/
-const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
-const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
-const mongoose = require("mongoose"); // http://mongoosejs.com/
 const passport = require("passport"); // https://github.com/jaredhanson/passport
 const logger = require("../../handlers/logger/console");
-const mail = require("../../handlers/mail");
-const User = mongoose.model("User");
 
 
 /*

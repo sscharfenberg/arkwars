@@ -32,7 +32,6 @@ const generateHTML = (filename, options = {}) => {
     const templatePath = path.join(
         cfg.app.projectDir,
         "server",
-        "app",
         "views",
         "email",
         filename,

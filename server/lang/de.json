@@ -51,11 +51,11 @@
             "UserExistsError": "Ein Benutzer mit dieser E-Mail Adresse ist bereits registriert.",
             "NotConfirmedError": "Sie haben Ihre E-Mail Adresse noch nicht bestätigt. Bitte überprüfen Sie Ihren Mail-Eingang.",
             "Suspended": "Sie können sich aktuell nicht anmelden da Ihr Konto gesperrt wurde. Ablauf der Sperre: ",
-            "SUCCESS": "Erfolgreich eingeloggt."
+            "SUCCESS": "Erfolgreich angemeldet."
         },
 
         "LOGOUT": {
-            "SUCCESS": "Sie sind erfolgreich ausgeloggt."
+            "SUCCESS": "Erfolgreich abgemeldet."
         },
 
         "REGISTER": {
@@ -69,6 +69,9 @@
             "PWD_LABEL": "Passwort",
             "PWD_PLACEHOLDER": "Passwort eingeben",
             "PWD_DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
+            "PWD_CONFIRM_LABEL": "Passwort bestätigen",
+            "PWD_CONFIRM_PLACEHOLDER": "Bitte das Passwort wiederholen",
+            "PWD_CONFIRM_DESCRIPTION": "Bitte wiederholen Sie das Passwort. Das nervt, verhindert aber ärgerliche Tippfehler im Passwort.",
             "CAPTCHA_PLACEHOLDER": "Überzeugen Sie uns das Sie keine Maschine sind.",
             "CAPTCHA_DESCRIPTION": "Bitte geben Sie die Zeichen aus dem Bild oben ein.",
             "ACCEPT_LABEL": "Nutzungsedingungen",
@@ -111,7 +114,30 @@
             "SUBMIT": "E-Mail anfordern",
             "ERR_EmailNotFound": "Wir konnten diese E-Mail nicht finden.",
             "ERR_EmailNotYetConfirmed": "Diese E-Mail Adresse ist noch nicht bestätigt worden. Bitte überprüfen Sie Ihren Maileingang oder fordern Sie einen neuen Aktivierungs-Link an.",
-            "ERR_UserSuspended": "Das Benutzerkonto mit dieser E-Mail Adresse ist gesperrt. Ablauf der Sperre: "
+            "ERR_UserSuspended": "Das Benutzerkonto mit dieser E-Mail Adresse ist gesperrt. Ablauf der Sperre: ",
+            "DB_ERROR": "Fehler beim Aktualisieren der Datenbank.",
+            "MAIL_SUBJECT": "%s Passwort Änderung",
+            "MAIL_SENT": "Wir haben Ihnen einen Link zum Ändern Ihres Passwortes zugeschickt. Bitte überprüfen Sie Ihren Maileingang!",
+            "ERR_TOKEN": "Passwort Änderungs Marker ist ungültig oder abgelaufen.",
+            "CHANGE": {
+                "TITLE": "Passwort ändern",
+                "INTRO": "Sie können jetzt Ihr Passwort ändern.",
+                "PWD_LABEL": "Neues Passwort",
+                "PWD_PLACEHOLDER": "Passwort eingeben",
+                "PWD_DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
+                "PWD_CONFIRM_LABEL": "Passwort bestätigen",
+                "PWD_CONFIRM_PLACEHOLDER": "Bitte das Passwort wiederholen",
+                "PWD_CONFIRM_DESCRIPTION": "Bitte wiederholen Sie das Passwort. Umständlich, verhindert aber ärgerliche Tippfehler im Passwort.",
+                "SUBMIT": "Passwort ändern",
+                "ERROR": {
+                    "PasswordEmpty": "Bitte geben Sie Ihr Passwort an.",
+                    "PasswordOutOfBounds": "Das Passwort muss zwischen 6 und 32 Zeichen haben.",
+                    "PasswordConfirmEmpty": "Bitte geben Sie das Passwort erneut ein.",
+                    "PasswordsNoMatch": "Die Passwörter stimmen nicht überein.",
+                    "FLASH": "Passwort ändern fehlgeschlagen."
+                },
+                "SUCCESS": "Passwort erfolgreich geändert. Wilkommen @%s!"
+            }
         },
 
         "PROFILE": {

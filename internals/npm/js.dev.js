@@ -13,7 +13,6 @@ const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
 const webpackDevServer = require("webpack-dev-server"); // https://webpack.js.org/configuration/dev-server/
 const webpackConfig = require("../webpack/config.dev");
-const livereload = require("gulp-livereload"); // https://www.npmjs.com/package/gulp-livereload
 const logger = require("../utils/clientlogger");
 const config = require("../config");
 let compiler = webpack(webpackConfig);
@@ -53,9 +52,9 @@ devServer.listen(config.webPackPort, "localhost", err => {
     logger.info(
         `[webpack] pug footer include points to webpack-dev-server for Hot-Module-Reloading.`
     );
-    logger.info(
-        `[webpack] css is served via webpack-dev-server injected as style blob into head.`
-    );
+//    logger.info(
+//        `[webpack] css is served via webpack-dev-server injected as style blob into head.`
+//    );
 });
 
 // log finished compilations to console

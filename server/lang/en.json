@@ -69,6 +69,9 @@
             "PWD_LABEL": "Password",
             "PWD_PLACEHOLDER": "Enter password",
             "PWD_DESCRIPTION": "Make sure that your password is unique and safe.",
+            "PWD_CONFIRM_LABEL": "Confirm password",
+            "PWD_CONFIRM_PLACEHOLDER": "Retype your password",
+            "PWD_CONFIRM_DESCRIPTION": "Please retype the password. This is annoying, but prevents password typos (you'd have to start over).",
             "CAPTCHA_PLACEHOLDER": "Please convince us you are not a robot",
             "CAPTCHA_DESCRIPTION": "Type the letters from the image above.",
             "ACCEPT_LABEL": "Accept Conditions",
@@ -111,7 +114,30 @@
             "SUBMIT": "Request email",
             "ERR_EmailNotFound": "Could not find this email address in our records.",
             "ERR_EmailNotYetConfirmed": "This email has not yet been confirmed. Please check your inbox or request a new activation link.",
-            "ERR_UserSuspended": "The account with this email is suspended until "
+            "ERR_UserSuspended": "The account with this email is suspended until ",
+            "DB_ERROR": "Error updating database.",
+            "MAIL_SUBJECT": "%s password update",
+            "MAIL_SENT": "We have sent you a password reset link. Please check your inbox.",
+            "ERR_TOKEN": "Reset Password token is invalid or has expired.",
+            "CHANGE": {
+                "TITLE": "Change Password",
+                "INTRO": "You can now update your password.",
+                "PWD_LABEL": "Password",
+                "PWD_PLACEHOLDER": "Enter password",
+                "PWD_DESCRIPTION": "Make sure that your password is unique and safe.",
+                "PWD_CONFIRM_LABEL": "Confirm password",
+                "PWD_CONFIRM_PLACEHOLDER": "Retype your password",
+                "PWD_CONFIRM_DESCRIPTION": "Please retype the password. This is annoying, but prevents password typos, which are even more annoying.",
+                "SUBMIT": "Change password",
+                "ERROR": {
+                    "PasswordEmpty": "please specify your password.",
+                    "PasswordOutOfBounds": "Password needs to have at least 6 and max. 32 characters.",
+                    "PasswordConfirmEmpty": "please confirm the password.",
+                    "PasswordsNoMatch": "Passwords do not match",
+                    "FLASH": "Password change failed."
+                },
+                "SUCCESS": "Password successfully changed. Welcome @%s!"
+            }
         },
 
         "PROFILE": {

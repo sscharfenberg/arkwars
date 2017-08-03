@@ -1,0 +1,11 @@
+extends ../email_layout
+
+block content
+    h2 Hallo @#{user.username}, Sie können Ihr Passwort jetzt ändern!
+    p Sie haben uns um einen Passwort Änderungs Link gebeten. Bitte klicken Sie auf den folgenden Button um Ihr Passwort zu ändern.. Bitte beachten Sie das der Link nur eine Stunde lang gültig ist.
+    +button(confirmURL, "Mein Passwort ändern →")
+    p Falls Sie den Button oberhalb nicht klicken können besuchen Sie bitte
+        br
+        | #{confirmURL}
+    br
+    p Falls Sie diese E-Mail nicht angefordert haben, ignorieren Sie diese bitte.

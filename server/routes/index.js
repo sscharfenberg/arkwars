@@ -15,6 +15,7 @@ const userController = require("../controllers/user");
 const authController = require("../controllers/auth");
 const resetController = require("../controllers/auth/reset");
 const resendController = require("../controllers/auth/resend");
+const registrationController = require("../controllers/auth/register");
 const adminController = require("../controllers/admin");
 const userHomeController = require("../controllers/user/home");
 const { catchErrors } = require("../handlers/error");
@@ -39,34 +40,48 @@ router.get(
  */
 
 // show registration form
-router.get("/auth/register", userController.showRegistration);
+router.get("/auth/register", registrationController.showRegistration);
 // post registration
 router.post(
     "/auth/register",
-    catchErrors(userController.validateRegistration), // 1. Validate the registration data
-    catchErrors(userController.doRegistration), // 2. register the user
-    catchErrors(userController.sendConfirmationEmail) // 3. send confirmation email
+    catchErrors(registrationController.validateRegistration), // 1. Validate the registration data
+    catchErrors(registrationController.doRegistration), // 2. register the user
+    catchErrors(registrationController.sendConfirmationEmail) // 3. send confirmation email
 );
-// confirm email
-router.get("/auth/confirm/:token", catchErrors(userController.confirmEmail));
+// confirm email (from email link)
+router.get("/auth/confirm/:token", catchErrors(registrationController.confirmEmail));
 // login
 router.get("/auth/login", authController.showLoginForm);
 router.post("/auth/login", authController.login);
 // logout
 router.get("/auth/logout", authController.logout);
-// resend activation email
+// show "resend activation email" form
 router.get("/auth/resend", resendController.showResendForm);
+// post "resend activation email" form
 router.post(
     "/auth/resend",
     catchErrors(resendController.validateResend), // 1. Validate form data
     catchErrors(resendController.doResend) // 2. resend activation link
 );
-// reset password
+// show reset form
 router.get("/auth/reset", resetController.showResetForm);
+// post "request reset email" request
 router.post(
     "/auth/reset",
     catchErrors(resetController.validateRequest), // 1. validate form data
-    resetController.doReset // 2. send reset link, update user
+    catchErrors(resetController.updateResetUser), // 2. update user
+    catchErrors(resetController.sendResetEmail) // 3. send reset email
+);
+// show change password form (from email link)
+router.get("/auth/reset/:token",
+    catchErrors(resetController.validateResetToken), // 1. validate token
+    resetController.showChangeForm // 2. show password change form
+);
+// post change password form
+router.post("/auth/reset/:token",
+    catchErrors(resetController.validateResetToken), // 1. validate token
+    catchErrors(resetController.validateChangeForm), // 2. validate form data
+    catchErrors(resetController.resetChangePassword) // 3. change password
 );
 
 /*

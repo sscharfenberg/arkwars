@@ -1,0 +1,11 @@
+extends ../email_layout
+
+block content
+    h2 Hello @#{user.username}, here is your password reset link!
+    p You have requested a password reset link for your account. Please click the following button to change your password. Please note this link is only valid for the next hour.
+    +button(confirmURL, "Change My Password →")
+    p If you can't click the above button please visit
+        br
+        | #{confirmURL}
+    br
+    p If you didn't request this email, please ignore it.
