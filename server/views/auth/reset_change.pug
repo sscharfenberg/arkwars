@@ -3,7 +3,8 @@ extends ../layout
 block content
     main.aw-content__inner.aw-content__inner--narrow
 
-        h1= h.__("APP.RESET.CHANGE.TITLE")
+    header.aw-content-head
+        h1.aw-content-head__title= h.__("APP.RESET.CHANGE.TITLE")
 
         form.aw-narrowform(action=("/auth/reset/" + data.token), method="POST")
 

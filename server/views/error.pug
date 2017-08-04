@@ -2,6 +2,7 @@ extends layout
 
 block content
     main.aw-content__inner
-    h1 #{status}#{message ? " - " + message : ""}
-    pre.error!= stackHighlighted
+        header.aw-content-head
+            h1.aw-content-head__title #{status}#{message ? " - " + message : ""}
+        pre.error!= stackHighlighted
 

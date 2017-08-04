@@ -1,0 +1,48 @@
+/***********************************************************************************************************************
+ *
+ * Avatar Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+
+.aw-change-avatar {
+    box-sizing: border-box;
+    width: 100%;
+
+    background: palette("grey", "fog");
+
+    @include respond-to("small") {
+        display: inline-flex;
+    }
+
+    &__current {
+        background: palette("grey", "asher");
+
+        @include respond-to("small") {
+            flex: 0 0 20rem;
+        }
+
+        @include respond-to("medium") {
+            flex: 0 0 30rem;
+            text-align: right;
+        }
+    }
+
+    &__change {
+        width: 100%;
+
+        background: palette("grey", "iron");
+
+        @include respond-to("small") {
+            width: auto;
+            flex-grow: 1;
+        }
+    }
+}
+
+.aw-show-avatar {
+    background: palette("grey", "bunker");
+}

@@ -3,7 +3,8 @@ extends ../layout
 block content
     main.aw-content__inner.aw-content__inner--narrow
 
-        h1= h.__("APP.LOGIN.TITLE")
+        header.aw-content-head
+            h1.aw-content-head__title= h.__("APP.LOGIN.TITLE")
 
         form.aw-narrowform(action="/auth/login" method="POST")
 

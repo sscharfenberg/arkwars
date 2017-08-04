@@ -4,7 +4,8 @@ html(lang="de")
         meta(charset="utf-8")
         title= `${title} | ${h.appName}`
         meta(name="viewport" content="width=device-width, initial-scale=1")
-        link(rel='stylesheet', href='/public/assets/styles.css')
+        block head
+            link(rel='stylesheet', href='/public/assets/styles.css')
 body
     != h.spritesheet()
 
@@ -22,6 +23,13 @@ body
                 span= h.appName
 
         ul.aw-header__actions
+
+            if user && user.admin
+                li.aw-header__action
+                    a.aw-header__link(href="/admin")
+                        != h.icon("key")
+                        span= h.__("APP.HEADER.LABEL_ADMIN")
+
             li.aw-header__action
                 a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGELANGUAGE")))
                     != h.icon("language")
@@ -57,13 +65,13 @@ body
 
             if user
                 li.aw-header__action
-                    a.aw-header__link.aw-header__submenu-trigger.aw-header__link--circle(href="/auth/profile")
+                    a.aw-header__link.aw-header__submenu-trigger.aw-header__link--circle(href="/dashboard")
                         img.aw-header__avatar(src="/public/assets/images/user-anon.svg")
                     ul.aw-header__submenu.aw-header__submenu--right.aw-header__submenu--medium(aria-hidden="true")
                         li.aw-header__submenu-item
-                            a.aw-header__submenu-item-link(href="/home")= h.__("APP.HEADER.LABEL_HOME")
+                            a.aw-header__submenu-item-link(href="/dashboard")= h.__("APP.HEADER.LABEL_HOME")
                 li.aw-header__action
-                    a.aw-header__link(href="/auth/logout/")
+                    a.aw-header__link(href="/auth/logout")
                         != h.icon("power")
                         span= h.__("APP.HEADER.LABEL_LOGOUT")
 
@@ -80,6 +88,7 @@ body
                 time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
 
     .aw-main-wrapper
+
         section.aw-drawer(aria-hidden="true")
 
             ul.aw-drawer__list
@@ -150,9 +159,6 @@ body
                                     button.aw-btn.aw-btn--close.aw-flash__remove &times;
 
             block content
-                main.aw-content__inner
-                    h1= title
-                    p This is the default!
 
             if session
                 h3 Session Data
@@ -176,4 +182,4 @@ body
                             != h.icon("arrow_up")
 
     block scripts
-        include webpack.includes/app.footer.pug
+        include webpack/app.footer.pug

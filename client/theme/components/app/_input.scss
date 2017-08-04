@@ -10,6 +10,8 @@
 /*
  * input fields for full width, narrow forms (max 768px width) =========================================================
  */
+// TODO: cleanup namespacing. its shit.
+.aw-form-input,
 .aw-narrowform-input {
     display: inline-block;
     position: relative;

@@ -228,7 +228,9 @@
         color: palette("text", "light");
 
         text-decoration: none;
-        transition: background-color map-get($animation-speeds, "fast") linear, color map-get($animation-speeds, "fast") linear;
+        transition:
+            background-color map-get($animation-speeds, "fast") linear,
+            color map-get($animation-speeds, "fast") linear;
 
         @include respond-to("small") {
             padding: 5px 10px;
@@ -419,7 +421,7 @@
     }
 
     /*
-     * 4. turn data - permanently displayed in header for mobile
+     * 4. turn data - permanently displayed in header for mobile =======================================================
      */
     &__turn {
         display: flex;

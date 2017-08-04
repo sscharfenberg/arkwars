@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+
+    main.aw-content__inner
+        header.aw-content-head
+            h1.aw-content-head__title= h.__("APP.DASHBOARD.TITLE")
+            nav.aw-content-head__breadcrumbs
+                a.aw-content-head__breadcrumb(href="/")
+                    != h.icon("home", ["home-icon"])
+                a.aw-content-head__breadcrumb(href="/dashboard")= h.__("APP.DASHBOARD.TITLE")
+
+        p= h.__("APP.DASHBOARD.INTRO")
+
+        form.aw-form(action="/dashboard/password" method="POST")
+
+            .aw-form__row-description
+                .aw-form__row-headline Passwort ändern
+
+            .aw-form__row(class=`${errors && errors.password ? "error" : ""}`)
+                .aw-form-input
+                    label.aw-form-input__label(for="password")= h.__("APP.DASHBOARD.PWD_LABEL")
+                    input.aw-form-input__input(type="password", name="password", id="password", placeholder=(h.__("APP.DASHBOARD.PWD_PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
+                if errors && errors.password
+                    .aw-form__error-message= errors.password.msg
+                .aw-form__row-description!= h.__("APP.DASHBOARD.PWD_DESCRIPTION")
+
+            .aw-form__row
+                .aw-form__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("key", ["small"])
+                        != h.__("APP.DASHBOARD.CHANGE_PWD_SUBMIT")
+
+        form.aw-form(action="/dashboard/password" method="POST")
+
+            .aw-form__row-description
+                .aw-form__row-headline Avatar
+
+            .aw-change-avatar(class=`${errors && errors.avatar ? "error" : ""}`)
+                .aw-change-avatar__current current
+                .aw-change-avatar__change
+                    label.aw-change-avatar__label(for="avatar")= h.__("APP.DASHBOARD.AVATAR_LABEL")
+                    input.aw-change-avatar__input(type="file", name="avatar", id="avatar", value=(data && data.password))
+            if errors && errors.avatar
+                .aw-form__error-message= errors.avatar.msg
+            .aw-form__row-description!= h.__("APP.DASHBOARD.AVATAR_DESCRIPTION")
+
+            .aw-form__row
+                .aw-form__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("key", ["small"])
+                        != h.__("APP.DASHBOARD.CHANGE_AVATAR_SUBMIT")

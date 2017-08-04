@@ -7,14 +7,19 @@
 @import "../../abstracts/functions";
 @import "../../abstracts/mixins";
 
-
+// TODO: clean up this namespacing. its shit.
+.aw-form,
 .aw-narrowform {
     box-sizing: border-box;
     width: 100%;
     padding: 1rem;
-    margin: 0 auto;
+    margin: 0 auto 1rem 0;
 
     background: palette("grey", "sunken");
+
+    @include respond-to("small") {
+        margin-bottom: 2rem;
+    }
 
     &__row {
         box-sizing: border-box;
@@ -39,6 +44,29 @@
                 background: palette("grey", "mystic");
                 color: palette("state", "error");
             }
+        }
+    }
+
+    &__row-headline {
+        display: flex;
+        align-items: center;
+
+        box-sizing: border-box;
+        margin-bottom: 2rem;
+
+        color: palette("text", "light");
+
+        font-size: 2rem;
+
+        &::after {
+            display: block;
+
+            height: 1px;
+            margin-left: 1rem;
+            flex-grow: 1;
+
+            background-color: palette("brand", "gorse");
+            content: " ";
         }
     }
 

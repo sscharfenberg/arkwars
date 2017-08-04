@@ -30,13 +30,13 @@ mongoose.Promise = global.Promise;
  * prune database and throw everything away.
  */
 async function pruneDatabase() {
-    logger.info("[node] pruning database ...");
+    logger.info("[node] deleting collections ...");
     try {
         await Game.remove();
         await User.remove();
-        logger.success("database pruned.");
+        logger.success("[node] collections deleted.");
     } catch (e) {
-        logger.error("error while pruning database.");
+        logger.error("[node] error while deleting collections.");
         logger.error(e);
     }
     process.exit(0);
@@ -49,12 +49,12 @@ async function seedDatabase() {
     logger.info("[node] start seeding database");
     try {
         await Game.insertMany(games);
-        logger.debug(`inserting ${games.length} games.`);
+        logger.debug(`[node] inserting ${games.length} games.`);
         await User.insertMany(users);
-        logger.debug(`inserting ${users.length} users.`);
-        logger.success("done, database seeded!");
+        logger.debug(`[node] inserting ${users.length} users.`);
+        logger.success("[node] done, database seeded!");
     } catch (e) {
-        logger.error("error while seeding database.");
+        logger.error("[node] error while seeding database.");
         logger.error(e);
     }
     process.exit(0);

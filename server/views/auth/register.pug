@@ -2,7 +2,9 @@ extends ../layout
 
 block content
     main.aw-content__inner.aw-content__inner--narrow
-        h1= title
+        header.aw-content-head
+            h1.aw-content-head__title= title
+
         form.aw-narrowform(action="/auth/register" method="POST")
 
             .aw-narrowform__row(class=`${errors && errors.username ? "error" : ""}`)
@@ -28,6 +30,14 @@ block content
                 if errors && errors.password
                     .aw-narrowform__error-message= errors.password.msg
                 .aw-narrowform__row-description!= h.__("APP.REGISTER.PWD_DESCRIPTION")
+
+            .aw-narrowform__row(class=`${errors && errors.passwordConfirm ? "error" : ""}`)
+                .aw-narrowform-input
+                    label.aw-narrowform-input__label(for="passwordConfirm")= h.__("APP.REGISTER.PWD_CONFIRM_LABEL")
+                    input.aw-narrowform-input__input(type="password", name="passwordConfirm", id="passwordConfirm", placeholder=(h.__("APP.REGISTER.PWD_CONFIRM_PLACEHOLDER")), required, aria-required="true", value=(data && data.passwordConfirm))
+                if errors && errors.passwordConfirm
+                    .aw-narrowform__error-message= errors.passwordConfirm.msg
+                .aw-narrowform__row-description!= h.__("APP.REGISTER.PWD_CONFIRM_DESCRIPTION")
 
             .aw-narrowform__row(class=`${errors && errors.captcha ? "error" : ""}`)
                 .aw-narrowform-input
@@ -56,7 +66,3 @@ block content
                         != h.__("APP.REGISTER.SUBMIT")
 
             pre= h.dump(data)
-
-
-block scripts
-    include ../webpack.includes/app.footer.pug

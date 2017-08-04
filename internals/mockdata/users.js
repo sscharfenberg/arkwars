@@ -8,8 +8,6 @@ module.exports = [
         "email" : "ashaltiriak@gmail.com",
         "username" : "Ash",
         "locale" : "de",
-        "emailConfirmationToken" : "",
-        "emailConfirmationExpires" : "2017-07-29T10:15:39.541Z",
         "created" : "2017-07-29T09:15:05.654Z",
         "lastLogin" : "2017-07-29T09:17:24.008Z",
         "attempts" : 0,

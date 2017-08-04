@@ -290,6 +290,6 @@ exports.resetChangePassword = async (req, res) => {
         req.user = updatedUser;
         logger.info(`[App] user @${updatedUser.username} logged in.`);
         req.flash("success", i18n.__("APP.RESET.CHANGE.SUCCESS", updatedUser.username));
-        res.redirect("/home");
+        res.redirect("/dashboard");
     });
 };

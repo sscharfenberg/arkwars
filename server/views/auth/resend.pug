@@ -3,7 +3,13 @@ extends ../layout
 block content
     main.aw-content__inner.aw-content__inner--narrow
 
-        h1= h.__("APP.RESEND.TITLE")
+        header.aw-content-head
+            h1.aw-content-head__title= h.__("APP.RESEND.TITLE")
+            nav.aw-content-head__breadcrumbs
+                a.aw-content-head__breadcrumb(href="/")
+                    != h.icon("home", ["home-icon"])
+                a.aw-content-head__breadcrumb(href="/auth/login")= h.__("APP.LOGIN.TITLE_NAV")
+                a.aw-content-head__breadcrumb(href="/auth/resend")= h.__("APP.RESEND.TITLE_NAV")
 
         form.aw-narrowform(action="/auth/resend" method="POST")
 

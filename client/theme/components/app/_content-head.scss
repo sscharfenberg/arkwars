@@ -1,0 +1,151 @@
+/***********************************************************************************************************************
+ *
+ * Headline Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+.aw-content-head {
+
+    border-left: 0.5rem solid  palette("brand");
+    margin-bottom: 1rem;
+
+    background: palette("grey", "sunken");
+    color: palette("text", "light");
+
+    @include respond-to("small") {
+        border-left-width: 0.8rem;
+        margin-bottom: 2rem;
+    }
+
+    &__title {
+        padding: 0.5rem;
+        margin: 0;
+
+        font-size: 2rem;
+        font-weight: 300;
+        line-height: 1.2;
+
+        @include respond-to("small") {
+            padding: 1rem 2rem;
+
+            font-size: 3rem;
+        }
+
+        .fonts-loaded & {
+            font-family: map-get($fonts, "headline");
+        }
+    }
+
+    &__breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+
+        padding: 0 0.5rem 0.5rem;
+
+        @include respond-to("small") {
+            padding: 0 2rem 1rem;
+        }
+    }
+
+    &__breadcrumb {
+        $basecolor: darken(palette("grey", "raven"), 6%);
+        $altcolor: palette("grey", "raven");
+        $hovercolor: palette("grey", "iron");
+        $baseheight: 2.6rem;
+        $bigheight: 3.2rem;
+
+        display: flex;
+        position: relative;
+        align-items: center;
+        box-sizing: border-box;
+
+        height: $baseheight;
+        padding: 0 0.6rem;
+
+        background-color: $basecolor;
+        color: palette("text", "light");
+
+        font-size: 1.4rem;
+        text-decoration: none;
+
+        transition:
+            background-color map-get($animation-speeds, "fast") linear,
+            color map-get($animation-speeds, "fast") linear;
+
+        @include respond-to("small") {
+            height: $bigheight;
+            padding: 0 1rem;
+
+            font-size: 1.6rem;
+        }
+
+        &:not(:first-child) {
+            padding-left: 1.3rem;
+
+            @include respond-to("small") {
+                padding-left: 1.8rem;
+            }
+        }
+
+        &:nth-child(2n) {
+            background-color: $altcolor;
+
+            &::after {
+                border-color: transparent transparent transparent $altcolor;
+            }
+        }
+
+        &:hover {
+            background-color: $hovercolor;
+            color: palette("grey", "black");
+
+            &::before {
+                left: 0;
+            }
+
+            &::after {
+                border-left-color: $hovercolor;
+            }
+        }
+
+        &::after {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            z-index: z("form");
+            width: 0;
+            height: 0;
+
+            border-width: #{$baseheight / 2} 0.7rem;
+            border-style: solid;
+
+            border-color: transparent transparent transparent $basecolor;
+
+            content: " ";
+
+            transition: border-color map-get($animation-speeds, "fast") linear;
+
+            @include respond-to("small") {
+                border-width: #{$bigheight / 2} 0.8rem;
+            }
+        }
+
+        .fonts-loaded & {
+            font-family: map-get($fonts, "text");
+        }
+    }
+
+    .aw-icon--home-icon {
+        width: 1.6rem;
+        height: 1.6rem;
+
+        @include respond-to("small") {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+
+}

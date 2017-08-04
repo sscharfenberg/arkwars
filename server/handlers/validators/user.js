@@ -7,44 +7,74 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const User = mongoose.model("User");
 
-
 /*
  * default validator.js validations ====================================================================================
  * @param {ExpressHTTPRequest} req
  * @return {ExpressHTTPRequest} req
  */
 exports.defaultValidators = req => {
+
     // username
     req.sanitizeBody("username").trim();
     req
         .checkBody("username", i18n.__("APP.REGISTER.ERROR.UsernameEmpty"))
         .notEmpty();
     req
-        .checkBody("username", i18n.__("APP.REGISTER.ERROR.UsernameOutOfBounds"))
+        .checkBody(
+            "username",
+            i18n.__("APP.REGISTER.ERROR.UsernameOutOfBounds")
+        )
         .isLength({ min: 3, max: 20 });
 
     // email
     req.checkBody("email", i18n.__("APP.REGISTER.ERROR.EmailEmpty")).notEmpty();
-    req.checkBody("email", i18n.__("APP.REGISTER.ERROR.EmailInvalid")).isEmail();
+    req
+        .checkBody("email", i18n.__("APP.REGISTER.ERROR.EmailInvalid"))
+        .isEmail();
+
     // password
     req
         .checkBody("password", i18n.__("APP.REGISTER.ERROR.PasswordEmpty"))
         .notEmpty();
     req
-        .checkBody("password", i18n.__("APP.REGISTER.ERROR.PasswordOutOfBounds"))
+        .checkBody(
+            "password",
+            i18n.__("APP.REGISTER.ERROR.PasswordOutOfBounds")
+        )
         .isLength({ min: 6, max: 32 });
+
+    // confirm password is not empty.
+    req
+        .checkBody(
+            "passwordConfirm",
+            i18n.__("APP.REGISTER.ERROR.PasswordConfirmEmpty")
+        )
+        .notEmpty();
+    req
+        .checkBody(
+            "passwordConfirm",
+            i18n.__("APP.REGISTER.ERROR.PasswordsNoMatch")
+        )
+        .equals(req.body.password);
+
     // captcha
-    req.checkBody("captcha", i18n.__("APP.REGISTER.ERROR.CaptchaEmpty")).notEmpty();
+    req
+        .checkBody("captcha", i18n.__("APP.REGISTER.ERROR.CaptchaEmpty"))
+        .notEmpty();
     req
         .checkBody("captcha", i18n.__("APP.REGISTER.ERROR.CaptchaMismatch"))
         .equals(req.session.captcha);
+
     // accept conditions
     req
-        .checkBody("accept_conditions", i18n.__("APP.REGISTER.ERROR.AcceptEmpty"))
+        .checkBody(
+            "accept_conditions",
+            i18n.__("APP.REGISTER.ERROR.AcceptEmpty")
+        )
         .notEmpty();
+
     return req;
 };
-
 
 /*
  * User Promise ========================================================================================================
@@ -55,7 +85,6 @@ exports.userPromise = req => {
     return User.findOne({ username: req.body.username });
 };
 
-
 /*
  * Email Promise =======================================================================================================
  * @param {ExpressHTTPRequest} req
@@ -64,7 +93,6 @@ exports.userPromise = req => {
 exports.emailPromise = req => {
     return User.findOne({ email: req.body.email });
 };
-
 
 /*
  * Username already exists =============================================================================================
@@ -79,7 +107,6 @@ exports.userNameExists = req => {
     };
 };
 
-
 /*
  * Email already exists ================================================================================================
  * @param {ExpressHTTPRequest} req
@@ -92,7 +119,6 @@ exports.emailExists = req => {
         value: req.body.email
     };
 };
-
 
 /*
  * Username already exists =============================================================================================

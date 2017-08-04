@@ -87,7 +87,7 @@ exports.login = async (req, res, next) => {
             req.user = user;
             logger.info(`[App] user @${user.username} logged in.`);
             req.flash("success", i18n.__("APP.LOGIN.SUCCESS"));
-            res.redirect("/home");
+            res.redirect("/dashboard");
         });
     })(req, res, next);
 };

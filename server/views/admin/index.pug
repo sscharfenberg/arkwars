@@ -1,0 +1,27 @@
+extends ../layout
+
+block head
+    link(rel='stylesheet', href='/public/assets/styles.css')
+    link(rel='stylesheet', href='/public/assets/admin.css')
+
+block content
+    main.aw-content__inner
+        header.aw-content-head
+            h1.aw-content-head__title= h.__("ADMIN.INDEX.TITLE")
+            nav.aw-content-head__breadcrumbs
+                a.aw-content-head__breadcrumb(href="/")
+                    != h.icon("home", ["home-icon"])
+                a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
+        .admin-cta
+            a.admin-cta__item(href="/admin/games")
+                .admin-cta__item-number 3
+                .admin-cta__item-desc active games
+            a.admin-cta__item(href="/admin/users")
+                .admin-cta__item-number 1
+                .admin-cta__item-desc registered users
+            a.admin-cta__item(href="/admin/emails")
+                .admin-cta__item-number 3
+                .admin-cta__item-desc email templates
+
+block scripts
+    include ../webpack/app.footer.pug

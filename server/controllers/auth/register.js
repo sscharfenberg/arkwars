@@ -201,7 +201,8 @@ exports.confirmEmail = async (req, res, next) => {
         return;
     }
 
-    user.emailConfirmationToken = "";
+    user.emailConfirmationToken = undefined; // clear email confirmation. this deletes the mongoDB property
+    user.emailConfirmationExpires = undefined;
     user.emailConfirmed = true;
     await user.save();
     logger.success(
@@ -218,6 +219,6 @@ exports.confirmEmail = async (req, res, next) => {
         req.user = user;
         logger.info(`[App] user @${user.username} logged in.`);
         req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
-        res.redirect("/home");
+        res.redirect("/dashboard");
     });
 };

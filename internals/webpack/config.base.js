@@ -133,7 +133,7 @@ for (let chunk in config.chunks) {
                 config.projectRoot,
                 "server",
                 "views",
-                "webpack.includes",
+                "webpack",
                 `${chunk}.footer.pug`
             ),
             showErrors: true,

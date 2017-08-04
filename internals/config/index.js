@@ -11,12 +11,14 @@ const fs = require("fs-extra");
 const moment = require("moment");
 const pkg = require("../../package.json");
 
+
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 const PROJECTROOT = fs.realpathSync(process.cwd());
 const APPFOLDER = path.join(PROJECTROOT, "client");
 const BUILDDIR = path.join(PROJECTROOT, "server", "public", "assets");
 moment.locale("de");
+
 
 module.exports = {
     projectRoot: PROJECTROOT,
@@ -53,12 +55,7 @@ module.exports = {
 `,
 
     // folder for pug script includes. we need this because of hash names.
-    pugScriptInclude: path.join(
-        PROJECTROOT,
-        "server",
-        "views",
-        "webpack.includes"
-    ),
+    pugScriptInclude: path.join(PROJECTROOT, "server", "views", "webpack"),
 
     webPackPort: 8000, // make sure this is different from the node server port.
 
@@ -84,7 +81,7 @@ module.exports = {
 
     paths: {
         css: {
-            in: [path.join(PROJECTROOT, "client", "theme", "styles.scss")],
+            in: [path.join(PROJECTROOT, "client", "theme", "*.scss")],
             out: BUILDDIR,
             lint: path.join(PROJECTROOT, "client", "theme", "**/*.scss"),
             styleLintRc: path.join(
@@ -106,6 +103,6 @@ module.exports = {
             in: [path.join(PROJECTROOT, "client", "theme", "icons", "**/*")],
             out: path.join(BUILDDIR, "images")
         },
-        cleanup: ["server/public/assets/**/*"]
+        cleanup: ["server/public/assets/**/*", "server/views/webpack/**/*"]
     }
 };
