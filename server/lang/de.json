@@ -150,13 +150,15 @@
         "DASHBOARD": {
             "TITLE": "Meine Zentrale",
             "INTRO": "Hier kommt der Einleitungstext für die Zentrale. Oder so.",
+            "USER_HDL": "Benutzerdaten",
+            "PWD_HDL": "Passwort ändern",
             "PWD_LABEL": "Neues Passwort",
             "PWD_PLACEHOLDER": "Neues Passwort eingeben",
             "PWD_DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
             "CHANGE_PWD_SUBMIT": "Passwort ändern",
-            "AVATAR_LABEL": "Avatar",
-            "AVATAR_PLACEHOLDER": "Neuer Avatar",
-            "AVATAR_DESCRIPTION": "Bitte wählen Sie ein Grafik als Avatar aus.",
+            "AVATAR_HDL": "Avatar ändern",
+            "AVATAR_LABEL": "Avatar auswählen",
+            "AVATAR_REMOVE": "Aktuellen Avatar löschen",
             "CHANGE_AVATAR_SUBMIT": "Avatar Speichern"
         }
     },

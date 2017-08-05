@@ -11,6 +11,7 @@
 .aw-change-avatar {
     box-sizing: border-box;
     width: 100%;
+    margin-bottom: 2rem;
 
     background: palette("grey", "fog");
 
@@ -18,7 +19,14 @@
         display: inline-flex;
     }
 
+    /*
+     * 1. show current avatar ==========================================================================================
+     */
     &__current {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         background: palette("grey", "asher");
 
         @include respond-to("small") {
@@ -31,18 +39,122 @@
         }
     }
 
-    &__change {
-        width: 100%;
+    /*
+     * 2. avatar actions ===============================================================================================
+     */
+    &__action {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
 
-        background: palette("grey", "iron");
+        width: 100%;
+        padding: 1rem;
 
         @include respond-to("small") {
             width: auto;
             flex-grow: 1;
         }
     }
+
+    /*
+     * 2.1 upload a new avatar image ===================================================================================
+     */
+    &__upload-label {
+        display: flex;
+        position: relative;
+        align-items: center;
+
+        padding: 1rem 3rem;
+        margin: 0 auto 1rem 0;
+
+        background-color: palette("grey", "raven");
+        color: palette("text", "light");
+
+        cursor: pointer;
+
+        transition:
+            background map-get($animation-speeds, "fast") linear,
+            color map-get($animation-speeds, "fast") linear;
+
+        .aw-icon {
+            margin-right: 1rem;
+        }
+        &:hover,
+        &:focus {
+            background-color: palette("grey", "asher");
+            color: palette("grey", "white");
+        }
+    }
+    &__upload-input {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: z("background");
+        opacity: 0;
+
+        width: 100%;
+        padding: 0;
+        margin: 0;
+
+        cursor: pointer;
+    }
+
+    /*
+     * 2.2 delete current avatar =======================================================================================
+     */
+    &__remove-current {
+        display: inline-flex;
+        align-items: center;
+
+        padding: 1rem 3rem;
+        margin-right: auto;
+
+        background-color: palette("grey", "raven");
+        color: palette("text", "light");
+
+        cursor: pointer;
+
+        transition:
+            background map-get($animation-speeds, "fast") linear,
+            color map-get($animation-speeds, "fast") linear;
+
+        .aw-icon {
+            margin-right: 1rem;
+        }
+
+        &:active,
+        &:focus {
+            outline: 0;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: palette("grey", "asher");
+            color: palette("grey", "white");
+        }
+    }
 }
 
 .aw-show-avatar {
-    background: palette("grey", "bunker");
+
+    background: palette("grey", "raven");
+    border-radius: 50%;
+
+    &--small {
+        width: 28px;
+        height: 28px;
+    }
+
+    &--medium {
+        width: 48px;
+        height: 48px;
+    }
+
+    &--big {
+        width: 96px;
+        height: 96px;
+    }
 }

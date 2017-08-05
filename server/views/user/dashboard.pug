@@ -12,10 +12,19 @@ block content
 
         p= h.__("APP.DASHBOARD.INTRO")
 
+        .aw-grid
+            .aw-grid__headline= h.__("APP.DASHBOARD.USER_HDL")
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column Benutzername
+                .aw-grid__column= "@" + user.username
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column Registriert am
+                .aw-grid__column= registered
+
         form.aw-form(action="/dashboard/password" method="POST")
 
             .aw-form__row-description
-                .aw-form__row-headline Passwort ändern
+                .aw-form__row-headline= h.__("APP.DASHBOARD.PWD_HDL")
 
             .aw-form__row(class=`${errors && errors.password ? "error" : ""}`)
                 .aw-form-input
@@ -28,25 +37,30 @@ block content
             .aw-form__row
                 .aw-form__submit
                     button.aw-btn.aw-btn--icon(type="submit")
-                        != h.icon("key", ["small"])
+                        != h.icon("save", ["small"])
                         != h.__("APP.DASHBOARD.CHANGE_PWD_SUBMIT")
 
-        form.aw-form(action="/dashboard/password" method="POST")
+        form.aw-form(action="/dashboard/avatar" method="POST")
 
             .aw-form__row-description
-                .aw-form__row-headline Avatar
+                .aw-form__row-headline= h.__("APP.DASHBOARD.AVATAR_HDL")
 
             .aw-change-avatar(class=`${errors && errors.avatar ? "error" : ""}`)
-                .aw-change-avatar__current current
-                .aw-change-avatar__change
-                    label.aw-change-avatar__label(for="avatar")= h.__("APP.DASHBOARD.AVATAR_LABEL")
-                    input.aw-change-avatar__input(type="file", name="avatar", id="avatar", value=(data && data.password))
-            if errors && errors.avatar
-                .aw-form__error-message= errors.avatar.msg
-            .aw-form__row-description!= h.__("APP.DASHBOARD.AVATAR_DESCRIPTION")
+                .aw-change-avatar__current
+                    img.aw-show-avatar.aw-show-avatar--big(src="/public/assets/images/user-anon.svg")
+                .aw-change-avatar__action
+                    label.aw-change-avatar__upload-label(for="avatar")
+                        != h.icon("folder_open", ["small"])
+                        span(data-label=(h.__("APP.DASHBOARD.AVATAR_LABEL")))= h.__("APP.DASHBOARD.AVATAR_LABEL")
+                        input.aw-change-avatar__upload-input(type="file", name="avatar", id="avatar")
+                    .aw-change-avatar__remove-current
+                        != h.icon("delete", ["small"])
+                        != h.__("APP.DASHBOARD.AVATAR_REMOVE")
+                if errors && errors.avatar
+                    .aw-form__error-message= errors.avatar.msg
 
             .aw-form__row
                 .aw-form__submit
                     button.aw-btn.aw-btn--icon(type="submit")
-                        != h.icon("key", ["small"])
+                        != h.icon("save", ["small"])
                         != h.__("APP.DASHBOARD.CHANGE_AVATAR_SUBMIT")

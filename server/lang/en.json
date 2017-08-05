@@ -150,13 +150,15 @@
         "DASHBOARD": {
             "TITLE": "Dashboard",
             "INTRO": "(EN) Hier kommt der Einleitungstext für das Dashboard. Oder so.",
+            "USER_HDL": "Account data",
+            "PWD_HDL": "Change password",
             "PWD_LABEL": "New Password",
             "PWD_PLACEHOLDER": "Enter the new password",
             "PWD_DESCRIPTION": "Make sure that your password is unique and safe.",
             "CHANGE_PWD_SUBMIT": "Change Password",
-            "AVATAR_LABEL": "Avatar",
-            "AVATAR_PLACEHOLDER": "New Avatar",
-            "AVATAR_DESCRIPTION": "Please select an image from your harddisk as your avatar.",
+            "AVATAR_HDL": "Change avatar",
+            "AVATAR_LABEL": "Select Avatar",
+            "AVATAR_REMOVE": "Delete current avatar",
             "CHANGE_AVATAR_SUBMIT": "Save avatar"
         }
     },

@@ -1,0 +1,72 @@
+/***********************************************************************************************************************
+ *
+ * Grid Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+
+.aw-grid {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem;
+    margin: 0 0 1rem;
+
+    background: palette("grey", "sunken");
+
+    @include respond-to("small") {
+        margin-bottom: 2rem;
+    }
+
+    &__row {
+        display: flex;
+        flex-direction: column;
+
+        box-sizing: border-box;
+        margin-bottom: 2rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        /*
+         * 2 column rows ===============================================================================================
+         */
+        @include respond-to("small") {
+            flex-direction: row;
+            &--2col .aw-grid__column {
+                flex-grow: 1;
+                &:first-child {
+                    flex: 0 0 20rem;
+                }
+            }
+        }
+    }
+
+    &__headline {
+        display: flex;
+        align-items: center;
+
+        box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 2rem;
+
+        color: palette("text", "light");
+
+        font-size: 2rem;
+
+        &::after {
+            display: block;
+
+            height: 1px;
+            margin-left: 1rem;
+            flex-grow: 1;
+
+            background-color: palette("brand", "gorse");
+            content: " ";
+        }
+    }
+
+}
