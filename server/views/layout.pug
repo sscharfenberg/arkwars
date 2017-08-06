@@ -4,6 +4,7 @@ html(lang="de")
         meta(charset="utf-8")
         title= `${title} | ${h.appName}`
         meta(name="viewport" content="width=device-width, initial-scale=1")
+        //- head block for seperate stylesheets (admin)
         block head
             link(rel='stylesheet', href='/public/assets/styles.css')
 body
@@ -24,12 +25,14 @@ body
 
         ul.aw-header__actions
 
+            //- admin link
             if user && user.admin
                 li.aw-header__action
                     a.aw-header__link(href="/admin")
                         != h.icon("key")
                         span= h.__("APP.HEADER.LABEL_ADMIN")
 
+            //- languages
             li.aw-header__action
                 a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGELANGUAGE")))
                     != h.icon("language")
@@ -43,6 +46,8 @@ body
                         a.aw-header__submenu-item-link(href="/language/de", class=(session && session.locale && session.locale == "de" ? "aw-header__submenu-item-link--active" : ""))
                             != h.image("flags/de.svg")
                             | Deutsch
+
+            //- games
             li.aw-header__action
                 a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGEGAME")))
                     != h.icon("games")
@@ -53,6 +58,7 @@ body
                     li.aw-header__submenu-item
                         a.aw-header__submenu-item-link(href="/game/2", data-gameid="2") g2 (Beta)
 
+            //- links for guests: login, register
             if !user
                 li.aw-header__action
                     a.aw-header__link(href="/auth/login")
@@ -63,6 +69,7 @@ body
                         != h.icon("lightbulb")
                         span= h.__("APP.HEADER.LABEL_REGISTER")
 
+            //- links for users: profile, logout
             if user
                 li.aw-header__action
                     a.aw-header__link.aw-header__submenu-trigger.aw-header__link--circle(href="/dashboard")
@@ -75,6 +82,7 @@ body
                         != h.icon("power")
                         span= h.__("APP.HEADER.LABEL_LOGOUT")
 
+        //- turn data for mobile
         .aw-header__turn
             .aw-turn
                 != h.icon("turn", ["turn"])
@@ -87,12 +95,15 @@ body
             .aw-header__turn-next-time
                 time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
 
+
     .aw-main-wrapper
 
+        //- game drawer
         section.aw-drawer(aria-hidden="true")
 
             ul.aw-drawer__list
 
+                //- time data
                 li.aw-drawer__list-item.aw-drawer__list-item--info
                     .aw-drawer__info
                         .aw-drawer__info-label= h.__("APP.HEADER.LABEL_SERVERTIME")
@@ -102,6 +113,8 @@ body
                         .aw-drawer__info-label= h.__("APP.HEADER.LABEL_LOCALTIME")
                         .aw-drawer__info-value
                             time(datetime="", data-my-time) 00:00
+
+                //- turn data
                 li.aw-drawer__list-item.aw-drawer__list-item--turn
                     .aw-drawer__turn
                         .aw-drawer__turn-current
@@ -117,6 +130,7 @@ body
                             .aw-drawer__turn-next-time
                                 time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
 
+                //- game links
                 li.aw-drawer__list-item
                     a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire")
                         != h.icon("empire", ["small"])
@@ -148,6 +162,7 @@ body
 
         section#content.aw-content
 
+            //- flash messages first.
             block messages
                 if locals.flashes
                     - const categories = Object.keys(locals.flashes)
@@ -158,8 +173,10 @@ body
                                     p.aw-flash__text= message
                                     button.aw-btn.aw-btn--close.aw-flash__remove &times;
 
+            //- main content block that is defined in the templates that extend this layout template.
             block content
 
+            //- tmp dump data
             if session
                 h3 Session Data
                 pre= h.dump(session)
@@ -167,6 +184,7 @@ body
                 h3 User Data
                 pre= h.dump(user)
 
+            //- v.short footer
             footer.aw-footer
                 address.aw-footer__meta
                     | handcrafted with
@@ -181,5 +199,6 @@ body
                         a#footerJumpTop.aw-footer__link.aw-footer__link--icon(href="#main")
                             != h.icon("arrow_up")
 
+    //- scripts block, can be overridden in templates.
     block scripts
         include webpack/app.footer.pug

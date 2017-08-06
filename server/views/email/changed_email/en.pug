@@ -1,0 +1,16 @@
+extends ../email_layout
+
+block content
+    h2 Hello @#{user.username}, please confirm your new E-Mail!
+    p You have changed your E-Mail address on on arkwars.io. Please click the following button to confirm your email and (re)-activate your account. Please note this link is only valid for the next hour.
+    +button(confirmURL, "Activate My Account →")
+    p If you can't click the above button please visit
+        br
+        | #{confirmURL}
+    p Registered Username
+        br
+        span= user.username
+    p Registered E-Mail
+        br
+        span= user.email
+    br

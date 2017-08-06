@@ -1,8 +1,8 @@
 extends ../email_layout
 
 block content
-    h2 Hallo @#{user.username}, willkommen bei Arkwars!
-    p Sie haben ein Benutzerkonto auf arkwars.io erstellt. Bitte klicken Sie auf den folgenden Button um Ihre Email zu bestätigen und Ihr Konto zu aktivieren. Bitte beachten Sie das der Link nur eine Stunde lang gültig ist.
+    h2 Hallo @#{user.username}, bitte bestätigen Sie Ihre neue E-Mail-Adresse!
+    p Sie haben Ihre E-Mail-Adresse auf arkwars.io geändert. Bitte klicken Sie auf den folgenden Button um Ihre neue Email zu bestätigen und Ihr Konto zu (re)-aktivieren. Bitte beachten Sie das der Link nur eine Stunde lang gültig ist.
     +button(confirmURL, "Mein Konto aktivieren →")
     p Falls Sie den Button oberhalb nicht klicken können besuchen Sie bitte
         br
@@ -14,4 +14,3 @@ block content
         br
         span= user.email
     br
-    p Falls Sie die E-Mail nicht angefordert haben, ignorieren Sie diese bitte.

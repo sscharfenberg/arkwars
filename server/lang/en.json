@@ -151,16 +151,39 @@
         "DASHBOARD": {
             "TITLE": "Dashboard",
             "INTRO": "(EN) Hier kommt der Einleitungstext für das Dashboard. Oder so.",
-            "USER_HDL": "Account data",
-            "PWD_HDL": "Change password",
-            "PWD_LABEL": "New Password",
-            "PWD_PLACEHOLDER": "Enter the new password",
-            "PWD_DESCRIPTION": "Make sure that your password is unique and safe.",
-            "CHANGE_PWD_SUBMIT": "Change Password",
-            "AVATAR_HDL": "Change avatar",
-            "AVATAR_LABEL": "Select Avatar",
-            "AVATAR_REMOVE": "Delete current avatar",
-            "CHANGE_AVATAR_SUBMIT": "Save avatar"
+            "INFOBOX": {
+                "HDL": "Account data",
+                "USERNAME": "Username",
+                "REGISTERED": "Registered at"
+            },
+            "PWD": {
+                "HDL": "Change password",
+                "LABEL": "New Password",
+                "PLACEHOLDER": "Enter the new password",
+                "DESCRIPTION": "Make sure that your password is unique and safe.",
+                "SUBMIT": "Change Password"
+            },
+            "EMAIL": {
+                "HDL": "Change E-Mail address",
+                "LABEL": "E-Mail",
+                "PLACEHOLDER": "New E-Mail address",
+                "DESCRIPTION": "If you change your e-mail address, we will send you a new activation email and <strong>log you out</strong>.",
+                "SUBMIT": "Change E-Mail",
+                "ERR": {
+                    "NoChange": "Your new E-Mail address has not changed.",
+                    "NotEmpty": "Please specify your new E-Mail address.",
+                    "NotValid": "This does not seem to be a valid E-Mail address.",
+                    "DB": "Error while saving to database."
+                },
+                "MAIL_SUBJECT": "%s E-Mail change and activation",
+                "SUCCESS": "Your E-Mail address was changed, and we have sent you a new activation link. Please check your inbox."
+            },
+            "AVATAR": {
+                "HDL": "Change avatar",
+                "LABEL": "Select Avatar",
+                "REMOVE": "Delete current avatar",
+                "SUBMIT": "Save avatar"
+            }
         }
     },
 

@@ -51,7 +51,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // validate data middleWare
-app.use(expressValidator());
+app.use(expressValidator({
+    customValidators: {
+        isNotEqual: function(param, value) {
+            return param !== value;
+        }
+    }
+}));
 
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());

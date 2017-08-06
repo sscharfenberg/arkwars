@@ -132,3 +132,31 @@ exports.userNameBlacklisted = req => {
         value: req.body.email
     };
 };
+
+
+/*
+ * Username already exists =============================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @return {ExpressHTTPRequest} req
+ */
+exports.changedEmail = req => {
+
+    // email not empty
+    req
+        .checkBody("email", i18n.__("APP.DASHBOARD.EMAIL.ERR.NotEmpty"))
+        .notEmpty();
+
+    // email valid
+    req
+        .checkBody("email", i18n.__("APP.DASHBOARD.EMAIL.ERR.NotValid"))
+        .isEmail();
+
+    // email not identical to saved one
+    req
+        .checkBody("email", i18n.__("APP.DASHBOARD.EMAIL.ERR.NoChange"))
+        .isNotEqual(req.user.email);
+
+    // TODO: Email does not already exist
+
+    return req;
+};

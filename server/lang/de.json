@@ -42,7 +42,7 @@
             "SUBMIT": "Anmelden",
             "FORGOTPWD": "Passwort zurücksetzen",
             "REGISTER": "Konto registrieren",
-            "RESEND_CONFIRMATION": "Aktivierungs E-Mail erneut anfordern",
+            "RESEND_CONFIRMATION": "Aktivierungs-E-Mail erneut anfordern",
             "MissingPasswordError": "Passwort wurde nicht angegeben.",
             "AttemptTooSoonError": "Konto ist vorrübergehend gesperrt. Bitte versuchen Sie es später noch einmal.",
             "TooManyAttemptsError": "Das Konto ist wegen zu vieler Fehlerversuche gesperrt.",
@@ -86,9 +86,9 @@
                 "UsernameOutOfBounds": "Der Benutzernamen muss zwischen 3 und 20 Zeichen enthalten.",
                 "UsernameTaken": "Der Benutzername ist bereits vergeben.",
                 "UsernameBlacklisted": "Der Benutzername ist nicht erlaubt.",
-                "EmailEmpty": "Bitte geben Sie Ihre E-Mail Adresse an.",
-                "EmailInvalid": "Diese E-Mail Adresse scheint ungültig zu sein.",
-                "EmailTaken": "Die E-Mail Adresse wurde bereits registriert.",
+                "EmailEmpty": "Bitte geben Sie Ihre E-Mail-Adresse an.",
+                "EmailInvalid": "Diese E-Mail-Adresse scheint ungültig zu sein.",
+                "EmailTaken": "Die E-Mail-Adresse wurde bereits registriert.",
                 "PasswordEmpty": "Bitte geben Sie Ihr Passwort an.",
                 "PasswordOutOfBounds": "Das Passwort muss zwischen 6 und 32 Zeichen haben.",
                 "PasswordConfirmEmpty": "Bitte geben Sie das Passwort erneut ein.",
@@ -121,8 +121,8 @@
             "INTRO": "Falls Sie sich nicht an Ihr Passwort erinnern können schicken wir Ihnen einen Link um das Passwort ändern.",
             "SUBMIT": "E-Mail anfordern",
             "ERR_EmailNotFound": "Wir konnten diese E-Mail nicht finden.",
-            "ERR_EmailNotYetConfirmed": "Diese E-Mail Adresse ist noch nicht bestätigt worden. Bitte überprüfen Sie Ihren Maileingang oder fordern Sie einen neuen Aktivierungs-Link an.",
-            "ERR_UserSuspended": "Das Benutzerkonto mit dieser E-Mail Adresse ist gesperrt. Ablauf der Sperre: ",
+            "ERR_EmailNotYetConfirmed": "Diese E-Mail-Adresse ist noch nicht bestätigt worden. Bitte überprüfen Sie Ihren Maileingang oder fordern Sie einen neuen Aktivierungs-Link an.",
+            "ERR_UserSuspended": "Das Benutzerkonto dieser E-Mail-Adresse ist gesperrt. Ablauf der Sperre: ",
             "DB_ERROR": "Fehler beim Aktualisieren der Datenbank.",
             "MAIL_SUBJECT": "%s Passwort Änderung",
             "MAIL_SENT": "Wir haben Ihnen einen Link zum Ändern Ihres Passwortes zugeschickt. Bitte überprüfen Sie Ihren Maileingang!",
@@ -151,16 +151,39 @@
         "DASHBOARD": {
             "TITLE": "Meine Zentrale",
             "INTRO": "Hier kommt der Einleitungstext für die Zentrale. Oder so.",
-            "USER_HDL": "Benutzerdaten",
-            "PWD_HDL": "Passwort ändern",
-            "PWD_LABEL": "Neues Passwort",
-            "PWD_PLACEHOLDER": "Neues Passwort eingeben",
-            "PWD_DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
-            "CHANGE_PWD_SUBMIT": "Passwort ändern",
-            "AVATAR_HDL": "Avatar ändern",
-            "AVATAR_LABEL": "Avatar auswählen",
-            "AVATAR_REMOVE": "Aktuellen Avatar löschen",
-            "CHANGE_AVATAR_SUBMIT": "Avatar Speichern"
+            "INFOBOX": {
+                "HDL": "Benutzerdaten",
+                "USERNAME": "Benutzername",
+                "REGISTERED": "Registriert am"
+            },
+            "PWD": {
+                "HDL": "Passwort ändern",
+                "LABEL": "Neues Passwort",
+                "PLACEHOLDER": "Neues Passwort eingeben",
+                "DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
+                "SUBMIT": "Passwort ändern"
+            },
+            "EMAIL": {
+                "HDL": "E-Mail Adresse ändern",
+                "LABEL": "E-Mail",
+                "PLACEHOLDER": "Neue E-Mail Adresse",
+                "DESCRIPTION": "Wenn Sie Ihre E-Mail-Adresse ändern schicken wir Ihnen eine neue E-Mail mit einem Aktivierungs-Link und <strong>melden Sie ab</strong>.",
+                "SUBMIT": "E-Mail ändern",
+                "ERR": {
+                    "NoChange": "Die neue E-Mail-Adresse ist identisch mit der gespeicherten.",
+                    "NotEmpty": "Bitte geben Sie Ihre neue E-Mail-Adresse an.",
+                    "NotValid": "Das scheint keine gültige E-Mail-Adresse zu sein.",
+                    "DB": "Fehler beim Aktualisieren der Datenbank."
+                },
+                "MAIL_SUBJECT": "%s E-Mail Änderung und Aktivierung",
+                "SUCCESS": "Ihre E-Mail-Adresse wurde geändert, und wir haben Ihnen einen neuen Aktivierungs-Link geschickt. Bitte überprüfen Sie Ihren Maileingang!"
+            },
+            "AVATAR": {
+                "HDL": "Avatar ändern",
+                "LABEL": "Avatar auswählen",
+                "REMOVE": "Aktuellen Avatar löschen",
+                "SUBMIT": "Avatar Speichern"
+            }
         }
     },
 
