@@ -160,3 +160,27 @@ exports.changedEmail = req => {
 
     return req;
 };
+
+
+/*
+ * Username already exists =============================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @return {ExpressHTTPRequest} req
+ */
+exports.changedPassword = req => {
+
+    // password not empty
+    req
+        .checkBody("password", i18n.__("APP.REGISTER.ERROR.PasswordEmpty"))
+        .notEmpty();
+
+    // password between 6 and 32 chars?
+    req
+        .checkBody(
+            "password",
+            i18n.__("APP.REGISTER.ERROR.PasswordOutOfBounds")
+        )
+        .isLength({ min: 6, max: 32 });
+
+    return req;
+};

@@ -161,7 +161,8 @@
                 "LABEL": "Neues Passwort",
                 "PLACEHOLDER": "Neues Passwort eingeben",
                 "DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
-                "SUBMIT": "Passwort ändern"
+                "SUBMIT": "Passwort ändern",
+                "SUCCESS": "Ihr Passwort wurde geändert."
             },
             "EMAIL": {
                 "HDL": "E-Mail Adresse ändern",
@@ -182,7 +183,12 @@
                 "HDL": "Avatar ändern",
                 "LABEL": "Avatar auswählen",
                 "REMOVE": "Aktuellen Avatar löschen",
-                "SUBMIT": "Avatar Speichern"
+                "SUBMIT": "Avatar Speichern",
+                "DESCRIPTION": "Verfügbare Bildtypen: <strong>PNG</strong>, <strong>WebM</strong>, <strong>Jpeg</strong>.<br />Maximale Dateigröße: 100Kb",
+                "ERR": {
+                    "TypeNotAllowed": "Diese Art von Bild ist nicht erlaubt. Zulässige Bildtypen: <strong>%s</strong>.",
+                    "FileSize": "Das Bild überschreitet die maximale Dateigröße um %s Kb."
+                }
             }
         }
     },

@@ -161,7 +161,8 @@
                 "LABEL": "New Password",
                 "PLACEHOLDER": "Enter the new password",
                 "DESCRIPTION": "Make sure that your password is unique and safe.",
-                "SUBMIT": "Change Password"
+                "SUBMIT": "Change password",
+                "SUCCESS": "Your password has been changed."
             },
             "EMAIL": {
                 "HDL": "Change E-Mail address",
@@ -182,7 +183,12 @@
                 "HDL": "Change avatar",
                 "LABEL": "Select Avatar",
                 "REMOVE": "Delete current avatar",
-                "SUBMIT": "Save avatar"
+                "SUBMIT": "Save avatar",
+                "DESCRIPTION": "Available filetypes: <strong>PNG</strong>, <strong>WebM</strong>, <strong>Jpeg</strong>.<br />Max filesize: 100Kb",
+                "ERR": {
+                    "TypeNotAllowed": "This type of image is not allowed. Allowed image types: <strong>%s</strong>.",
+                    "FileSize": "The image exceeds our max file size by %s Kb."
+                }
             }
         }
     },

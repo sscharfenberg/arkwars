@@ -25,7 +25,7 @@ block content
 
 
         //- Change Avatar form
-        form.aw-form(action="/dashboard/avatar" method="POST")
+        form.aw-form(action="/dashboard/avatar", method="POST", enctype="multipart/form-data")
             .aw-form__row-description
                 .aw-form__row-headline= h.__("APP.DASHBOARD.AVATAR.HDL")
             .aw-change-avatar(class=`${errors && errors.avatar ? "error" : ""}`)
@@ -39,8 +39,10 @@ block content
                     .aw-change-avatar__remove-current
                         != h.icon("delete", ["small"])
                         != h.__("APP.DASHBOARD.AVATAR.REMOVE")
-                if avatarError
-                    .aw-form__error-message= avatarError
+            .aw-change-avatar__description!= h.__("APP.DASHBOARD.AVATAR.DESCRIPTION")
+
+            if avatarError
+                .aw-form__error-message= avatarError
             .aw-form__row
                 .aw-form__submit
                     button.aw-btn.aw-btn--icon(type="submit")
@@ -49,7 +51,7 @@ block content
 
 
         //- Change E-Mail address
-        form.aw-form(action="/dashboard/email" method="POST")
+        form.aw-form(action="/dashboard/email", method="POST")
             .aw-form__row-description
                 .aw-form__row-headline= h.__("APP.DASHBOARD.EMAIL.HDL")
             .aw-form__row
@@ -65,7 +67,7 @@ block content
 
 
         //- Change Password form
-        form.aw-form(action="/dashboard/password" method="POST")
+        form.aw-form(action="/dashboard/password", method="POST")
             .aw-form__row-description
                 .aw-form__row-headline= h.__("APP.DASHBOARD.PWD.HDL")
             .aw-form__row(class=`${errors && errors.password ? "error" : ""}`)

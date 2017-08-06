@@ -34,4 +34,23 @@ router.post(
     catchErrors(dashboardController.sendEmailUpdated)// 4. send email
 );
 
+// post change password
+router.post(
+    "/dashboard/password",
+    authController.isLoggedIn, // 1. check if user is logged in
+    catchErrors(dashboardController.validateChangePassword), // 2. validate password
+    catchErrors(dashboardController.updatePassword), // 3. change password
+);
+
+// post change avatar
+router.post(
+    "/dashboard/avatar",
+    authController.isLoggedIn, // 1. check if user is logged in
+    dashboardController.bufferAvatarFormData, // 2. multipart/form-data middleware
+    catchErrors(dashboardController.validateAvatar), // 2. validate avatar
+    catchErrors(dashboardController.writeAvatar) // 3. write avatar to disk
+    // 4. update user with avatar
+    // 5. profit!
+);
+
 module.exports = router;

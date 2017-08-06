@@ -170,7 +170,8 @@ body
                         each message in flashes[category]
                             .aw-flash
                                 .aw-flash__message(class=`aw-flash__message--${category}`)
-                                    p.aw-flash__text= message
+                                    p.aw-flash__text
+                                        != message
                                     button.aw-btn.aw-btn--close.aw-flash__remove &times;
 
             //- main content block that is defined in the templates that extend this layout template.

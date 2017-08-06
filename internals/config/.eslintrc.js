@@ -20,7 +20,7 @@ module.exports = {
         semi: [2, "always"],
         "comma-style": [2, "last"],
         "no-undef": 2,
-        "no-console": ["error", { allow: ["log", "warn", "error"] }],
+        "no-console": ["error", { allow: ["log", "warn", "error", "dir"] }],
         "comma-spacing": [2, { before: false, after: true }],
         "new-cap": [2, { newIsCap: true, capIsNew: false }],
         "no-multi-spaces": [

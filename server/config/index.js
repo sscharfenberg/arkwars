@@ -4,7 +4,8 @@
  *
  * @type {Node.js}
  *
- * main configuration file. this file does NOT include sensitive information and can be safely committed to git.
+ * main configuration file for the server.
+ * this file does NOT include sensitive information and can be safely committed to git.
  * sensitive information is found in .env
  * this config file is used by the server, not the client.
  *
@@ -26,19 +27,27 @@ const appConfig = {
         }
         , locales: ["en", "de"]
         , blacklistedUsernames: [
-            "ash",
-            "ashaltiriak",
-            "admin",
-            "administrator",
-            "system",
-            "owner",
-            "mod",
-            "moderator",
-            "root",
-            "superuser",
-            "sudo",
-            "database"
+            "ash"
+            , "ashaltiriak"
+            , "admin"
+            , "administrator"
+            , "system"
+            , "owner"
+            , "mod"
+            , "moderator"
+            , "root"
+            , "superuser"
+            , "sudo"
+            , "database"
         ]
+        , avatar: {
+            mimeTypes: [
+                "image/png"
+                , "image/jpeg"
+                , "image/webp"
+            ]
+            , maxFileSize: 100 * 1024 // 100Kb
+        }
     }
 };
 

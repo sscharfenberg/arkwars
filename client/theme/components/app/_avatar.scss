@@ -11,7 +11,7 @@
 .aw-change-avatar {
     box-sizing: border-box;
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 
     background: palette("grey", "fog");
 
@@ -135,6 +135,14 @@
             background-color: palette("grey", "asher");
             color: palette("grey", "white");
         }
+    }
+
+    /*
+     * 3. description ==================================================================================================
+     */
+    &__description {
+        margin-bottom: 2rem;
+        color: palette("text", "tint");
     }
 }
 

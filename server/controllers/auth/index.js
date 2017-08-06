@@ -3,6 +3,7 @@
  * authController
  *
  **********************************************************************************************************************/
+const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const passport = require("passport"); // https://github.com/jaredhanson/passport
@@ -84,7 +85,7 @@ exports.login = async (req, res, next) => {
                 return next(err);
             }
             req.user = user;
-            logger.info(`[App] user @${user.username} logged in.`);
+            logger.info(`[App] user ${chalk.red("@"+user.username)} logged in.`);
             req.flash("success", i18n.__("APP.LOGIN.SUCCESS"));
             res.redirect("/dashboard");
         });
@@ -98,7 +99,7 @@ exports.login = async (req, res, next) => {
  * @param {ExpressHTTPResponse} res
  */
 exports.logout = (req, res) => {
-    logger.info(`[App] user @${req.user.username} logging out.`);
+    logger.info(`[App] user ${chalk.red("@"+req.user.username)} logging out.`);
     req.logout();
     req.flash("success", i18n.__("APP.LOGOUT.SUCCESS"));
     res.redirect("/");
