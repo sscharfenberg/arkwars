@@ -7,7 +7,7 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const moment = require("moment"); // https://momentjs.com/
 const mongodbErrorHandler = require("mongoose-mongodb-errors"); // https://www.npmjs.com/package/mongoose-mongodb-errors
 const passportLocalMongoose = require("passport-local-mongoose"); // https://github.com/saintedlama/passport-local-mongoose
-const validator = require("validator"); // https://www.npmjs.com/package/validator
+//const validator = require("validator"); // https://www.npmjs.com/package/validator
 mongoose.Promise = global.Promise;
 
 
@@ -17,13 +17,13 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        required: "Please Supply an email address"
+        required: true
     },
     // username
     username: {
         type: String,
         unique: true,
-        required: "Please supply a name",
+        required: true,
         trim: true
     },
     locale: {

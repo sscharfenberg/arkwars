@@ -69,7 +69,6 @@ exports.login = async (req, res, next) => {
                 i18n.__("APP.LOGIN.Suspended") +
                 moment(user.suspendedUntil).format("LLL");
             req.flash("error", message);
-            console.log(moment().locale());
             return res.render("auth/login", {
                 title: i18n.__("APP.LOGIN.TITLE"),
                 session: req.session,

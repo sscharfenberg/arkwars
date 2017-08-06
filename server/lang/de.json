@@ -110,6 +110,7 @@
             "SUBMIT": "E-Mail anfordern",
             "ERR_EmailNotFound": "Wir konnten diese E-Mail nicht finden.",
             "ERR_EmailAlreadyConfirmed": "Diese E-Mail wurde bereits bestätigt, das Konto ist aktiviert.",
+            "ERR_Suspended": "Das Benutzerkonto ist gesperrt. Ablauf der Sperre: ",
             "MAIL_SUBJECT": "%s Konto Aktivierung",
             "SUCCESS": "Wir haben Ihnen einen neuen Aktivierungs Link geschickt. Bitte überprüfen Sie Ihren Maileingang!"
         },

@@ -110,6 +110,7 @@
             "SUBMIT": "Request email",
             "ERR_EmailNotFound": "Could not find this email address in our records.",
             "ERR_EmailAlreadyConfirmed": "This email has already been confirmed.",
+            "ERR_Suspended": "The user account is suspended until ",
             "MAIL_SUBJECT": "%s account activation",
             "SUCCESS": "We have sent you a new account activation link. Please check your inbox!"
         },

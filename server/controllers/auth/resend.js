@@ -50,11 +50,7 @@ exports.validateResend = async (req, res, next) => {
     if (!emailUser) {
         errors.push(i18n.__("APP.RESEND.ERR_EmailNotFound"));
     }
-    if (
-        emailUser &&
-        emailUser.emailConfirmed &&
-        emailUser.emailConfirmationToken === ""
-    ) {
+    if (emailUser && emailUser.emailConfirmed) {
         errors.push(i18n.__("APP.RESEND.ERR_EmailAlreadyConfirmed"));
     }
 
@@ -63,6 +59,16 @@ exports.validateResend = async (req, res, next) => {
     } else if (req.body.captcha !== req.session.captcha) {
         captchaFail = i18n.__("APP.REGISTER.ERROR.CaptchaMismatch");
     }
+
+    // user is suspended and suspendedUntil is > now
+    if (
+        emailUser &&
+        emailUser.suspended &&
+        moment(emailUser.suspendedUntil).diff(moment()) > 0
+    ) {
+        errors.push(i18n.__("APP.RESEND.ERR_Suspended") + moment(emailUser.suspendedUntil).format("LLL"));
+    }
+
 
     if (captchaFail) {
         const captcha = getCaptcha(req.session.captcha);

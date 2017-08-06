@@ -75,6 +75,8 @@ exports.validateRequest = async (req, res, next) => {
                 .email}".`
         );
     }
+
+    // check if user email has been confirmed
     if (!emailUser.emailConfirmed) {
         errors.email = { msg: i18n.__("APP.RESET.ERR_EmailNotYetConfirmed") };
         logger.error(
@@ -100,8 +102,8 @@ exports.validateRequest = async (req, res, next) => {
         );
     }
 
-    if (errors.email || errors.captcha) {
-        const captcha = getCaptcha();
+    if (errors.email) {
+        const captcha = getCaptcha(); // new captcha to increase costs
         req.session.captcha = captcha.text;
         return res.render("auth/reset", {
             title: i18n.__("APP.RESET.TITLE"),
