@@ -47,10 +47,10 @@ router.post(
     "/dashboard/avatar",
     authController.isLoggedIn, // 1. check if user is logged in
     dashboardController.bufferAvatarFormData, // 2. multipart/form-data middleware
-    catchErrors(dashboardController.validateAvatar), // 2. validate avatar
-    catchErrors(dashboardController.writeAvatar) // 3. write avatar to disk
-    // 4. update user with avatar
-    // 5. profit!
+    catchErrors(dashboardController.validateAvatar), // 3. validate avatar
+    catchErrors(dashboardController.writeAvatar), // 4. write avatar to disk
+    catchErrors(dashboardController.deleteOldAvatar), // 5. delete old avatar
+    catchErrors(dashboardController.updateAvatarUser), // 6. update user with avatar
 );
 
 module.exports = router;

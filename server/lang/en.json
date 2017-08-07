@@ -184,11 +184,13 @@
                 "LABEL": "Select Avatar",
                 "REMOVE": "Delete current avatar",
                 "SUBMIT": "Save avatar",
-                "DESCRIPTION": "Available filetypes: <strong>PNG</strong>, <strong>WebM</strong>, <strong>Jpeg</strong>.<br />Max filesize: 100Kb",
+                "DESCRIPTION": "Available filetypes: <strong>PNG</strong>, <strong>WebM</strong>, <strong>Jpeg</strong>.<br />Max filesize: 100Kb<br />Your avatar should be a square, we will resize the image to 196 x 196 px.",
                 "ERR": {
                     "TypeNotAllowed": "This type of image is not allowed. Allowed image types: <strong>%s</strong>.",
-                    "FileSize": "The image exceeds our max file size by %s Kb."
-                }
+                    "FileSize": "The image exceeds our max file size by %s Kb.",
+                    "DbFail": "Error while updating database."
+                },
+                "SUCCESS": "Your avatar has been updated."
             }
         }
     },

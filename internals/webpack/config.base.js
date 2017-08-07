@@ -2,7 +2,6 @@
  *
  * WEBPACK BASE CONFIG
  *
- * @type {Node.js}
  * @exports {object} webpackConfig
  *
  * fuck yeah webpack.

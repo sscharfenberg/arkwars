@@ -11,6 +11,7 @@
  *
  **********************************************************************************************************************/
 const fs = require("fs-extra");
+const path = require("path"); // https://www.npmjs.com/package/path
 const pkg = require( "../../package.json" );
 
 // Make sure any symlinks in the project folder are resolved:
@@ -47,6 +48,11 @@ const appConfig = {
                 , "image/webp"
             ]
             , maxFileSize: 100 * 1024 // 100Kb
+            , maxSize: {
+                width: 192 // 96px 2dpi
+                , height: 192
+            }
+            , path: path.join(appDirectory, "server", "public", "avatars")
         }
     }
 };

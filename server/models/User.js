@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
+
     // username
     username: {
         type: String,
@@ -26,9 +27,17 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+
+    // locale
     locale: {
         type: String,
         enum: ["en", "de"],
+    },
+
+    // avatar filename
+    avatar: {
+        type: String,
+        unique: true
     },
 
     // user email confirmed?

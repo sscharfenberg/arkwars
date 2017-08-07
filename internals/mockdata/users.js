@@ -8,6 +8,7 @@ module.exports = [
         "email" : "ashaltiriak@gmail.com",
         "username" : "Ash",
         "locale" : "de",
+        "avatar": "d791d67f-9bd3-47c8-ada1-273b44fd5ec4.png",
         "created" : "2017-07-29T09:15:05.654Z",
         "lastLogin" : "2017-07-29T09:17:24.008Z",
         "attempts" : 0,

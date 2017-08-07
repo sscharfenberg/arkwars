@@ -30,7 +30,8 @@ block content
                 .aw-form__row-headline= h.__("APP.DASHBOARD.AVATAR.HDL")
             .aw-change-avatar(class=`${errors && errors.avatar ? "error" : ""}`)
                 .aw-change-avatar__current
-                    img.aw-show-avatar.aw-show-avatar--big(src="/public/assets/images/user-anon.svg")
+                    //- TODO: fallback default avatar
+                    img.aw-show-avatar.aw-show-avatar--big(src=("/public/avatars/" + user.avatar))
                 .aw-change-avatar__action
                     label.aw-change-avatar__upload-label(for="avatar")
                         != h.icon("folder_open", ["small"])

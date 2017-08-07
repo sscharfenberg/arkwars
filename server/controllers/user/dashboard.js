@@ -5,11 +5,15 @@
  **********************************************************************************************************************/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
+const del = require("del"); // https://www.npmjs.com/package/del
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
+const jimp = require("jimp"); // https://www.npmjs.com/package/jimp
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const multer = require("multer"); // https://github.com/expressjs/multer
+const path = require("path"); // https://www.npmjs.com/package/path
 const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
+const uuid = require("uuid"); // https://www.npmjs.com/package/uuid
 const User = mongoose.model("User");
 const userValidators = require("../../handlers/validators/user");
 const logger = require("../../handlers/logger/console");
@@ -263,8 +267,70 @@ exports.validateAvatar = async (req, res, next) => {
  * write avatar to disk ================================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
+ * @param {callback} next
  */
-exports.writeAvatar = async (req, res) => {
-    req.flash("info", "TODO: implement write avatar and update user middlewares.");
-    return res.redirect("/dashboard");
+exports.writeAvatar = async (req, res, next) => {
+    const extension = req.file.mimetype.split("/").pop();
+    const image = await jimp.read(req.file.buffer);
+    const filename = `${uuid.v4()}.${extension}`;
+    const filepath = path.join(cfg.app.avatar.path, filename);
+    if (
+        image.bitmap.width > cfg.app.avatar.maxSize.width ||
+        image.bitmap.height > cfg.app.avatar.maxSize.height
+    ) {
+        await image.resize(cfg.app.avatar.maxSize.width, cfg.app.avatar.maxSize.height);
+    }
+    req._avatar = filename;
+    await image.write(filepath);
+    logger.info(
+        `[App] avatar for ${chalk.red("@" + req.user.username)} written to disk.`
+    );
+    next();
+};
+
+
+/*
+ * delete old avatar ===================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.deleteOldAvatar = async (req, res, next) => {
+    const filepath = path.join(cfg.app.avatar.path, req.user.avatar);
+    await del(filepath);
+    logger.info(`[App] deleted old avatar ${req.user.avatar}`);
+    next();
+};
+
+
+/*
+ * update user =========================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.updateAvatarUser = async (req, res, next) => {
+    const user = await User.findOneAndUpdate(
+        { _id: req.user._id },
+        {
+            $set: {
+                avatar: req._avatar
+            }
+        },
+        { new: true, runValidators: true, context: "query" }
+    );
+    if (!user) {
+        await del(path.join(cfg.app.avatar.path, req._avatar));
+        logger.error(`[App] error updating db with new avatar, rolled back.`);
+        req.flash("error", i18n.__("APP.DASHBOARD.AVATAR.ERR.DbFail"));
+
+    } else {
+        logger.debug(
+            `[App] avatar for user ${chalk.red("@" + user.username)} updated.`
+        );
+        req._avatar = undefined;
+        req.user = user;
+        req.flash("success", i18n.__("APP.DASHBOARD.AVATAR.SUCCESS"));
+    }
+    res.redirect("/dashboard");
 };

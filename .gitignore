@@ -4,6 +4,7 @@ node_modules
 server/logs
 bundle-report.html
 server/public/assets
+server/public/avatars
 server/views/webpack
 coverage
 *.log
