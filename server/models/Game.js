@@ -47,6 +47,10 @@ const gameSchema = new mongoose.Schema({
     turnDue: {
         type: Date
     },
+    // date when the game starts
+    startDate: {
+        type: Date
+    },
 
     // date of game creation
     created: {

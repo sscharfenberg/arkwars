@@ -23,19 +23,28 @@ block content
                 .aw-grid__column= h.__("APP.DASHBOARD.INFOBOX.REGISTERED")
                 .aw-grid__column= registered
 
-        //- available games that can be enlisted
-        .aw-grid
-            .aw-grid__headline= h.__("APP.DASHBOARD.INFOBOX.HDL")
-            .aw-grid__row.aw-grid__row--2col
-                .aw-grid__column= h.__("APP.DASHBOARD.INFOBOX.USERNAME")
-                .aw-grid__column= "@" + user.username
-            .aw-grid__row.aw-grid__row--2col
-                .aw-grid__column= h.__("APP.DASHBOARD.INFOBOX.REGISTERED")
-                .aw-grid__column= registered
 
-
-        pre= h.dump(games.canEnlist)
-        pre= h.dump(games.active)
+        //- available games where the user can enlist
+        if games.canEnlist
+            each game in games.canEnlist
+                form.aw-form(action=`/game/${game.number}/enlist`, method="POST")
+                    .aw-grid__headline= h.__("APP.DASHBOARD.GAMES.AVAILABLE.HDL")
+                    .aw-grid__row.aw-grid__row--2col
+                        .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.NAME")
+                        .aw-grid__column= "g" + game.number
+                    .aw-grid__row.aw-grid__row--2col
+                        .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.TURNDURATION")
+                        .aw-grid__column= game.turnDuration + " minutes"
+                    if game.startDate
+                        .aw-grid__row.aw-grid__row--2col
+                            .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.START")
+                            .aw-grid__column= h.moment(game.startDate).format("LLLL")
+                    .aw-grid__row= h.__("APP.DASHBOARD.GAMES.AVAILABLE.INTRO")
+                    .aw-grid__row
+                        button.aw-btn.aw-btn--icon(type="submit")
+                            != h.icon("games", ["small"])
+                            != h.__("APP.DASHBOARD.GAMES.AVAILABLE.ENLIST")
+                            | TODO!
 
 
         //- Change Avatar form

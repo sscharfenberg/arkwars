@@ -158,7 +158,12 @@
             },
             "GAMES": {
                 "AVAILABLE": {
-                    "HDL": "Available Games"
+                    "HDL": "Available Game",
+                    "INTRO": "If you enlist to a game it will automatically start at the indicated time. Some games allow late joining.",
+                    "NAME": "Game",
+                    "TURNDURATION": "Turn duration",
+                    "START": "Game start",
+                    "ENLIST": "Enlist"
                 }
             },
             "PWD": {

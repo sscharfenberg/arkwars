@@ -156,6 +156,16 @@
                 "USERNAME": "Benutzername",
                 "REGISTERED": "Registriert am"
             },
+            "GAMES": {
+                "AVAILABLE": {
+                    "HDL": "Verfügbares Spiel",
+                    "INTRO": "Wenn Sie sich in ein Spiel einschreiben startet das Spiel automatisch zur angegebenen Zeit. Manche Spiele erlauben es sich nach Spiel-Start einzuschreiben.",
+                    "NAME": "Spiel",
+                    "TURNDURATION": "Rundendauer",
+                    "START": "Spiel Start",
+                    "ENLIST": "Einschreiben"
+                }
+            },
             "PWD": {
                 "HDL": "Passwort ändern",
                 "LABEL": "Neues Passwort",
