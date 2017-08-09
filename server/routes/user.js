@@ -22,7 +22,7 @@ router.get("/language/:lang", catchErrors(userController.switchLanguage));
 router.get(
     "/dashboard",
     authController.isLoggedIn,
-    dashboardController.showDashboard
+    catchErrors(dashboardController.showDashboard)
 );
 
 // post change email address
@@ -39,7 +39,7 @@ router.post(
     "/dashboard/password",
     authController.isLoggedIn, // 1. check if user is logged in
     catchErrors(dashboardController.validateChangePassword), // 2. validate password
-    catchErrors(dashboardController.updatePassword), // 3. change password
+    catchErrors(dashboardController.updatePassword) // 3. change password
 );
 
 // post change avatar
@@ -51,6 +51,13 @@ router.post(
     catchErrors(dashboardController.writeAvatar), // 4. write avatar to disk
     catchErrors(dashboardController.deleteOldAvatar), // 5. delete old avatar
     catchErrors(dashboardController.updateAvatarUser), // 6. update user with avatar
+);
+
+// delete avatar
+router.get(
+    "/dashboard/avatar/delete",
+    authController.isLoggedIn, // 1. check if user is logged in
+    catchErrors(dashboardController.deleteCurrentAvatar) // 2. delete current avatar
 );
 
 module.exports = router;

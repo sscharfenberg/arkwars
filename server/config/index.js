@@ -45,7 +45,7 @@ const appConfig = {
             mimeTypes: [
                 "image/png"
                 , "image/jpeg"
-                , "image/webp"
+//                , "image/webp"
             ]
             , maxFileSize: 100 * 1024 // 100Kb
             , maxSize: {

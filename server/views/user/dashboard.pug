@@ -13,7 +13,17 @@ block content
         p= h.__("APP.DASHBOARD.INTRO")
 
 
-        //- Information that can not be changed.
+        //- Generic user information that can not be changed.
+        .aw-grid
+            .aw-grid__headline= h.__("APP.DASHBOARD.INFOBOX.HDL")
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column= h.__("APP.DASHBOARD.INFOBOX.USERNAME")
+                .aw-grid__column= "@" + user.username
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column= h.__("APP.DASHBOARD.INFOBOX.REGISTERED")
+                .aw-grid__column= registered
+
+        //- available games that can be enlisted
         .aw-grid
             .aw-grid__headline= h.__("APP.DASHBOARD.INFOBOX.HDL")
             .aw-grid__row.aw-grid__row--2col
@@ -24,31 +34,33 @@ block content
                 .aw-grid__column= registered
 
 
+        pre= h.dump(games.canEnlist)
+        pre= h.dump(games.active)
+
+
         //- Change Avatar form
         form.aw-form(action="/dashboard/avatar", method="POST", enctype="multipart/form-data")
             .aw-form__row-description
                 .aw-form__row-headline= h.__("APP.DASHBOARD.AVATAR.HDL")
             .aw-change-avatar(class=`${errors && errors.avatar ? "error" : ""}`)
                 .aw-change-avatar__current
-                    //- TODO: fallback default avatar
-                    img.aw-show-avatar.aw-show-avatar--big(src=("/public/avatars/" + user.avatar))
+                    if user.avatar
+                        img.aw-show-avatar.aw-show-avatar--big(src=("/public/avatars/" + user.avatar))
+                    else
+                        img.aw-show-avatar.aw-show-avatar--big(src="/public/assets/images/user-anon.svg")
                 .aw-change-avatar__action
                     label.aw-change-avatar__upload-label(for="avatar")
                         != h.icon("folder_open", ["small"])
                         span(data-label=(h.__("APP.DASHBOARD.AVATAR.LABEL")))= h.__("APP.DASHBOARD.AVATAR.LABEL")
                         input.aw-change-avatar__upload-input(type="file", name="avatar", id="avatar")
-                    .aw-change-avatar__remove-current
-                        != h.icon("delete", ["small"])
-                        != h.__("APP.DASHBOARD.AVATAR.REMOVE")
+                    span
+                        button.aw-change-avatar__btn(type="submit")
+                            != h.icon("save", ["small"])
+                            != h.__("APP.DASHBOARD.AVATAR.SUBMIT")
+                        a.aw-change-avatar__btn(href="/dashboard/avatar/delete")
+                            != h.icon("delete", ["small"])
+                            != h.__("APP.DASHBOARD.AVATAR.REMOVE")
             .aw-change-avatar__description!= h.__("APP.DASHBOARD.AVATAR.DESCRIPTION")
-
-            if avatarError
-                .aw-form__error-message= avatarError
-            .aw-form__row
-                .aw-form__submit
-                    button.aw-btn.aw-btn--icon(type="submit")
-                        != h.icon("save", ["small"])
-                        != h.__("APP.DASHBOARD.AVATAR.SUBMIT")
 
 
         //- Change E-Mail address
@@ -75,8 +87,6 @@ block content
                 .aw-form-input
                     label.aw-form-input__label(for="password")= h.__("APP.DASHBOARD.PWD.LABEL")
                     input.aw-form-input__input(type="password", name="password", id="password", placeholder=(h.__("APP.DASHBOARD.PWD.PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
-                if passwordError
-                    .aw-form__error-message= passwordError
                 .aw-form__row-description!= h.__("APP.DASHBOARD.PWD.DESCRIPTION")
             .aw-form__row
                 .aw-form__submit

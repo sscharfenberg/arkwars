@@ -57,10 +57,10 @@
     }
 
     /*
-     * 2.1 upload a new avatar image ===================================================================================
+     * 2.1 select a new avatar image ===================================================================================
      */
     &__upload-label {
-        display: flex;
+        display: inline-flex;
         position: relative;
         align-items: center;
 
@@ -103,19 +103,29 @@
     }
 
     /*
+     * 2.2 save avatar =================================================================================================
+     */
+    &__submit {
+        display: inline-flex;
+    }
+
+    /*
      * 2.2 delete current avatar =======================================================================================
      */
-    &__remove-current {
+    &__btn {
         display: inline-flex;
         align-items: center;
 
         padding: 1rem 3rem;
-        margin-right: auto;
+        border: 0;
+        margin-right: 2rem;
 
         background-color: palette("grey", "raven");
         color: palette("text", "light");
 
         cursor: pointer;
+        line-height: 1.4;
+        text-decoration: none;
 
         transition:
             background map-get($animation-speeds, "fast") linear,
@@ -135,6 +145,10 @@
             background-color: palette("grey", "asher");
             color: palette("grey", "white");
         }
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
 
     /*
@@ -147,6 +161,8 @@
 }
 
 .aw-show-avatar {
+
+    padding: 4px;
 
     background: palette("grey", "raven");
     border-radius: 50%;

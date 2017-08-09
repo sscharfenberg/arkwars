@@ -8,13 +8,20 @@ const moment = require("moment"); // https://momentjs.com/
 mongoose.Promise = global.Promise;
 
 const gameSchema = new mongoose.Schema({
+
     // game number
     number: {
         type: Number,
         index: { unique: true }
     },
+
     // active game?
     active: {
+        type: Boolean,
+        default: false
+    },
+    // can users enlist?
+    canEnlist: {
         type: Boolean,
         default: false
     },
@@ -23,6 +30,7 @@ const gameSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+
     // current turn number
     turn: {
         type: Number,
@@ -39,11 +47,13 @@ const gameSchema = new mongoose.Schema({
     turnDue: {
         type: Date
     },
+
     // date of game creation
     created: {
         type: Date,
         default: moment().toISOString()
     }
+
 });
 
 module.exports = mongoose.model("Game", gameSchema);

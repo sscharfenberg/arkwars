@@ -15,6 +15,7 @@ const path = require("path"); // https://www.npmjs.com/package/path
 const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
 const uuid = require("uuid"); // https://www.npmjs.com/package/uuid
 const User = mongoose.model("User");
+const Game = mongoose.model("Game");
 const userValidators = require("../../handlers/validators/user");
 const logger = require("../../handlers/logger/console");
 const mail = require("../../handlers/mail");
@@ -26,13 +27,21 @@ const cfg = require("../../config");
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  */
-exports.showDashboard = (req, res) => {
+exports.showDashboard = async (req, res) => {
+    const canEnlistPromise = Game.find({ canEnlist: true });
+    const activePromise = Game.find({ active: true }); // TODO: change to _my_ games (tmp)
+    const [canEnlist, active] = await Promise.all([
+        canEnlistPromise,
+        activePromise
+    ]);
+    const games = { canEnlist, active };
     moment.locale(req.session.locale);
     res.render("user/dashboard", {
         title: i18n.__("APP.DASHBOARD.TITLE"),
         session: req.session,
         registered: moment(req.user.created).format("LLLL"),
-        email: req.user.email
+        email: req.user.email,
+        games
     });
 };
 
@@ -199,7 +208,6 @@ exports.updatePassword = async (req, res) => {
 };
 
 
-
 /*
  * Multer middleware - buffer multipart/form-data fields into req.file =================================================
  * @param {ExpressHTTPRequest} req
@@ -234,26 +242,37 @@ exports.bufferAvatarFormData = multer({
  * @param {callback} next
  */
 exports.validateAvatar = async (req, res, next) => {
-    let sizeDiff = Math.round((req.file.size - cfg.app.avatar.maxFileSize) / 1024);
+    if (!req.file) {
+        if (req._fileError) {
+            req.flash("error", req._fileError);
+            logger.debug(
+                `[App] ${chalk.red(
+                    "@" + req.user.username
+                )}'s new avatar is wrong mime type.`
+            );
+        } else {
+            req.flash("error", i18n.__("APP.DASHBOARD.AVATAR.ERR.Empty"));
+        }
+        return res.redirect("/dashboard");
+    }
+
+    let sizeDiff = Math.round(
+        (req.file.size - cfg.app.avatar.maxFileSize) / 1024
+    );
     let diffText = sizeDiff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); // add decimal mark
     logger.info(
         `[App] change avatar request from ${chalk.red("@" + req.user.username)}`
     );
 
-    if (!req.file && req._fileError) {
-        req.flash("error", req._fileError);
+    if (req.file && sizeDiff > 0) {
+        req.flash(
+            "error",
+            i18n.__("APP.DASHBOARD.AVATAR.ERR.FileSize", diffText)
+        );
         logger.debug(
             `[App] ${chalk.red(
                 "@" + req.user.username
-            )}'s new avatar is wrong mime type.`
-        );
-        return res.redirect("/dashboard");
-    }
-
-    if (req.file && sizeDiff > 0) {
-        req.flash("error", i18n.__("APP.DASHBOARD.AVATAR.ERR.FileSize", diffText));
-        logger.debug(
-            `[App] ${chalk.red("@" + req.user.username)}'s new avatar is ${diffText} bytes too big.`
+            )}'s new avatar is ${diffText} Kb too big.`
         );
         req.file = undefined; // discard the image
         return res.redirect("/dashboard");
@@ -278,12 +297,17 @@ exports.writeAvatar = async (req, res, next) => {
         image.bitmap.width > cfg.app.avatar.maxSize.width ||
         image.bitmap.height > cfg.app.avatar.maxSize.height
     ) {
-        await image.resize(cfg.app.avatar.maxSize.width, cfg.app.avatar.maxSize.height);
+        await image.resize(
+            cfg.app.avatar.maxSize.width,
+            cfg.app.avatar.maxSize.height
+        );
     }
     req._avatar = filename;
     await image.write(filepath);
     logger.info(
-        `[App] avatar for ${chalk.red("@" + req.user.username)} written to disk.`
+        `[App] avatar for ${chalk.red(
+            "@" + req.user.username
+        )} written to disk.`
     );
     next();
 };
@@ -296,9 +320,11 @@ exports.writeAvatar = async (req, res, next) => {
  * @param {callback} next
  */
 exports.deleteOldAvatar = async (req, res, next) => {
-    const filepath = path.join(cfg.app.avatar.path, req.user.avatar);
-    await del(filepath);
-    logger.info(`[App] deleted old avatar ${req.user.avatar}`);
+    if (req.user.avatar) {
+        const filepath = path.join(cfg.app.avatar.path, req.user.avatar);
+        await del(filepath);
+        logger.info(`[App] deleted old avatar ${req.user.avatar}`);
+    }
     next();
 };
 
@@ -323,7 +349,6 @@ exports.updateAvatarUser = async (req, res, next) => {
         await del(path.join(cfg.app.avatar.path, req._avatar));
         logger.error(`[App] error updating db with new avatar, rolled back.`);
         req.flash("error", i18n.__("APP.DASHBOARD.AVATAR.ERR.DbFail"));
-
     } else {
         logger.debug(
             `[App] avatar for user ${chalk.red("@" + user.username)} updated.`
@@ -332,5 +357,31 @@ exports.updateAvatarUser = async (req, res, next) => {
         req.user = user;
         req.flash("success", i18n.__("APP.DASHBOARD.AVATAR.SUCCESS"));
     }
+    res.redirect("/dashboard");
+};
+
+
+/*
+ * delete old avatar ===================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.deleteCurrentAvatar = async (req, res, next) => {
+    const filepath = path.join(cfg.app.avatar.path, req.user.avatar);
+    await del(filepath);
+    await User.findOneAndUpdate(
+        { _id: req.user._id },
+        {
+            $set: {
+                avatar: undefined
+            }
+        },
+        { new: true, runValidators: true, context: "query" }
+    );
+    logger.info(
+        `[App] deleted current avatar of ${chalk.red("@" + req.user.username)}`
+    );
+    req.flash("success", i18n.__("APP.DASHBOARD.AVATAR.DELETED"));
     res.redirect("/dashboard");
 };

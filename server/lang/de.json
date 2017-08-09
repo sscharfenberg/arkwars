@@ -184,13 +184,15 @@
                 "LABEL": "Avatar auswählen",
                 "REMOVE": "Aktuellen Avatar löschen",
                 "SUBMIT": "Avatar Speichern",
-                "DESCRIPTION": "Verfügbare Bildtypen: <strong>PNG</strong>, <strong>WebM</strong>, <strong>Jpeg</strong>.<br />Maximale Dateigröße: 100Kb<br />Ihr Avatar sollte quadratisch sein, wir werden die Grafik auf 196px x 196px skalieren.",
+                "DESCRIPTION": "Verfügbare Bildtypen: <strong>PNG</strong>, <strong>JPEG</strong>.<br />Maximale Dateigröße: 100Kb<br />Ihr Avatar sollte quadratisch sein, wir werden die Grafik auf 196px x 196px skalieren.",
                 "ERR": {
                     "TypeNotAllowed": "Diese Art von Bild ist nicht erlaubt. Zulässige Bildtypen: <strong>%s</strong>.",
                     "FileSize": "Das Bild überschreitet die maximale Dateigröße um %s Kb.",
-                    "DbFail": "Fehler beim Aktualisieren der Datenbank."
+                    "DbFail": "Fehler beim Aktualisieren der Datenbank.",
+                    "Empty": "Sie haben keinen Avatar ausgewählt."
                 },
-                "SUCCESS": "Ihr Avatar wurde aktualisiert."
+                "SUCCESS": "Ihr Avatar wurde aktualisiert.",
+                "DELETED": "Ihr Avatar wurde gelöscht. Sie nutzen jetzt das hässliche Standard-Symbol."
             }
         }
     },

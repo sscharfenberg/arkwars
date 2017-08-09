@@ -71,6 +71,15 @@ const userSchema = new mongoose.Schema({
         type: Date
     },
 
+    // enlisted games
+    gamesEnlisted: [
+        { type: mongoose.Schema.ObjectId, ref: "Game" }
+    ],
+    // active games
+    gamesActive: [
+        { type: mongoose.Schema.ObjectId, ref: "Game" }
+    ],
+
     // number of failed login attempts
     attempts: {
         type: Number,
