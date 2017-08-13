@@ -1,0 +1,74 @@
+extends ../layout
+
+block content
+
+    main.aw-content__inner
+        header.aw-content-head
+            h1.aw-content-head__title= h.__("GAMES.ENLIST.TITLE", `g${game.number}`)
+            nav.aw-content-head__breadcrumbs
+                a.aw-content-head__breadcrumb(href="/")
+                    != h.icon("home", ["home-icon"])
+                a.aw-content-head__breadcrumb(href="/games") Games
+                a.aw-content-head__breadcrumb(href=`/games/${game.number}/enlist`)= h.__("GAMES.ENLIST.TITLE", `g${game.number}`)
+
+        .aw-grid
+            .aw-grid__headline= h.__("GAMES.ENLIST.DATA.HDL")
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column= h.__("GAMES.ENLIST.DATA.NUMBER")
+                .aw-grid__column
+                    strong= "g" + game.number
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column= h.__("GAMES.ENLIST.DATA.TURNDURATION")
+                .aw-grid__column= h.__("GAMES.ENLIST.DATA.DURATION_VALUE", game.turnDuration)
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column= h.__("GAMES.ENLIST.DATA.START")
+                .aw-grid__column= h.moment(game.startDate).format("LLLL")
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column= h.__("GAMES.ENLIST.DATA.MAXPLAYERS")
+                .aw-grid__column= game.maxPlayers
+
+        form.aw-form(action=`/games/${game.number}/enlist` method="POST")
+
+            .aw-form__row(class=`${errors && errors.empirename ? "error" : ""}`)
+                .aw-form-input
+                    label.aw-form-input__label(for="empirename")
+                        != h.__("GAMES.ENLIST.EMPIRENAME.LABEL")
+                    input.aw-form-input__input(
+                        type="text",
+                        name="empirename",
+                        id="empirename",
+                        placeholder=(h.__("GAMES.ENLIST.EMPIRENAME.PLACEHOLDER")),
+                        maxlength=(cfg.games.empire.name.max)
+                        required,
+                        aria-required="true",
+                        value=(data && data.empirename)
+                    )
+                if errors && errors.empirename
+                    .aw-form__error-message= errors.empirename.msg
+                .aw-form__row-description= h.__("GAMES.ENLIST.EMPIRENAME.DESCRIPTION", `${cfg.games.empire.name.min} - ${cfg.games.empire.name.max}`)
+
+            .aw-form__row(class=`${errors && errors.empireticker ? "error" : ""}`)
+                .aw-form-input
+                    label.aw-form-input__label(for="empireticker")
+                        != h.__("GAMES.ENLIST.EMPIRETICKER.LABEL")
+                    input.aw-form-input__input(
+                        type="text",
+                        name="empireticker",
+                        id="empireticker",
+                        placeholder=(h.__("GAMES.ENLIST.EMPIRETICKER.PLACEHOLDER")),
+                        maxlength=(cfg.games.empire.ticker.max),
+                        required,
+                        aria-required="true",
+                        value=(data && data.empireticker)
+                    )
+                if errors && errors.empireticker
+                    .aw-form__error-message= errors.empireticker.msg
+                .aw-form__row-description= h.__("GAMES.ENLIST.EMPIRETICKER.DESCRIPTION", `${cfg.games.empire.ticker.min} - ${cfg.games.empire.ticker.max}`)
+
+            .aw-form__row
+                .aw-form__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("key", ["small"])
+                        != h.__("GAMES.ENLIST.SUBMIT")
+
+            pre= h.dump(errors)

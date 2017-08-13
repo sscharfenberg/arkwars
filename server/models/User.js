@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     // avatar filename
     avatar: {
         type: String,
-        unique: true
+        default: undefined
     },
 
     // user email confirmed?
@@ -71,13 +71,9 @@ const userSchema = new mongoose.Schema({
         type: Date
     },
 
-    // enlisted games
-    gamesEnlisted: [
-        { type: mongoose.Schema.ObjectId, ref: "Game" }
-    ],
-    // active games
-    gamesActive: [
-        { type: mongoose.Schema.ObjectId, ref: "Game" }
+    // references player entries in games
+    players: [
+        { type: mongoose.Schema.ObjectId, ref: "Player" }
     ],
 
     // number of failed login attempts
@@ -116,6 +112,14 @@ userSchema.plugin(passportLocalMongoose, {
     maxAttempts: 5
 });
 userSchema.plugin(mongodbErrorHandler);
+
+function autopopulate(next) {
+    this.populate("players");
+    next();
+}
+
+userSchema.pre("find", autopopulate);
+userSchema.pre("findOne", autopopulate);
 
 
 module.exports = mongoose.model("User", userSchema);

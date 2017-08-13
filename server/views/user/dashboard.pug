@@ -27,24 +27,27 @@ block content
         //- available games where the user can enlist
         if games.canEnlist
             each game in games.canEnlist
-                form.aw-form(action=`/game/${game.number}/enlist`, method="POST")
+                .aw-grid
                     .aw-grid__headline= h.__("APP.DASHBOARD.GAMES.AVAILABLE.HDL")
                     .aw-grid__row.aw-grid__row--2col
                         .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.NAME")
                         .aw-grid__column= "g" + game.number
                     .aw-grid__row.aw-grid__row--2col
                         .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.TURNDURATION")
-                        .aw-grid__column= game.turnDuration + " minutes"
+                        .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.DURATION_VALUE", game.turnDuration)
                     if game.startDate
                         .aw-grid__row.aw-grid__row--2col
                             .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.START")
                             .aw-grid__column= h.moment(game.startDate).format("LLLL")
+                    if game.maxPlayers
+                        .aw-grid__row.aw-grid__row--2col
+                            .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.MAXPLAYERS")
+                            .aw-grid__column= game.maxPlayers
                     .aw-grid__row= h.__("APP.DASHBOARD.GAMES.AVAILABLE.INTRO")
                     .aw-grid__row
-                        button.aw-btn.aw-btn--icon(type="submit")
+                        a.aw-btn.aw-btn--icon(href=`/games/${game.number}/enlist`)
                             != h.icon("games", ["small"])
                             != h.__("APP.DASHBOARD.GAMES.AVAILABLE.ENLIST")
-                            | TODO!
 
 
         //- Change Avatar form
@@ -61,7 +64,11 @@ block content
                     label.aw-change-avatar__upload-label(for="avatar")
                         != h.icon("folder_open", ["small"])
                         span(data-label=(h.__("APP.DASHBOARD.AVATAR.LABEL")))= h.__("APP.DASHBOARD.AVATAR.LABEL")
-                        input.aw-change-avatar__upload-input(type="file", name="avatar", id="avatar")
+                        input.aw-change-avatar__upload-input(
+                            type="file",
+                            name="avatar",
+                            id="avatar"
+                        )
                     span
                         button.aw-change-avatar__btn(type="submit")
                             != h.icon("save", ["small"])
@@ -79,7 +86,15 @@ block content
             .aw-form__row
                 .aw-form-input
                     label.aw-form-input__label(for="email")= h.__("APP.DASHBOARD.EMAIL.LABEL")
-                    input.aw-form-input__input(type="email", name="email", id="email", placeholder=(h.__("APP.DASHBOARD.EMAIL.PLACEHOLDER")), value=(data && data.email ? data.email : email), required, aria-required="true")
+                    input.aw-form-input__input(
+                        type="email",
+                        name="email",
+                        id="email",
+                        placeholder=(h.__("APP.DASHBOARD.EMAIL.PLACEHOLDER")),
+                        value=(data && data.email ? data.email : email),
+                        required,
+                        aria-required="true"
+                    )
                 .aw-form__row-description!= h.__("APP.DASHBOARD.EMAIL.DESCRIPTION")
             .aw-form__row
                 .aw-form__submit
@@ -95,7 +110,15 @@ block content
             .aw-form__row(class=`${errors && errors.password ? "error" : ""}`)
                 .aw-form-input
                     label.aw-form-input__label(for="password")= h.__("APP.DASHBOARD.PWD.LABEL")
-                    input.aw-form-input__input(type="password", name="password", id="password", placeholder=(h.__("APP.DASHBOARD.PWD.PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
+                    input.aw-form-input__input(
+                        type="password",
+                        name="password",
+                        id="password",
+                        placeholder=(h.__("APP.DASHBOARD.PWD.PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.password)
+                    )
                 .aw-form__row-description!= h.__("APP.DASHBOARD.PWD.DESCRIPTION")
             .aw-form__row
                 .aw-form__submit

@@ -18,7 +18,7 @@
         "npm": ">= 5.3.0"
     },
     "scripts": {
-        "server.start": "node server/nodemon.js",
+        "server.start": "node --inspect server/nodemon.js",
         "watch": "gulp watch",
         "build.static": "gulp build:static",
         "js.prod": "node internals/npm/js.prod.js",

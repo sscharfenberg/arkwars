@@ -47,6 +47,12 @@ const gameSchema = new mongoose.Schema({
     turnDue: {
         type: Date
     },
+    // max number of players
+    maxPlayers: {
+        type: Number,
+        min: 1,
+        default: 50
+    },
     // date when the game starts
     startDate: {
         type: Date

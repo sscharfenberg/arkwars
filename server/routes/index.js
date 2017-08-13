@@ -33,7 +33,12 @@ router.use("/auth", require("./auth"));
 /*
  * admin routes ========================================================================================================
  */
-router.use("/admin/", require("./admin"));
+router.use("/admin", require("./admin"));
+
+/*
+ * game routes =========================================================================================================
+ */
+router.use("/games", require("./games"));
 
 
 module.exports = router;

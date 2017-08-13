@@ -10,7 +10,15 @@ block content
             .aw-narrowform__row(class=`${errors && errors.username ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label(for="username")= h.__("APP.REGISTER.USERNAME_LABEL")
-                    input.aw-narrowform-input__input(type="text", name="username", id="username", placeholder=h.__("APP.REGISTER.USERNAME_PLACEHOLDER"), required, aria-required="true", value=(data && data.username))
+                    input.aw-narrowform-input__input(
+                        type="text",
+                        name="username",
+                        id="username",
+                        placeholder=h.__("APP.REGISTER.USERNAME_PLACEHOLDER"),
+                        required,
+                        aria-required="true",
+                        value=(data && data.username)
+                    )
                 if errors && errors.username
                     .aw-narrowform__error-message= errors.username.msg
                 .aw-narrowform__row-description= h.__("APP.REGISTER.USERNAME_DESCRIPTION")
@@ -18,7 +26,15 @@ block content
             .aw-narrowform__row(class=`${errors && errors.email ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label(for="email")= h.__("APP.REGISTER.EMAIL_LABEL")
-                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder=(h.__("APP.REGISTER.EMAIL_PLACEHOLDER")), required, aria-required="true", value=(data && data.email))
+                    input.aw-narrowform-input__input(
+                        type="email",
+                        name="email",
+                        id="email",
+                        placeholder=(h.__("APP.REGISTER.EMAIL_PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.email)
+                    )
                 if errors && errors.email
                     .aw-narrowform__error-message= errors.email.msg
                 .aw-narrowform__row-description!= h.__("APP.REGISTER.EMAIL_DESCRIPTION")
@@ -26,7 +42,15 @@ block content
             .aw-narrowform__row(class=`${errors && errors.password ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label(for="password")= h.__("APP.REGISTER.PWD_LABEL")
-                    input.aw-narrowform-input__input(type="password", name="password", id="password", placeholder=(h.__("APP.REGISTER.PWD_PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
+                    input.aw-narrowform-input__input(
+                        type="password",
+                        name="password",
+                        id="password",
+                        placeholder=(h.__("APP.REGISTER.PWD_PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.password)
+                    )
                 if errors && errors.password
                     .aw-narrowform__error-message= errors.password.msg
                 .aw-narrowform__row-description!= h.__("APP.REGISTER.PWD_DESCRIPTION")
@@ -34,7 +58,15 @@ block content
             .aw-narrowform__row(class=`${errors && errors.passwordConfirm ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label(for="passwordConfirm")= h.__("APP.REGISTER.PWD_CONFIRM_LABEL")
-                    input.aw-narrowform-input__input(type="password", name="passwordConfirm", id="passwordConfirm", placeholder=(h.__("APP.REGISTER.PWD_CONFIRM_PLACEHOLDER")), required, aria-required="true", value=(data && data.passwordConfirm))
+                    input.aw-narrowform-input__input(
+                        type="password",
+                        name="passwordConfirm",
+                        id="passwordConfirm",
+                        placeholder=(h.__("APP.REGISTER.PWD_CONFIRM_PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.passwordConfirm)
+                    )
                 if errors && errors.passwordConfirm
                     .aw-narrowform__error-message= errors.passwordConfirm.msg
                 .aw-narrowform__row-description!= h.__("APP.REGISTER.PWD_CONFIRM_DESCRIPTION")
@@ -43,7 +75,15 @@ block content
                 .aw-narrowform-input
                     label.aw-narrowform-input__label.aw-narrowform-input__label--captcha(for="captcha")
                         != captcha
-                    input.aw-narrowform-input__input(type="text", name="captcha", id="captcha", placeholder=(h.__("APP.REGISTER.CAPTCHA_PLACEHOLDER")), required, aria-required="true", value=(data && data.captcha))
+                    input.aw-narrowform-input__input(
+                        type="text",
+                        name="captcha",
+                        id="captcha",
+                        placeholder=(h.__("APP.REGISTER.CAPTCHA_PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.captcha)
+                    )
                 if errors && errors.captcha
                     .aw-narrowform__error-message= errors.captcha.msg
                 .aw-narrowform__row-description!= h.__("APP.REGISTER.CAPTCHA_DESCRIPTION")
@@ -53,7 +93,14 @@ block content
                     label.aw-narrowform-input__label(for="accept_conditions")= h.__("APP.REGISTER.ACCEPT_LABEL")
                     .aw-narrowform-input__input
                         .aw-checkbox
-                            input(type="checkbox", name="accept_conditions", id="accept_conditions", value="1", checked=(data && data.accept_conditions), aria-checked=(data && data.accept_conditions))
+                            input(
+                                type="checkbox",
+                                name="accept_conditions",
+                                id="accept_conditions",
+                                value="1",
+                                checked=(data && data.accept_conditions),
+                                aria-checked=(data && data.accept_conditions)
+                            )
                             label(for="accept_conditions")
                 if errors && errors.accept_conditions
                     .aw-narrowform__error-message= errors.accept_conditions.msg

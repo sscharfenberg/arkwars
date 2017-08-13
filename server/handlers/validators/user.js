@@ -6,6 +6,7 @@
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const User = mongoose.model("User");
+const cfg = require("../../config");
 
 /*
  * default validator.js validations ====================================================================================
@@ -22,9 +23,12 @@ exports.defaultValidators = req => {
     req
         .checkBody(
             "username",
-            i18n.__("APP.REGISTER.ERROR.UsernameOutOfBounds")
+            i18n.__(
+                "APP.REGISTER.ERROR.UsernameOutOfBounds",
+                `${cfg.app.username.min} - ${cfg.app.username.max}`
+            )
         )
-        .isLength({ min: 3, max: 20 });
+        .isLength({ min: cfg.app.username.min, max: cfg.app.username.max });
 
     // email
     req.checkBody("email", i18n.__("APP.REGISTER.ERROR.EmailEmpty")).notEmpty();
@@ -39,9 +43,12 @@ exports.defaultValidators = req => {
     req
         .checkBody(
             "password",
-            i18n.__("APP.REGISTER.ERROR.PasswordOutOfBounds")
+            i18n.__(
+                "APP.REGISTER.ERROR.PasswordOutOfBounds",
+                `${cfg.app.password.min} - ${cfg.app.password.max}`
+            )
         )
-        .isLength({ min: 6, max: 32 });
+        .isLength({ min: cfg.app.password.min, max: cfg.app.password.max });
 
     // confirm password is not empty.
     req
@@ -133,14 +140,12 @@ exports.userNameBlacklisted = req => {
     };
 };
 
-
 /*
  * Username already exists =============================================================================================
  * @param {ExpressHTTPRequest} req
  * @return {ExpressHTTPRequest} req
  */
 exports.changedEmail = req => {
-
     // email not empty
     req
         .checkBody("email", i18n.__("APP.DASHBOARD.EMAIL.ERR.NotEmpty"))
@@ -161,14 +166,12 @@ exports.changedEmail = req => {
     return req;
 };
 
-
 /*
  * Username already exists =============================================================================================
  * @param {ExpressHTTPRequest} req
  * @return {ExpressHTTPRequest} req
  */
 exports.changedPassword = req => {
-
     // password not empty
     req
         .checkBody("password", i18n.__("APP.REGISTER.ERROR.PasswordEmpty"))

@@ -36,6 +36,7 @@ mongoose.connection
 // require mongoose schemas
 require("./models/User");
 require("./models/Game");
+require("./models/Player");
 
 errorHandlers.catchErrors(cron.startup());
 

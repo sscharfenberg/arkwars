@@ -39,11 +39,17 @@ body
                     span.keep #{session && session.locale ? session.locale : ""}
                 ul.aw-header__submenu.aw-header__submenu--left.aw-header__submenu--medium(aria-hidden="true")
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(href="/language/en", class=(session && session.locale && session.locale == "en" ? "aw-header__submenu-item-link--active" : ""))
+                        a.aw-header__submenu-item-link(
+                            href="/language/en",
+                            class=(session && session.locale && session.locale == "en" ? "aw-header__submenu-item-link--active" : "")
+                        )
                             != h.image("flags/en.svg")
                             | English
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(href="/language/de", class=(session && session.locale && session.locale == "de" ? "aw-header__submenu-item-link--active" : ""))
+                        a.aw-header__submenu-item-link(
+                            href="/language/de",
+                            class=(session && session.locale && session.locale == "de" ? "aw-header__submenu-item-link--active" : "")
+                        )
                             != h.image("flags/de.svg")
                             | Deutsch
 
@@ -54,9 +60,15 @@ body
                     span.keep g1
                 ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link.aw-header__submenu-item-link--active(href="/game/1", data-gameid="2") g1 (Alpha)
+                        a.aw-header__submenu-item-link.aw-header__submenu-item-link--active(
+                            href="/game/1",
+                            data-gameid="2"
+                        ) g1 (Alpha)
                     li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(href="/game/2", data-gameid="2") g2 (Beta)
+                        a.aw-header__submenu-item-link(
+                            href="/game/2",
+                            data-gameid="2"
+                        ) g2 (Beta)
 
             //- links for guests: login, register
             if !user

@@ -83,14 +83,14 @@
             "ERROR": {
                 "FLASH": "Hang in there, skeleton - you're nearly there!",
                 "UsernameEmpty": "Please supply a username.",
-                "UsernameOutOfBounds": "Username needs to have between 3 and 20 characters.",
+                "UsernameOutOfBounds": "Username needs to have %s characters.",
                 "UsernameTaken": "The specified username has already been registered.",
                 "UsernameBlacklisted": "The specified username is not allowed.",
                 "EmailEmpty": "Please specify your E-Mail address.",
                 "EmailInvalid": "This is not a valid E-Mail address.",
                 "EmailTaken": "The specified E-Mail address has already been registered.",
                 "PasswordEmpty": "please specify your password.",
-                "PasswordOutOfBounds": "Password needs to have at least 6 and max. 32 characters.",
+                "PasswordOutOfBounds": "Password needs to have %s characters.",
                 "PasswordConfirmEmpty": "please confirm the password.",
                 "PasswordsNoMatch": "Passwords do not match",
                 "CaptchaEmpty": "Please enter the letters from the image above.",
@@ -162,7 +162,9 @@
                     "INTRO": "If you enlist to a game it will automatically start at the indicated time. Some games allow late joining.",
                     "NAME": "Game",
                     "TURNDURATION": "Turn duration",
+                    "DURATION_VALUE": "%s minutes",
                     "START": "Game start",
+                    "MAXPLAYERS": "Max number of players",
                     "ENLIST": "Enlist"
                 }
             },
@@ -228,6 +230,46 @@
         },
         "GALNET": {
             "LABEL": "GalNet"
+        }
+    },
+
+    "GAMES": {
+        "ENLIST": {
+            "TITLE": "Enlist to %s",
+            "DATA": {
+                "HDL": "Game Data",
+                "NUMBER": "Game",
+                "TURNDURATION": "Turn duration",
+                "DURATION_VALUE": "%s minutes",
+                "MAXPLAYERS": "Max number of players",
+                "START": "Game start"
+            },
+            "EMPIRENAME": {
+                "LABEL": "Empire <strong>name</strong>",
+                "PLACEHOLDER": "Name your empire!",
+                "DESCRIPTION": "Your Empire name must have %s characters.",
+                "ERR": {
+                    "Empty": "Empire Name is empty",
+                    "Length": "Empire Name needs to have %s characters.",
+                    "NotAlphaNum": "Empire name must contain only alphanumeric characters - letters and mumbers."
+                }
+            },
+            "EMPIRETICKER": {
+                "LABEL": "Empire <strong>ticker</strong>",
+                "PLACEHOLDER": "Short Ticker for your Empire",
+                "DESCRIPTION": "Your Ticker is shown as short form for your empire pretty much everywhere. It needs to have %s alphanumeric characters (letters!)",
+                "ERR": {
+                    "Empty": "Empire ticker is empty",
+                    "Length": "Empire ticker needs to have %s characters.",
+                    "NotAlphaNum": "Empire ticker must contain only alphanumeric characters - letters and mumbers."
+                }
+            },
+            "ERR": {
+                "NotEnlistable": "You can't enlist to this game.",
+                "Flash": "Error while enlisting to game."
+            },
+            "SUBMIT": "Enlist now",
+            "SUCCESS": "You have successfully enlisted to %s. Have fun!"
         }
     },
 

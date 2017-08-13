@@ -11,13 +11,29 @@ block content
             .aw-narrowform__row(class=`${errors ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label(for="email")= h.__("APP.LOGIN.EMAIL_LABEL")
-                    input.aw-narrowform-input__input(type="email", name="email", id="email", placeholder=(h.__("APP.LOGIN.EMAIL_PLACEHOLDER")), required, aria-required="true", value=(data && data.email))
+                    input.aw-narrowform-input__input(
+                        type="email",
+                        name="email",
+                        id="email",
+                        placeholder=(h.__("APP.LOGIN.EMAIL_PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.email)
+                    )
                 .aw-narrowform__row-description= h.__("APP.LOGIN.EMAIL_DESCRIPTION")
 
             .aw-narrowform__row(class=`${errors ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label(for="password")= h.__("APP.LOGIN.PWD_LABEL")
-                    input.aw-narrowform-input__input(type="password", name="password", id="password", placeholder=(h.__("APP.LOGIN.PWD_PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
+                    input.aw-narrowform-input__input(
+                        type="password",
+                        name="password",
+                        id="password",
+                        placeholder=(h.__("APP.LOGIN.PWD_PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.password)
+                    )
                 if errors
                     .aw-narrowform__error-message= errors
                 .aw-narrowform__row-description= h.__("APP.LOGIN.PWD_DESCRIPTION")

@@ -83,14 +83,14 @@
             "ERROR": {
                 "FLASH": "Halte durch, Skelett - du hast es fast geschafft!",
                 "UsernameEmpty": "Bitte geben Sie Ihren Benutzernamen an.",
-                "UsernameOutOfBounds": "Der Benutzernamen muss zwischen 3 und 20 Zeichen enthalten.",
+                "UsernameOutOfBounds": "Der Benutzername muss %s Zeichen enthalten.",
                 "UsernameTaken": "Der Benutzername ist bereits vergeben.",
                 "UsernameBlacklisted": "Der Benutzername ist nicht erlaubt.",
                 "EmailEmpty": "Bitte geben Sie Ihre E-Mail-Adresse an.",
                 "EmailInvalid": "Diese E-Mail-Adresse scheint ungültig zu sein.",
                 "EmailTaken": "Die E-Mail-Adresse wurde bereits registriert.",
                 "PasswordEmpty": "Bitte geben Sie Ihr Passwort an.",
-                "PasswordOutOfBounds": "Das Passwort muss zwischen 6 und 32 Zeichen haben.",
+                "PasswordOutOfBounds": "Das Passwort muss %s Zeichen haben.",
                 "PasswordConfirmEmpty": "Bitte geben Sie das Passwort erneut ein.",
                 "PasswordsNoMatch": "Die Passwörter stimmen nicht überein.",
                 "CaptchaEmpty": "Bitte geben Sie die Zeichen aus dem Bild ein.",
@@ -162,7 +162,9 @@
                     "INTRO": "Wenn Sie sich in ein Spiel einschreiben startet das Spiel automatisch zur angegebenen Zeit. Manche Spiele erlauben es sich nach Spiel-Start einzuschreiben.",
                     "NAME": "Spiel",
                     "TURNDURATION": "Rundendauer",
+                    "DURATION_VALUE": "%s Minuten",
                     "START": "Spiel Start",
+                    "MAXPLAYERS": "Maximale Spielerzahl",
                     "ENLIST": "Einschreiben"
                 }
             },
@@ -228,6 +230,46 @@
         },
         "GALNET": {
             "LABEL": "GalNet"
+        }
+    },
+
+    "GAMES": {
+        "ENLIST": {
+            "TITLE": "Einschreiben in %s",
+            "DATA": {
+                "HDL": "Spieldaten",
+                "NUMBER": "Spiel",
+                "TURNDURATION": "Rundendauer",
+                "DURATION_VALUE": "%s Minuten",
+                "MAXPLAYERS": "Maximale Spielerzahl",
+                "START": "Spiel Start"
+            },
+            "EMPIRENAME": {
+                "LABEL": "<strong>Name</strong> des Imperiums",
+                "PLACEHOLDER": "Wählen Sie mit Bedacht.",
+                "DESCRIPTION": "Der Name Ihres Imperiums muss %s Zeichen enthalten.",
+                "ERR": {
+                    "Empty": "Bitte geben Sie den Namen des Imperiums an.",
+                    "Length": "Der Name des Imperiums muss %s Zeichen haben.",
+                    "NotAlphaNum": "Der Name des Imperium darf nur Aplhanummerische Zeichen enthalten - Buchstaben und Zahlen."
+                }
+            },
+            "EMPIRETICKER": {
+                "LABEL": "<strong>Ticker</strong> des Imperiums",
+                "PLACEHOLDER": "Abkürzung Ihres Imperiums-Namens",
+                "DESCRIPTION": "Ihr Ticker wird als Kurzform Ihres Imperiums praktisch überall angezeigt. Er muss %s Zeichen (Buchstaben!) enthalten.",
+                "ERR": {
+                    "Empty": "Bitte geben Sie den Ticker Ihres Imperiums an.",
+                    "Length": "Der Ticker des Imperiums muss %s Zeichen haben.",
+                    "NotAlphaNum": "Empire Ticker darf nur Aplhanummerische Zeichen enthalten - Buchstaben und Zahlen."
+                }
+            },
+            "ERR": {
+                "NotEnlistable": "Sie können sich in dieses Spiel nicht einschreiben.",
+                "Flash": "Fehler beim Einschreiben!"
+            },
+            "SUBMIT": "Jetzt einschreiben",
+            "SUCCESS": "Sie haben sich erfolgreich für %s eingeschrieben. Viel Spaß!"
         }
     },
 

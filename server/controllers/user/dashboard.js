@@ -21,15 +21,21 @@ const logger = require("../../handlers/logger/console");
 const mail = require("../../handlers/mail");
 const cfg = require("../../config");
 
-
 /*
  * show profile page ===================================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  */
 exports.showDashboard = async (req, res) => {
-    const canEnlistPromise = Game.find({ canEnlist: true });
-    const activePromise = Game.find({ active: true }); // TODO: change to _my_ games (tmp)
+    const canEnlistPromise = Game.find({
+        canEnlist: true,
+        startDate: { $gt: moment().toISOString() },
+        // User.players gets populated with players object, which includes game id.
+        _id: { $nin: req.user.players.map(game => game.game) }
+    });
+
+    const activePromise = Game.find({ active: true }); // TODO: change to _my_ games (this is tmp)
+
     const [canEnlist, active] = await Promise.all([
         canEnlistPromise,
         activePromise
@@ -44,7 +50,6 @@ exports.showDashboard = async (req, res) => {
         games
     });
 };
-
 
 /*
  * validate change email address post request ==========================================================================
@@ -94,7 +99,6 @@ exports.validateChangeEmail = async (req, res, next) => {
     next(); // no errors, proceed to next middleware
 };
 
-
 /*
  * change email address request: update user ===========================================================================
  * @param {ExpressHTTPRequest} req
@@ -133,7 +137,6 @@ exports.updateEmail = async (req, res, next) => {
     }
 };
 
-
 /*
  * change email address request: send 'email updated' with activation link =============================================
  * @param {ExpressHTTPRequest} req
@@ -157,7 +160,6 @@ exports.sendEmailUpdated = async (req, res) => {
     req.logout();
     res.redirect("/auth/login");
 };
-
 
 /*
  * validate change email address post request ==========================================================================
@@ -189,7 +191,6 @@ exports.validateChangePassword = async (req, res, next) => {
     next(); // no errors, proceed to next middleware
 };
 
-
 /*
  * change email address request: update user ===========================================================================
  * @param {ExpressHTTPRequest} req
@@ -206,7 +207,6 @@ exports.updatePassword = async (req, res) => {
     req.flash("success", i18n.__("APP.DASHBOARD.PWD.SUCCESS"));
     res.redirect("/dashboard");
 };
-
 
 /*
  * Multer middleware - buffer multipart/form-data fields into req.file =================================================
@@ -233,7 +233,6 @@ exports.bufferAvatarFormData = multer({
         }
     }
 }).single("avatar");
-
 
 /*
  * validate avatar =====================================================================================================
@@ -281,7 +280,6 @@ exports.validateAvatar = async (req, res, next) => {
     next(); // file is not too big, and valid mime type
 };
 
-
 /*
  * write avatar to disk ================================================================================================
  * @param {ExpressHTTPRequest} req
@@ -312,7 +310,6 @@ exports.writeAvatar = async (req, res, next) => {
     next();
 };
 
-
 /*
  * delete old avatar ===================================================================================================
  * @param {ExpressHTTPRequest} req
@@ -328,14 +325,12 @@ exports.deleteOldAvatar = async (req, res, next) => {
     next();
 };
 
-
 /*
  * update user =========================================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
- * @param {callback} next
  */
-exports.updateAvatarUser = async (req, res, next) => {
+exports.updateAvatarUser = async (req, res) => {
     const user = await User.findOneAndUpdate(
         { _id: req.user._id },
         {
@@ -360,14 +355,12 @@ exports.updateAvatarUser = async (req, res, next) => {
     res.redirect("/dashboard");
 };
 
-
 /*
  * delete old avatar ===================================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
- * @param {callback} next
  */
-exports.deleteCurrentAvatar = async (req, res, next) => {
+exports.deleteCurrentAvatar = async (req, res) => {
     const filepath = path.join(cfg.app.avatar.path, req.user.avatar);
     await del(filepath);
     await User.findOneAndUpdate(

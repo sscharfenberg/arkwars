@@ -13,7 +13,15 @@ block content
             .aw-narrowform__row(class=`${errors && errors.password ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label(for="password")= h.__("APP.RESET.CHANGE.PWD_LABEL")
-                    input.aw-narrowform-input__input(type="password", name="password", id="password", placeholder=(h.__("APP.RESET.CHANGE.PWD_PLACEHOLDER")), required, aria-required="true", value=(data && data.password))
+                    input.aw-narrowform-input__input(
+                        type="password",
+                        name="password",
+                        id="password",
+                        placeholder=(h.__("APP.RESET.CHANGE.PWD_PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.password)
+                    )
                 if errors && errors.password
                     .aw-narrowform__error-message= errors.password.msg
                 .aw-narrowform__row-description!= h.__("APP.RESET.CHANGE.PWD_DESCRIPTION")
@@ -21,7 +29,15 @@ block content
             .aw-narrowform__row(class=`${errors && errors.passwordConfirm ? "error" : ""}`)
                 .aw-narrowform-input
                     label.aw-narrowform-input__label(for="passwordConfirm")= h.__("APP.RESET.CHANGE.PWD_CONFIRM_LABEL")
-                    input.aw-narrowform-input__input(type="password", name="passwordConfirm", id="passwordConfirm", placeholder=(h.__("APP.RESET.CHANGE.PWD_CONFIRM_PLACEHOLDER")), required, aria-required="true", value=(data && data.passwordConfirm))
+                    input.aw-narrowform-input__input(
+                        type="password",
+                        name="passwordConfirm",
+                        id="passwordConfirm",
+                        placeholder=(h.__("APP.RESET.CHANGE.PWD_CONFIRM_PLACEHOLDER")),
+                        required,
+                        aria-required="true",
+                        value=(data && data.passwordConfirm)
+                    )
                 if errors && errors.passwordConfirm
                     .aw-narrowform__error-message= errors.passwordConfirm.msg
                 .aw-narrowform__row-description!= h.__("APP.RESET.CHANGE.PWD_CONFIRM_DESCRIPTION")
