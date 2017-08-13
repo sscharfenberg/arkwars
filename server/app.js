@@ -25,8 +25,9 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const routes = require("./routes/index"); // Express routes
 const accessLogger = require("./handlers/logger/access"); // Access logging
 const errorHandlers = require("./handlers/error"); // Error handling
-const logger = require("./handlers/logger/console");
+const logger = require("./handlers/logger/console"); // stub console.log and make it funky.
 const templateHelpers = require("./handlers/template"); // Template helpers
+const cfg = require("./config"); // base app config
 
 // create our Express app
 const app = express();
@@ -123,6 +124,7 @@ app.use((req, res, next) => {
     res.locals.currentPath = req.path;
     res.locals.session = req.session;
     res.locals.user = req.user;
+    res.locals.cfg = cfg;
     next();
 });
 

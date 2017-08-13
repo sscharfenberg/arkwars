@@ -20,13 +20,25 @@ const appDirectory = fs.realpathSync(process.cwd());
 
 const appConfig = {
     app: {
+        // basic settings
         title: pkg.app.name,
         projectDir: appDirectory,
         browsers: pkg.browsers,
         email: {
             from: `${pkg.app.name} <noreply@arkwars.io>`
         },
-        locales: ["en", "de"],
+        // i18n base settings. the language files can be found in /server/lang/{locale].json
+        locales: [
+            {
+                name: "en",
+                native: "English"
+            },
+            {
+                name: "de",
+                native: "Deutsch"
+            }
+        ],
+        // blacklisted usernames. TODO: put in external file for ease of maintenance
         blacklistedUsernames: [
             "ash",
             "ashaltiriak",
@@ -41,6 +53,7 @@ const appConfig = {
             "sudo",
             "database"
         ],
+        // user settings
         username: {
             min: 3,
             max: 20
@@ -53,7 +66,7 @@ const appConfig = {
             mimeTypes: [
                 "image/png",
                 "image/jpeg"
-                //                , "image/webp"
+                //, "image/webp"
             ],
             maxFileSize: 100 * 1024, // 100Kb
             maxSize: {
@@ -61,12 +74,13 @@ const appConfig = {
                 height: 192
             },
             path: path.join(appDirectory, "server", "public", "avatars")
-        },
+        }
     },
+    // game settings
     games: {
         empire: {
             name: {
-                min: 3,
+                min: 6,
                 max: 32
             },
             ticker: {

@@ -38,7 +38,7 @@ router.use("/admin", require("./admin"));
 /*
  * game routes =========================================================================================================
  */
-router.use("/games", require("./games"));
+router.use("/game", require("./game"));
 
 
 module.exports = router;

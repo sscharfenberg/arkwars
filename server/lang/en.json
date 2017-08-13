@@ -166,6 +166,14 @@
                     "START": "Game start",
                     "MAXPLAYERS": "Max number of players",
                     "ENLIST": "Enlist"
+                },
+                "MY": {
+                    "HDL": "My Games",
+                    "TURNDURATION": "Turn duration",
+                    "DURATION_VALUE": "%s minutes",
+                    "MAXPLAYERS": "Max number of players",
+                    "WITHDRAW": "Withdraw",
+                    "GOTO": "Switch to game"
                 }
             },
             "PWD": {
@@ -230,6 +238,10 @@
         },
         "GALNET": {
             "LABEL": "GalNet"
+        },
+        "STATUS": {
+            "Active": "The game is active and running. Current turn: %s",
+            "Enlisted": "You are enlisted, but the game is not yet active.<br />Game start: %s"
         }
     },
 
@@ -270,6 +282,14 @@
             },
             "SUBMIT": "Enlist now",
             "SUCCESS": "You have successfully enlisted to %s. Have fun!"
+        },
+        "CHANGE": {
+            "ERR": "You can not switch to game %s.",
+            "SUCCESS": "Successfully switched to game %s."
+        },
+        "WITHDRAW": {
+            "ERR": "You can not withdraw from game %s.",
+            "SUCCESS": "You have withdrawn your enlistment to game %s."
         }
     },
 

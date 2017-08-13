@@ -2,7 +2,7 @@ doctype html
 html(lang="de")
     head
         meta(charset="utf-8")
-        title= `${title} | ${h.appName}`
+        title= `${title} | ${cfg.app.title}`
         meta(name="viewport" content="width=device-width, initial-scale=1")
         //- head block for seperate stylesheets (admin)
         block head
@@ -38,37 +38,31 @@ body
                     != h.icon("language")
                     span.keep #{session && session.locale ? session.locale : ""}
                 ul.aw-header__submenu.aw-header__submenu--left.aw-header__submenu--medium(aria-hidden="true")
-                    li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(
-                            href="/language/en",
-                            class=(session && session.locale && session.locale == "en" ? "aw-header__submenu-item-link--active" : "")
-                        )
-                            != h.image("flags/en.svg")
-                            | English
-                    li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(
-                            href="/language/de",
-                            class=(session && session.locale && session.locale == "de" ? "aw-header__submenu-item-link--active" : "")
-                        )
-                            != h.image("flags/de.svg")
-                            | Deutsch
+                    each locale in cfg.app.locales
+                        li.aw-header__submenu-item
+                            a.aw-header__submenu-item-link(
+                                href=(`/language/${locale.name}`),
+                                class=(session && session.locale && session.locale === locale.name ? "aw-header__submenu-item-link--active" : "")
+                            )
+                                != h.image(`flags/${locale.name}.svg`)
+                                != locale.native
 
-            //- games
-            li.aw-header__action
-                a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGEGAME")))
-                    != h.icon("games")
-                    span.keep g1
-                ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
-                    li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link.aw-header__submenu-item-link--active(
-                            href="/game/1",
-                            data-gameid="2"
-                        ) g1 (Alpha)
-                    li.aw-header__submenu-item
-                        a.aw-header__submenu-item-link(
-                            href="/game/2",
-                            data-gameid="2"
-                        ) g2 (Beta)
+
+            //- players. we show games, but we really mean players
+            if user && user.players.length && user.selectedPlayer
+                li.aw-header__action
+                    a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGEGAME")))
+                        != h.icon("games")
+                        span.keep= "g" + user.selectedPlayer.game.number
+                    ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
+                        each player in user.players
+                            li.aw-header__submenu-item
+                                a.aw-header__submenu-item-link(
+                                href=`/game/${player.game.number}/select`,
+                                data-gameid=(player.game.number),
+                                class=(user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
+                                )= "g" + player.game.number
+
 
             //- links for guests: login, register
             if !user
@@ -98,17 +92,18 @@ body
                         span= h.__("APP.HEADER.LABEL_LOGOUT")
 
         //- turn data for mobile
-        .aw-header__turn
-            .aw-turn
-                != h.icon("turn", ["turn"])
-                .aw-turn__value 125
-            .aw-header__server-time
-                time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LLL")
-            .aw-header__turn-next-progress
-                .aw-progress.aw-progress-turn(data-max="15", data-value="14")
-                    != h.progressbar(15, 14)
-            .aw-header__turn-next-time
-                time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
+        if user && user.players.length && user.selectedPlayer
+            .aw-header__turn
+                .aw-turn
+                    != h.icon("turn", ["turn"])
+                    .aw-turn__value= user.selectedPlayer.game.turn
+                .aw-header__server-time
+                    time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LT")
+                .aw-header__turn-next-progress
+                    .aw-progress.aw-progress-turn(data-max="15", data-value="14")
+                        != h.progressbar(15, 14)
+                .aw-header__turn-next-time
+                    time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
 
 
     .aw-main-wrapper
@@ -123,53 +118,58 @@ body
                     .aw-drawer__info
                         .aw-drawer__info-label= h.__("APP.HEADER.LABEL_SERVERTIME")
                         .aw-drawer__info-value
-                            time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LLL")
+                            time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LT")
                     .aw-drawer__info.aw-drawer__info--darker
                         .aw-drawer__info-label= h.__("APP.HEADER.LABEL_LOCALTIME")
                         .aw-drawer__info-value
                             time(datetime="", data-my-time) 00:00
 
                 //- turn data
-                li.aw-drawer__list-item.aw-drawer__list-item--turn
-                    .aw-drawer__turn
-                        .aw-drawer__turn-current
-                            .aw-drawer__turn-current-label= h.__("GAME.LABEL_CURRENTTURN")
-                            .aw-turn
-                                != h.icon("turn", ["turn"])
-                                .aw-turn__value 21
-                        .aw-drawer__turn-next
-                            .aw-drawer__turn-next-label= h.__("GAME.LABEL_NEXTTURN")
-                            .aw-drawer__turn-next-progress
-                                .aw-progress.aw-progress-turn(data-max="15", data-value="14")
-                                    != h.progressbar(15,14)
-                            .aw-drawer__turn-next-time
-                                time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
+                if user && user.players.length && user.selectedPlayer
+                    li.aw-drawer__list-item.aw-drawer__list-item--turn
+                        .aw-drawer__turn
+                            .aw-drawer__turn-current
+                                .aw-drawer__turn-current-label= h.__("GAME.LABEL_CURRENTTURN")
+                                .aw-turn
+                                    != h.icon("turn", ["turn"])
+                                    .aw-turn__value= user.selectedPlayer.game.turn
+                            .aw-drawer__turn-next
+                                .aw-drawer__turn-next-label= h.__("GAME.LABEL_NEXTTURN")
+                                .aw-drawer__turn-next-progress
+                                    .aw-progress.aw-progress-turn(data-max="15", data-value="14")
+                                        != h.progressbar(15,14)
+                                .aw-drawer__turn-next-time
+                                    time(
+                                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()), data-time-next-turn
+                                    )= h.moment(user.selectedPlayer.game.turnDue).format("LT")
+
 
                 //- game links
-                li.aw-drawer__list-item
-                    a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire")
-                        != h.icon("empire", ["small"])
-                        != h.__("GAME.EMPIRE.LABEL")
-                li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/fleets")
-                        != h.icon("fleet", ["small"])
-                        != h.__("GAME.FLEETS.LABEL")
-                li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/shipyards")
-                        != h.icon("build", ["small"])
-                        != h.__("GAME.SHIPYARDS.LABEL")
-                li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/research")
-                        != h.icon("research", ["small"])
-                        != h.__("GAME.RESEARCH.LABEL")
-                li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/starchart")
-                        != h.icon("starchart", ["small"])
-                        != h.__("GAME.STARCHART.LABEL")
-                li.aw-drawer__list-item
-                    a.aw-drawer__link(href="/game/1/galnet")
-                        != h.icon("galnet", ["small"])
-                        != h.__("GAME.GALNET.LABEL")
+                if user && user.players.length && user.selectedPlayer
+                    li.aw-drawer__list-item
+                        a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire")
+                            != h.icon("empire", ["small"])
+                            != h.__("GAME.EMPIRE.LABEL")
+                    li.aw-drawer__list-item
+                        a.aw-drawer__link(href="/game/1/fleets")
+                            != h.icon("fleet", ["small"])
+                            != h.__("GAME.FLEETS.LABEL")
+                    li.aw-drawer__list-item
+                        a.aw-drawer__link(href="/game/1/shipyards")
+                            != h.icon("build", ["small"])
+                            != h.__("GAME.SHIPYARDS.LABEL")
+                    li.aw-drawer__list-item
+                        a.aw-drawer__link(href="/game/1/research")
+                            != h.icon("research", ["small"])
+                            != h.__("GAME.RESEARCH.LABEL")
+                    li.aw-drawer__list-item
+                        a.aw-drawer__link(href="/game/1/starchart")
+                            != h.icon("starchart", ["small"])
+                            != h.__("GAME.STARCHART.LABEL")
+                    li.aw-drawer__list-item
+                        a.aw-drawer__link(href="/game/1/galnet")
+                            != h.icon("galnet", ["small"])
+                            != h.__("GAME.GALNET.LABEL")
 
                 li.aw-drawer__list-item.aw-drawer__list-item--spacer
                 li.aw-drawer__list-item

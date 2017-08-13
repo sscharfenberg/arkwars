@@ -166,6 +166,14 @@
                     "START": "Spiel Start",
                     "MAXPLAYERS": "Maximale Spielerzahl",
                     "ENLIST": "Einschreiben"
+                },
+                "MY": {
+                    "HDL": "Meine Spiele",
+                    "TURNDURATION": "Rundendauer",
+                    "DURATION_VALUE": "%s Minuten",
+                    "MAXPLAYERS": "Maximale Spielerzahl",
+                    "WITHDRAW": "Einschreibung zurückziehen",
+                    "GOTO": "Zum Spiel wechseln"
                 }
             },
             "PWD": {
@@ -230,6 +238,10 @@
         },
         "GALNET": {
             "LABEL": "GalNet"
+        },
+        "STATUS": {
+            "Active": "Das Spiel ist aktiv und Runden werden vom Server berechnet. Aktuelle Runde : %s",
+            "Enlisted": "Sie sind eingeschrieben, aber das Spiel ist noch nicht gestartet.<br />Start des Spiels: %s"
         }
     },
 
@@ -270,6 +282,14 @@
             },
             "SUBMIT": "Jetzt einschreiben",
             "SUCCESS": "Sie haben sich erfolgreich für %s eingeschrieben. Viel Spaß!"
+        },
+        "CHANGE": {
+            "ERR": "Sie können nicht zu Spiel %s wechseln.",
+            "SUCCESS": "Erfolgreich zu Spiel %s gewechselt."
+        },
+        "WITHDRAW": {
+            "ERR": "Sie können die Einschreibung für Spiel %s nicht zurückziehen.",
+            "SUCCESS": "Sie haben die Einschreibung für Spiel %s zurückgezogen."
         }
     },
 

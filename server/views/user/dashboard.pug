@@ -10,6 +10,7 @@ block content
                     != h.icon("home", ["home-icon"])
                 a.aw-content-head__breadcrumb(href="/dashboard")= h.__("APP.DASHBOARD.TITLE")
 
+
         p= h.__("APP.DASHBOARD.INTRO")
 
 
@@ -25,8 +26,8 @@ block content
 
 
         //- available games where the user can enlist
-        if games.canEnlist
-            each game in games.canEnlist
+        if available && available.length
+            each game in available
                 .aw-grid
                     .aw-grid__headline= h.__("APP.DASHBOARD.GAMES.AVAILABLE.HDL")
                     .aw-grid__row.aw-grid__row--2col
@@ -45,9 +46,42 @@ block content
                             .aw-grid__column= game.maxPlayers
                     .aw-grid__row= h.__("APP.DASHBOARD.GAMES.AVAILABLE.INTRO")
                     .aw-grid__row
-                        a.aw-btn.aw-btn--icon(href=`/games/${game.number}/enlist`)
+                        a.aw-btn.aw-btn--icon(href=`/game/${game.number}/enlist`)
                             != h.icon("games", ["small"])
                             != h.__("APP.DASHBOARD.GAMES.AVAILABLE.ENLIST")
+
+
+        //- my games (games where i have a player)
+        if user.players && user.players.length
+            .aw-grid
+                .aw-grid__headline= h.__("APP.DASHBOARD.GAMES.MY.HDL")
+                each player in user.players
+                    //- game is not active and startDate in the future
+                    if !player.game.active && h.moment(player.game.startDate).diff(h.moment()) > 0
+                        .aw-grid__row.aw-grid__row--2col
+                            .aw-grid__column
+                                strong= "g" + player.game.number
+                                br
+                                strong= `[${player.ticker}] `
+                                != player.name
+                                br
+                                != h.__("APP.DASHBOARD.GAMES.MY.TURNDURATION") + " " + h.__("APP.DASHBOARD.GAMES.MY.DURATION_VALUE", player.game.turnDuration)
+                                br
+                                != h.__("APP.DASHBOARD.GAMES.MY.MAXPLAYERS") + " " + player.game.maxPlayers
+                            .aw-grid__column
+                                != h.__("GAME.STATUS.Enlisted", h.moment(player.game.startDate).format("LLLL"))
+                                br
+                                //- TODO: show number of enlisted players ^.^
+                                .aw-btn-group
+                                    a.aw-btn.aw-btn--icon(href=`/game/${player.game.number}/withdraw`)
+                                        != h.icon("delete", ["small"])
+                                        != h.__("APP.DASHBOARD.GAMES.MY.WITHDRAW")
+                                    a.aw-btn.aw-btn--icon(href=`/game/${player.game.number}/select`)
+                                        != h.icon("games", ["small"])
+                                        != h.__("APP.DASHBOARD.GAMES.MY.GOTO")
+                    //- game is active and startDate is in the past. TODO: this is mockdata
+                    if player.game.active && h.moment(player.game.startDate).diff(h.moment()) < 0
+                        != h.__("GAME.STATUS.Active")
 
 
         //- Change Avatar form

@@ -26,8 +26,9 @@ block content
             .aw-grid__row.aw-grid__row--2col
                 .aw-grid__column= h.__("GAMES.ENLIST.DATA.MAXPLAYERS")
                 .aw-grid__column= game.maxPlayers
+            //- TODO: show current number of players
 
-        form.aw-form(action=`/games/${game.number}/enlist` method="POST")
+        form.aw-form(action=`/game/${game.number}/enlist` method="POST")
 
             .aw-form__row(class=`${errors && errors.empirename ? "error" : ""}`)
                 .aw-form-input

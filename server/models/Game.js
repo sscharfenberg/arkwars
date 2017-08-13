@@ -12,7 +12,8 @@ const gameSchema = new mongoose.Schema({
     // game number
     number: {
         type: Number,
-        index: { unique: true }
+        index: { unique: true },
+        required: true
     },
 
     // active game?

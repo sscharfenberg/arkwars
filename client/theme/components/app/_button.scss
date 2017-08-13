@@ -58,6 +58,32 @@
 }
 
 
+.aw-btn-group {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    margin-top: 1rem;
+
+    @include respond-to("medium") {
+        flex-direction: row;
+    }
+
+    .aw-btn {
+        margin-bottom: 1rem;
+
+        @include respond-to("medium") {
+            margin: 0 2rem 0 0;
+        }
+
+        &:last-child {
+            margin: 0;
+        }
+    }
+}
+
+
 @keyframes slideIn {
     0% {
         transform: translateX(-10px);

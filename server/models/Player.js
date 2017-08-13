@@ -33,4 +33,12 @@ const playerSchema = new mongoose.Schema({
 
 });
 
+// auto populate games
+function autopopulate(next) {
+    this.populate("game");
+    next();
+}
+playerSchema.pre("find", autopopulate);
+playerSchema.pre("findOne", autopopulate);
+
 module.exports = mongoose.model("Player", playerSchema);

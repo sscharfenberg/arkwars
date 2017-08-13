@@ -7,6 +7,7 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const moment = require("moment"); // https://momentjs.com/
 const mongodbErrorHandler = require("mongoose-mongodb-errors"); // https://www.npmjs.com/package/mongoose-mongodb-errors
 const passportLocalMongoose = require("passport-local-mongoose"); // https://github.com/saintedlama/passport-local-mongoose
+const cfg = require("../config");
 //const validator = require("validator"); // https://www.npmjs.com/package/validator
 mongoose.Promise = global.Promise;
 
@@ -31,7 +32,7 @@ const userSchema = new mongoose.Schema({
     // locale
     locale: {
         type: String,
-        enum: ["en", "de"],
+        enum: cfg.app.locales.map(locale => locale.name),
     },
 
     // avatar filename
@@ -75,6 +76,10 @@ const userSchema = new mongoose.Schema({
     players: [
         { type: mongoose.Schema.ObjectId, ref: "Player" }
     ],
+    // currently selected player
+    selectedPlayer: {
+        type: mongoose.Schema.ObjectId, ref: "Player"
+    },
 
     // number of failed login attempts
     attempts: {
@@ -113,13 +118,13 @@ userSchema.plugin(passportLocalMongoose, {
 });
 userSchema.plugin(mongodbErrorHandler);
 
+// this might be a bit much?
 function autopopulate(next) {
     this.populate("players");
+    this.populate("selectedPlayer");
     next();
 }
-
 userSchema.pre("find", autopopulate);
 userSchema.pre("findOne", autopopulate);
-
 
 module.exports = mongoose.model("User", userSchema);

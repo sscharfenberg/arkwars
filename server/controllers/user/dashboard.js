@@ -27,27 +27,20 @@ const cfg = require("../../config");
  * @param {ExpressHTTPResponse} res
  */
 exports.showDashboard = async (req, res) => {
-    const canEnlistPromise = Game.find({
+    // User.players gets populated with players object, which includes game id.
+    const myGames = req.user.players.map(game => game.game);
+    const available = await Game.find({
         canEnlist: true,
         startDate: { $gt: moment().toISOString() },
-        // User.players gets populated with players object, which includes game id.
-        _id: { $nin: req.user.players.map(game => game.game) }
+        _id: { $nin: myGames } // not in my games
     });
-
-    const activePromise = Game.find({ active: true }); // TODO: change to _my_ games (this is tmp)
-
-    const [canEnlist, active] = await Promise.all([
-        canEnlistPromise,
-        activePromise
-    ]);
-    const games = { canEnlist, active };
     moment.locale(req.session.locale);
     res.render("user/dashboard", {
         title: i18n.__("APP.DASHBOARD.TITLE"),
         session: req.session,
         registered: moment(req.user.created).format("LLLL"),
         email: req.user.email,
-        games
+        available
     });
 };
 

@@ -4,7 +4,6 @@
  *
  **********************************************************************************************************************/
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
-const mongoose = require("mongoose"); // http://mongoosejs.com/
 const cfg = require("../../../config");
 
 /*

@@ -18,7 +18,8 @@ const cfg = require("../../config");
  */
 exports.switchLanguage = async (req, res) => {
     const newLocale = req.params.lang;
-    if (!cfg.app.locales.includes(req.params.lang)) {
+    const availableLocales = cfg.app.locales.map(locale => locale.name);
+    if (!availableLocales.includes(req.params.lang)) {
         logger.error(`[App] invalid locale: ${chalk.red(newLocale)}.`);
         req.flash("error", i18n.__("APP.LANGUAGE.INVALID"));
         return res.redirect("back");

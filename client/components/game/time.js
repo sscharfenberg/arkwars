@@ -94,10 +94,12 @@ const updateServerTime = time => {
     // update progress only if servertime changes
     // do not update progress for the first time when we update the textContent
     if (oldText !== display && oldText !== "00:00") {
-        updateProgress(
-            parseInt(_progress.getAttribute(DATA_MAX), 10),
-            parseInt(_progress.getAttribute(DATA_VALUE), 10) + 1
-        );
+        if (_progress) {
+            updateProgress(
+                parseInt(_progress.getAttribute(DATA_MAX), 10),
+                parseInt(_progress.getAttribute(DATA_VALUE), 10) + 1
+            );
+        }
     }
 };
 
@@ -258,15 +260,12 @@ const applyServerPulse = game => {
 const initTime = () => {
     const _serverTime = document.querySelectorAll(SELECTOR_SERVER_TIME);
     const _myTime = document.querySelectorAll(SELECTOR_MY_TIME);
-    const _progress = document.querySelectorAll(SELECTOR_PROGRESS);
     const _nextTurn = document.querySelectorAll(SELECTOR_TIME_NEXT_TURN);
 
     // fail silently if there is no time that needs to be updated.
     if (
         _serverTime.length < 1 ||
-        _myTime.length < 1 ||
-        _progress.length < 1 ||
-        _nextTurn.length < 1
+        _myTime.length < 1
     )
         return;
 
@@ -282,9 +281,12 @@ const initTime = () => {
     updateServerTime(
         moment(_serverTime[0].getAttribute("datetime")).toISOString()
     );
-    updateNextTurnTime(
-        moment(_nextTurn[0].getAttribute("datetime")).toISOString()
-    );
+
+    if (_nextTurn.length) {
+        updateNextTurnTime(
+            moment(_nextTurn[0].getAttribute("datetime")).toISOString()
+        );
+    }
 };
 
 export { initTime };
