@@ -241,7 +241,9 @@
         },
         "STATUS": {
             "Active": "The game is active and running. Current turn: %s",
-            "Enlisted": "You are enlisted, but the game is not yet active.<br />Game start: %s"
+            "Enlisted": "You are enlisted, but the game is not yet active.<br />Game start: %s",
+            "Finished": "This game has ended.",
+            "FinishedTurn": "Played turns: %s"
         }
     },
 

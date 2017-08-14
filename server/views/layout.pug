@@ -103,7 +103,9 @@ body
                     .aw-progress.aw-progress-turn(data-max="15", data-value="14")
                         != h.progressbar(15, 14)
                 .aw-header__turn-next-time
-                    time(datetime="2017-07-10T19:45:05.133Z", data-time-next-turn) 00:00
+                    time(
+                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()), data-time-next-turn
+                    )= h.moment(user.selectedPlayer.game.turnDue).format("LT")
 
 
     .aw-main-wrapper
@@ -140,7 +142,8 @@ body
                                         != h.progressbar(15,14)
                                 .aw-drawer__turn-next-time
                                     time(
-                                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()), data-time-next-turn
+                                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
+                                        data-time-next-turn
                                     )= h.moment(user.selectedPlayer.game.turnDue).format("LT")
 
 

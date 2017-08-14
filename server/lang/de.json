@@ -241,7 +241,9 @@
         },
         "STATUS": {
             "Active": "Das Spiel ist aktiv und Runden werden vom Server berechnet. Aktuelle Runde : %s",
-            "Enlisted": "Sie sind eingeschrieben, aber das Spiel ist noch nicht gestartet.<br />Start des Spiels: %s"
+            "Enlisted": "Sie sind eingeschrieben, aber das Spiel ist noch nicht gestartet.<br />Start des Spiels: %s",
+            "Finished": "Das Spiel ist beendet.",
+            "FinishedTurn": "Gespielte Runden: %s"
         }
     },
 

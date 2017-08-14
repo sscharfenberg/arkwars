@@ -43,6 +43,15 @@
                 }
             }
         }
+
+        &--seperated {
+            padding: 0 0 2rem;
+            border-bottom: 1px solid palette("brand", "christine");
+
+            &:last-of-type {
+                border-bottom-width: 0;
+            }
+        }
     }
 
     &__headline {

@@ -31,6 +31,10 @@ const gameSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    // end date. if this is present, the game has ended.
+    endDate: {
+        type: Date
+    },
 
     // current turn number
     turn: {
