@@ -52,10 +52,10 @@ block content
 
 
         //- my games (games where i have a player)
-        if user.players && user.players.length
+        if user.players && user.players.length && myPlayers
             .aw-grid
                 .aw-grid__headline= h.__("APP.DASHBOARD.GAMES.MY.HDL")
-                each player in user.players
+                each player in myPlayers
 
                     //- game is not active and startDate in the future
                     if !player.game.active && h.moment(player.game.startDate).diff(h.moment()) > 0
@@ -68,11 +68,10 @@ block content
                                 br
                                 != h.__("APP.DASHBOARD.GAMES.MY.TURNDURATION") + " " + h.__("APP.DASHBOARD.GAMES.MY.DURATION_VALUE", player.game.turnDuration)
                                 br
-                                != h.__("APP.DASHBOARD.GAMES.MY.MAXPLAYERS") + " " + player.game.maxPlayers
+                                != h.__("APP.DASHBOARD.GAMES.MY.PLAYERS") + `: ${player.game.numPlayers}/${player.game.maxPlayers}`
                             .aw-grid__column
                                 != h.__("GAME.STATUS.Enlisted", h.moment(player.game.startDate).format("LLLL"))
                                 br
-                                //- TODO: show number of enlisted players ^.^
                                 .aw-btn-group
                                     a.aw-btn.aw-btn--icon(href=`/game/${player.game.number}/withdraw`)
                                         != h.icon("delete", ["small"])
@@ -92,11 +91,10 @@ block content
                                 br
                                 != h.__("APP.DASHBOARD.GAMES.MY.TURNDURATION") + " " + h.__("APP.DASHBOARD.GAMES.MY.DURATION_VALUE", player.game.turnDuration)
                                 br
-                                != h.__("APP.DASHBOARD.GAMES.MY.MAXPLAYERS") + " " + player.game.maxPlayers
+                                != h.__("APP.DASHBOARD.GAMES.MY.PLAYERS") + `: ${player.game.numPlayers}/${player.game.maxPlayers}`
                             .aw-grid__column
                                 != h.__("GAME.STATUS.Active", player.game.turn)
                                 br
-                                //- TODO: show number of enlisted players ^.^
                                 .aw-btn-group
                                     a.aw-btn.aw-btn--icon(href=`/game/${player.game.number}/select`)
                                         != h.icon("games", ["small"])

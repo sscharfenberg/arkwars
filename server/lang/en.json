@@ -171,7 +171,7 @@
                     "HDL": "My Games",
                     "TURNDURATION": "Turn duration",
                     "DURATION_VALUE": "%s minutes",
-                    "MAXPLAYERS": "Max number of players",
+                    "PLAYERS": "Players",
                     "WITHDRAW": "Withdraw",
                     "GOTO": "Switch to game"
                 }

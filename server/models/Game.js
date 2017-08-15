@@ -69,6 +69,17 @@ const gameSchema = new mongoose.Schema({
         default: moment().toISOString()
     }
 
+}, {
+    toJSON: { virtuals: true },
+    toOjbect: { virtuals: true },
 });
+
+// find reviews where the stores _id property === reviews store property
+gameSchema.virtual("players", {
+    ref: "Player", // what model to link?
+    localField: "_id", // which field on the store?
+    foreignField: "game" // which field on the review?
+});
+
 
 module.exports = mongoose.model("Game", gameSchema);

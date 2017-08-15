@@ -16,6 +16,7 @@ const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6
 const uuid = require("uuid"); // https://www.npmjs.com/package/uuid
 const User = mongoose.model("User");
 const Game = mongoose.model("Game");
+const Player = mongoose.model("Player");
 const userValidators = require("../../handlers/validators/user");
 const logger = require("../../handlers/logger/console");
 const mail = require("../../handlers/mail");
@@ -34,13 +35,41 @@ exports.showDashboard = async (req, res) => {
         startDate: { $gt: moment().toISOString() },
         _id: { $nin: myGames } // not in my games
     });
+    const myActiveGames = await Game.find({
+        _id: { $in: myGames } // not in my games
+    }).populate("players");
+    let myPlayers = req.user.players;
+    myPlayers = myPlayers.map( _player => {
+        let player = {
+            game: {
+                active: _player.game.active,
+                startDate: _player.game.startDate,
+                endDate: _player.game.endDate,
+                number: _player.game.number,
+                turn: _player.game.turn,
+                maxPlayers: _player.game.maxPlayers,
+                turnDuration: _player.game.turnDuration,
+                numPlayers: 0
+            },
+            name: _player.name,
+            ticker: _player.ticker
+        };
+        myActiveGames.forEach( function (game) {
+            if (game.id === _player.game.id) {
+                player.game.numPlayers = game.players.length;
+            }
+        });
+        return player;
+    });
+
     moment.locale(req.session.locale);
     res.render("user/dashboard", {
         title: i18n.__("APP.DASHBOARD.TITLE"),
         session: req.session,
         registered: moment(req.user.created).format("LLLL"),
         email: req.user.email,
-        available
+        available,
+        myPlayers
     });
 };
 

@@ -171,7 +171,7 @@
                     "HDL": "Meine Spiele",
                     "TURNDURATION": "Rundendauer",
                     "DURATION_VALUE": "%s Minuten",
-                    "MAXPLAYERS": "Maximale Spielerzahl",
+                    "PLAYERS": "Spieler",
                     "WITHDRAW": "Einschreibung zurückziehen",
                     "GOTO": "Zum Spiel wechseln"
                 }
