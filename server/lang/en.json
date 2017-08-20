@@ -154,7 +154,15 @@
             "INFOBOX": {
                 "HDL": "Account data",
                 "USERNAME": "Username",
-                "REGISTERED": "Registered at"
+                "REGISTERED": "Registered at",
+                "DELETE": {
+                    "SUBMIT": "Permanently delete this account",
+                    "EXPLANATION": "We do not use soft deletes and permanently remove your account - and all enlistments to any games you might have - from the database.",
+                    "CONFIRM": "Are you sure you want to delete your user account? This action can not be undone.",
+                    "SUCCESS": "Your user account was permanently deleted.",
+                    "FAILED": "We could not delete your user account."
+                }
+
             },
             "GAMES": {
                 "AVAILABLE": {

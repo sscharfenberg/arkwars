@@ -14,8 +14,11 @@ block content
         p= h.__("APP.DASHBOARD.INTRO")
 
 
-        //- Generic user information that can not be changed.
-        .aw-grid
+        //- Generic user information and delete account button
+        form.aw-form(
+            action="/dashboard/delete",
+            method="POST"
+        )
             .aw-grid__headline= h.__("APP.DASHBOARD.INFOBOX.HDL")
             .aw-grid__row.aw-grid__row--2col
                 .aw-grid__column= h.__("APP.DASHBOARD.INFOBOX.USERNAME")
@@ -23,6 +26,15 @@ block content
             .aw-grid__row.aw-grid__row--2col
                 .aw-grid__column= h.__("APP.DASHBOARD.INFOBOX.REGISTERED")
                 .aw-grid__column= registered
+            .aw-form__row
+                .aw-form__submit
+                    button.aw-btn.aw-btn--icon(
+                        type="submit",
+                        onclick="if (!window.confirm(\"" + h.__("APP.DASHBOARD.INFOBOX.DELETE.CONFIRM") + "\")) return false;"
+                    )
+                        != h.icon("delete", ["small"])
+                        != h.__("APP.DASHBOARD.INFOBOX.DELETE.SUBMIT")
+                    .aw-form__row-description!= h.__("APP.DASHBOARD.INFOBOX.DELETE.EXPLANATION")
 
 
         //- available games where the user can enlist
@@ -115,7 +127,11 @@ block content
 
 
         //- Change Avatar form
-        form.aw-form(action="/dashboard/avatar", method="POST", enctype="multipart/form-data")
+        form.aw-form(
+            action="/dashboard/avatar",
+            method="POST",
+            enctype="multipart/form-data"
+        )
             .aw-form__row-description
                 .aw-form__row-headline= h.__("APP.DASHBOARD.AVATAR.HDL")
             .aw-change-avatar(class=`${errors && errors.avatar ? "error" : ""}`)

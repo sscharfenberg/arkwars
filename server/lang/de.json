@@ -154,7 +154,14 @@
             "INFOBOX": {
                 "HDL": "Benutzerdaten",
                 "USERNAME": "Benutzername",
-                "REGISTERED": "Registriert am"
+                "REGISTERED": "Registriert am",
+                "DELETE": {
+                    "SUBMIT": "Benutzerkonto unwiderruflich löschen",
+                    "EXPLANATION": "Wir verwenden aus Datenschutzgründen keine soft-deletes - Ihr Benutzerkonto und alle Spiel-Einschreibungen werden unwiderruflich aus unserer Datenbank gelöscht.",
+                    "CONFIRM": "Sind Sie sicher das Sie Ihr Benutzerkonto löschen wollen? Diese Aktion lässt sich nicht rückgängig machen.",
+                    "SUCCESS": "Ihr Benutzerkonto wurde unwiderruflich gelöscht.",
+                    "FAILED": "Wir konnten Ihr Benutzerkonto nicht löschen."
+                }
             },
             "GAMES": {
                 "AVAILABLE": {

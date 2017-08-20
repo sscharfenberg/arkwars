@@ -39,7 +39,7 @@ exports.showDashboard = async (req, res) => {
         _id: { $in: myGames } // not in my games
     }).populate("players");
     let myPlayers = req.user.players;
-    myPlayers = myPlayers.map( _player => {
+    myPlayers = myPlayers.map(_player => {
         let player = {
             game: {
                 active: _player.game.active,
@@ -54,7 +54,7 @@ exports.showDashboard = async (req, res) => {
             name: _player.name,
             ticker: _player.ticker
         };
-        myActiveGames.forEach( function (game) {
+        myActiveGames.forEach(function(game) {
             if (game.id === _player.game.id) {
                 player.game.numPlayers = game.players.length;
             }
@@ -399,4 +399,36 @@ exports.deleteCurrentAvatar = async (req, res) => {
     );
     req.flash("success", i18n.__("APP.DASHBOARD.AVATAR.DELETED"));
     res.redirect("/dashboard");
+};
+
+/*
+ * delete user account =================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.deleteUser = async (req, res) => {
+    const deletedUser = await User.findOneAndRemove({
+        _id: req.user._id
+    });
+    if (deletedUser) {
+        await Player.findOneAndRemove({
+            user: req.user._id
+        });
+        logger.debug(
+            `[App] user ${chalk.red(
+                "@" + req.user.username
+            )} has deleted his account`
+        );
+        req.logout();
+        req.flash("success", i18n.__("APP.DASHBOARD.INFOBOX.DELETE.SUCCESS"));
+        res.redirect("/");
+    } else {
+        req.flash("success", i18n.__("APP.DASHBOARD.INFOBOX.DELETE.FAILED"));
+        logger.error(
+            `[App] user ${chalk.red(
+                "@" + req.user.username
+            )} account deletion failed`
+        );
+        res.redirect("back");
+    }
 };

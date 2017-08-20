@@ -60,4 +60,11 @@ router.get(
     catchErrors(dashboardController.deleteCurrentAvatar) // 2. delete current avatar
 );
 
+// delete user account
+router.post(
+    "/dashboard/delete",
+    catchErrors(dashboardController.deleteUser)
+);
+
+
 module.exports = router;
