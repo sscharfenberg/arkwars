@@ -49,7 +49,6 @@ exports.checkCanEnlist = async (req, res, next) => {
 exports.showEnlistForm = (req, res) => {
     const game = req._game;
     const data = req.body;
-    moment.locale(req.session.locale);
     res.render("game/enlist", {
         title: i18n.__("GAMES.ENLIST.TITLE", `g${game.number}`),
         session: req.session,

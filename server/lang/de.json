@@ -315,7 +315,25 @@
 
         "USERS": {
             "TITLE": "Benutzer Verwalten",
-            "TITLE_NAV": "Benutzer"
+            "TITLE_NAV": "Benutzer",
+            "ALL": {
+                "HEADLINE": "Alle Benutzer",
+                "HEAD": {
+                    "USER": "Benutzer",
+                    "EMAIL": "E-Mail",
+                    "REGISTERED": "Registriert am",
+                    "LASTLOGIN": "Letzter Login",
+                    "ACTIVEGAMES": "Aktive Spiele",
+                    "SUSPENDED": "Gesperrt",
+                    "PERMISSIONS": "Rechte"
+                },
+                "BODY": {
+                    "CONFIRMED": "E-Mail-Adresse ist bestätigt",
+                    "NOTCONFIRMED": "Unbestätigte E-Mail-Adresse",
+                    "SUSPENDED": "Benutzerkonto ist gesperrt",
+                    "SUSPENDEDUNTIL": "Gesperrt bis "
+                }
+            }
         },
 
         "EMAILS": {

@@ -34,7 +34,7 @@ gulp.task("watch", function() {
         .watch(config.paths.images.in, ["sync:images"])
         .on("change", reportChange);
     gulp
-        .watch(config.paths.icons.in, ["icons"])
+        .watch(config.paths.icons.in, ["icons:app"])
         .on("change", reportChange);
 
     console.log();

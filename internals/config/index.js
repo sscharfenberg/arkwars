@@ -11,14 +11,12 @@ const fs = require("fs-extra");
 const moment = require("moment");
 const pkg = require("../../package.json");
 
-
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 const PROJECTROOT = fs.realpathSync(process.cwd());
 const APPFOLDER = path.join(PROJECTROOT, "client");
 const BUILDDIR = path.join(PROJECTROOT, "server", "public", "assets");
 moment.locale("de");
-
 
 module.exports = {
     projectRoot: PROJECTROOT,

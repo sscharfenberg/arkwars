@@ -30,7 +30,6 @@ exports.showLoginForm = (req, res) => {
  * @param {callback} next
  */
 exports.login = async (req, res, next) => {
-    moment.locale(req.session.locale);
     passport.authenticate("local", function(err, user, info) {
         if (err) {
             return next(err);

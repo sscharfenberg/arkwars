@@ -60,9 +60,11 @@ exports.showEmailTemplates = async (req, res) => {
  *
  */
 exports.showUsers = async (req, res) => {
+    const users = await User.find({});
     res.render("admin/users", {
         title: i18n.__("ADMIN.USERS.TITLE"),
-        session: req.session
+        session: req.session,
+        users
     });
 };
 

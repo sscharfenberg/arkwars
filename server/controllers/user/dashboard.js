@@ -62,7 +62,6 @@ exports.showDashboard = async (req, res) => {
         return player;
     });
 
-    moment.locale(req.session.locale);
     res.render("user/dashboard", {
         title: i18n.__("APP.DASHBOARD.TITLE"),
         session: req.session,

@@ -1,0 +1,72 @@
+/***********************************************************************************************************************
+ *
+ * User list table
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+
+.admin-userlist {
+    $border: 1px solid palette("borders", "darkbg");
+
+    width: 100%;
+    border-top: $border;
+    border-left: $border;
+    border-collapse: collapse;
+
+    td,
+    th {
+        padding: 0.5rem;
+        border-right: $border;
+        border-bottom: $border;
+
+        font-weight: 300;
+        text-align: left;
+    }
+
+    thead th {
+        background: palette("grey", "abbey");
+    }
+
+    tbody &__row:nth-child(2n) td {
+        background: palette("grey", "ebony");
+    }
+
+    &__status {
+        display: inline-block;
+
+        width: 2.4rem;
+        height: 2.4rem;
+        padding: 0.2rem;
+        margin-left: 1rem;
+
+        background: palette("grey", "charcoal");
+        line-height: 2.2rem;
+
+        &--success {
+            background: palette("state", "success");
+            color: palette("grey", "white");
+        }
+
+        &--warning {
+            background: palette("state", "warning");
+            color: palette("state", "error");
+        }
+
+        &--error {
+            background: palette("state", "error");
+            color: palette("grey", "white");
+        }
+
+    }
+
+    &__td-space-between {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        //flex-wrap: wrap;
+    }
+}
+

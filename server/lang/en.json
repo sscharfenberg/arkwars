@@ -316,7 +316,25 @@
 
         "USERS": {
             "TITLE": "Manage Users",
-            "TITLE_NAV": "Users"
+            "TITLE_NAV": "Users",
+            "ALL": {
+                "HEADLINE": "Alle Benutzer",
+                "HEAD": {
+                    "USER": "User",
+                    "EMAIL": "E-Mail",
+                    "REGISTERED": "Registered",
+                    "LASTLOGIN": "Last Login",
+                    "ACTIVEGAMES": "Active Games",
+                    "SUSPENDED": "Suspended",
+                    "PERMISSIONS": "Permissions"
+                },
+                "BODY": {
+                    "CONFIRMED": "E-Mail address is confirmed.",
+                    "NOTCONFIRMED": "Unconfirmed E-Mail address",
+                    "SUSPENDED": "Account is suspended",
+                    "SUSPENDEDUNTIL": "Suspended until "
+                }
+            }
         },
 
         "EMAILS": {

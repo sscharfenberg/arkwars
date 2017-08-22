@@ -18,9 +18,9 @@ const logger = require("../utils/clientlogger");
 const config = require("../config");
 
 /*
- * copy SVGs from /client/theme/icons/ to /server/public/assets/icons/
+ * copy SVGs from /client/theme/icons/ as spritesheet to /server/public/assets/icons/sprite.svg
  */
-gulp.task("icons", function() {
+gulp.task("icons", () => {
     console.log();
     logger.info(
         `[gulp] creating SVG spritesheet for ${chalk.blue("icons")}.\n`
@@ -36,7 +36,11 @@ gulp.task("icons", function() {
         .pipe(flatten())
         .pipe(
             imagemin([
-                imagemin.svgo({})
+                imagemin.svgo({
+                    plugins: [
+                        {removeTitle: true}
+                    ]
+                })
             ])
         )
         .pipe(svgstore())

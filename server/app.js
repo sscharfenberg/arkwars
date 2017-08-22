@@ -14,6 +14,7 @@ const compression = require("compression"); // https://github.com/expressjs/comp
 const session = require("express-session"); // https://www.npmjs.com/package/express-session
 const expressValidator = require("express-validator"); // https://www.npmjs.com/package/express-validator
 const helmet = require("helmet"); // https://helmetjs.github.io/docs/
+const moment = require("moment"); // http://momentjs.com/
 const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
 const redis = require("redis"); // https://www.npmjs.com/package/redis
 const RedisStore = require("connect-redis")(session); // https://www.npmjs.com/package/connect-mongo
@@ -118,6 +119,7 @@ app.use((req, res, next) => {
     }
     req.session.locale = locale;
     i18n.setLocale(locale);
+    moment.locale(locale);
     res.locals.h = templateHelpers;
     res.locals.flashes = req.flash();
     //    res.locals.user = req.user || null;

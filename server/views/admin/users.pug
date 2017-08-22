@@ -13,7 +13,73 @@ block content
                     != h.icon("home", ["home-icon"])
                 a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
                 a.aw-content-head__breadcrumb(href="/admin/users")= h.__("ADMIN.USERS.TITLE_NAV")
-        p Boilerplating Users
+
+        p TODO: search for users. sort by column, pagination. uff.
+
+        .aw-grid
+            .aw-grid__headline= h.__("ADMIN.USERS.ALL.HEADLINE")
+            table.admin-userlist
+                thead
+                    tr.admin-userlist__row
+                        th= h.__("ADMIN.USERS.ALL.HEAD.USER")
+                        th= h.__("ADMIN.USERS.ALL.HEAD.EMAIL")
+                        th= h.__("ADMIN.USERS.ALL.HEAD.REGISTERED")
+                        th= h.__("ADMIN.USERS.ALL.HEAD.LASTLOGIN")
+                        th= h.__("ADMIN.USERS.ALL.HEAD.ACTIVEGAMES")
+                        th= h.__("ADMIN.USERS.ALL.HEAD.SUSPENDED")
+                        th= h.__("ADMIN.USERS.ALL.HEAD.PERMISSIONS")
+                tbody
+                    each user in users
+                        tr.admin-userlist__row
+
+                            td
+                                a.aw-textlink(href=`/admin/users/${user.username}`)= "@" + user.username
+
+                            td
+                                .admin-userlist__td-space-between
+                                    a.aw-textlink(href=`mailto:${user.email}`)= user.email
+                                    if user.emailConfirmed
+                                        span.admin-userlist__status.admin-userlist__status--success(
+                                            title=`${h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")}`
+                                        )
+                                            != h.icon("done")
+                                    else
+                                        span.admin-userlist__status.admin-userlist__status--warning(
+                                            title=`${h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")}`
+                                        )
+                                            != h.icon("warning")
+
+                            td= h.moment(user.lastLogin).format("LLL")
+
+                            td= h.moment(user.created).format("LLL")
+
+                            td
+                                if user.players && user.players.length
+                                    each player, index in user.players
+                                        a.aw-textlink(
+                                            href=`/admin/games/${player.game.number}`
+                                        )= "g" + player.game.number
+                                        if index !== user.players.length - 1
+                                            | ,&nbsp;
+
+                            td
+                                .admin-userlist__td-space-between
+                                    if user.suspended && user.suspendedUntil && h.moment(user.suspendedUntil).diff(h.moment()) > 0
+                                        != h.__("ADMIN.USERS.ALL.BODY.SUSPENDEDUNTIL")
+                                        != h.moment(user.suspendedUntil).format("LLL")
+                                        span.admin-userlist__status.admin-userlist__status--error(
+                                            title=`${h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")}`
+                                        )
+                                            != h.icon("lock")
+
+                            td
+                                | user
+                                if user.admin
+                                    |
+                                    | admin
+                                if user.mod
+                                    |
+                                    | mod
 
 
 block scripts
