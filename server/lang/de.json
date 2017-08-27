@@ -7,6 +7,13 @@
             "LOGIN_REQUIRED": "Sie müssen eingeloggt sein um diese Funktion oder Seite zu verwenden."
         },
 
+        "PAGINATION": {
+            "FIRST": "Anfang",
+            "PREV": "Zurück",
+            "NEXT": "Vor",
+            "LAST": "Ende"
+        },
+
         "LANGUAGE": {
             "INVALID": "Diese Sprache unterstützen wir leider nicht."
         },
@@ -305,7 +312,10 @@
     "ADMIN": {
         "INDEX": {
             "TITLE": "Administration - Übersicht",
-            "TITLE_NAV": "Admin"
+            "TITLE_NAV": "Admin",
+            "GAMES": "spiele",
+            "REGUSERS": "registrierte benutzer",
+            "TEMPLATES": "e-mail templates"
         },
 
         "GAMES": {

@@ -88,6 +88,12 @@ const appConfig = {
                 max: 4
             }
         }
+    },
+    // default number of results per page
+    defaultPagination: {
+        admin: {
+            users: 1 // wip
+        }
     }
 };
 

@@ -7,6 +7,13 @@
             "LOGIN_REQUIRED": "You need to be logged in to access the requested resource."
         },
 
+        "PAGINATION": {
+            "FIRST": "First",
+            "PREV": "Prev",
+            "NEXT": "Next",
+            "LAST": "Last"
+        },
+
         "LANGUAGE": {
             "INVALID": "This locale does not exist."
         },
@@ -306,7 +313,10 @@
     "ADMIN": {
         "INDEX": {
             "TITLE": "Admin Dashboard",
-            "TITLE_NAV": "Admin"
+            "TITLE_NAV": "Admin",
+            "GAMES": "games",
+            "REGUSERS": "registered users",
+            "TEMPLATES": "email templates"
         },
 
         "GAMES": {

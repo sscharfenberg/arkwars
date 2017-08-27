@@ -15,10 +15,12 @@ const { catchErrors } = require("../handlers/error");
 router.use("/", authController.isAdmin);
 
 // admin dashboard
-router.get("/", adminController.showDashboard);
+router.get("/", catchErrors(adminController.showDashboard));
 
 // user administration
-router.get("/users", adminController.showUsers);
+router.get("/users", catchErrors(adminController.showUsers));
+// user administration with pagination
+router.get("/users/p/:page", catchErrors(adminController.showUsers));
 
 // game administration
 router.get("/games", adminController.showGames);

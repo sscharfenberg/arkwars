@@ -11,15 +11,17 @@
     border-bottom: 3px solid palette("brand", "viking");
 
     color: palette("grey", "fog");
+    box-shadow: inset 0 -3px palette("brand", "viking");
     text-decoration: none;
+
 
     transition:
         color map-get($animation-speeds, "fast") linear,
-        border-color map-get($animation-speeds, "fast") linear;
+        background-color map-get($animation-speeds, "fast") linear;
 
     &:hover,
     &:focus {
-        color: palette("grey", "white");
-        border-color: palette("grey", "white");
+        background-color: palette("brand", "viking");
+        color: palette("grey", "black");
     }
 }

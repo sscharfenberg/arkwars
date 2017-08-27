@@ -83,7 +83,7 @@ exports.login = async (req, res, next) => {
             if (err) {
                 return next(err);
             }
-            req.user = user;
+            //req.user = user;
             logger.info(`[App] user ${chalk.red("@"+user.username)} logged in.`);
             req.flash("success", i18n.__("APP.LOGIN.SUCCESS"));
             res.redirect("/dashboard");

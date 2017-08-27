@@ -14,14 +14,14 @@ block content
                 a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
         .admin-cta
             a.admin-cta__item(href="/admin/games")
-                .admin-cta__item-number 3
-                .admin-cta__item-desc active games
+                .admin-cta__item-number= games
+                .admin-cta__item-desc= h.__("ADMIN.INDEX.GAMES")
             a.admin-cta__item(href="/admin/users")
-                .admin-cta__item-number 1
-                .admin-cta__item-desc registered users
+                .admin-cta__item-number= users
+                .admin-cta__item-desc= h.__("ADMIN.INDEX.REGUSERS")
             a.admin-cta__item(href="/admin/emails")
-                .admin-cta__item-number 3
-                .admin-cta__item-desc email templates
+                .admin-cta__item-number= emailTemplates
+                .admin-cta__item-desc= h.__("ADMIN.INDEX.TEMPLATES")
 
 block scripts
     include ../webpack/app.footer.pug

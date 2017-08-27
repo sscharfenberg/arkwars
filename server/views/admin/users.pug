@@ -1,5 +1,7 @@
 extends ../layout
 
+include ../mixins/_pagination
+
 block head
     link(rel='stylesheet', href='/public/assets/styles.css')
     link(rel='stylesheet', href='/public/assets/admin.css')
@@ -15,6 +17,8 @@ block content
                 a.aw-content-head__breadcrumb(href="/admin/users")= h.__("ADMIN.USERS.TITLE_NAV")
 
         p TODO: search for users. sort by column, pagination. uff.
+
+        +pagination(page, pages, count, "/admin/users/p")
 
         .aw-grid
             .aw-grid__headline= h.__("ADMIN.USERS.ALL.HEADLINE")
