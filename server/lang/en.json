@@ -14,6 +14,11 @@
             "LAST": "Last"
         },
 
+        "SORT": {
+            "ASC": "Sort this column ascending",
+            "DESC": "Sort this column descending"
+        },
+
         "LANGUAGE": {
             "INVALID": "This locale does not exist."
         },
@@ -329,6 +334,15 @@
             "TITLE_NAV": "Users",
             "ALL": {
                 "HEADLINE": "Alle Benutzer",
+                "SEARCH": {
+                    "HDL": "Search for users",
+                    "EMAIL": "E-Mail",
+                    "EMAIL_PLACEHOLDER": "Search for E-Mail address",
+                    "USERNAME": "Username",
+                    "USERNAME_PLACEHOLDER": "Search for username",
+                    "SUBMIT": "Search for users",
+                    "ALLUSERS": "Reset search"
+                },
                 "HEAD": {
                     "USER": "User",
                     "EMAIL": "E-Mail",
@@ -345,6 +359,10 @@
                     "SUSPENDEDUNTIL": "Suspended until "
                 }
             }
+        },
+
+        "USER": {
+            "TITLE": "Edit @%s"
         },
 
         "EMAILS": {

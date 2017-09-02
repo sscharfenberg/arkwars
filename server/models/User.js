@@ -106,6 +106,13 @@ const userSchema = new mongoose.Schema({
 
 });
 
+// Define our indexes
+userSchema.index({
+    username: "text",
+    email: "text"
+});
+
+
 // https://github.com/saintedlama/passport-local-mongoose
 // configure passport-local-mongoose
 userSchema.plugin(passportLocalMongoose, {

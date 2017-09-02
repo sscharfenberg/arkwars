@@ -92,7 +92,7 @@ const appConfig = {
     // default number of results per page
     defaultPagination: {
         admin: {
-            users: 1 // wip
+            users: 10
         }
     }
 };

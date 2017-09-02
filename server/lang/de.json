@@ -14,6 +14,11 @@
             "LAST": "Ende"
         },
 
+        "SORT": {
+            "ASC": "Diese Spalte aufsteigend sortieren",
+            "DESC": "Diese Spalte absteigend sortieren"
+        },
+
         "LANGUAGE": {
             "INVALID": "Diese Sprache unterstützen wir leider nicht."
         },
@@ -328,6 +333,15 @@
             "TITLE_NAV": "Benutzer",
             "ALL": {
                 "HEADLINE": "Alle Benutzer",
+                "SEARCH": {
+                    "HDL": "Benutzer suchen",
+                    "EMAIL": "E-Mail",
+                    "EMAIL_PLACEHOLDER": "Nach E-Mail-Adresse suchen",
+                    "USERNAME": "Benutzername",
+                    "USERNAME_PLACEHOLDER": "Nach Benutzernamen suchen",
+                    "SUBMIT": "Benutzer suchen",
+                    "ALLUSERS": "Suche zurücksetzen"
+                },
                 "HEAD": {
                     "USER": "Benutzer",
                     "EMAIL": "E-Mail",
@@ -344,6 +358,10 @@
                     "SUSPENDEDUNTIL": "Gesperrt bis "
                 }
             }
+        },
+
+        "USER": {
+            "TITLE": "@%s bearbeiten"
         },
 
         "EMAILS": {

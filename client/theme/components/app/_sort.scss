@@ -1,0 +1,91 @@
+/***********************************************************************************************************************
+ *
+ * Sort Component
+ *
+ **********************************************************************************************************************/
+@import "../../abstracts/config";
+@import "../../abstracts/functions";
+@import "../../abstracts/mixins";
+
+.aw-sort {
+
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: 0;
+
+    flex-direction: column;
+
+    transform: translateY(-50%);
+
+    &__sortable.aw-sort__sortable {
+        padding-right: 2.2rem;
+    }
+
+    &__item {
+        position: relative;
+
+        width: 2rem;
+        height: 2rem;
+    }
+
+    &__item > label {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: z("form");
+
+        background-color: palette("grey", "asher");
+        cursor: pointer;
+
+        transition: background-color map-get($animation-speeds, "fast") linear;
+
+        &:hover {
+            background-color: palette("grey", "raven");
+        }
+
+        &::before {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 0;
+            height: 0;
+
+            transform: translateY(-50%) translateX(-50%);
+
+            border-style: solid;
+
+            content: " ";
+        }
+    }
+
+    &__item > input[type="radio"] {
+        display: none;
+
+        &:checked + label {
+            background: palette("grey", "bunker");
+        }
+    }
+
+    // sort ascending
+    &__asc::before {
+        border-width: 0 0.6rem 0.6rem;
+        border-color: transparent transparent palette("text", "base") transparent;
+    }
+
+    // sort descending
+    &__desc {
+        margin-top: 0.2rem;
+
+        &::before {
+            border-width: 0.6rem 0.6rem 0;
+            border-color: palette("text", "base") transparent transparent transparent;
+        }
+    }
+
+}

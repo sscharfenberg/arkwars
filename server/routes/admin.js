@@ -20,7 +20,13 @@ router.get("/", catchErrors(adminController.showDashboard));
 // user administration
 router.get("/users", catchErrors(adminController.showUsers));
 // user administration with pagination
+router.get("/users/p/:page/s/:sortField/d/:sortDirection", catchErrors(adminController.showUsers));
 router.get("/users/p/:page", catchErrors(adminController.showUsers));
+// post search user / change sort order request
+router.post("/users", catchErrors(adminController.showUsers));
+
+// show edit user form
+router.get("/users/:userid", catchErrors(adminController.showEditUser))
 
 // game administration
 router.get("/games", adminController.showGames);

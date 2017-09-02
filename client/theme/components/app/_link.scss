@@ -8,10 +8,10 @@
 @import "../../abstracts/mixins";
 
 .aw-textlink {
-    border-bottom: 3px solid palette("brand", "viking");
+    border-bottom: 2px solid palette("brand", "viking");
 
     color: palette("grey", "fog");
-    box-shadow: inset 0 -3px palette("brand", "viking");
+    box-shadow: inset 0 -2px palette("brand", "viking");
     text-decoration: none;
 
 

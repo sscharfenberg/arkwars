@@ -18,7 +18,9 @@
 
     td,
     th {
-        padding: 0.5rem;
+        position: relative;
+
+        padding: 1rem;
         border-right: $border;
         border-bottom: $border;
 

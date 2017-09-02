@@ -50,7 +50,7 @@ body
 
 
             //- players. we show games, but we really mean players
-            if user && user.players.length && user.selectedPlayer
+            if user && user.players && user.players.length && user.selectedPlayer
                 li.aw-header__action
                     a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGEGAME")))
                         != h.icon("games")
@@ -93,7 +93,7 @@ body
                         span= h.__("APP.HEADER.LABEL_LOGOUT")
 
         //- turn data for mobile
-        if user && user.players.length && user.selectedPlayer
+        if user && user.players && user.players.length && user.selectedPlayer
             .aw-header__turn
                 .aw-turn
                     != h.icon("turn", ["turn"])
@@ -128,7 +128,7 @@ body
                             time(datetime="", data-my-time) 00:00
 
                 //- turn data
-                if user && user.players.length && user.selectedPlayer
+                if user && user.players && user.players.length && user.selectedPlayer
                     li.aw-drawer__list-item.aw-drawer__list-item--turn
                         .aw-drawer__turn
                             .aw-drawer__turn-current
@@ -149,7 +149,7 @@ body
 
 
                 //- game links
-                if user && user.players.length && user.selectedPlayer
+                if user && user.players && user.players.length && user.selectedPlayer
                     li.aw-drawer__list-item
                         a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire")
                             != h.icon("empire", ["small"])

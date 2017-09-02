@@ -11,6 +11,15 @@ const User = mongoose.model("User");
 const Game = mongoose.model("Game");
 const cfg = require("../config");
 
+// switch direction for text-sorting by mongodb. this makes more sense for users.
+const switchDirection = direction => {
+    if (direction === "asc") {
+        return "desc";
+    } else {
+        return "asc";
+    }
+};
+
 /*
  * mock show email template ============================================================================================
  * @param {ExpressHTTPRequest} req
@@ -84,14 +93,46 @@ exports.showEmailTemplates = async (req, res) => {
  */
 exports.showUsers = async (req, res) => {
     const page = parseInt(req.params.page, 10) || 1; // current page
-    const limit = cfg.defaultPagination.admin.users; // number of users per page
-    const skip = page * limit - limit; // skip entries if we are not on page 1
-    const sort = { created: "desc" }; // temp sort.
-    const userPromise = User.find({}).skip(skip).limit(limit).sort(sort);
-    const countPromise = User.count();
-    const [users, count] = await Promise.all([userPromise, countPromise]);
-    const pages = Math.ceil(count / limit);
-    if (!users.length && skip) {
+    let sort = {}; // temp sort.
+    let sortField = "created"; // default sort column
+    let sortDirection = "desc"; // default sort direction
+    let dbSortDirection = "desc"; // default sort direction
+    let search = {};
+    let limit = cfg.defaultPagination.admin.users; // number of users per page
+    let skip = page * limit - limit; // skip entries if we are not on page 1
+    let data = req.body;
+
+    if (req.body.username) search.username = new RegExp(req.body.username, "i");
+    if (req.body.email) search.email = new RegExp(req.body.email, "i");
+    if (req.body.sort) {
+        sortField = req.body.sort.split("_")[0];
+        sortDirection = dbSortDirection = req.body.sort.split("_")[1];
+    }
+
+    // if no post params exist, try and use url params (pagination links!)
+    if (req.params.sortField && req.params.sortDirection) {
+        sortField = req.params.sortField;
+        sortDirection = dbSortDirection = req.params.sortDirection;
+    }
+    // reverse the order for username and email, this makes more sense
+    if (sortField === "username" || sortField === "email") {
+        dbSortDirection = switchDirection(sortDirection);
+    }
+    // if we have search params, do not use skip and limit
+    if (req.body.username || req.body.email) {
+        limit = 0;
+        skip = 0;
+    }
+
+    sort[sortField] = dbSortDirection; // object notation for mongoose
+    data.sort = `${sortField}_${sortDirection}`; // pass to pug as value of input[name=sort]
+
+    const usersPromise = User.find(search).skip(skip).limit(limit).sort(sort);
+    const countPromise = User.find(search);
+    const [users, count] = await Promise.all([usersPromise, countPromise]);
+    const pages = Math.ceil(count.length / limit);
+
+    if (!count && skip) {
         req.flash(
             "info",
             `Hey! You asked for page ${page}. But that doesn't exist. So I put you on page ${pages}`
@@ -105,7 +146,25 @@ exports.showUsers = async (req, res) => {
         users,
         page,
         pages,
-        count
+        count: count.length,
+        data,
+        sortField,
+        sortDirection
+    });
+};
+
+/*
+ * edit users ==========================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ *
+ */
+exports.showEditUser = async (req, res) => {
+    const editUser = await User.findOne({_id: req.params.userid});
+    return res.render("admin/user", {
+        title: i18n.__("ADMIN.USER.TITLE", editUser.username),
+        session: req.session,
+        editUser
     });
 };
 

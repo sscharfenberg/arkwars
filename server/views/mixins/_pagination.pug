@@ -2,9 +2,10 @@
     @param {int} page - the current page
     @param {int] pages - the maximum number of pages for this result set
     @param {int} count - the number of results in this result set
-    @param {string} urlPart - the first part of the url, everything before the page number without trailing slash
+    @param {string} urlStart - the first part of the url, everything before the page number without trailing slash
+    @param {string} urlEnd - the last part of the url, everything after the page number
 
-mixin pagination(page, pages, count, urlPart)
+mixin pagination(page, pages, count, urlStart, urlEnd)
     - let numShowPages = pages
     - let startAt = parseInt(page, 10) - 1
     - let endAt = pages
@@ -18,10 +19,11 @@ mixin pagination(page, pages, count, urlPart)
     if pages > 6
         - numShowPages = 9
         - startAt = parseInt(page, 10) - 4
-    if page === 1 || pages - page < numShowPages
+    //- this seems wrong
+    if page === 1 || startAt < 1
         - startAt = 1
 
-    if pages !== 1
+    if pages > 1
 
         nav.aw-pagination
 
@@ -30,15 +32,15 @@ mixin pagination(page, pages, count, urlPart)
             //- first page
             if pages > 2
                 if page === 1
-                    span.aw-pagination__item.aw-pagination__item--prev.aw-pagination__item--disabled= h.__("APP.PAGINATION.FIRST")
+                    span.aw-pagination__item.aw-pagination__item--first.aw-pagination__item--disabled= h.__("APP.PAGINATION.FIRST")
                 else
-                    a.aw-pagination__item.aw-pagination__item--prev(href=`${urlPart}/1`)= h.__("APP.PAGINATION.FIRST")
+                    a.aw-pagination__item.aw-pagination__item--first(href=`${urlStart}/1${urlEnd}`)= h.__("APP.PAGINATION.FIRST")
 
             //- previous page
             if page === 1
                 span.aw-pagination__item.aw-pagination__item--prev.aw-pagination__item--disabled= h.__("APP.PAGINATION.PREV")
             else
-                a.aw-pagination__item.aw-pagination__item--prev(href=`${urlPart}/${page - 1}`)= h.__("APP.PAGINATION.PREV")
+                a.aw-pagination__item.aw-pagination__item--prev(href=`${urlStart}/${page - 1}${urlEnd}`)= h.__("APP.PAGINATION.PREV")
 
 
             - let i = 0;
@@ -49,18 +51,18 @@ mixin pagination(page, pages, count, urlPart)
                 if counter === page
                     span.aw-pagination__item.aw-pagination__item--active= counter
                 else
-                    a.aw-pagination__item(href=`${urlPart}/${counter}`)= counter
+                    a.aw-pagination__item(href=`${urlStart}/${counter}${urlEnd}`)= counter
 
 
             //- next page
             if page === pages
                 span.aw-pagination__item.aw-pagination__item--next.aw-pagination__item--disabled= h.__("APP.PAGINATION.NEXT")
             else
-                a.aw-pagination__item.aw-pagination__item--next(href=`${urlPart}/${page + 1}`)= h.__("APP.PAGINATION.NEXT")
+                a.aw-pagination__item.aw-pagination__item--next(href=`${urlStart}/${page + 1}${urlEnd}`)= h.__("APP.PAGINATION.NEXT")
 
             //- last page
-            if pages > 4
+            if pages > 2
                 if page === pages
-                    span.aw-pagination__item.aw-pagination__item--next.aw-pagination__item--disabled= h.__("APP.PAGINATION.LAST")
+                    span.aw-pagination__item.aw-pagination__item--last.aw-pagination__item--disabled= h.__("APP.PAGINATION.LAST")
                 else
-                    a.aw-pagination__item.aw-pagination__item--next(href=`${urlPart}/${pages}`)= h.__("APP.PAGINATION.LAST")
+                    a.aw-pagination__item.aw-pagination__item--last(href=`${urlStart}/${pages}${urlEnd}`)= h.__("APP.PAGINATION.LAST")

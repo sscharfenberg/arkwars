@@ -72,7 +72,8 @@ $bigheight: 3.2rem;
         }
 
         // next / last item
-        &--next {
+        &--next,
+        &--last {
             margin-right: 0;
 
             background-color: $altcolor;
@@ -111,14 +112,11 @@ $bigheight: 3.2rem;
         }
 
         // previous / first item
-        &--prev {
+        &--prev,
+        &--first {
             margin-right: 0;
 
             background-color: $altcolor;
-
-            &:nth-of-type(2) {
-                margin-right: 0.5rem;
-            }
 
             &::before {
                 position: absolute;
@@ -153,8 +151,11 @@ $bigheight: 3.2rem;
                 }
             }
         }
+        &--prev {
+            margin-right: 0.5rem;
+        }
 
-        &:not(.aw-pagination__item--active):hover {
+        &:not(.aw-pagination__item--active):not(.aw-pagination__item--disabled):hover {
             background-color: $hovercolor;
             color: palette("grey", "black");
 

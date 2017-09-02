@@ -1,4 +1,7 @@
-module.exports = [
+const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
+
+
+let users = [
     {
         _id: "597c523b7331ca2e2436b37f",
         salt:
@@ -20,3 +23,22 @@ module.exports = [
         __v: 0
     }
 ];
+
+const numRandomUsers = 100;
+
+for (let i = 0; i < numRandomUsers; i++) {
+    let user = {
+        salt: crypto.randomBytes(20).toString("hex"),
+        hash: crypto.randomBytes(255).toString("hex"),
+        email: `${crypto.randomBytes(5).toString("hex")}@${crypto.randomBytes(5).toString("hex")}.com`,
+        username: crypto.randomBytes(5).toString("hex"),
+        locale: "de",
+        emailConfirmed: true,
+        suspended: false,
+        admin: false,
+        mod: false,
+    };
+    users.push(user);
+}
+
+module.exports = users;
