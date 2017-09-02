@@ -2,9 +2,9 @@
 
 Frontend and Backend for Arkwars - a strategic turn-based game of galactic conquest.
 
-**Status:** working on basics - currently user accounts.
+Number of times `.env` file got submitted to git: **2** 
 
-**TODO:** write tests, dammit.
+**Status:** backend push so we have some structure to work with in the frontend. currently working on admin area.
 
 ## Requirements
 
