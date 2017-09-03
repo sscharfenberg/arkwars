@@ -237,7 +237,7 @@
         }
 
         &--circle {
-            padding: 4px;
+            padding: 2px;
 
             border-radius: 50%;
         }
@@ -265,14 +265,6 @@
         }
     }
 
-    // user avatar and user account menu
-    &__avatar {
-        width: 28px;
-        height: 28px;
-
-        color: palette("text", "header");
-        border-radius: 14px;
-    }
 
     /*
      * 3.1 submenus ====================================================================================================

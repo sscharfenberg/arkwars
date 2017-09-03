@@ -59,9 +59,9 @@ body
                         each player in user.players
                             li.aw-header__submenu-item
                                 a.aw-header__submenu-item-link(
-                                href=`/game/${player.game.number}/select`,
-                                data-gameid=(player.game.number),
-                                class=(user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
+                                    href=`/game/${player.game.number}/select`,
+                                    data-gameid=(player.game.number),
+                                    class=(user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
                                 )= "g" + player.game.number
 
 
@@ -80,10 +80,7 @@ body
             if user
                 li.aw-header__action
                     a.aw-header__link.aw-header__submenu-trigger.aw-header__link--circle(href="/dashboard")
-                        if user.avatar
-                            img.aw-header__avatar(src=("/public/avatars/" + user.avatar))
-                        else
-                            img.aw-header__avatar(src="/public/assets/images/user-anon.svg")
+                        != h.getAvatar(user.avatar, "header")
                     ul.aw-header__submenu.aw-header__submenu--right.aw-header__submenu--medium(aria-hidden="true")
                         li.aw-header__submenu-item
                             a.aw-header__submenu-item-link(href="/dashboard")= h.__("APP.HEADER.LABEL_HOME")
@@ -99,13 +96,17 @@ body
                     != h.icon("turn", ["turn"])
                     .aw-turn__value= user.selectedPlayer.game.turn
                 .aw-header__server-time
-                    time(datetime=(h.moment().toISOString()), data-server-time)= h.moment().format("LT")
+                    time(
+                        datetime=(h.moment().toISOString()),
+                        data-server-time
+                    )= h.moment().format("LT")
                 .aw-header__turn-next-progress
                     .aw-progress.aw-progress-turn(data-max="15", data-value="14")
                         != h.progressbar(15, 14)
                 .aw-header__turn-next-time
                     time(
-                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()), data-time-next-turn
+                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
+                        data-time-next-turn
                     )= h.moment(user.selectedPlayer.game.turnDue).format("LT")
 
 

@@ -179,7 +179,8 @@ exports.sendResetEmail = async (req, res) => {
         user,
         filename: "reset_email",
         subject: i18n.__("APP.RESET.MAIL_SUBJECT", cfg.app.title),
-        confirmURL
+        confirmURL,
+        adminEmail: false
     });
     logger.info(
         `[App] sent reset email to ${chalk.yellow(user.email)}.`

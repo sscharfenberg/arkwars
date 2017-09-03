@@ -81,3 +81,13 @@ exports.appName = cfg.app.title;
 exports.__ = (key, data) => {
     return i18n.__(key, data);
 };
+
+
+
+exports.getAvatar = (avatar, size) => {
+    if (avatar) {
+        return `<img class="aw-show-avatar aw-show-avatar--${size}" src="/public/avatars/${avatar}">`;
+    } else {
+        return `<img class="aw-show-avatar aw-show-avatar--${size}" src="/public/assets/images/user-anon.svg">`;
+    }
+};

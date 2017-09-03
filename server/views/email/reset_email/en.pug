@@ -8,4 +8,7 @@ block content
         br
         | #{confirmURL}
     br
-    p If you didn't request this email, please ignore it.
+    if !adminEmail
+        p If you didn't request this email, please ignore it.
+    else
+        p This email was sent to you by our admin team. If you do not have problems logging in, please ignore this email.

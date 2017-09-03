@@ -78,4 +78,15 @@
         }
     }
 
+    &__column {
+        &--vcentered {
+            display: flex;
+            align-items: center;
+
+            > span {
+                margin-right: 1rem;
+            }
+        }
+    }
+
 }

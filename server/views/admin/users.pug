@@ -221,7 +221,9 @@ block content
                             tr.admin-userlist__row
 
                                 td
-                                    a.aw-textlink(href=`/admin/users/${user._id}`)= "@" + user.username
+                                    .admin-userlist__td-space-between
+                                        a.aw-textlink(href=`/admin/users/${user._id}`)= "@" + user.username
+                                        != h.getAvatar(user.avatar, "tiny")
 
                                 td
                                     .admin-userlist__td-space-between
@@ -253,10 +255,9 @@ block content
                                 td
                                     .admin-userlist__td-space-between
                                         if user.suspended && user.suspendedUntil && h.moment(user.suspendedUntil).diff(h.moment()) > 0
-                                            != h.__("ADMIN.USERS.ALL.BODY.SUSPENDEDUNTIL")
                                             != h.moment(user.suspendedUntil).format("LLL")
                                             span.admin-userlist__status.admin-userlist__status--error(
-                                                title=`${h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")}`
+                                                title=`${h.__("ADMIN.USERS.ALL.BODY.SUSPENDED")}`
                                             )
                                                 != h.icon("lock")
 

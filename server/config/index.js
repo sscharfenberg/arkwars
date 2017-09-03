@@ -92,7 +92,7 @@ const appConfig = {
     // default number of results per page
     defaultPagination: {
         admin: {
-            users: 10
+            users: 10 // tmp for dev
         }
     }
 };

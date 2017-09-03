@@ -361,7 +361,60 @@
         },
 
         "USER": {
-            "TITLE": "@%s bearbeiten"
+            "TITLE": "@%s bearbeiten",
+            "CHANGE": {
+                "USERNAME": "Benutzername ändern",
+                "EMAIL": "E-Mail-Adresse ändern",
+                "AVATAR": "Avatar zurücksetzen",
+                "AVATARHDL": "Avatar"
+            },
+            "ACTIVEGAMES": "Aktive Spiele",
+            "SUCCESS": {
+                "USERNAME": "Benutzername erfolgreich in <strong>%s</strong> geändert.",
+                "EMAIL": "E-Mail-Adresse erfolgreich in <strong>%s</strong> geändert.",
+                "AVATAR": "Der Avatar dieses Benutzers wurde zurückgesetzt.",
+                "SUSPENSION": "Benutzerkonto gesperrt bis %s.",
+                "CLEARSUSPENSION": "Sperre des Benutzerkontos von <strong>@%s</strong> aufgehoben.",
+                "PASSWORD": "\"Passwort zurücksetzen\" E-Mail erfolgreich an <strong>@%s</strong> verschickt.",
+                "EMAILCONFIRMATION": "Bestätigungs-E-Mail erfolgreich an <strong>@%s</strong> verschickt.",
+                "EMAILCONFIRM": "E-Mail-Adresse von <strong>@%s</strong> erfolgreich bestätigt."
+            },
+            "ERROR": {
+                "UserNotFound": "Benutzer mit ObjectId <strong>%s</strong> nicht gefunden.",
+                "NoAvatarToReset": "Es existiert kein Avatar der gelöscht werden könnte.",
+                "SuspensionNoDuration": "Bitte Dauer der Sperre angeben."
+            },
+            "SUSPEND": {
+                "HDL": "Benutzerkonto sperren",
+                "STATUS": {
+                    "NotSuspended": "Benutzerkonto von @%s ist <strong>nicht</strong> gesperrt.",
+                    "Suspended": "Benutzerkonto ist <strong>gesperrt bis %s</strong>"
+                },
+                "LABEL": "Dauer der Sperre",
+                "PERIOD": {
+                    "CHOOSE": "Bitte auswählen",
+                    "1DAY": "Einen Tag",
+                    "1WEEK": "Eine Woche",
+                    "1MONTH": "Einen Monat",
+                    "1YEAR": "Ein Jahr",
+                    "FOREVER": "Für immer"
+                },
+                "SUBMIT": "Benutzer sperren",
+                "CLEAR": "Sperre entfernen"
+            },
+            "PASSWORD": {
+                "TITLE": "Passwort",
+                "SUBMIT": "Sende \"Passwort Zurücksetzen\" E-Mail",
+                "TOKEN": "\"Passwort zurücksetzen\" Marker",
+                "EXPIRES": "Marker Gültig Bis"
+            },
+            "EMAILCONFIRMED": {
+                "TITLE": "E-Mail Aktivierungs Status",
+                "TOKEN": "E-Mail Aktivierungs Marker",
+                "EXPIRES": "Marker gültig bis",
+                "RESEND": "Aktivierungs E-Mail senden",
+                "CONFIRM": "Setze E-Mail-Adresse aktiv"
+            }
         },
 
         "EMAILS": {

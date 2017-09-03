@@ -362,7 +362,60 @@
         },
 
         "USER": {
-            "TITLE": "Edit @%s"
+            "TITLE": "Edit @%s",
+            "CHANGE": {
+                "USERNAME": "Change username",
+                "EMAIL": "Change E-Mail address",
+                "AVATAR": "Reset Avatar",
+                "AVATARHDL": "Avatar"
+            },
+            "ACTIVEGAMES": "Active games",
+            "SUCCESS": {
+                "USERNAME": "Username successfully changed to <strong>%s</strong>.",
+                "EMAIL": "E-Mail address successfully changed to <strong>%s</strong>.",
+                "AVATAR": "The avatar of this user has been reset.",
+                "SUSPENSION": "User suspended until %s.",
+                "CLEARSUSPENSION": "Cleared suspension of user <strong>@%s</strong>.",
+                "PASSWORD": "Successfully sent a password reset email to <strong>@%s</strong>.",
+                "EMAILCONFIRMATION": "Successfully sent a confirmation email to <strong>@%s</strong>.",
+                "EMAILCONFIRM": "Confirmed E-Mail address of <strong>@%s</strong>."
+            },
+            "ERROR": {
+                "UserNotFound": "No user with ObjectId <strong>%s</strong> found.",
+                "NoAvatarToReset": "No avatar to reset.",
+                "SuspensionNoDuration": "No duration specified for suspension."
+            },
+            "SUSPEND": {
+                "HDL": "Suspend user",
+                "STATUS": {
+                    "NotSuspended": "User %s is <strong>not</strong> suspended.",
+                    "Suspended": "User is <strong>suspended until %s</strong>"
+                },
+                "LABEL": "Duration of suspension",
+                "PERIOD": {
+                    "CHOOSE": "Please select",
+                    "1DAY": "One Day",
+                    "1WEEK": "One Week",
+                    "1MONTH": "One Month",
+                    "1YEAR": "One Year",
+                    "FOREVER": "FOREVER"
+                },
+                "SUBMIT": "Suspend user",
+                "CLEAR": "Clear suspension"
+            },
+            "PASSWORD": {
+                "TITLE": "Password",
+                "SUBMIT": "Send \"password reset\" E-Mail",
+                "TOKEN": "Reset password token",
+                "EXPIRES": "Token expires"
+            },
+            "EMAILCONFIRMED": {
+                "TITLE": "Email Confirmation Status",
+                "TOKEN": "Email confirmation token",
+                "EXPIRES": "Token expires",
+                "RESEND": "Resend activation email",
+                "CONFIRM": "Set E-Mail address to confirmed"
+            }
         },
 
         "EMAILS": {

@@ -167,6 +167,20 @@
     background: palette("grey", "raven");
     border-radius: 50%;
 
+    &--tiny {
+        width: 20px;
+        height: 20px;
+        padding: 2px;
+    }
+
+    &--header {
+        width: 28px;
+        height: 28px;
+        padding: 0;
+
+        color: palette("text", "header");
+    }
+
     &--small {
         width: 28px;
         height: 28px;
@@ -177,7 +191,7 @@
         height: 48px;
     }
 
-    &--big {
+    &--large {
         width: 96px;
         height: 96px;
     }
