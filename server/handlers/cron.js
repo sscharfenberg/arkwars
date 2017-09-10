@@ -74,15 +74,14 @@ const confirmGameIntegrity = async game => {
  * @callee /server/start.js - called on server start / restart
  */
 exports.startup = async () => {
-    const games = await Game.find({ active: true });
+    const activeGames = await Game.find({ active: true });
     moment.locale("de");
     logger.info(
-        `found ${chalk.red(games.length)} active games in the database.`
+        `found ${chalk.red(activeGames.length)} active games in the database.`
     );
 
-    // this is incredibly verbose. it is also really important.
-    if (games.length > 0) {
-        games.forEach(game => {
+    if (activeGames.length > 0) {
+        activeGames.forEach(game => {
             catchErrors(confirmGameIntegrity(game));
             scheduleGameTurn(game);
         });

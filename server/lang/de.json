@@ -183,7 +183,7 @@
                     "TURNDURATION": "Rundendauer",
                     "DURATION_VALUE": "%s Minuten",
                     "START": "Spiel Start",
-                    "MAXPLAYERS": "Maximale Spielerzahl",
+                    "PLAYERS": "Spielerzahl",
                     "ENLIST": "Einschreiben"
                 },
                 "MY": {

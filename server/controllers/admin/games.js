@@ -50,7 +50,6 @@ exports.showGames = async (req, res) => {
         page,
         pages,
         count: count.length,
-        data,
         sortField,
         sortDirection
     });

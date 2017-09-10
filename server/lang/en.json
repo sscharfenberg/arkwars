@@ -184,7 +184,7 @@
                     "TURNDURATION": "Turn duration",
                     "DURATION_VALUE": "%s minutes",
                     "START": "Game start",
-                    "MAXPLAYERS": "Max number of players",
+                    "PLAYERS": "Number of players",
                     "ENLIST": "Enlist"
                 },
                 "MY": {

@@ -26,7 +26,7 @@ exports.checkCanEnlist = async (req, res, next) => {
         canEnlist: true,
         startDate: { $gt: moment().toISOString() }
     }); // TODO: add check if already enlisted?
-    if (!game) {
+    if (!game || (game.players && game.maxPlayers > game.players.length)) {
         logger.debug(
             `[${chalk.yellow(
                 "@" + req.user.username

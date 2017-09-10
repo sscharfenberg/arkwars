@@ -31,13 +31,17 @@ block content
                             .aw-grid__column= h.moment(game.startDate).format("LLLL")
                     if game.maxPlayers
                         .aw-grid__row.aw-grid__row--2col
-                            .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.MAXPLAYERS")
-                            .aw-grid__column= game.maxPlayers
+                            .aw-grid__column= h.__("APP.DASHBOARD.GAMES.AVAILABLE.PLAYERS")
+                            if game.players && game.players.length
+                                .aw-grid__column= `${game.players.length}/${game.maxPlayers}`
+                            else
+                                .aw-grid__column= `0/${game.maxPlayers}`
                     .aw-grid__row= h.__("APP.DASHBOARD.GAMES.AVAILABLE.INTRO")
                     .aw-grid__row
-                        a.aw-btn.aw-btn--icon(href=`/game/${game.number}/enlist`)
-                            != h.icon("games", ["small"])
-                            != h.__("APP.DASHBOARD.GAMES.AVAILABLE.ENLIST")
+                        if game.players && game.maxPlayers > game.players.length
+                            a.aw-btn.aw-btn--icon(href=`/game/${game.number}/enlist`)
+                                != h.icon("games", ["small"])
+                                != h.__("APP.DASHBOARD.GAMES.AVAILABLE.ENLIST")
 
 
         //- my games (games where i have a player)

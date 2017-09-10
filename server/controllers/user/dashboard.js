@@ -30,11 +30,11 @@ const cfg = require("../../config");
 exports.showDashboard = async (req, res) => {
     // User.players gets populated with players object, which includes game id.
     const myGames = req.user.players.map(game => game.game);
-    const available = await Game.find({
+    let available = await Game.find({
         canEnlist: true,
         startDate: { $gt: moment().toISOString() },
         _id: { $nin: myGames } // not in my games
-    });
+    }).populate("players");
     const myActiveGames = await Game.find({
         _id: { $in: myGames } // not in my games
     }).populate("players");
@@ -49,7 +49,7 @@ exports.showDashboard = async (req, res) => {
                 turn: _player.game.turn,
                 maxPlayers: _player.game.maxPlayers,
                 turnDuration: _player.game.turnDuration,
-                numPlayers: 0
+                numPlayers: _player.game.players ? _player.game.players.length : 0
             },
             name: _player.name,
             ticker: _player.ticker
