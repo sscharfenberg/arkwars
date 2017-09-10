@@ -1,0 +1,26 @@
+extends ../layout
+
+include ../mixins/_pagination
+
+block head
+    link(rel='stylesheet', href='/public/assets/styles.css')
+    link(rel='stylesheet', href='/public/assets/admin.css')
+
+block content
+    main.aw-content__inner
+        header.aw-content-head
+            h1.aw-content-head__title= title
+            nav.aw-content-head__breadcrumbs
+                a.aw-content-head__breadcrumb(href="/")
+                    != h.icon("home", ["home-icon"])
+                a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
+                a.aw-content-head__breadcrumb(href="/admin/games")= h.__("ADMIN.GAMES.TITLE_NAV")
+                if game && game._id
+                    a.aw-content-head__breadcrumb(href=`/admin/games/${game._id}/edit`)= title
+                else
+                    a.aw-content-head__breadcrumb(href=`/admin/games/new`)= title
+
+        pre= h.dump(game)
+
+block scripts
+    include ../webpack/app.footer.pug

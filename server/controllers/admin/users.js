@@ -39,7 +39,7 @@ exports.showUsers = async (req, res) => {
     let sort = {}; // temp sort.
     let sortField = "created"; // default sort column
     let sortDirection = "desc"; // default sort direction
-    let dbSortDirection = "desc"; // default sort direction
+    let dbSortDirection = "desc"; // default sort direction for mongoose
     let search = {};
     let limit = cfg.defaultPagination.admin.users; // number of users per page
     let skip = page * limit - limit; // skip entries if we are not on page 1
@@ -70,7 +70,7 @@ exports.showUsers = async (req, res) => {
     sort[sortField] = dbSortDirection; // object notation for mongoose
     data.sort = `${sortField}_${sortDirection}`; // pass to pug as value of input[name=sort]
 
-    const usersPromise = User.find(search).skip(skip).limit(limit).sort(sort);
+    const usersPromise = User.find(search).sort(sort).skip(skip).limit(limit);
     const countPromise = User.find(search);
     const [users, count] = await Promise.all([usersPromise, countPromise]);
     const pages = Math.ceil(count.length / limit);
@@ -312,14 +312,18 @@ exports.resetPassword = async (req, res) => {
         );
         return res.redirect("back");
     }
-    const confirmURL = `http://${req.headers.host}/auth/reset/${editedUser.resetPasswordToken}`;
+    const confirmURL = `http://${req.headers
+        .host}/auth/reset/${editedUser.resetPasswordToken}`;
     await mail.send({
         user: editedUser,
         filename: "reset_email",
-        subject: i18n.__({
-            phrase: "APP.RESET.MAIL_SUBJECT",
-            locale: editedUser.locale
-        }, cfg.app.title),
+        subject: i18n.__(
+            {
+                phrase: "APP.RESET.MAIL_SUBJECT",
+                locale: editedUser.locale
+            },
+            cfg.app.title
+        ),
         confirmURL,
         adminEmail: true
     });
@@ -328,7 +332,10 @@ exports.resetPassword = async (req, res) => {
             "@" + req.user.username
         )}] sent reset email to ${chalk.yellow(editedUser.email)}.`
     );
-    req.flash("success", i18n.__("ADMIN.USER.SUCCESS.PASSWORD", editedUser.username));
+    req.flash(
+        "success",
+        i18n.__("ADMIN.USER.SUCCESS.PASSWORD", editedUser.username)
+    );
     res.redirect("back");
 };
 
@@ -356,10 +363,13 @@ exports.resendConfirmationEmail = async (req, res) => {
     await mail.send({
         user: editedUser,
         filename: "resend_email",
-        subject: i18n.__({
-            phrase: "APP.RESEND.MAIL_SUBJECT",
-            locale: editedUser.locale
-        }, cfg.app.title),
+        subject: i18n.__(
+            {
+                phrase: "APP.RESEND.MAIL_SUBJECT",
+                locale: editedUser.locale
+            },
+            cfg.app.title
+        ),
         confirmURL,
         adminEmail: true
     });
@@ -370,7 +380,10 @@ exports.resendConfirmationEmail = async (req, res) => {
             editedUser.email
         )} and updated user with new confirm token.`
     );
-    req.flash("success", i18n.__("ADMIN.USER.SUCCESS.EMAILCONFIRMATION", editedUser.username));
+    req.flash(
+        "success",
+        i18n.__("ADMIN.USER.SUCCESS.EMAILCONFIRMATION", editedUser.username)
+    );
     return res.redirect("back");
 };
 
@@ -400,6 +413,9 @@ exports.setEmailConfirmed = async (req, res) => {
             editedUser.email
         )} and updated user with new confirm token.`
     );
-    req.flash("success", i18n.__("ADMIN.USER.SUCCESS.EMAILCONFIRM", editedUser.username));
+    req.flash(
+        "success",
+        i18n.__("ADMIN.USER.SUCCESS.EMAILCONFIRM", editedUser.username)
+    );
     return res.redirect("back");
 };

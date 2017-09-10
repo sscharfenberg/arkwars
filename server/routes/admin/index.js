@@ -21,7 +21,7 @@ router.get("/", catchErrors(adminController.showDashboard));
 router.use("/users", require("./users"));
 
 // manage games routes
-router.get("/games", require("./games"));
+router.use("/games", require("./games"));
 
 // manage email templates
 router.use("/emails", require("./emails"));

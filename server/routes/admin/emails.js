@@ -12,6 +12,7 @@ const { catchErrors } = require("../../handlers/error");
 
 // list available email templates
 router.get("/", catchErrors(managegEmailsController.showEmailTemplates));
+
 // mock view email templates
 router.get("/:template/lang/:language", catchErrors(managegEmailsController.showEmail));
 

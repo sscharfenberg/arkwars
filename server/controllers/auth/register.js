@@ -205,14 +205,18 @@ exports.confirmEmail = async (req, res, next) => {
     user.emailConfirmationToken = undefined; // clear email confirmation. this deletes the mongoDB property
     user.emailConfirmationExpires = undefined;
     user.emailConfirmed = true;
-    await user.save();
+//    await user.save();
     logger.success(
         `[App] account for ${chalk.red(
             "@" + user.username
         )} has been activated.`
     );
+    console.log(moment(user.suspendedUntil).diff(moment()));
 
-    if (!user.suspended && moment(user.suspendedUntil).diff(moment()) < 0) {
+    if (user.suspended && moment(user.suspendedUntil).diff(moment()) > 0) {
+        req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
+        res.redirect("/auth/login");
+    } else {
         req.login(user, function (err) { // log in
             if (err) {
                 return next(err);
@@ -222,9 +226,6 @@ exports.confirmEmail = async (req, res, next) => {
             req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
             res.redirect("/dashboard");
         });
-    } else { // user is suspended and will not be logged in.
-        req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
-        res.redirect("/auth/login");
     }
 
 };

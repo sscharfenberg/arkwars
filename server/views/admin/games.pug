@@ -1,5 +1,7 @@
 extends ../layout
 
+include ../mixins/_pagination
+
 block head
     link(rel='stylesheet', href='/public/assets/styles.css')
     link(rel='stylesheet', href='/public/assets/admin.css')
@@ -13,7 +15,213 @@ block content
                     != h.icon("home", ["home-icon"])
                 a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
                 a.aw-content-head__breadcrumb(href="/admin/games")= h.__("ADMIN.GAMES.TITLE_NAV")
-        p Boilerplating Games
+
+        //- Change Avatar form
+        form#sortGames(
+            action=`/admin/games`,
+            method="POST"
+        )
+            p
+                a.aw-btn.aw-btn--icon(href=`/admin/games/new`)
+                    != h.icon("games", ["small"])
+                    | New Game
+
+            +pagination(page, pages, count, "/admin/games/p", `/s/${sortField}/d/${sortDirection}`)
+
+            .aw-grid
+                .aw-grid__headline= h.__("ADMIN.GAMES.HEADLINE")
+                table.admin-listtable
+
+                    //- header row including sort radio buttons
+                    thead
+                        tr.admin-listtable__row
+
+                            th.aw-sort__sortable
+                                != h.__("ADMIN.GAMES.HEAD.NUMBER")
+                                .aw-sort
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="number_asc",
+                                            id="sort_number_asc",
+                                            aria-label=(h.__("APP.SORT.ASC")),
+                                            checked=(data && data.sort === "number_asc"),
+                                            aria-checked=(data && data.sort === "number_asc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__asc(
+                                            for="sort_number_asc",
+                                            title=(h.__("APP.SORT.ASC"))
+                                        )
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="number_desc",
+                                            id="sort_number_desc",
+                                            aria-label=(h.__("APP.SORT.DESC")),
+                                            checked=(data && data.sort === "number_desc"),
+                                            aria-checked=(data && data.sort === "number_desc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__desc(
+                                            for="sort_number_desc",
+                                            title=(h.__("APP.SORT.DESC"))
+                                        )
+
+                            th= h.__("ADMIN.GAMES.HEAD.ACTIVE")
+
+                            th= h.__("ADMIN.GAMES.HEAD.PLAYERS")
+
+                            th.aw-sort__sortable
+                                != h.__("ADMIN.GAMES.HEAD.TURN")
+                                .aw-sort
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="turn_asc",
+                                            id="sort_turn_asc",
+                                            aria-label=(h.__("APP.SORT.ASC")),
+                                            checked=(data && data.sort === "turn_asc"),
+                                            aria-checked=(data && data.sort === "turn_asc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__asc(
+                                            for="sort_turn_asc",
+                                            title=(h.__("APP.SORT.ASC"))
+                                        )
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="turn_desc",
+                                            id="sort_turn_desc",
+                                            aria-label=(h.__("APP.SORT.DESC")),
+                                            checked=(data && data.sort === "turn_desc"),
+                                            aria-checked=(data && data.sort === "turn_desc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__desc(
+                                            for="sort_turn_desc",
+                                            title=(h.__("APP.SORT.DESC"))
+                                        )
+
+                            th= h.__("ADMIN.GAMES.HEAD.DURATION")
+
+                            th.aw-sort__sortable
+                                != h.__("ADMIN.GAMES.HEAD.CREATED")
+                                .aw-sort
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="created_asc",
+                                            id="sort_created_asc",
+                                            aria-label=(h.__("APP.SORT.ASC")),
+                                            checked=(data && data.sort === "created_asc"),
+                                            aria-checked=(data && data.sort === "created_asc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__asc(
+                                            for="sort_created_asc",
+                                            title=(h.__("APP.SORT.ASC"))
+                                        )
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="created_desc",
+                                            id="sort_created_desc",
+                                            aria-label=(h.__("APP.SORT.DESC")),
+                                            checked=(data && data.sort === "created_desc"),
+                                            aria-checked=(data && data.sort === "created_desc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__desc(
+                                            for="sort_created_desc",
+                                            title=(h.__("APP.SORT.DESC"))
+                                        )
+
+                            th.aw-sort__sortable
+                                != h.__("ADMIN.GAMES.HEAD.STARTED")
+                                .aw-sort
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="startDate_asc",
+                                            id="sort_startDate_asc",
+                                            aria-label=(h.__("APP.SORT.ASC")),
+                                            checked=(data && data.sort === "startDate_asc"),
+                                            aria-checked=(data && data.sort === "startDate_asc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__asc(
+                                            for="sort_startDate_asc",
+                                            title=(h.__("APP.SORT.ASC"))
+                                        )
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="startDate_desc",
+                                            id="sort_startDate_desc",
+                                            aria-label=(h.__("APP.SORT.DESC")),
+                                            checked=(data && data.sort === "startDate_desc"),
+                                            aria-checked=(data && data.sort === "startDate_desc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__desc(
+                                            for="sort_startDate_desc",
+                                            title=(h.__("APP.SORT.DESC"))
+                                        )
+
+                            th= h.__("ADMIN.GAMES.HEAD.PROCESSING")
+
+                            th= h.__("ADMIN.GAMES.HEAD.CANENLIST")
+
+                    //- user data
+                    tbody
+                        each game in games
+                            tr.admin-listtable__row
+
+                                td
+                                    a.aw-btn(href=`/admin/games/${game._id}/edit`)= "g" + game.number
+
+                                td
+                                    if game.active
+                                        span.admin-listtable__status.admin-listtable__status--success(
+                                            title=`${h.__("ADMIN.GAME.STATUS.ACTIVE")}`
+                                        )
+                                            != h.icon("done")
+
+                                td= game.players.length
+                                    | /
+                                    != game.maxPlayers
+
+                                td= game.turn
+
+                                td= h.__("ADMIN.GAMES.BODY.DURATION", game.turnDuration)
+
+                                td= h.moment(game.created).format("LLL")
+
+                                td= h.moment(game.startDate).format("LLL")
+
+                                td
+                                    if game.processing
+                                        span.admin-listtable__status.admin-listtable__status--warning(
+                                            title=`${h.__("ADMIN.GAMES.BODY.PROCESSING")}`
+                                        )
+                                            != h.icon("warning")
+
+                                td
+                                    if game.canEnlist
+                                        span.admin-listtable__status.admin-listtable__status--success(
+                                            title=`${h.__("ADMIN.GAME.BODY.CANENLIST")}`
+                                        )
+                                            != h.icon("galnet")
 
         pre= h.dump(games)
 

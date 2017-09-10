@@ -326,7 +326,29 @@
 
         "GAMES": {
             "TITLE": "Manage Games",
-            "TITLE_NAV": "Games"
+            "TITLE_NAV": "Games",
+            "HEADLINE": "All Games",
+            "HEAD": {
+                "NUMBER": "Number",
+                "CREATED": "Created",
+                "STARTED": "Started",
+                "PLAYERS": "Players",
+                "TURN": "Turn",
+                "DURATION": "Duration",
+                "PROCESSING": "Processing",
+                "CANENLIST": "Can Enlist",
+                "ACTIVE": "Active"
+            },
+            "BODY": {
+                "PROCESSING": "Game is currently being processed.",
+                "CANENLIST": "Users can enlist to this game.",
+                "DURATION": "%s minutes"
+            }
+        },
+
+        "GAME": {
+            "TITLE": "Edit Game g%s",
+            "TITLENEW": "New Game"
         },
 
         "USERS": {
@@ -358,7 +380,7 @@
                     "SUSPENDED": "Account is suspended",
                     "SUSPENDEDUNTIL": "Suspended until "
                 }
-            },
+            }
         },
 
         "USER": {

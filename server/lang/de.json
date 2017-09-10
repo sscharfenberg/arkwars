@@ -325,7 +325,29 @@
 
         "GAMES": {
             "TITLE": "Spiele Verwalten",
-            "TITLE_NAV": "Spiele"
+            "TITLE_NAV": "Spiele",
+            "HEADLINE": "Alle Spiele",
+            "HEAD": {
+                "NUMBER": "Nummer",
+                "CREATED": "Erstellt",
+                "STARTED": "Gestartet",
+                "PLAYERS": "Spieler",
+                "TURN": "Runde",
+                "DURATION": "Rundendauer",
+                "PROCESSING": "Berechnen",
+                "CANENLIST": "Einschreiben",
+                "ACTIVE": "Aktiv"
+            },
+            "BODY": {
+                "PROCESSING": "Spiel wird aktuell berechnet.",
+                "CANENLIST": "Benutzer können sich für das Spiel einschreiben.",
+                "DURATION": "%s Minuten"
+            }
+        },
+
+        "GAME": {
+            "TITLE": "Spiel g%s bearbeiten",
+            "TITLENEW": "Neues Spiel"
         },
 
         "USERS": {
