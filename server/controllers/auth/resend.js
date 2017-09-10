@@ -82,6 +82,8 @@ exports.validateResend = async (req, res, next) => {
         });
     }
 
+    console.log(errors);
+
     if (errors.length) {
         const captcha = getCaptcha();
         req.session.captcha = captcha.text;
@@ -91,7 +93,7 @@ exports.validateResend = async (req, res, next) => {
             data: req.body,
             captcha: captcha.data,
             captchaFail,
-            errors: errors,
+            errors,
             flashes: req.flash()
         });
     }

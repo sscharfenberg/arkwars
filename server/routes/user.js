@@ -63,6 +63,7 @@ router.get(
 // delete user account
 router.post(
     "/dashboard/delete",
+    authController.isLoggedIn,
     catchErrors(dashboardController.deleteUser)
 );
 

@@ -28,7 +28,7 @@ block content
                         value=(data && data.email)
                     )
                 if errors
-                    .aw-narrowform__error-message= errors
+                    .aw-narrowform__error-message!= errors.join("<br />")
                 .aw-narrowform__row-description= h.__("APP.LOGIN.EMAIL_LABEL")
 
             .aw-narrowform__row(class=`${captchaFail ? "error" : ""}`)

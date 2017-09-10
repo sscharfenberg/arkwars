@@ -195,6 +195,7 @@ exports.confirmEmail = async (req, res, next) => {
     logger.debug(
         `[App] email confirmation request. token: ${req.params.token}`
     );
+    // could not find user.
     if (!user) {
         req.flash("error", i18n.__("APP.REGISTER.CONFIRM_FAILED"));
         res.redirect("/auth/login");
@@ -211,14 +212,19 @@ exports.confirmEmail = async (req, res, next) => {
         )} has been activated.`
     );
 
-    // log in
-    req.login(user, function(err) {
-        if (err) {
-            return next(err);
-        }
-        req.user = user;
-        logger.info(`[App] user @${user.username} logged in.`);
+    if (!user.suspended && moment(user.suspendedUntil).diff(moment()) < 0) {
+        req.login(user, function (err) { // log in
+            if (err) {
+                return next(err);
+            }
+            req.user = user;
+            logger.info(`[App] user @${user.username} logged in.`);
+            req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
+            res.redirect("/dashboard");
+        });
+    } else { // user is suspended and will not be logged in.
         req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
-        res.redirect("/dashboard");
-    });
+        res.redirect("/auth/login");
+    }
+
 };

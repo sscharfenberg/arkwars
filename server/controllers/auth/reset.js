@@ -285,14 +285,19 @@ exports.resetChangePassword = async (req, res) => {
     user.resetPasswordExpires = undefined;
     user.attempts = 0;
     const updatedUser = await user.save(); // save to db
-    // log in
-    req.login(user, function(err) {
-        if (err) {
-            return next(err);
-        }
-        req.user = updatedUser;
-        logger.info(`[App] user @${updatedUser.username} logged in.`);
+    if (!user.suspended && moment(user.suspendedUntil).diff(moment()) < 0) {
+        // log in
+        req.login(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            req.user = updatedUser;
+            logger.info(`[App] user @${updatedUser.username} logged in.`);
+            req.flash("success", i18n.__("APP.RESET.CHANGE.SUCCESS", updatedUser.username));
+            res.redirect("/dashboard");
+        });
+    } else {
         req.flash("success", i18n.__("APP.RESET.CHANGE.SUCCESS", updatedUser.username));
-        res.redirect("/dashboard");
-    });
+        res.redirect("/auth/login");
+    }
 };

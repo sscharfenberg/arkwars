@@ -9,7 +9,6 @@ const moment = require("moment"); // https://momentjs.com/
 const passport = require("passport"); // https://github.com/jaredhanson/passport
 const logger = require("../../handlers/logger/console");
 
-
 /*
  * show login form =====================================================================================================
  * @param {ExpressHTTPRequest} req
@@ -21,7 +20,6 @@ exports.showLoginForm = (req, res) => {
         session: req.session
     });
 };
-
 
 /*
  * log the user in =====================================================================================================
@@ -61,10 +59,7 @@ exports.login = async (req, res, next) => {
         }
 
         // user is suspended and suspendedUntil is > now
-        if (
-            user.suspended &&
-            moment(user.suspendedUntil).diff(moment()) > 0
-        ) {
+        if (user.suspended && moment(user.suspendedUntil).diff(moment()) > 0) {
             const message =
                 i18n.__("APP.LOGIN.Suspended") +
                 moment(user.suspendedUntil).format("LLL");
@@ -84,13 +79,14 @@ exports.login = async (req, res, next) => {
                 return next(err);
             }
             //req.user = user;
-            logger.info(`[App] user ${chalk.red("@"+user.username)} logged in.`);
+            logger.info(
+                `[App] user ${chalk.red("@" + user.username)} logged in.`
+            );
             req.flash("success", i18n.__("APP.LOGIN.SUCCESS"));
             res.redirect("/dashboard");
         });
     })(req, res, next);
 };
-
 
 /*
  * log the user out ====================================================================================================
@@ -98,12 +94,13 @@ exports.login = async (req, res, next) => {
  * @param {ExpressHTTPResponse} res
  */
 exports.logout = (req, res) => {
-    logger.info(`[App] user ${chalk.red("@"+req.user.username)} logging out.`);
+    logger.info(
+        `[App] user ${chalk.red("@" + req.user.username)} logging out.`
+    );
     req.logout();
     req.flash("success", i18n.__("APP.LOGOUT.SUCCESS"));
     res.redirect("/");
 };
-
 
 /*
  * is current user an admin? ===========================================================================================
@@ -119,7 +116,6 @@ exports.isAdmin = (req, res, next) => {
     }
 };
 
-
 /*
  * is current user a moderator? ========================================================================================
  * @param {ExpressHTTPRequest} req
@@ -134,19 +130,33 @@ exports.isMod = (req, res, next) => {
     }
 };
 
-
 /*
  * is user logged in? ==================================================================================================
+ * if hhe is logged in and suspended, he probably was suspended just now.
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  * @param {callback} next
  */
 exports.isLoggedIn = (req, res, next) => {
+    // is user logged in?
     if (req.isAuthenticated()) {
-        next();
+        // is user suspended?
+        if (
+            req.user.suspended &&
+            moment(req.user.suspendedUntil).diff(moment()) > 0
+        ) {
+            req.flash(
+                "error",
+                i18n.__("APP.LOGIN.Suspended") +
+                    moment(user.suspendedUntil).format("LLL")
+            );
+            req.logout(); // log him out, just to make sure.
+            res.redirect("/auth/login");
+        } else {
+            next();
+        }
     } else {
         req.flash("error", i18n.__("APP.AUTH.LOGIN_REQUIRED"));
         res.redirect("/auth/login");
     }
 };
-
