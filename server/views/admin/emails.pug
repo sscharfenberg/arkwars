@@ -13,7 +13,14 @@ block content
                     != h.icon("home", ["home-icon"])
                 a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
                 a.aw-content-head__breadcrumb(href="/admin/emails")= h.__("ADMIN.EMAILS.TITLE_NAV")
-        p Boilerplating Emails
+
+        .aw-grid
+            each template in templates
+                .aw-grid__headline= template.name
+                .aw-grid__row.aw-btn-group
+                    each locale in cfg.app.locales
+                        a.aw-btn(href=`/admin/emails/${template.name}/lang/${locale.name}`)
+                            != locale.native
 
 
 block scripts

@@ -358,7 +358,7 @@
                     "SUSPENDED": "Account is suspended",
                     "SUSPENDEDUNTIL": "Suspended until "
                 }
-            }
+            },
         },
 
         "USER": {
@@ -420,7 +420,8 @@
 
         "EMAILS": {
             "TITLE": "View Email Templates",
-            "TITLE_NAV": "Email Templates"
+            "TITLE_NAV": "Email Templates",
+            "HDL_TEMPLATE": "Email template: <strong>%s</strong>"
         }
     }
 

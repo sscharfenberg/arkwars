@@ -418,8 +418,9 @@
         },
 
         "EMAILS": {
-            "TITLE": "Vorschau von Email Vorlagen",
-            "TITLE_NAV": "Email Vorlagen"
+            "TITLE": "Vorschau von E-Mail Vorlagen",
+            "TITLE_NAV": "E-Mail Vorlagen",
+            "HDL_TEMPLATE": "E-Mail Vorlage: <strong>%s</strong>"
         }
     }
 

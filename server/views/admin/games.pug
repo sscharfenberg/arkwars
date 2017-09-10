@@ -15,6 +15,7 @@ block content
                 a.aw-content-head__breadcrumb(href="/admin/games")= h.__("ADMIN.GAMES.TITLE_NAV")
         p Boilerplating Games
 
+        pre= h.dump(games)
 
 block scripts
     include ../webpack/app.footer.pug
