@@ -348,7 +348,18 @@
 
         "GAME": {
             "TITLE": "Edit Game g%s",
-            "TITLENEW": "New Game"
+            "TITLENEW": "New Game",
+            "NUMBER": "Game number",
+            "CREATED": "Date created",
+            "PROCESSING": "Game is processing",
+            "CANENLIST": "Can enlist to game",
+            "ACTIVE": "Game is active",
+            "ENLISTEDPLAYERS": "Currently enlisted players",
+            "MAXPLAYERS": "Maximum number of players",
+            "STARTDATE": "Start Date",
+            "STARTTIME": "Start Time",
+            "TURNDURATION": "Turn Duration (minutes)",
+            "SUBMIT": "Save game"
         },
 
         "USERS": {

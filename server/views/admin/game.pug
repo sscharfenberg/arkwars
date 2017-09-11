@@ -15,12 +15,123 @@ block content
                     != h.icon("home", ["home-icon"])
                 a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
                 a.aw-content-head__breadcrumb(href="/admin/games")= h.__("ADMIN.GAMES.TITLE_NAV")
-                if game && game._id
-                    a.aw-content-head__breadcrumb(href=`/admin/games/${game._id}/edit`)= title
+                if game && game.id
+                    a.aw-content-head__breadcrumb(href=`/admin/games/${game.id}/edit`)= title
                 else
                     a.aw-content-head__breadcrumb(href=`/admin/games/new`)= title
 
-        pre= h.dump(game)
+
+        if game && game.id
+            - let formUrl = `/admin/games/${game.id}/edit`
+        else
+            - let formUrl = `/admin/games/new`
+        form#gameForm.aw-form(method="POST", action=(formUrl))
+
+            if game && game.number
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.GAME.NUMBER")
+                    .aw-grid__column.aw-grid__column--vcentered= "g" + game.number
+
+            if game && game.created
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.GAME.CREATED")
+                    .aw-grid__column.aw-grid__column--vcentered= h.moment(game.created).format("LLLL")
+
+            .aw-form__row
+                .aw-form-input
+                    label.aw-form-input__label(for="active")= h.__("ADMIN.GAME.ACTIVE")
+                    .aw-form-input__input
+                        .aw-checkbox
+                            input(
+                                type="checkbox",
+                                name="active",
+                                id="active",
+                                value="true",
+                                checked=(game && game.active),
+                                aria-checked=(game && game.active)
+                            )
+                            label(for="active")
+
+            .aw-form__row
+                .aw-form-input
+                    label.aw-form-input__label(for="processing")= h.__("ADMIN.GAME.PROCESSING")
+                    .aw-form-input__input
+                        .aw-checkbox
+                            input(
+                                type="checkbox",
+                                name="processing",
+                                id="processing",
+                                value="true",
+                                checked=(game && game.processing),
+                                aria-checked=(game && game.processing)
+                            )
+                            label(for="processing")
+
+            .aw-form__row
+                .aw-form-input
+                    label.aw-form-input__label(for="canEnlist")= h.__("ADMIN.GAME.CANENLIST")
+                    .aw-form-input__input
+                        .aw-checkbox
+                            input(
+                                type="checkbox",
+                                name="canEnlist",
+                                id="canEnlist",
+                                value="true",
+                                checked=(game && game.canEnlist),
+                                aria-checked=(game && game.canEnlist)
+                            )
+                            label(for="canEnlist")
+
+            if game && game.players && game.players.length
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.GAME.ENLISTEDPLAYERS")
+                    .aw-grid__column.aw-grid__column--vcentered= game.players.length
+
+            .aw-form__row
+                .aw-form-input
+                    label.aw-narrowform-input__label(for="maxPlayers")= h.__("ADMIN.GAME.MAXPLAYERS")
+                    input.aw-narrowform-input__input(
+                        type="text",
+                        name="maxPlayers",
+                        id="maxPlayers",
+                        value=(game && game.maxPlayers ? game.maxPlayers : cfg.games.defaultNumPlayers)
+                    )
+
+            .aw-form__row
+                .aw-form-input
+                    label.aw-narrowform-input__label(for="startDateDate")= h.__("ADMIN.GAME.STARTDATE")
+                    input.aw-narrowform-input__input(
+                        type="date",
+                        name="startDateDate",
+                        id="startDateDate",
+                        value=(game && game.startDate && h.moment(game.startDate).format("YYYY-MM-DD"))
+                    )
+
+            .aw-form__row
+                .aw-form-input
+                    label.aw-narrowform-input__label(for="startDateTime")= h.__("ADMIN.GAME.STARTTIME")
+                    input.aw-narrowform-input__input(
+                        type="time",
+                        name="startDateTime",
+                        id="startDateTime",
+                        value=(game && game.startDate && h.moment(game.startDate).format("HH:MM"))
+                    )
+
+            .aw-form__row
+                .aw-form-input
+                    label.aw-narrowform-input__label(for="turnDuration")= h.__("ADMIN.GAME.TURNDURATION")
+                    input.aw-narrowform-input__input(
+                        type="text",
+                        name="turnDuration",
+                        id="turnDuration",
+                        value=(game && game.turnDuration ? game.turnDuration : cfg.games.defaultTurnDuration)
+                    )
+
+            .aw-form__row
+                .aw-form__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("save", ["small"])
+                        != h.__("ADMIN.GAME.SUBMIT")
 
 block scripts
     include ../webpack/app.footer.pug

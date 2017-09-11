@@ -75,6 +75,8 @@ const redisClient = redis
     .on("error", err => {
         logger.error("[App] Error while connecting to Redis.");
         logger.error(err);
+        logger.error("[App] Exited. Please kill the nodemon process.");
+        process.exit(0);
     });
 app.use(
     session({

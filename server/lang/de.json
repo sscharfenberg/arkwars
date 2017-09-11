@@ -347,7 +347,18 @@
 
         "GAME": {
             "TITLE": "Spiel g%s bearbeiten",
-            "TITLENEW": "Neues Spiel"
+            "TITLENEW": "Neues Spiel",
+            "NUMBER": "Spiel Nummer",
+            "CREATED": "Erstellt am",
+            "PROCESSING": "Spiel wird gerade ausgewertet",
+            "CANENLIST": "Können Benutzer sich einschreiben",
+            "ACTIVE": "Spiel ist aktiv",
+            "MAXPLAYERS": "Maximalzahl an Spielern",
+            "ENLISTEDPLAYERS": "Currently enlisted players",
+            "STARTDATE": "Startdatum",
+            "STARTTIME": "Start Uhrzeit",
+            "TURNDURATION": "Dauer einer Runde (Minuten)",
+            "SUBMIT": "Spiel Speichern"
         },
 
         "USERS": {

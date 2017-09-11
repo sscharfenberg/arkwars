@@ -16,6 +16,7 @@ block content
                 a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
                 a.aw-content-head__breadcrumb(href="/admin/users")= h.__("ADMIN.USERS.TITLE_NAV")
 
+        p TODO: FIND PLAYERS OF A SPECIFIC GAME.
 
         //- Change Avatar form
         form#searchUsers(
@@ -247,7 +248,7 @@ block content
                                     if user.players && user.players.length
                                         each player, index in user.players
                                             a.aw-textlink(
-                                                href=`/admin/games/${player.game.number}`
+                                                href=`/admin/games/${player.game.id}/edit`
                                             )= "g" + player.game.number
                                             if index !== user.players.length - 1
                                                 | ,&nbsp;

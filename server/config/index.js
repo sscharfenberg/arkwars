@@ -87,7 +87,9 @@ const appConfig = {
                 min: 2,
                 max: 4
             }
-        }
+        },
+        defaultNumPlayers: 50,
+        defaultTurnDuration: 15
     },
     // default number of results per page
     defaultPagination: {

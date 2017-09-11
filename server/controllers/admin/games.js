@@ -65,7 +65,7 @@ exports.showEditGame = async (req, res) => {
     let game = {};
     let title = i18n.__("ADMIN.GAME.TITLENEW");
     if (req.params.id) {
-        game = await Game.findOne({ _id: req.params.id });
+        game = await Game.findOne({ _id: req.params.id }).populate("players");
         title = i18n.__("ADMIN.GAME.TITLE", game.number);
     }
     res.render("admin/game", {
