@@ -33,7 +33,8 @@
             "LABEL_HOME": "Profil",
             "LABEL_SERVERTIME": "Serverzeit",
             "LABEL_LOCALTIME": "Lokale Zeit",
-            "LABEL_ADMIN": "Administration"
+            "LABEL_ADMIN": "Administration",
+            "LABEL_GAME": "Spiel"
         },
 
         "INDEX": {
@@ -330,7 +331,7 @@
             "HEAD": {
                 "NUMBER": "Nummer",
                 "CREATED": "Erstellt",
-                "STARTED": "Gestartet",
+                "STARTED": "Start Datum",
                 "PLAYERS": "Spieler",
                 "TURN": "Runde",
                 "DURATION": "Rundendauer",
@@ -350,15 +351,25 @@
             "TITLENEW": "Neues Spiel",
             "NUMBER": "Spiel Nummer",
             "CREATED": "Erstellt am",
-            "PROCESSING": "Spiel wird gerade ausgewertet",
+            "PROCESSINGLABEL": "Spiel wird gerade ausgewertet",
+            "PROCESSINGDESC": "Auswerten bedeutet das der Server das Berechnen einer Runde gestartet hat, aber die Berechnung ist noch nicht abgeschlossen. Mit Vorsicht verwenden.",
             "CANENLIST": "Können Benutzer sich einschreiben",
-            "ACTIVE": "Spiel ist aktiv",
+            "ACTIVELABEL": "Spiel ist aktiv",
+            "ACTIVEDESC": "Die Runden aktiver Spiele werden vom Server berechnet, falls das StartDatum in der Vergangenheit liegt.",
             "MAXPLAYERS": "Maximalzahl an Spielern",
             "ENLISTEDPLAYERS": "Currently enlisted players",
-            "STARTDATE": "Startdatum",
-            "STARTTIME": "Start Uhrzeit",
+            "STARTDATE": "Startdatum (Server)",
+            "STARTTIME": "Start Uhrzeit (Server)",
             "TURNDURATION": "Dauer einer Runde (Minuten)",
-            "SUBMIT": "Spiel Speichern"
+            "SUBMIT": "Spiel Speichern",
+            "DELETE": "Spiel löschen",
+            "DELETECONFIRM": "Sind Sie sicher das Sie das Spiel g%s löschen wollen? Diese Aktion kann nicht rückgängig gemacht werden.",
+            "DELETEDESC": "Löschen eines Spieles entfernt alle Spieler von dem Spiel, benachrichtigt sie (TODO) und löscht schließlich das Spiel. <strong>Diese Aktion kann nicht rückgängig gemacht werden.</strong>",
+            "SUCCESS": {
+                "EDIT": "Spiel <strong>g%s</strong> geändert.",
+                "NEW": "Spiel <strong>g%s</strong> erstellt.",
+                "DELETE": "Successfully deleted <strong>g%s</strong>."
+            }
         },
 
         "USERS": {

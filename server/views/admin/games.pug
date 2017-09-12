@@ -207,7 +207,8 @@ block content
 
                                 td= h.moment(game.created).format("LLL")
 
-                                td= h.moment(game.startDate).format("LLL")
+                                td(class=(h.moment(game.startDate).diff(h.moment()) < 0 ? "admin-listtable__td-highlighted" : ""))
+                                    != h.moment(game.startDate).format("LLL")
 
                                 td
                                     if game.processing
@@ -222,8 +223,8 @@ block content
                                             title=`${h.__("ADMIN.GAME.BODY.CANENLIST")}`
                                         )
                                             != h.icon("galnet")
-
-        pre= h.dump(games)
+        h1 data
+        pre= h.dump(data)
 
 block scripts
     include ../webpack/app.footer.pug

@@ -95,7 +95,7 @@ const appConfig = {
     defaultPagination: {
         admin: {
             users: 20,
-            games: 4 // tmp for dev
+            games: 20
         }
     }
 };

@@ -3,9 +3,14 @@
  * manageGGamesController
  *
  **********************************************************************************************************************/
+const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
+const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
+const logger = require("../../handlers/logger/console");
 const Game = mongoose.model("Game");
+const Player = mongoose.model("Player");
+const User = mongoose.model("User");
 const cfg = require("../../config");
 
 /*
@@ -25,9 +30,8 @@ exports.showGames = async (req, res) => {
     if (req.body.sort) {
         sortField = req.body.sort.split("_")[0];
         sortDirection = req.body.sort.split("_")[1];
-    }
-    // if no post params exist, try and use url params (pagination links!)
-    if (req.params.sortField && req.params.sortDirection) {
+    } else if (req.params.sortField && req.params.sortDirection) {
+        // if no post params exist, try and use url params (pagination links!)
         sortField = req.params.sortField;
         sortDirection = req.params.sortDirection;
     }
@@ -51,7 +55,8 @@ exports.showGames = async (req, res) => {
         pages,
         count: count.length,
         sortField,
-        sortDirection
+        sortDirection,
+        data
     });
 };
 
@@ -73,4 +78,144 @@ exports.showEditGame = async (req, res) => {
         title,
         game
     });
+};
+
+/*
+ * prepare checkbox and date data for the next middleware ==============================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ *
+ */
+exports.parseCheckboxAndDates = (req, res, next) => {
+    req.body.startDate = moment(
+        `${req.body.startDateDate} ${req.body.startDateTime}`
+    ).toISOString();
+    /* set our booleans to true || false by evaluating (req.body.. !== undefined)
+     * since unchecked checkboxes do not send form data and do not exist on req.body
+     * we need this so you can set to false by unchecking the checkbox
+     */
+    req.body.active = req.body.active !== undefined;
+    req.body.canEnlist = req.body.canEnlist !== undefined;
+    req.body.processing = req.body.processing !== undefined;
+    next();
+};
+
+/*
+ * post edit an existing game ==========================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ *
+ */
+exports.editGame = async (req, res) => {
+    const game = await Game.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+        runValidators: true,
+        context: "query"
+    });
+    logger.success(
+        `[Admin ${chalk.cyan(
+            "@" + req.user.username
+        )}]: changed game ${chalk.red("g" + game.number)} to ${chalk.yellow(
+            JSON.stringify(game, null, 2)
+        )}`
+    );
+    req.flash("success", i18n.__("ADMIN.GAME.SUCCESS.EDIT", game.number));
+    res.render("admin/game", {
+        session: req.session,
+        title: i18n.__("ADMIN.GAME.TITLE", game.number),
+        game,
+        flashes: req.flash()
+    });
+};
+
+/*
+ * post create a new game from req.body data ===========================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ *
+ */
+exports.newGame = async (req, res) => {
+    req.body.number =
+        (await Game.findOne({}).sort({ number: "desc" })).number + 1;
+    const game = await new Game(req.body).save();
+    console.log(game);
+    logger.success(
+        `[Admin ${chalk.cyan(
+            "@" + req.user.username
+        )}]: created new game ${chalk.red("g" + game.number)} => ${chalk.yellow(
+            JSON.stringify(game, null, 2)
+        )}`
+    );
+    req.flash("success", i18n.__("ADMIN.GAME.SUCCESS.NEW", game.number));
+    res.redirect(`/admin/games/${game.id}/edit`);
+};
+
+/*
+ * delete game request =================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ *
+ */
+exports.deleteGame = async (req, res) => {
+    const game = await Game.findById(req.params.id).populate("players");
+    const playerIds = game.players.map(player => player.id); // players enlisted in this game.
+    const UserIds = game.players.map(player => player.user); // users with players enlisted in this game
+    logger.info(
+        `[Admin ${chalk.cyan(
+            "@" + req.user.username
+        )}]: deleting game ${chalk.yellow("g" + game.number)}.`
+    );
+
+    if (game.players && game.players.length) {
+        logger.info(
+            `[Admin ${chalk.cyan(
+                "@" + req.user.username
+            )}]: removing ${playerIds.length} playerIDs from users.`
+        );
+        // update users and remove SelectedPlayer if player is enlisted to this game
+        await User.updateMany(
+            { selectedPlayer: { $in: playerIds } },
+            {
+                $set: {
+                    selectedPlayer: undefined
+                }
+            },
+            { runValidators: true, context: "query" }
+        );
+        // update users and remove players entry if player is enlisted to this game
+        await User.updateMany(
+            { _id: { $in: UserIds } },
+            {
+                $pull: { players: { $in: playerIds } }
+            },
+            { runValidators: true, context: "query" }
+        );
+        // delete players
+        logger.info(
+            `[Admin ${chalk.cyan(
+                "@" + req.user.username
+            )}]: removing ${playerIds.length} players.`
+        );
+        await Player.deleteMany({
+            _id: { $in: playerIds }
+        });
+    }
+
+    const deletedGame = await Game.findByIdAndRemove(req.params.id);
+    if (deletedGame) {
+        logger.success(
+            `[Admin ${chalk.cyan(
+                "@" + req.user.username
+            )}]: deleted game ${chalk.yellow("g" + deletedGame.number)}.`
+        );
+    }
+
+    // TODO: notify users by email
+
+    req.flash(
+        "success",
+        i18n.__("ADMIN.GAME.SUCCESS.DELETE", deletedGame.number)
+    );
+    res.redirect("/admin/games");
 };

@@ -21,11 +21,7 @@ block content
                     a.aw-content-head__breadcrumb(href=`/admin/games/new`)= title
 
 
-        if game && game.id
-            - let formUrl = `/admin/games/${game.id}/edit`
-        else
-            - let formUrl = `/admin/games/new`
-        form#gameForm.aw-form(method="POST", action=(formUrl))
+        form#gameForm.aw-form(method="POST", action=(game && game.id ? `/admin/games/${game.id}/edit` : `/admin/games/new`))
 
             if game && game.number
                 .aw-grid__row.aw-grid__row--2col
@@ -39,7 +35,7 @@ block content
 
             .aw-form__row
                 .aw-form-input
-                    label.aw-form-input__label(for="active")= h.__("ADMIN.GAME.ACTIVE")
+                    label.aw-form-input__label(for="active")= h.__("ADMIN.GAME.ACTIVELABEL")
                     .aw-form-input__input
                         .aw-checkbox
                             input(
@@ -51,10 +47,11 @@ block content
                                 aria-checked=(game && game.active)
                             )
                             label(for="active")
+                .aw-form__row-description!= h.__("ADMIN.GAME.ACTIVEDESC")
 
             .aw-form__row
                 .aw-form-input
-                    label.aw-form-input__label(for="processing")= h.__("ADMIN.GAME.PROCESSING")
+                    label.aw-form-input__label(for="processing")= h.__("ADMIN.GAME.PROCESSINGLABEL")
                     .aw-form-input__input
                         .aw-checkbox
                             input(
@@ -66,6 +63,7 @@ block content
                                 aria-checked=(game && game.processing)
                             )
                             label(for="processing")
+                .aw-form__row-description!= h.__("ADMIN.GAME.PROCESSINGDESC")
 
             .aw-form__row
                 .aw-form-input
@@ -91,7 +89,7 @@ block content
                 .aw-form-input
                     label.aw-narrowform-input__label(for="maxPlayers")= h.__("ADMIN.GAME.MAXPLAYERS")
                     input.aw-narrowform-input__input(
-                        type="text",
+                        type="number",
                         name="maxPlayers",
                         id="maxPlayers",
                         value=(game && game.maxPlayers ? game.maxPlayers : cfg.games.defaultNumPlayers)
@@ -114,14 +112,14 @@ block content
                         type="time",
                         name="startDateTime",
                         id="startDateTime",
-                        value=(game && game.startDate && h.moment(game.startDate).format("HH:MM"))
+                        value=(game && game.startDate && h.moment(game.startDate).format("HH:mm"))
                     )
 
             .aw-form__row
                 .aw-form-input
                     label.aw-narrowform-input__label(for="turnDuration")= h.__("ADMIN.GAME.TURNDURATION")
                     input.aw-narrowform-input__input(
-                        type="text",
+                        type="number",
                         name="turnDuration",
                         id="turnDuration",
                         value=(game && game.turnDuration ? game.turnDuration : cfg.games.defaultTurnDuration)
@@ -132,6 +130,17 @@ block content
                     button.aw-btn.aw-btn--icon(type="submit")
                         != h.icon("save", ["small"])
                         != h.__("ADMIN.GAME.SUBMIT")
+
+            if game && game.id
+                .aw-form__row
+                    .aw-form__submit
+                        a.aw-btn.aw-btn--icon(
+                            href=`/admin/games/${game.id}/delete`,
+                            onclick="if (!window.confirm(\"" + h.__("ADMIN.GAME.DELETECONFIRM", game.number) + "\")) return false;"
+                        )
+                            != h.icon("delete", ["small"])
+                            != h.__("ADMIN.GAME.DELETE")
+                        .aw-form__row-description!= h.__("ADMIN.GAME.DELETEDESC")
 
 block scripts
     include ../webpack/app.footer.pug

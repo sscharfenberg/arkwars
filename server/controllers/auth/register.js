@@ -185,7 +185,7 @@ exports.sendConfirmationEmail = async (req, res) => {
  * confirm email request ===============================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
-  * @param {callback} next
+ * @param {callback} next
  */
 exports.confirmEmail = async (req, res, next) => {
     const user = await User.findOne({

@@ -8,6 +8,8 @@
 @import "../../abstracts/mixins";
 
 .aw-btn {
+    display: inline-block;
+
     padding: 1rem 3rem;
 
     border: 0;

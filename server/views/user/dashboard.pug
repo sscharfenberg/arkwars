@@ -123,8 +123,8 @@ block content
                 .aw-form__submit
                     //- this is embarassignly simple. TODO: use some sort of modal.
                     button.aw-btn.aw-btn--icon(
-                    type="submit",
-                    onclick="if (!window.confirm(\"" + h.__("APP.DASHBOARD.INFOBOX.DELETE.CONFIRM") + "\")) return false;"
+                        type="submit",
+                        onclick="if (!window.confirm(\"" + h.__("APP.DASHBOARD.INFOBOX.DELETE.CONFIRM") + "\")) return false;"
                     )
                         != h.icon("delete", ["small"])
                         != h.__("APP.DASHBOARD.INFOBOX.DELETE.SUBMIT")

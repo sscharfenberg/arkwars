@@ -70,5 +70,9 @@
         justify-content: space-between;
         flex-wrap: wrap;
     }
+
+    &__td-highlighted {
+        color: palette("brand", "viking");
+    }
 }
 

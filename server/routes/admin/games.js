@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
  *
- * MANAGE GAMES ROUTES
+ * `/admin/games` ROUTES
  *
  * @exports {Express.Router} router
  *
@@ -21,7 +21,21 @@ router.post("/", catchErrors(manageGamesController.showGames));
 
 // show edit gamme formm
 router.get("/:id/edit", catchErrors(manageGamesController.showEditGame));
+// post edit gamme formm
+router.post("/:id/edit",
+    manageGamesController.parseCheckboxAndDates,
+    catchErrors(manageGamesController.editGame)
+);
+
 // show create game formm
 router.get("/new", catchErrors(manageGamesController.showEditGame));
+// post create gamme formm
+router.post("/new",
+    manageGamesController.parseCheckboxAndDates,
+    catchErrors(manageGamesController.newGame)
+);
+
+// delete game request
+router.get("/:id/delete", catchErrors(manageGamesController.deleteGame));
 
 module.exports = router;

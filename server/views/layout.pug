@@ -50,18 +50,18 @@ body
 
 
             //- players. we show games, but we really mean players
-            if user && user.players && user.players.length && user.selectedPlayer
+            if user && user.players && user.players.length
                 li.aw-header__action
                     a.aw-header__link.aw-header__submenu-trigger(href="", aria-label=(h.__("APP.HEADER.LABEL_CHANGEGAME")))
                         != h.icon("games")
-                        span.keep= "g" + user.selectedPlayer.game.number
+                        span.keep= user.selectedPlayer ? "g" + user.selectedPlayer.game.number : h.__("APP.HEADER.LABEL_GAME")
                     ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
                         each player in user.players
                             li.aw-header__submenu-item
                                 a.aw-header__submenu-item-link(
                                     href=`/game/${player.game.number}/select`,
                                     data-gameid=(player.game.number),
-                                    class=(user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
+                                    class=(user.selectedPlayer && user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
                                 )= "g" + player.game.number
 
 
