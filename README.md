@@ -10,7 +10,21 @@ Number of times `.env` file got submitted to git: **2**
 
 * MongoDB 3.4 Database
 * Redis database as session store
-* NodeJS 8.2.1, npm 5.3
+* NodeJS 8.4.0, npm 5.3
+
+### Next TODOs Backend
+
+- [x] Edit game
+- [x] Create game
+- [x] Delete game
+- [ ] seed universe and star systems
+- [ ] make values for progressbar dynamic from server
+
+### Next TODOs Frontend
+
+- [ ] Add a Frontend framework for game screens. Decide on using React or Vue.
+- [ ] Refactor webpack config: changes for framework, bundle-buddy
+  
 
 ## NPM Scripts
 

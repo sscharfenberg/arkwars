@@ -11,6 +11,7 @@ const logger = require("../../handlers/logger/console");
 const Game = mongoose.model("Game");
 const Player = mongoose.model("Player");
 const User = mongoose.model("User");
+const seed = require("../../handlers/game/seed");
 const cfg = require("../../config");
 
 /*
@@ -71,7 +72,11 @@ exports.showEditGame = async (req, res) => {
     let title = i18n.__("ADMIN.GAME.TITLENEW");
     if (req.params.id) {
         game = await Game.findOne({ _id: req.params.id }).populate("players");
-        title = i18n.__("ADMIN.GAME.TITLE", game.number);
+        if (!game) {
+            req.flash("error", i18n.__("ADMIN.GAME.ERROR.GAMENOTFOUND"));
+        } else {
+            title = i18n.__("ADMIN.GAME.TITLE", game.number);
+        }
     }
     res.render("admin/game", {
         session: req.session,
@@ -88,9 +93,11 @@ exports.showEditGame = async (req, res) => {
  *
  */
 exports.parseCheckboxAndDates = (req, res, next) => {
-    req.body.startDate = moment(
-        `${req.body.startDateDate} ${req.body.startDateTime}`
-    ).toISOString();
+    if (req.body.startDateDate && req.body.startDateTime) {
+        req.body.startDate = moment(
+            `${req.body.startDateDate} ${req.body.startDateTime}`
+        ).toISOString();
+    }
     /* set our booleans to true || false by evaluating (req.body.. !== undefined)
      * since unchecked checkboxes do not send form data and do not exist on req.body
      * we need this so you can set to false by unchecking the checkbox
@@ -133,9 +140,10 @@ exports.editGame = async (req, res) => {
  * post create a new game from req.body data ===========================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
+ * @param {callback} next
  *
  */
-exports.newGame = async (req, res) => {
+exports.newGame = async (req, res, next) => {
     req.body.number =
         (await Game.findOne({}).sort({ number: "desc" })).number + 1;
     const game = await new Game(req.body).save();
@@ -147,8 +155,9 @@ exports.newGame = async (req, res) => {
             JSON.stringify(game, null, 2)
         )}`
     );
-    req.flash("success", i18n.__("ADMIN.GAME.SUCCESS.NEW", game.number));
-    res.redirect(`/admin/games/${game.id}/edit`);
+    req._game = game;
+    req._game.density = Math.ceil(req.body.density);
+    next(); // game was created, proceed to seed universe
 };
 
 /*
@@ -218,4 +227,23 @@ exports.deleteGame = async (req, res) => {
         i18n.__("ADMIN.GAME.SUCCESS.DELETE", deletedGame.number)
     );
     res.redirect("/admin/games");
+};
+
+/*
+ * seed game universe ==================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ *
+ */
+exports.seedGame = async (req, res) => {
+    const game = req._game;
+    logger.info(
+        `[Admin ${chalk.cyan(
+            "@" + req.user.username
+        )}]: seed universe for game ${chalk.yellow("g" + game.number)}.`
+    );
+    console.log(seed.PlayerSystems(game, req.user));
+    console.log(seed.NPCSystems(game, req.user));
+    //    req.flash("success", i18n.__("ADMIN.GAME.SUCCESS.NEW", game.number));
+    //    res.redirect(`/admin/games/${game.id}/edit`);
 };

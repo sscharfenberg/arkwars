@@ -126,6 +126,28 @@ block content
                     )
 
             .aw-form__row
+                .aw-form-input
+                    label.aw-narrowform-input__label(for="dimensions")= h.__("ADMIN.GAME.DIMENSIONS")
+                    input.aw-narrowform-input__input(
+                        type="number",
+                        name="dimensions",
+                        id="dimensions",
+                        value=(game && game.dimensions ? game.dimensions : cfg.games.defaultDimensions)
+                    )
+
+            if !game || !game.id
+                .aw-form__row
+                    .aw-form-input
+                        label.aw-narrowform-input__label(for="density")= h.__("ADMIN.GAME.DENSITYLABEL")
+                        input.aw-narrowform-input__input(
+                            type="number",
+                            name="density",
+                            id="density",
+                            value=(game && game.density ? game.density : cfg.games.defaultDensity)
+                        )
+                    .aw-form__row-description!= h.__("ADMIN.GAME.DENSITYDESC")
+
+            .aw-form__row
                 .aw-form__submit
                     button.aw-btn.aw-btn--icon(type="submit")
                         != h.icon("save", ["small"])

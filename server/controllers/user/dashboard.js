@@ -44,7 +44,6 @@ exports.showDashboard = async (req, res) => {
             game: {
                 active: _player.game.active,
                 startDate: _player.game.startDate,
-                endDate: _player.game.endDate,
                 number: _player.game.number,
                 turn: _player.game.turn,
                 maxPlayers: _player.game.maxPlayers,

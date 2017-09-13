@@ -73,8 +73,8 @@ block content
                                         != h.icon("games", ["small"])
                                         != h.__("APP.DASHBOARD.GAMES.MY.GOTO")
 
-                    //- game is active, has no endDate and startDate is in the past.
-                    else if player.game.active && h.moment(player.game.startDate).diff(h.moment()) < 0 && !player.game.endDate
+                    //- game is active and startDate is in the past.
+                    else if player.game.active && h.moment(player.game.startDate).diff(h.moment()) < 0
                         .aw-grid__row.aw-grid__row--2col.aw-grid__row--seperated
                             .aw-grid__column
                                 strong= "g" + player.game.number
@@ -93,8 +93,8 @@ block content
                                         != h.icon("games", ["small"])
                                         != h.__("APP.DASHBOARD.GAMES.MY.GOTO")
 
-                    //- game is not active and has an endDate
-                    else if !player.game.active && player.game.endDate
+                    //- game is not active
+                    else if !player.game.active
                         .aw-grid__row.aw-grid__row--2col.aw-grid__row--seperated
                             .aw-grid__column
                                 strong= "g" + player.game.number

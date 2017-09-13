@@ -31,10 +31,6 @@ const gameSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    // end date. if this is present, the game has ended.
-    endDate: {
-        type: Date
-    },
 
     // current turn number
     turn: {
@@ -52,12 +48,22 @@ const gameSchema = new mongoose.Schema({
     turnDue: {
         type: Date
     },
+
     // max number of players
     maxPlayers: {
         type: Number,
         min: 1,
         default: 50
     },
+
+    // dimensions of game (width/height)
+    dimensions: {
+        type: Number,
+        min: 10,
+        max: 200,
+        default: 20
+    },
+
     // date when the game starts
     startDate: {
         type: Date

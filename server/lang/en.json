@@ -362,6 +362,9 @@
             "STARTDATE": "Start Date (server)",
             "STARTTIME": "Start Time (server)",
             "TURNDURATION": "Turn Duration (minutes)",
+            "DIMENSIONS": "Width and height of universe",
+            "DENSITYLABEL": "Density of universe",
+            "DENSITYDESC": "Average number of squares per star system",
             "SUBMIT": "Save game",
             "DELETE": "Delete game",
             "DELETECONFIRM": "Are you sure you want to permanently delete game g%s? This can not be undone.",
@@ -370,6 +373,9 @@
                 "EDIT": "Game <strong>g%s</strong> updated.",
                 "NEW": "Game <strong>g%s</strong> created.",
                 "DELETE": "Successfully deleted <strong>g%s</strong>."
+            },
+            "ERROR": {
+                "GAMENOTFOUND": "We could not find a game with this id."
             }
         },
 

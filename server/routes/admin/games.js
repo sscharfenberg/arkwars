@@ -31,11 +31,12 @@ router.post("/:id/edit",
 router.get("/new", catchErrors(manageGamesController.showEditGame));
 // post create gamme formm
 router.post("/new",
-    manageGamesController.parseCheckboxAndDates,
-    catchErrors(manageGamesController.newGame)
+    manageGamesController.parseCheckboxAndDates, // 1. parse date+time to datetime and assign checkbox values
+    catchErrors(manageGamesController.newGame), // 2. create new game with metadata
+    catchErrors(manageGamesController.seedGame) // 3. seed universe with systems
 );
 
 // delete game request
-router.get("/:id/delete", catchErrors(manageGamesController.deleteGame));
+router.get("/:id/delete", catchErrors(manageGamesController.deleteGame)); // TODO: remove systems
 
 module.exports = router;

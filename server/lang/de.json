@@ -361,6 +361,9 @@
             "STARTDATE": "Startdatum (Server)",
             "STARTTIME": "Start Uhrzeit (Server)",
             "TURNDURATION": "Dauer einer Runde (Minuten)",
+            "DIMENSIONS": "Breite und Höhe des Universums",
+            "DENSITYLABEL": "Dichte des Universums",
+            "DENSITYDESC": "Durchschnittliche Anzahl an Sektoren pro System",
             "SUBMIT": "Spiel Speichern",
             "DELETE": "Spiel löschen",
             "DELETECONFIRM": "Sind Sie sicher das Sie das Spiel g%s löschen wollen? Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -369,6 +372,9 @@
                 "EDIT": "Spiel <strong>g%s</strong> geändert.",
                 "NEW": "Spiel <strong>g%s</strong> erstellt.",
                 "DELETE": "Successfully deleted <strong>g%s</strong>."
+            },
+            "ERROR": {
+                "GAMENOTFOUND": "Wir konnten kein Spiel mit dieser ID finden."
             }
         },
 

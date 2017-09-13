@@ -89,7 +89,9 @@ const appConfig = {
             }
         },
         defaultNumPlayers: 50,
-        defaultTurnDuration: 15
+        defaultTurnDuration: 15,
+        defaultDimensions: 50,
+        defaultDensity: 15
     },
     // default number of results per page
     defaultPagination: {
