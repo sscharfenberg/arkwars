@@ -18,6 +18,7 @@ Number of times `.env` file got submitted to git: **2**
 - [x] Create game
 - [x] Delete game
 - [x] seed universe with star systems, include preview
+- [ ] add dimensions to saved game when seeding
 - [ ] enlist => assign random player system
 - [ ] withhdraw => remove owner of player system
 - [ ] improve seed database scripts by using server handlers. add seed stars and planets so we have seeded games available for testing.
