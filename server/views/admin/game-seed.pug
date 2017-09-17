@@ -1,0 +1,123 @@
+extends ../layout
+
+block head
+    link(rel='stylesheet', href='/public/assets/styles.css')
+    link(rel='stylesheet', href='/public/assets/admin.css')
+
+block content
+    main.aw-content__inner
+        header.aw-content-head
+            h1.aw-content-head__title= title
+            nav.aw-content-head__breadcrumbs
+                a.aw-content-head__breadcrumb(href="/")
+                    != h.icon("home", ["home-icon"])
+                a.aw-content-head__breadcrumb(href="/admin")= h.__("ADMIN.INDEX.TITLE_NAV")
+                a.aw-content-head__breadcrumb(href="/admin/games")= h.__("ADMIN.GAMES.TITLE_NAV")
+                a.aw-content-head__breadcrumb(href=`/admin/games/${game.id}/edit`)= h.__("ADMIN.GAME.TITLE", game.number)
+                a.aw-content-head__breadcrumb(href=`/admin/games/${game.id}/seed`)= title
+
+        form#seedGameForm.aw-form(method="POST", action=(`/admin/games/${game.id}/seed`))
+
+            .aw-form__row
+                .aw-form-input
+                    label.aw-narrowform-input__label(for="dimensions")= h.__("ADMIN.GAME.DIMENSIONS")
+                    input.aw-narrowform-input__input(
+                        type="number",
+                        name="dimensions",
+                        id="dimensions",
+                        value=(game && game.dimensions ? game.dimensions : cfg.games.dimensions.default)
+                    )
+
+            .aw-form__row
+                br
+                .aw-form-input
+                    label.aw-narrowform-input__label= h.__("ADMIN.GAME.DISTANCELABEL")
+                    .aw-narrowform-input__input(style="min-height: 9rem;")
+                        .aw-slider#distanceSlider(
+                            data-min=(cfg.games.distance.bounds[0]),
+                            data-max=(cfg.games.distance.bounds[1])
+                        )
+                            input.aw-slider__input(
+                                type="hidden",
+                                name="distanceMin",
+                                id="distanceMin",
+                                value=(data && data.distanceMin ? data.distanceMin : cfg.games.distance.default[0])
+                            )
+                            input.aw-slider__input(
+                                type="hidden",
+                                name="distanceMax",
+                                id="distanceMax",
+                                value=(data && data.distanceMax ? data.distanceMax : cfg.games.distance.default[1])
+                            )
+                .aw-form__row-description!= h.__("ADMIN.GAME.DISTANCEDESC")
+
+            .aw-form__row
+                br
+                .aw-form-input
+                    label.aw-narrowform-input__label= h.__("ADMIN.GAME.PLAYERDISTANCELABEL")
+                    .aw-narrowform-input__input(style="min-height: 9rem;")
+                        .aw-slider#playerDistanceSlider(
+                            data-min=(cfg.games.playerDistance.bounds[0]),
+                            data-max=(cfg.games.playerDistance.bounds[1])
+                        )
+                            input.aw-slider__input(
+                                type="hidden",
+                                name="playerDistanceMin",
+                                id="playerDistanceMin",
+                                value=(data && data.playerDistanceMin ? data.playerDistanceMin : cfg.games.playerDistance.default[0])
+                            )
+                            input.aw-slider__input(
+                                type="hidden",
+                                name="playerDistanceMax",
+                                id="playerDistanceMax",
+                                value=(data && data.playerDistanceMax ? data.playerDistanceMax : cfg.games.playerDistance.default[1])
+                            )
+                .aw-form__row-description!= h.__("ADMIN.GAME.PLAYERDISTANCEDESC")
+
+
+            .aw-form__row
+                .aw-form__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("starchart", ["small"])
+                        != h.__("ADMIN.GAME.SEED.GENERATE")
+
+
+            if map && map.points
+                .aw-form__row
+                    .aw-form__submit
+                        button.aw-btn.aw-btn--icon(
+                            type="submit",
+                            onclick="document.forms.seedGameForm.action=\"/admin/games/" + game.id + "/seed/save\""
+                        )
+                            != h.icon("save", ["small"])
+                            != h.__("ADMIN.GAME.SEED.SAVE")
+
+            if map && map.points
+                - let tableClass = "admin-map--small"
+                if map.points.length > 50
+                    - tableClass = "admin-map--medium"
+                if map.points.length > 100
+                    - tableClass = "admin-map--large"
+                .aw-form__row
+                    .aw-grid__headline= h.__("ADMIN.GAME.SEED.MAPHDL", map.numEmptySys + map.numPlayerSys)
+                    .aw-grid__row.aw-grid__row--2col
+                        .aw-grid__column= h.__("ADMIN.GAME.SEED.NPCSYSTEM")
+                        .aw-grid__column= "🌏 " + map.numEmptySys
+                    .aw-grid__row.aw-grid__row--2col
+                        .aw-grid__column= h.__("ADMIN.GAME.SEED.PLAYERSYSTEM")
+                        .aw-grid__column= "🌕 " + map.numPlayerSys
+                    .admin-map__wrapper
+                        table.admin-map(class=(tableClass))
+                            each row in map.points
+                                tr.admin-map__row
+                                    each system in row
+                                        if system === 0
+                                            td.admin-map__sector
+                                        if system === 1
+                                            td.admin-map__sector.admin-map__sector--star 🌏
+                                        if system === 2
+                                            td.admin-map__sector.admin-map__sector--star 🌕
+
+
+block scripts
+    include ../webpack/admin.footer.pug

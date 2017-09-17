@@ -23,8 +23,8 @@ router.post("/", catchErrors(manageGamesController.showGames));
 router.get("/:id/edit", catchErrors(manageGamesController.showEditGame));
 // post edit gamme formm
 router.post("/:id/edit",
-    manageGamesController.parseCheckboxAndDates,
-    catchErrors(manageGamesController.editGame)
+    manageGamesController.parseCheckboxAndDates, // 1. parse date+time to datetime and assign checkbox values
+    catchErrors(manageGamesController.editGame) // 2. edit game metadata
 );
 
 // show create game formm
@@ -32,9 +32,20 @@ router.get("/new", catchErrors(manageGamesController.showEditGame));
 // post create gamme formm
 router.post("/new",
     manageGamesController.parseCheckboxAndDates, // 1. parse date+time to datetime and assign checkbox values
-    catchErrors(manageGamesController.newGame), // 2. create new game with metadata
-    catchErrors(manageGamesController.seedGame) // 3. seed universe with systems
+    catchErrors(manageGamesController.newGame) // 2. create new game with metadata
+//    catchErrors(manageGamesController.seedGame) // 3. seed universe with systems
 );
+
+// show seed game
+router.get("/:id/seed", catchErrors(manageGamesController.showSeedGame));
+// post seed game (preview)
+router.post("/:id/seed", catchErrors(manageGamesController.seedGamePreview));
+// post save seeded game
+router.post("/:id/seed/save",
+    catchErrors(manageGamesController.createStars), // 1. prepare stars with stats
+    catchErrors(manageGamesController.createPlanets) // 2. prepare planet data
+);
+
 
 // delete game request
 router.get("/:id/delete", catchErrors(manageGamesController.deleteGame)); // TODO: remove systems

@@ -10,8 +10,7 @@ module.exports = [
         turn: 22,
         turnDuration: 5,
         turnDue: moment().add(5, "minutes").toISOString(),
-        maxPlayers: 20,
-        dimensions: 10,
+        //maxPlayers: 20,
         startDate: "2017-06-19T03:15:05.654Z"
     },
     {
@@ -23,8 +22,7 @@ module.exports = [
         turn: 125,
         turnDuration: 15,
         turnDue: moment().add(1, "minutes").toISOString(),
-        maxPlayers: 10,
-        dimensions: 20,
+        //maxPlayers: 10,
         startDate: "2017-05-02T11:15:05.654Z"
     },
     {
@@ -36,8 +34,7 @@ module.exports = [
         turn: 9865,
         turnDuration: 10,
         turnDue: moment().add(10, "minutes").toISOString(),
-        maxPlayers: 500,
-        dimensions: 50,
+        //maxPlayers: 500,
         startDate: "2017-07-29T21:15:05.654Z"
     },
     {
@@ -48,8 +45,7 @@ module.exports = [
         processing: false,
         turn: 0,
         turnDuration: 30,
-        maxPlayers: 50,
-        dimensions: 25,
+        //maxPlayers: 50,
         startDate: moment().add(6, "months").toISOString()
     }
 ];

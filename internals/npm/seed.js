@@ -16,10 +16,11 @@ require("dotenv").config({
 
 // models and mockdata
 const Game = require("../../server/models/Game");
-const games = require("../mockdata/games");
 const User = require("../../server/models/User");
-const users = require("../mockdata/users");
 const Player = require("../../server/models/Player");
+const Star = require("../../server/models/Star");
+const games = require("../mockdata/games");
+const users = require("../mockdata/users");
 const players = require("../mockdata/players");
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
@@ -37,6 +38,7 @@ async function pruneDatabase() {
         await Game.remove();
         await User.remove();
         await Player.remove();
+        await Star.remove();
         logger.success("[node] collections deleted.");
     } catch (e) {
         logger.error("[node] error while deleting collections.");

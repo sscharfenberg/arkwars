@@ -338,7 +338,8 @@
                 "DURATION": "Duration",
                 "PROCESSING": "Processing",
                 "CANENLIST": "Can Enlist",
-                "ACTIVE": "Active"
+                "ACTIVE": "Active",
+                "SEEDED": "Seeded"
             },
             "BODY": {
                 "PROCESSING": "Game is currently being processed.",
@@ -357,18 +358,21 @@
             "CANENLIST": "Can enlist to game",
             "ACTIVELABEL": "Game is active",
             "ACTIVEDESC": "Active games means the server will calculate turns, if startDate is in the past.",
-            "ENLISTEDPLAYERS": "Currently enlisted players",
+            "ENLISTEDPLAYERS": "Players / Max",
             "MAXPLAYERS": "Maximum number of players",
             "STARTDATE": "Start Date (server)",
             "STARTTIME": "Start Time (server)",
             "TURNDURATION": "Turn Duration (minutes)",
             "DIMENSIONS": "Width and height of universe",
-            "DENSITYLABEL": "Density of universe",
-            "DENSITYDESC": "Average number of squares per star system",
+            "DISTANCELABEL": "Star Distance",
+            "DISTANCEDESC": "Select minimum and maximum distance of star systems. The map is filled with starsystems while enforcing the min/max distance. With this setting you can influence the number of systems in the map.",
+            "PLAYERDISTANCELABEL": "Player Distance",
+            "PLAYERDISTANCEDESC": "Select minimum and maximum distance of players. This determines the maximum number of players.",
             "SUBMIT": "Save game",
             "DELETE": "Delete game",
             "DELETECONFIRM": "Are you sure you want to permanently delete game g%s? This can not be undone.",
             "DELETEDESC": "Deleting a game removes all players from the game, notifies them (TODO) and deletes the game. <strong>This can not be undone.</strong>",
+            "STARS": "Stars",
             "SUCCESS": {
                 "EDIT": "Game <strong>g%s</strong> updated.",
                 "NEW": "Game <strong>g%s</strong> created.",
@@ -376,6 +380,19 @@
             },
             "ERROR": {
                 "GAMENOTFOUND": "We could not find a game with this id."
+            },
+            "SEED": {
+                "LINK": "Seed game with stars",
+                "TITLE": "Seed game g%s with stars",
+                "GENERATE": "Generate star systems preview",
+                "MAPHDL": "Map preview with %s star systems",
+                "NPCSYSTEM": "Unowned systems",
+                "PLAYERSYSTEM": "Player starting systems",
+                "SAVE": "Save systems and finalize seeding",
+                "ERROR": {
+                    "AlreadySeeded": "Game g%s is already seeded."
+                },
+                "SUCCESS": "The game was successfully seeded with stars and planets."
             }
         },
 

@@ -19,6 +19,7 @@ const pkg = require("../../package.json");
 const appDirectory = fs.realpathSync(process.cwd());
 
 const appConfig = {
+
     app: {
         // basic settings
         title: pkg.app.name,
@@ -68,7 +69,7 @@ const appConfig = {
                 "image/jpeg"
                 //, "image/webp"
             ],
-            maxFileSize: 100 * 1024, // 100Kb
+            maxFileSize: 200 * 1024, // 200Kb
             maxSize: {
                 width: 192, // 96px 2dpi
                 height: 192
@@ -76,7 +77,7 @@ const appConfig = {
             path: path.join(appDirectory, "server", "public", "avatars")
         }
     },
-    // game settings
+
     games: {
         empire: {
             name: {
@@ -88,18 +89,112 @@ const appConfig = {
                 max: 4
             }
         },
-        defaultNumPlayers: 50,
         defaultTurnDuration: 15,
-        defaultDimensions: 50,
-        defaultDensity: 15
+        dimensions: {
+            default: 40,
+            min: 10,
+            max: 200
+        },
+        distance: {
+            default: [3,5],
+            bounds: [2,20]
+        },
+        playerDistance: {
+            default: [6,12],
+            bounds: [2,20]
+        }
     },
-    // default number of results per page
+
+    stars: {
+        spectralTypes: [
+            {
+                name: "O",
+                chance: 5,
+                chanceHome: 0,
+                planetsMod: -3
+            }, {
+                name: "B",
+                chance: 5,
+                chanceHome: 0,
+                planetsMod: -2
+            }, {
+                name: "A",
+                chance: 5,
+                chanceHome: 10,
+                planetsMod: -2
+            }, {
+                name: "F",
+                chance: 10,
+                chanceHome: 30,
+                planetsMod: 0
+            }, {
+                name: "G",
+                chance: 20,
+                chanceHome: 30,
+                planetsMod: 1
+            }, {
+                name: "K",
+                chance: 20,
+                chanceHome: 30,
+                planetsMod: 2
+            }, {
+                name: "M",
+                chance: 35,
+                chanceHome: 0,
+                planetsMod: 3
+            }
+        ],
+        name: {
+            initial: [4,6],
+            bounds: [4,30]
+        },
+        planets: {
+            npc: [3, 10],
+            player: [6,12]
+        }
+    },
+
+    planets: {
+        types: [
+            {
+                name: "terrestrial",
+                chance: 15,
+                chanceHome: 50
+            }, {
+                name: "gas",
+                chance: 12,
+                chanceHome: 10
+            }, {
+                name: "ice",
+                chance: 11,
+                chanceHome: 10
+            }, {
+                name: "iron",
+                chance: 15,
+                chanceHome: 10
+            }, {
+                name: "barren",
+                chance: 50,
+                chanceHome: 10
+            }, {
+                name: "toxic",
+                chance: 5,
+                chanceHome: 5
+            }, {
+                name: "tomb",
+                chance: 2,
+                chanceHome: 5
+            }
+        ]
+    },
+
     defaultPagination: {
         admin: {
             users: 20,
             games: 20
         }
     }
+
 };
 
 module.exports = appConfig;

@@ -17,12 +17,17 @@ Number of times `.env` file got submitted to git: **2**
 - [x] Edit game
 - [x] Create game
 - [x] Delete game
-- [ ] seed universe and star systems
+- [x] seed universe with star systems, include preview
+- [ ] enlist => assign random player system
+- [ ] withhdraw => remove owner of player system
+- [ ] improve seed database scripts by using server handlers. add seed stars and planets so we have seeded games available for testing.
+- [ ] debug and test manage games stuff. shits important, yo.
 - [ ] make values for progressbar dynamic from server
 
 ### Next TODOs Frontend
 
 - [ ] Add a Frontend framework for game screens. Decide on using React or Vue.
+- [ ] Add a datetime picker for game generation.
 - [ ] Refactor webpack config: changes for framework, bundle-buddy
   
 

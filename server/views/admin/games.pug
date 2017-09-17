@@ -180,6 +180,8 @@ block content
 
                             th= h.__("ADMIN.GAMES.HEAD.PROCESSING")
 
+                            th= h.__("ADMIN.GAMES.HEAD.SEEDED")
+
                             th= h.__("ADMIN.GAMES.HEAD.CANENLIST")
 
                     //- user data
@@ -198,8 +200,10 @@ block content
                                             != h.icon("done")
 
                                 td= game.players.length
-                                    | /
-                                    != game.maxPlayers
+                                    if game.maxPlayers
+                                        != "/" + game.maxPlayers
+                                    else
+                                        | /0
 
                                 td= game.turn
 
@@ -218,6 +222,22 @@ block content
                                             != h.icon("warning")
 
                                 td
+                                    if game.stars && game.stars.length
+                                        .admin-listtable__td-symbols
+                                            span.admin-listtable__status.admin-listtable__status--stars(
+                                                title=`${h.__("ADMIN.GAME.STATUS.STARS")}`
+                                            )
+                                                != h.icon("starchart")
+                                            span= game.stars.length
+                                    if game.maxPlayers
+                                        .admin-listtable__td-symbols
+                                            span.admin-listtable__status.admin-listtable__status--emmpires(
+                                                title=`${h.__("ADMIN.GAME.STATUS.EMPIRES")}`
+                                            )
+                                                != h.icon("empire")
+                                            span= game.maxPlayers
+
+                                td
                                     if game.canEnlist
                                         span.admin-listtable__status.admin-listtable__status--success(
                                             title=`${h.__("ADMIN.GAME.BODY.CANENLIST")}`
@@ -227,4 +247,4 @@ block content
         pre= h.dump(data)
 
 block scripts
-    include ../webpack/app.footer.pug
+    include ../webpack/admin.footer.pug

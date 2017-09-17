@@ -61,7 +61,7 @@ block content
                                 br
                                 != h.__("APP.DASHBOARD.GAMES.MY.TURNDURATION") + " " + h.__("APP.DASHBOARD.GAMES.MY.DURATION_VALUE", player.game.turnDuration)
                                 br
-                                != h.__("APP.DASHBOARD.GAMES.MY.PLAYERS") + `: ${player.game.numPlayers}/${player.game.maxPlayers}`
+                                != h.__("APP.DASHBOARD.GAMES.MY.PLAYERS") + `: ${player.game.numPlayers}/${player.game.maxPlayers ? player.game.maxPlayers : 0}`
                             .aw-grid__column
                                 != h.__("GAME.STATUS.Enlisted", h.moment(player.game.startDate).format("LLLL"))
                                 br
@@ -84,7 +84,7 @@ block content
                                 br
                                 != h.__("APP.DASHBOARD.GAMES.MY.TURNDURATION") + " " + h.__("APP.DASHBOARD.GAMES.MY.DURATION_VALUE", player.game.turnDuration)
                                 br
-                                != h.__("APP.DASHBOARD.GAMES.MY.PLAYERS") + `: ${player.game.numPlayers}/${player.game.maxPlayers}`
+                                != h.__("APP.DASHBOARD.GAMES.MY.PLAYERS") + `: ${player.game.numPlayers}/${player.game.maxPlayers ? player.game.maxPlayers : 0}`
                             .aw-grid__column
                                 != h.__("GAME.STATUS.Active", player.game.turn)
                                 br

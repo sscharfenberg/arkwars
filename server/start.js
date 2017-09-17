@@ -37,6 +37,8 @@ mongoose.connection
 require("./models/User");
 require("./models/Game");
 require("./models/Player");
+require("./models/Star");
+require("./models/Planet");
 
 errorHandlers.catchErrors(cron.startup());
 

@@ -337,7 +337,8 @@
                 "DURATION": "Rundendauer",
                 "PROCESSING": "Berechnen",
                 "CANENLIST": "Einschreiben",
-                "ACTIVE": "Aktiv"
+                "ACTIVE": "Aktiv",
+                "SEEDED": "Karte"
             },
             "BODY": {
                 "PROCESSING": "Spiel wird aktuell berechnet.",
@@ -357,17 +358,20 @@
             "ACTIVELABEL": "Spiel ist aktiv",
             "ACTIVEDESC": "Die Runden aktiver Spiele werden vom Server berechnet, falls das StartDatum in der Vergangenheit liegt.",
             "MAXPLAYERS": "Maximalzahl an Spielern",
-            "ENLISTEDPLAYERS": "Currently enlisted players",
+            "ENLISTEDPLAYERS": "Spieler / Maximal",
             "STARTDATE": "Startdatum (Server)",
             "STARTTIME": "Start Uhrzeit (Server)",
             "TURNDURATION": "Dauer einer Runde (Minuten)",
             "DIMENSIONS": "Breite und Höhe des Universums",
-            "DENSITYLABEL": "Dichte des Universums",
-            "DENSITYDESC": "Durchschnittliche Anzahl an Sektoren pro System",
+            "DISTANCELABEL": "Stern Distanz",
+            "DISTANCEDESC": "Wählen Sie die minimale und maximale Entfernung von Sternensystemen zueinander. Die Karte wird mit Sternensystemen gefüllt unter Beachtung der min/max Entfernung; durch diese Einstellung können Sie Dichte und Anzahl der Systeme steuern.",
+            "PLAYERDISTANCELABEL": "Spieler Distanz",
+            "PLAYERDISTANCEDESC": "Wählen Sie die minimale und maximale Entfernung von Spielern zueinander. Dies beeinflusst die maximale Anzahl der Spieler.",
             "SUBMIT": "Spiel Speichern",
             "DELETE": "Spiel löschen",
             "DELETECONFIRM": "Sind Sie sicher das Sie das Spiel g%s löschen wollen? Diese Aktion kann nicht rückgängig gemacht werden.",
             "DELETEDESC": "Löschen eines Spieles entfernt alle Spieler von dem Spiel, benachrichtigt sie (TODO) und löscht schließlich das Spiel. <strong>Diese Aktion kann nicht rückgängig gemacht werden.</strong>",
+            "STARS": "Sternensysteme",
             "SUCCESS": {
                 "EDIT": "Spiel <strong>g%s</strong> geändert.",
                 "NEW": "Spiel <strong>g%s</strong> erstellt.",
@@ -375,6 +379,19 @@
             },
             "ERROR": {
                 "GAMENOTFOUND": "Wir konnten kein Spiel mit dieser ID finden."
+            },
+            "SEED": {
+                "LINK": "Erzeuge Sternensysteme",
+                "TITLE": "Erzeuge Sternensysteme für Spiel g%s",
+                "GENERATE": "Erzeuge Vorschau der Sternensysteme",
+                "MAPHDL": "Vorschau der Karte mit %s Sternensystemen",
+                "NPCSYSTEM": "Sternensysteme ohne Besitzer",
+                "PLAYERSYSTEM": "Spieler Startsysteme",
+                "SAVE": "Sternensysteme speichern und Erzeugen der Karte abschließen",
+                "ERROR": {
+                    "AlreadySeeded": "Spiel g%s hat bereits erzeugte Sternensysteme."
+                },
+                "SUCCESS": "Sternensysteme und Planeten wurden erfolgreich verteilt."
             }
         },
 
