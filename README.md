@@ -4,7 +4,7 @@ Frontend and Backend for Arkwars - a strategic turn-based game of galactic conqu
 
 Number of times `.env` file got submitted to git: **2** 
 
-**Status:** backend push so we have some structure to work with in the frontend. currently working on admin area.
+**Status:** backend push so we have some structure to work with in the frontend. currently working on admin area, manage games.
 
 ## Requirements
 
@@ -13,24 +13,25 @@ Number of times `.env` file got submitted to git: **2**
 * NodeJS 8.4.0, npm 5.3
 
 ### Next TODOs Backend
-
-- [x] Edit game
-- [x] Create game
-- [x] Delete game
-- [x] seed universe with star systems, include preview
-- [ ] add dimensions to saved game when seeding
+- [x] improve seed database scripts by using server handlers. add seed stars and planets so we have seeded games available for testing. half done, needs work.- [x] improve seed database scripts by using server handlers. add seed stars and planets so we have seeded games available for testing. half done, needs work.
 - [ ] enlist => assign random player system
 - [ ] withhdraw => remove owner of player system
-- [ ] improve seed database scripts by using server handlers. add seed stars and planets so we have seeded games available for testing.
 - [ ] debug and test manage games stuff. shits important, yo.
 - [ ] make values for progressbar dynamic from server
 
 ### Next TODOs Frontend
 
 - [ ] Add a Frontend framework for game screens. Decide on using React or Vue.
-- [ ] Add a datetime picker for game generation.
 - [ ] Refactor webpack config: changes for framework, bundle-buddy
-  
+
+### Recently Done
+- [x] Add a datetime picker for game generation.
+- [x] delete game => delete stars and planets
+- [x] add map dimensions to saved game when seeding
+- [x] seed universe with star systems, include preview
+- [x] Delete game
+- [x] Create game
+- [x] Edit game  
 
 ## NPM Scripts
 

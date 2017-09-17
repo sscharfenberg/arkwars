@@ -263,8 +263,11 @@
         "STATUS": {
             "Active": "The game is active and running. Current turn: %s",
             "Enlisted": "You are enlisted, but the game is not yet active.<br />Game start: %s",
+            "Enlistable": "Users can enlist to this game.",
             "Finished": "This game has ended.",
-            "FinishedTurn": "Played turns: %s"
+            "FinishedTurn": "Played turns: %s",
+            "Empires": "%s player home systems",
+            "Stars": "%s star systems"
         }
     },
 
@@ -360,10 +363,9 @@
             "ACTIVEDESC": "Active games means the server will calculate turns, if startDate is in the past.",
             "ENLISTEDPLAYERS": "Players / Max",
             "MAXPLAYERS": "Maximum number of players",
-            "STARTDATE": "Start Date (server)",
-            "STARTTIME": "Start Time (server)",
+            "STARTDATE": "Date of game start",
             "TURNDURATION": "Turn Duration (minutes)",
-            "DIMENSIONS": "Width and height of universe",
+            "DIMENSIONS": "Map dimensions",
             "DISTANCELABEL": "Star Distance",
             "DISTANCEDESC": "Select minimum and maximum distance of star systems. The map is filled with starsystems while enforcing the min/max distance. With this setting you can influence the number of systems in the map.",
             "PLAYERDISTANCELABEL": "Player Distance",
@@ -375,7 +377,7 @@
             "STARS": "Stars",
             "SUCCESS": {
                 "EDIT": "Game <strong>g%s</strong> updated.",
-                "NEW": "Game <strong>g%s</strong> created.",
+                "NEW": "Game <strong>g%s</strong> successfully created without starmap. Seed starsystems and planets now.",
                 "DELETE": "Successfully deleted <strong>g%s</strong>."
             },
             "ERROR": {

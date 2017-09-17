@@ -63,14 +63,11 @@
         }
 
         &--stars {
+            margin-left: 0;
+
             background: palette("grey", "raven");
             color: palette("brand", "gorse");
             border-radius: 50%;
-        }
-
-        &--emmpires {
-            background: palette("grey", "raven");
-            color: palette("brand", "christine");
         }
 
     }

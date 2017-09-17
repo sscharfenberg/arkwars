@@ -24,7 +24,7 @@ block content
             p
                 a.aw-btn.aw-btn--icon(href=`/admin/games/new`)
                     != h.icon("games", ["small"])
-                    | New Game
+                    != h.__("ADMIN.GAME.TITLENEW")
 
             +pagination(page, pages, count, "/admin/games/p", `/s/${sortField}/d/${sortDirection}`)
 
@@ -195,7 +195,7 @@ block content
                                 td
                                     if game.active
                                         span.admin-listtable__status.admin-listtable__status--success(
-                                            title=`${h.__("ADMIN.GAME.STATUS.ACTIVE")}`
+                                            title=`${h.__("GAME.STATUS.Active", game.turn)}`
                                         )
                                             != h.icon("done")
 
@@ -225,22 +225,20 @@ block content
                                     if game.stars && game.stars.length
                                         .admin-listtable__td-symbols
                                             span.admin-listtable__status.admin-listtable__status--stars(
-                                                title=`${h.__("ADMIN.GAME.STATUS.STARS")}`
+                                                title=`${h.__("GAME.STATUS.Stars", game.stars.length)}`
                                             )
                                                 != h.icon("starchart")
                                             span= game.stars.length
-                                    if game.maxPlayers
+                                    if game.dimensions
                                         .admin-listtable__td-symbols
-                                            span.admin-listtable__status.admin-listtable__status--emmpires(
-                                                title=`${h.__("ADMIN.GAME.STATUS.EMPIRES")}`
-                                            )
-                                                != h.icon("empire")
-                                            span= game.maxPlayers
+                                            span(
+                                                title=(`${game.dimensions} x ${game.dimensions}`)
+                                            )= `${game.dimensions} x ${game.dimensions}`
 
                                 td
                                     if game.canEnlist
                                         span.admin-listtable__status.admin-listtable__status--success(
-                                            title=`${h.__("ADMIN.GAME.BODY.CANENLIST")}`
+                                            title=`${h.__("GAME.STATUS.Enlistable")}`
                                         )
                                             != h.icon("galnet")
         h1 data

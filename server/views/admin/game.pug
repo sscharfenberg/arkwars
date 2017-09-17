@@ -94,24 +94,29 @@ block content
                     .aw-grid__column= h.__("ADMIN.GAME.STARS")
                     .aw-grid__column.aw-grid__column--vcentered= game.stars.length
 
-            .aw-form__row
-                .aw-form-input
-                    label.aw-narrowform-input__label(for="startDateDate")= h.__("ADMIN.GAME.STARTDATE")
-                    input.aw-narrowform-input__input(
-                        type="date",
-                        name="startDateDate",
-                        id="startDateDate",
-                        value=(game && game.startDate && h.moment(game.startDate).format("YYYY-MM-DD"))
-                    )
+            if game && game.dimensions
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.GAME.DIMENSIONS")
+                    .aw-grid__column.aw-grid__column--vcentered= game.dimensions + " x " + game.dimensions
 
             .aw-form__row
                 .aw-form-input
-                    label.aw-narrowform-input__label(for="startDateTime")= h.__("ADMIN.GAME.STARTTIME")
-                    input.aw-narrowform-input__input(
-                        type="time",
-                        name="startDateTime",
-                        id="startDateTime",
-                        value=(game && game.startDate && h.moment(game.startDate).format("HH:mm"))
+                    label.aw-narrowform-input__label(for="startDateInput")= h.__("ADMIN.GAME.STARTDATE")
+                    input.aw-narrowform-input__input.admin-datetimepicker(
+                        type="text",
+                        name="startDateInput",
+                        id="startDateInput",
+                        value=(
+                            game && game.startDate ? h.moment(game.startDate).toISOString() : h.moment().add(1, "weeks").toISOString()
+                        )
+                    )
+                    input(
+                        type="hidden",
+                        name="startDate",
+                        id="startDate",
+                        value=(
+                            game && game.startDate ? h.moment(game.startDate).toISOString() : h.moment().add(1, "weeks").toISOString()
+                        )
                     )
 
             .aw-form__row
@@ -132,7 +137,7 @@ block content
 
             if game && game.id
 
-                if !game.stars || !game.stars.length
+                if !game.stars || game.stars.length === 0
                     .aw-form__row
                         .aw-form__submit
                             a.aw-btn.aw-btn--icon(href=`/admin/games/${game.id}/seed`)

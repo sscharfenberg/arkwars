@@ -84,6 +84,7 @@
         "eslint-friendly-formatter": "^3.0.0",
         "eslint-loader": "^1.9.0",
         "eslint-plugin-import": "^2.7.0",
+        "flatpickr": "^3.0.7",
         "fontfaceobserver": "^2.0.13",
         "gulp": "^3.9.1",
         "gulp-cached": "^1.1.1",

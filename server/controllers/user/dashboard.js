@@ -48,7 +48,9 @@ exports.showDashboard = async (req, res) => {
                 turn: _player.game.turn,
                 maxPlayers: _player.game.maxPlayers,
                 turnDuration: _player.game.turnDuration,
-                numPlayers: _player.game.players ? _player.game.players.length : 0
+                numPlayers: _player.game.players
+                    ? _player.game.players.length
+                    : 0
             },
             name: _player.name,
             ticker: _player.ticker
@@ -60,7 +62,6 @@ exports.showDashboard = async (req, res) => {
         });
         return player;
     });
-
     res.render("user/dashboard", {
         title: i18n.__("APP.DASHBOARD.TITLE"),
         session: req.session,

@@ -96,12 +96,7 @@ exports.showEditGame = async (req, res) => {
  * @param {callback} next
  *
  */
-exports.parseCheckboxAndDates = (req, res, next) => {
-    if (req.body.startDateDate && req.body.startDateTime) {
-        req.body.startDate = moment(
-            `${req.body.startDateDate} ${req.body.startDateTime}`
-        ).toISOString();
-    }
+exports.parseCheckboxes = (req, res, next) => {
     /* set our booleans to true || false by evaluating (req.body.. !== undefined)
      * since unchecked checkboxes do not send form data and do not exist on req.body
      * we need this so you can set to false by unchecking the checkbox
@@ -123,12 +118,25 @@ exports.editGame = async (req, res) => {
         new: true,
         runValidators: true,
         context: "query"
-    });
+    }).populate("players stars");
     logger.success(
         `[Admin ${chalk.cyan(
             "@" + req.user.username
         )}]: changed game ${chalk.red("g" + game.number)} to ${chalk.yellow(
-            JSON.stringify(game, null, 2)
+            JSON.stringify(
+                {
+                    _id: game._id,
+                    number: game.number,
+                    startDate: game.startDate,
+                    created: game.created,
+                    turnDuration: game.turnDuration,
+                    processing: game.processing,
+                    active: game.active,
+                    canEnlist: game.canEnlist
+                },
+                null,
+                2
+            )
         )}`
     );
     req.flash("success", i18n.__("ADMIN.GAME.SUCCESS.EDIT", game.number));
@@ -191,6 +199,12 @@ exports.deleteGame = async (req, res) => {
         });
     }
 
+    // delete stars
+    await Planet.deleteMany({ game: req.params.id });
+    // delete planets
+    await Star.deleteMany({ game: req.params.id });
+
+    // finally, delete the game
     const deletedGame = await Game.findByIdAndRemove(req.params.id);
     if (deletedGame) {
         logger.success(
@@ -355,7 +369,8 @@ exports.seedGamePreview = async (req, res) => {
         { _id: req.params.id },
         {
             $set: {
-                seededMap: JSON.stringify(starsFiltered)
+                seededMap: JSON.stringify(starsFiltered),
+                dimensions: game.dimensions
             }
         },
         { new: true, runValidators: true, context: "query" }
@@ -389,10 +404,10 @@ exports.seedGamePreview = async (req, res) => {
  *
  */
 exports.createStars = async (req, res, next) => {
-    let game = await Game.findOne({_id: req.params.id});
+    let game = await Game.findOne({ _id: req.params.id });
     let points = JSON.parse(game.seededMap);
     let stars = [];
-    points.forEach( point => {
+    points.forEach(point => {
         let spectral = seed.randomType(point[2], cfg.stars.spectralTypes);
         let star = {
             name: seed.getStarName(spectral),
@@ -404,11 +419,15 @@ exports.createStars = async (req, res, next) => {
         };
         stars.push(star);
     });
-    logger.info(`[App] prepared stats for ${chalk.yellow(stars.length)} star systems.`);
+    logger.info(
+        `[App] prepared stats for ${chalk.yellow(stars.length)} star systems.`
+    );
     await Star.insertMany(stars);
     // insertMany does not return the new objects, so we need to find them again
-    req._stars = await Star.find({game: req.params.id});
-    logger.info(`[App] saved ${chalk.red(req._stars.length)} star systems in database.`);
+    req._stars = await Star.find({ game: req.params.id });
+    logger.info(
+        `[App] saved ${chalk.red(req._stars.length)} star systems in database.`
+    );
     next(); // no exceptions, proceed.
 };
 
@@ -422,11 +441,15 @@ exports.createStars = async (req, res, next) => {
 exports.createPlanets = async (req, res, next) => {
     let stars = req._stars;
     let planetsToCreate = [];
-    let maxPlayers = stars.filter( star => star.homeSystem ).length;
+    let maxPlayers = stars.filter(star => star.homeSystem).length;
 
-    stars.forEach( star => {
+    stars.forEach(star => {
         let owner = star.homeSystem ? 2 : 1;
-        let numPlanets = seed.getNumPlanets(star.spectral, owner, cfg.stars.spectralTypes);
+        let numPlanets = seed.getNumPlanets(
+            star.spectral,
+            owner,
+            cfg.stars.spectralTypes
+        );
         for (let counter = 0; counter < numPlanets; counter++) {
             planetsToCreate.push({
                 game: req.params.id,
@@ -437,7 +460,11 @@ exports.createPlanets = async (req, res, next) => {
     });
 
     await Planet.insertMany(planetsToCreate);
-    logger.info(`[App] generated and saved ${chalk.red(planetsToCreate.length)} planets for ${chalk.yellow(stars.length)} star systems.`);
+    logger.info(
+        `[App] generated and saved ${chalk.red(
+            planetsToCreate.length
+        )} planets for ${chalk.yellow(stars.length)} star systems.`
+    );
 
     // store the seeded map
     await Game.findOneAndUpdate(
@@ -445,12 +472,12 @@ exports.createPlanets = async (req, res, next) => {
         {
             $set: {
                 seededMap: undefined,
-                maxPlayers,
+                maxPlayers
             }
         },
         { new: true, runValidators: true, context: "query" }
     );
 
-    req.flash("success",i18n.__("ADMIN.GAME.SEED.SUCCESS"));
+    req.flash("success", i18n.__("ADMIN.GAME.SEED.SUCCESS"));
     res.redirect(`/admin/games/${req.params.id}/edit`);
 };

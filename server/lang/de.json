@@ -260,10 +260,13 @@
             "LABEL": "GalNet"
         },
         "STATUS": {
-            "Active": "Das Spiel ist aktiv und Runden werden vom Server berechnet. Aktuelle Runde : %s",
+            "Active": "Das Spiel ist aktiv und Runden werden vom Server berechnet. Aktuelle Runde: %s",
             "Enlisted": "Sie sind eingeschrieben, aber das Spiel ist noch nicht gestartet.<br />Start des Spiels: %s",
+            "Enlistable": "Benutzer können sich in das Spiel einschreiben.",
             "Finished": "Das Spiel ist beendet.",
-            "FinishedTurn": "Gespielte Runden: %s"
+            "FinishedTurn": "Gespielte Runden: %s",
+            "Empires": "%s Spieler Start Systeme",
+            "Stars": "%s Sternensysteme"
         }
     },
 
@@ -359,10 +362,9 @@
             "ACTIVEDESC": "Die Runden aktiver Spiele werden vom Server berechnet, falls das StartDatum in der Vergangenheit liegt.",
             "MAXPLAYERS": "Maximalzahl an Spielern",
             "ENLISTEDPLAYERS": "Spieler / Maximal",
-            "STARTDATE": "Startdatum (Server)",
-            "STARTTIME": "Start Uhrzeit (Server)",
+            "STARTDATE": "Datum des Starts",
             "TURNDURATION": "Dauer einer Runde (Minuten)",
-            "DIMENSIONS": "Breite und Höhe des Universums",
+            "DIMENSIONS": "Kartengröße",
             "DISTANCELABEL": "Stern Distanz",
             "DISTANCEDESC": "Wählen Sie die minimale und maximale Entfernung von Sternensystemen zueinander. Die Karte wird mit Sternensystemen gefüllt unter Beachtung der min/max Entfernung; durch diese Einstellung können Sie Dichte und Anzahl der Systeme steuern.",
             "PLAYERDISTANCELABEL": "Spieler Distanz",
@@ -374,7 +376,7 @@
             "STARS": "Sternensysteme",
             "SUCCESS": {
                 "EDIT": "Spiel <strong>g%s</strong> geändert.",
-                "NEW": "Spiel <strong>g%s</strong> erstellt.",
+                "NEW": "Spiel <strong>g%s</strong> wurde (ohne Karte) erstellt - erzeugen Sie die Sternensysteme jetzt.",
                 "DELETE": "Successfully deleted <strong>g%s</strong>."
             },
             "ERROR": {

@@ -37,8 +37,8 @@ block content
                             else
                                 .aw-grid__column= `0/${game.maxPlayers}`
                     .aw-grid__row= h.__("APP.DASHBOARD.GAMES.AVAILABLE.INTRO")
-                    .aw-grid__row
-                        if game.players && game.maxPlayers > game.players.length
+                    if game.players && game.maxPlayers > game.players.length
+                        .aw-grid__row
                             a.aw-btn.aw-btn--icon(href=`/game/${game.number}/enlist`)
                                 != h.icon("games", ["small"])
                                 != h.__("APP.DASHBOARD.GAMES.AVAILABLE.ENLIST")
@@ -51,7 +51,7 @@ block content
                 each player in myPlayers
 
                     //- game is not active and startDate in the future
-                    if !player.game.active && h.moment(player.game.startDate).diff(h.moment()) > 0
+                    if !player.game.active || h.moment(player.game.startDate).diff(h.moment()) > 0
                         .aw-grid__row.aw-grid__row--2col.aw-grid__row--seperated
                             .aw-grid__column
                                 strong= "g" + player.game.number

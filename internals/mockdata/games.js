@@ -8,7 +8,7 @@ module.exports = [
         canEnlist: false,
         processing: false,
         turn: 22,
-        turnDuration: 5,
+        turnDuration: 10,
         turnDue: moment().add(5, "minutes").toISOString(),
         //maxPlayers: 20,
         startDate: "2017-06-19T03:15:05.654Z"
@@ -20,7 +20,7 @@ module.exports = [
         canEnlist: false,
         processing: false,
         turn: 125,
-        turnDuration: 15,
+        turnDuration: 30,
         turnDue: moment().add(1, "minutes").toISOString(),
         //maxPlayers: 10,
         startDate: "2017-05-02T11:15:05.654Z"
@@ -32,7 +32,7 @@ module.exports = [
         canEnlist: false,
         processing: true,
         turn: 9865,
-        turnDuration: 10,
+        turnDuration: 5,
         turnDue: moment().add(10, "minutes").toISOString(),
         //maxPlayers: 500,
         startDate: "2017-07-29T21:15:05.654Z"
@@ -44,8 +44,9 @@ module.exports = [
         canEnlist: true,
         processing: false,
         turn: 0,
-        turnDuration: 30,
-        //maxPlayers: 50,
+        turnDuration: 15,
+        maxPlayers: 4,
+        dimensions: 10,
         startDate: moment().add(6, "months").toISOString()
     }
 ];
