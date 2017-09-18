@@ -17,6 +17,7 @@ Number of times `.env` file got submitted to git: **2**
 - [ ] enlist => assign random player system
 - [ ] withhdraw => remove owner of player system
 - [ ] debug and test manage games stuff. shits important, yo.
+- [ ] change Users model and make "players" a virtual field. change controller User.find to populate player and/or use autopopulate.
 - [ ] make values for progressbar dynamic from server
 
 ### Next TODOs Frontend
