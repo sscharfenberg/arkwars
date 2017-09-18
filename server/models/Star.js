@@ -50,8 +50,8 @@ const starSchema = new mongoose.Schema({
 // find planets where the stars _id property === planets star property
 starSchema.virtual("planets", {
     ref: "Planet", // what model to link?
-    localField: "_id", // which field on the store?
-    foreignField: "star" // which field on the review?
+    localField: "_id", // which field on the star?
+    foreignField: "star" // which field on the planet?
 });
 
 module.exports = mongoose.model("Star", starSchema);
