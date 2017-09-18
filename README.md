@@ -13,7 +13,7 @@ Number of times `.env` file got submitted to git: **2**
 * NodeJS 8.4.0, npm 5.3
 
 ### Next TODOs Backend
-- [x] improve seed database scripts by using server handlers. add seed stars and planets so we have seeded games available for testing. half done, needs work.- [x] improve seed database scripts by using server handlers. add seed stars and planets so we have seeded games available for testing. half done, needs work.
+- [x] improve seed database scripts by using server handlers. half done, needs work.
 - [ ] enlist => assign random player system
 - [ ] withhdraw => remove owner of player system
 - [ ] debug and test manage games stuff. shits important, yo.
