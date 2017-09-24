@@ -13,7 +13,6 @@ let users = [
         locale: "de",
         emailConfirmed: true,
         suspended: false,
-        players: ["59904696a7dba10320d3a092", "5990c7871e8258089436d748"],
         selectedPlayer: "59904696a7dba10320d3a092",
         attempts: 0,
         lastLogin: "2017-07-29T09:17:24.008Z",

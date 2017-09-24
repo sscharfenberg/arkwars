@@ -205,6 +205,10 @@ body
                 h3 User Data
                 pre= h.dump(user)
 
+            if user && user.players
+                h3 Player Data
+                pre= h.dump(user.players)
+
             //- v.short footer
             footer.aw-footer
                 address.aw-footer__meta

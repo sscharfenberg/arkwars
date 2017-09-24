@@ -25,8 +25,9 @@ exports.checkCanEnlist = async (req, res, next) => {
         number: req.params.game,
         canEnlist: true,
         startDate: { $gt: moment().toISOString() }
-    }); // TODO: add check if already enlisted?
-    if (!game || (game.players && game.maxPlayers > game.players.length)) {
+    }).populate("players");
+
+    if (!game || (game.maxPlayers <= game.players.length)) {
         logger.debug(
             `[${chalk.yellow(
                 "@" + req.user.username
@@ -109,7 +110,6 @@ exports.enlistUser = async (req, res) => {
     const user = await User.findByIdAndUpdate(
         req.user._id,
         {
-            $addToSet: { players: player._id },
             $set: { selectedPlayer: player._id }
         },
         { new: true }
@@ -254,8 +254,7 @@ exports.withdrawEnlistedUser = async (req, res) => {
     const updatedPlayersUser = await User.findByIdAndUpdate(
         req.user._id,
         {
-            $pull: { players: removedPlayer.id },
-            $set: { selectedPlayer: null }
+            $set: { selectedPlayer: null } // TODO: do this only if game.id = selectedPlayer.id
         },
         { new: true }
     );

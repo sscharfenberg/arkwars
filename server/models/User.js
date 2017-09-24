@@ -72,10 +72,6 @@ const userSchema = new mongoose.Schema({
         type: Date
     },
 
-    // references player entries in games
-    players: [
-        { type: mongoose.Schema.ObjectId, ref: "Player" }
-    ],
     // currently selected player
     selectedPlayer: {
         type: mongoose.Schema.ObjectId, ref: "Player"
@@ -124,6 +120,14 @@ userSchema.plugin(passportLocalMongoose, {
     maxAttempts: 5
 });
 userSchema.plugin(mongodbErrorHandler);
+
+
+// find players where player.user = user._id
+userSchema.virtual("players", {
+    ref: "Player", // what model to link?
+    localField: "_id", // which field on the User?
+    foreignField: "user" // which field on the Player?
+});
 
 // this might be a bit much?
 function autopopulate(next) {

@@ -13,11 +13,11 @@ Number of times `.env` file got submitted to git: **2**
 * NodeJS 8.4.0, npm 5.3
 
 ### Next TODOs Backend
+- [x] change Users model and make "players" a virtual field. change controller User.find, add autopopulate players.
 - [x] improve seed database scripts by using server handlers. half done, needs work.
 - [ ] enlist => assign random player system
 - [ ] withhdraw => remove owner of player system
 - [ ] debug and test manage games stuff. shits important, yo.
-- [ ] change Users model and make "players" a virtual field. change controller User.find to populate player and/or use autopopulate.
 - [ ] make values for progressbar dynamic from server
 
 ### Next TODOs Frontend

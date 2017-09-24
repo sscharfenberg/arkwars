@@ -86,18 +86,18 @@ const gameSchema = new mongoose.Schema(
     }
 );
 
-// find reviews where the stores _id property === reviews store property
+// find players where player.game === game._id
 gameSchema.virtual("players", {
     ref: "Player", // what model to link?
-    localField: "_id", // which field on the store?
-    foreignField: "game" // which field on the review?
+    localField: "_id", // which field on the Game?
+    foreignField: "game" // which field on the Player?
 });
 
-// find reviews where the stores _id property === reviews store property
+// find stars where star.game === game._id
 gameSchema.virtual("stars", {
     ref: "Star", // what model to link?
-    localField: "_id", // which field on the store?
-    foreignField: "game" // which field on the review?
+    localField: "_id", // which field on the Game?
+    foreignField: "game" // which field on the Player?
 });
 
 module.exports = mongoose.model("Game", gameSchema);

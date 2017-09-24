@@ -180,14 +180,6 @@ exports.deleteGame = async (req, res) => {
             },
             { runValidators: true, context: "query" }
         );
-        // update users and remove players entry if player is enlisted to this game
-        await User.updateMany(
-            { _id: { $in: UserIds } },
-            {
-                $pull: { players: { $in: playerIds } }
-            },
-            { runValidators: true, context: "query" }
-        );
         // delete players
         logger.info(
             `[Admin ${chalk.cyan(
