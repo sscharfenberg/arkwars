@@ -10,7 +10,9 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const Game = mongoose.model("Game");
 const Player = mongoose.model("Player");
 const User = mongoose.model("User");
+const Star = mongoose.model("Star");
 const logger = require("../../handlers/logger/console");
+const seed = require("../../handlers/game/seed");
 const enlistValidators = require("../../handlers/validators/game/enlist");
 const cfg = require("../../config");
 
@@ -27,7 +29,7 @@ exports.checkCanEnlist = async (req, res, next) => {
         startDate: { $gt: moment().toISOString() }
     }).populate("players");
 
-    if (!game || (game.maxPlayers <= game.players.length)) {
+    if (!game || game.maxPlayers <= game.players.length) {
         logger.debug(
             `[${chalk.yellow(
                 "@" + req.user.username
@@ -68,20 +70,47 @@ exports.showEnlistForm = (req, res) => {
 exports.validateEnlistForm = async (req, res, next) => {
     // default validators
     req = enlistValidators.defaultValidators(req);
-    const result = await req.getValidationResult();
-    const errorList = result.array();
+
+    const validatorPromise = req.getValidationResult();
+
+    console.log(req.body.ticker);
+    const tickerPromise = enlistValidators.tickerPromise(req);
+    const namePromise = enlistValidators.namePromise(req);
+
+    const [results, existingTicker, existingName] = await Promise.all([
+        validatorPromise,
+        tickerPromise,
+        namePromise
+    ]);
+    let errorMap = results.mapped();
+    let errorList = results.array();
+
+    // ticker is already taken.
+    if (existingTicker) {
+        const errors = enlistValidators.tickerExists(req);
+        errorMap.empireticker = errors;
+        errorList.push(errors);
+    }
+
+    // name is already taken.
+    if (existingName) {
+        const errors = enlistValidators.nameExists(req);
+        errorMap.empirename = errors;
+        errorList.push(errors);
+    }
+
     if (errorList.length) {
         logger.debug(
             `[App] enlist validation errors: ${JSON.stringify(errorList)}`
         );
         req.flash("error", i18n.__("GAMES.ENLIST.ERR.Flash"));
         return res.render("game/enlist", {
-            title: i18n.__("APP.REGISTER.TITLE"),
+            title: i18n.__("GAMES.ENLIST.TITLE"),
             session: req.session,
             game: req._game,
             cfg,
             data: req.body,
-            errors: result.mapped(),
+            errors: errorMap,
             flashes: req.flash()
         });
     }
@@ -98,23 +127,42 @@ exports.validateEnlistForm = async (req, res, next) => {
  * enlist user into game ===============================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
+ * @param {callback} next
  */
-exports.enlistUser = async (req, res) => {
+exports.enlistUser = async (req, res, next) => {
     const player = new Player({
         game: req._game._id,
         user: req.user._id,
         name: req.body.empirename,
         ticker: req.body.empireticker.toUpperCase()
     });
-    await player.save();
-    const user = await User.findByIdAndUpdate(
-        req.user._id,
-        {
-            $set: { selectedPlayer: player._id }
-        },
-        { new: true }
+    req._player = await player.save();
+    next();
+};
+
+/*
+ * assign a home system to the player ==================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.assignHomeSystem = async (req, res) => {
+    const game = await Game.findById(req._player.game).populate("stars");
+    const availableStars = game.stars.filter(star => {
+        return star.homeSystem && !star.owner;
+    });
+    logger.info(`[App] select random star from ${chalk.yellow(availableStars.length)} available stars.`);
+    const homeSystem = seed.assignRandomStar(availableStars);
+    logger.info(
+        `[App] Decided on using Star ${chalk.cyan(
+            homeSystem.name
+        )} as home system for player ${chalk.magenta(req._player.name)}.`
     );
-    if (user && player) {
+    const updatatedStar = await Star.findOneAndUpdate(
+        { _id: homeSystem.id },
+        { $set: { owner: req._player._id } },
+        { new: true, runValidators: true, context: "query" }
+    );
+    if (updatatedStar) {
         logger.success(
             `[App] user ${chalk.red(
                 "@" + req.user.username
@@ -166,7 +214,6 @@ exports.validateGameSelect = async (req, res, next) => {
     next(); // no errors, proceed.
 };
 
-
 /*
  * select the game =====================================================================================================
  * @param {ExpressHTTPRequest} req
@@ -190,7 +237,10 @@ exports.selectGame = async (req, res) => {
         );
         req.flash(
             "error",
-            i18n.__("GAMES.CHANGE.ERR", `<strong>g${requestedGameNumber}</strong>`)
+            i18n.__(
+                "GAMES.CHANGE.ERR",
+                `<strong>g${requestedGameNumber}</strong>`
+            )
         );
         return res.redirect("back");
     } else {
@@ -201,11 +251,13 @@ exports.selectGame = async (req, res) => {
         );
         req.flash(
             "success",
-            i18n.__("GAMES.CHANGE.SUCCESS", `<strong>g${requestedGameNumber}</strong>`)
+            i18n.__(
+                "GAMES.CHANGE.SUCCESS",
+                `<strong>g${requestedGameNumber}</strong>`
+            )
         );
         return res.redirect(`/game/${requestedGameNumber}`);
     }
-
 };
 
 /*
@@ -226,7 +278,9 @@ exports.validateWithdraw = async (req, res, next) => {
         logger.debug(
             `[App] user ${chalk.red(
                 "@" + req.user.username
-            )} failed to withdraw enlistment from ${chalk.yellow("g" + requestedGameNumber)}`
+            )} failed to withdraw enlistment from ${chalk.yellow(
+                "g" + requestedGameNumber
+            )}`
         );
         req.flash("error", i18n.__("GAMES.WITHDRAW.ERR"));
         return res.redirect("back");
@@ -242,28 +296,34 @@ exports.validateWithdraw = async (req, res, next) => {
  */
 exports.withdrawEnlistedUser = async (req, res) => {
     // we only need to remove the player.
-    // Because of the relationship between User.players / User.selectedPlayer and the Player,
-    // Mongoose will automatically remove the Player.id from User.players
-    // and set User.selectedPlayer to null if this Player was selected.
-    // i need to buy a beer for the person that thought this up, this is awesome.
 
     const removedPlayer = await Player.findOneAndRemove({
         user: req.user.id,
         game: req._game.id // from previous middleware
-    });
-    const updatedPlayersUser = await User.findByIdAndUpdate(
-        req.user._id,
-        {
-            $set: { selectedPlayer: null } // TODO: do this only if game.id = selectedPlayer.id
-        },
-        { new: true }
-    );
-
-    if (!removedPlayer || !updatedPlayersUser) {
+    }).populate("stars");
+    // set selectedPlayer to null if the enlisted game is selected
+    if (req._game.id === req.user.selectedPlayer) {
+        await User.findByIdAndUpdate(
+            req.user._id,
+            { $set: { selectedPlayer: null } },
+            { new: false, runValidators: true, context: "query" }
+        );
+    }
+    // remove ownership of stars if necessary
+    if (removedPlayer.stars && removedPlayer.stars.length) {
+        await Star.updateMany(
+            { owner: removedPlayer.id },
+            { $set: { owner: null } },
+            { runValidators: true, context: "query" }
+        );
+    }
+    if (!removedPlayer) {
         logger.debug(
             `[App] user ${chalk.red(
                 "@" + req.user.username
-            )} failed to withdraw enlistment from ${chalk.yellow("g" + req._game.number)}`
+            )} failed to withdraw enlistment from ${chalk.yellow(
+                "g" + req._game.number
+            )}`
         );
         req.flash("error", i18n.__("GAMES.WITHDRAW.ERR"));
     } else {
@@ -272,7 +332,11 @@ exports.withdrawEnlistedUser = async (req, res) => {
                 "@" + req.user.username
             )} withdrew enlistment from ${chalk.yellow("g" + req._game.number)}`
         );
-        req.flash("success", i18n.__("GAMES.WITHDRAW.SUCCESS"), `g${req._game.number}`);
+        req.flash(
+            "success",
+            i18n.__("GAMES.WITHDRAW.SUCCESS"),
+            `g${req._game.number}`
+        );
     }
     return res.redirect("back");
 };

@@ -18,8 +18,8 @@ router.use("/", authController.isLoggedIn);
 // show "enlist to game" form
 router.get(
     "/:game/enlist",
-    catchErrors(gameController.checkCanEnlist),
-    gameController.showEnlistForm
+    catchErrors(gameController.checkCanEnlist), // 1. check if the game can be enlisted to
+    gameController.showEnlistForm // 2. show enlist form for empire name/ticker
 );
 
 // post "enlist to game" form
@@ -27,7 +27,8 @@ router.post(
     "/:game/enlist",
     catchErrors(gameController.checkCanEnlist), // 1. check if the game can be enlisted to
     catchErrors(gameController.validateEnlistForm), // 2. validate form data
-    catchErrors(gameController.enlistUser) // 3. enlist user
+    catchErrors(gameController.enlistUser), // 3. enlist user
+    catchErrors(gameController.assignHomeSystem) // 4. assign an available home system to the user.
 );
 
 // switch to game
@@ -42,6 +43,7 @@ router.get(
     "/:game/withdraw",
     catchErrors(gameController.validateWithdraw), // 1. check if user can withdraw
     catchErrors(gameController.withdrawEnlistedUser), // 2. update user and player
+    // TODO: 3. deal with the empire. remove ownership of planets
 );
 
 

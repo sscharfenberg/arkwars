@@ -13,12 +13,11 @@ Number of times `.env` file got submitted to git: **2**
 * NodeJS 8.4.0, npm 5.3
 
 ### Next TODOs Backend
-- [x] change Users model and make "players" a virtual field. change controller User.find, add autopopulate players.
 - [x] improve seed database scripts by using server handlers. half done, needs work.
-- [ ] enlist => assign random player system
-- [ ] withhdraw => remove owner of player system
+- [ ] add orbital index to planets
+- [ ] externalize cron/turn handling into a seperate node process.
 - [ ] debug and test manage games stuff. shits important, yo.
-- [ ] make values for progressbar dynamic from server
+- [ ] make values for progressbar dynamic from server (probably together with frontend push)
 
 ### Next TODOs Frontend
 
@@ -26,6 +25,9 @@ Number of times `.env` file got submitted to git: **2**
 - [ ] Refactor webpack config: changes for framework, bundle-buddy
 
 ### Recently Done
+- [x] enlist => assign random player system
+- [x] withhdraw => remove ownership of player systems
+- [x] change Users model and make "players" a virtual field. change controller User.find, add autopopulate players.
 - [x] Add a datetime picker for game generation.
 - [x] delete game => delete stars and planets
 - [x] add map dimensions to saved game when seeding
@@ -33,6 +35,10 @@ Number of times `.env` file got submitted to git: **2**
 - [x] Delete game
 - [x] Create game
 - [x] Edit game  
+
+## Installation
+
+tbd `¯\_(ツ)_/¯`
 
 ## NPM Scripts
 
@@ -43,5 +49,5 @@ Number of times `.env` file got submitted to git: **2**
 * `npm run jst.test`: run unit tests once and analyse coverage.
 * `npm run js.test.watch`: start jest unit tests in watch mode. Incompatible with IntelliJ's `Run` Conolse.
 * `npm run cleanup`: empty directories with webpack-generated, git-ignored files.
-* `npm run server.db.prune`: empty MongoDB databases.
-* `npm run server.db.seed`: seed MongoDB with mock data.
+* `npm run db.prune`: empty MongoDB databases.
+* `npm run db.seed`: seed MongoDB with mock data.

@@ -5,6 +5,7 @@
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const moment = require("moment"); // https://momentjs.com/
+const cfg = require("../config");
 mongoose.Promise = global.Promise;
 
 const playerSchema = new mongoose.Schema({
@@ -17,12 +18,18 @@ const playerSchema = new mongoose.Schema({
 
     // name of empire
     name: {
-        type: String
+        type: String,
+        required: true,
+        minlength: cfg.games.empire.name.bounds[0],
+        maxlength: cfg.games.empire.name.bounds[1]
     },
 
     // can users enlist?
     ticker: {
-        type: String
+        type: String,
+        required: true,
+        minlength: cfg.games.empire.ticker.bounds[0],
+        maxlength: cfg.games.empire.ticker.bounds[1]
     },
 
     // date of player creation
@@ -31,6 +38,13 @@ const playerSchema = new mongoose.Schema({
         default: moment().toISOString()
     }
 
+});
+
+// find stars that are owned by this player
+playerSchema.virtual("stars", {
+    ref: "Star", // what model to link?
+    localField: "_id", // which field on the Player?
+    foreignField: "owner" // which field on the Star?
 });
 
 // auto populate games

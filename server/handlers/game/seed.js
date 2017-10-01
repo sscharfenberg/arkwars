@@ -106,7 +106,7 @@ exports.getStarName = () => {
 /*
  * seed NPC systems ====================================================================================================
  * @param {Mongoose.Object} game
- * @param {object} user - req.user that is doing the requesst
+ * @param {Object} user - req.user that is doing the requesst
  * @param {Number} distMin - minimum star distance
  * @param {Number} distMax - maximum star distance
  * @returns {array} filteredPoints - array of arrays with x/y coordinates
@@ -116,7 +116,7 @@ exports.systems = (game, user, distMin, distMax) => {
     // limit tries for bigger dimensions - very large datasets result in perf problems
     const tries = cfg.games.dimensions.max + 50 - game.dimensions;
     let pds = new PoissonDiskSampling(
-        [game.dimensions, game.dimensions],
+        [game.dimensions, game.dimensions], // for now, we only support equal width/height maps
         parseInt(distMin, 10), // ensure integers for distance. pds starts to behave strangely with floats.
         parseInt(distMax, 10),
         tries
@@ -128,4 +128,14 @@ exports.systems = (game, user, distMin, distMax) => {
         )} stars.`
     );
     return normalizeStars(points, game.dimensions);
+};
+
+/*
+ * assign a random star fromm an array of stars ========================================================================
+ * @param {Array} stars - array of Mongoose.Model("Star")
+ * @returns {Object} - Mongoose.model("Star")
+ *
+ */
+exports.assignRandomStar = (stars) => {
+    return stars[Math.floor(Math.random() * stars.length)];
 };

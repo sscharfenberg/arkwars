@@ -279,6 +279,7 @@
                 "TURNDURATION": "Rundendauer",
                 "DURATION_VALUE": "%s Minuten",
                 "MAXPLAYERS": "Maximale Spielerzahl",
+                "CURRENTPLAYERS": "Aktuelle Spielerzahl",
                 "START": "Spiel Start"
             },
             "EMPIRENAME": {
@@ -288,6 +289,7 @@
                 "ERR": {
                     "Empty": "Bitte geben Sie den Namen des Imperiums an.",
                     "Length": "Der Name des Imperiums muss %s Zeichen haben.",
+                    "NotUnique": "Dieser Name ist bereits vergeben -.-",
                     "NotAlphaNum": "Der Name des Imperium darf nur Aplhanummerische Zeichen enthalten - Buchstaben und Zahlen."
                 }
             },
@@ -298,6 +300,7 @@
                 "ERR": {
                     "Empty": "Bitte geben Sie den Ticker Ihres Imperiums an.",
                     "Length": "Der Ticker des Imperiums muss %s Zeichen haben.",
+                    "NotUnique": "Dieser Ticker ist bereits vergeben -.-",
                     "NotAlphaNum": "Empire Ticker darf nur Aplhanummerische Zeichen enthalten - Buchstaben und Zahlen."
                 }
             },

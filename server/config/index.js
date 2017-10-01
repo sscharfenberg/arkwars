@@ -81,12 +81,10 @@ const appConfig = {
     games: {
         empire: {
             name: {
-                min: 6,
-                max: 32
+                bounds: [6, 32]
             },
             ticker: {
-                min: 2,
-                max: 4
+                bounds: [2, 5]
             }
         },
         defaultTurnDuration: 15,
@@ -145,12 +143,12 @@ const appConfig = {
             }
         ],
         name: {
-            initial: [4,6],
-            bounds: [4,30]
+            initial: [4,6], // range for initially generated names
+            bounds: [4,30] // range for player edited names
         },
         planets: {
-            npc: [3, 10],
-            player: [6,12]
+            npc: [3, 10], // range for numplanets in npc systems
+            player: [6,12] // range for numplanets in player systems
         }
     },
 

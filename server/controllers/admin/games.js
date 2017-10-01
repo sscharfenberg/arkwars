@@ -1,11 +1,10 @@
 /***********************************************************************************************************************
  *
- * manageGGamesController
+ * manageGamesController
  *
  **********************************************************************************************************************/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
-const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const logger = require("../../handlers/logger/console");
 const Game = mongoose.model("Game");

@@ -280,6 +280,7 @@
                 "TURNDURATION": "Turn duration",
                 "DURATION_VALUE": "%s minutes",
                 "MAXPLAYERS": "Max number of players",
+                "CURRENTPLAYERS": "Aktuelle Spielerzahl",
                 "START": "Game start"
             },
             "EMPIRENAME": {
@@ -289,6 +290,7 @@
                 "ERR": {
                     "Empty": "Empire Name is empty",
                     "Length": "Empire Name needs to have %s characters.",
+                    "NotUnique": "This empire name is already taken.",
                     "NotAlphaNum": "Empire name must contain only alphanumeric characters - letters and mumbers."
                 }
             },
@@ -299,6 +301,7 @@
                 "ERR": {
                     "Empty": "Empire ticker is empty",
                     "Length": "Empire ticker needs to have %s characters.",
+                    "NotUnique": "This ticker is already taken -.-",
                     "NotAlphaNum": "Empire ticker must contain only alphanumeric characters - letters and mumbers."
                 }
             },

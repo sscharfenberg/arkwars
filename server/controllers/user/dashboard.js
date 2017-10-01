@@ -35,6 +35,9 @@ exports.showDashboard = async (req, res) => {
         startDate: { $gt: moment().toISOString() },
         _id: { $nin: myGames } // not in my games
     }).populate("players");
+    available = available.filter(game => {
+        return game.maxPlayers > game.players.length;
+    }); // filter full games out
     const myActiveGames = await Game.find({
         _id: { $in: myGames } // not in my games
     }).populate("players");

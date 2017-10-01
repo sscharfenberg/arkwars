@@ -97,7 +97,7 @@ gameSchema.virtual("players", {
 gameSchema.virtual("stars", {
     ref: "Star", // what model to link?
     localField: "_id", // which field on the Game?
-    foreignField: "game" // which field on the Player?
+    foreignField: "game" // which field on the Star?
 });
 
 module.exports = mongoose.model("Game", gameSchema);

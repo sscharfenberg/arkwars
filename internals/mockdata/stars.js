@@ -13,6 +13,7 @@ module.exports = [
         __v: 0,
         name: "K74-TG",
         game: "598b652d0404e604046bd35e",
+        owner: "59904696a7dba10320d3a092",
         coordX: 1,
         coordY: 4,
         homeSystem: true,
