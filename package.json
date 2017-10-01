@@ -19,6 +19,7 @@
     },
     "scripts": {
         "server.start": "node --inspect server/nodemon.js",
+        "server.cron": "node server/cron.js",
         "watch": "gulp watch",
         "build.static": "gulp build:static",
         "js.prod": "node internals/npm/js.prod.js",

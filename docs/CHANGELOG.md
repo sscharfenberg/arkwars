@@ -1,5 +1,6 @@
 # Changelog
 
+- [x] externalize cron/turn handling into a seperate node process. `01.10.2017`
 - [x] add orbital index to planets `01.10.2017`
 - [x] enlist => assign random player system `01.10.2017`
 - [x] withhdraw => remove ownership of player systems `01.10.2017`

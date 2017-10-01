@@ -8,9 +8,8 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const cron = require("node-schedule"); // https://www.npmjs.com/package/node-schedule
 const logger = require("./logger/console");
-const { catchErrors } = require("./error"); // Error handling
+const { catchErrors } = require("./error");
 const turnHandlers = require("./turn");
-require("../models/Game");
 const Game = mongoose.model("Game");
 
 /*

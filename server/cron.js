@@ -1,22 +1,22 @@
 /***********************************************************************************************************************
  *
- * START EXPRESS SERVER
+ * SCHEDULINGG PROCESS
  *
  * @type {Node.js}
  *
- * This file is called directly via nodemon and starts the server
+ * This file is started as a seperate node process
  *
  **********************************************************************************************************************/
-const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
-const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
+const mongoose = require("mongoose"); // http://mongoosejs.com/
 const logger = require("./handlers/logger/console");
+const cron = require("./handlers/cron");
+const {catchErrors} = require("./handlers/error"); // Error handling
 
 // import environmental variables from our .env file to process.env
 require("dotenv").config({ path: "./server/config/.env" });
 
 /*
  * connect and prepare MongoDB
- *
  */
 mongoose.connect(process.env.DATABASE, {
     useMongoClient: true // http://mongoosejs.com/docs/connections.html#use-mongo-client
@@ -27,8 +27,9 @@ mongoose.connection
         logger.error(err.message);
     })
     .on("connected", () => {
-        logger.success("[App] Successfully connected to MongoDB.");
+        logger.success("[Cron] Successfully connected to MongoDB.");
     });
+
 
 // require all mongoose schemas
 require("./models/User");
@@ -37,16 +38,5 @@ require("./models/Player");
 require("./models/Star");
 require("./models/Planet");
 
-/*
- * start the application
- *
- */
-const app = require("./app"); // app.js exports the express app
-app.set("port", process.env.PORT || 80); // set port
+catchErrors(cron.startup());
 
-// start server by listening to requests on app port
-const server = app.listen(app.get("port"), () => {
-    logger.info(
-        `[node] Server now listening on port ${chalk.yellow(app.get("port"))}`
-    );
-});

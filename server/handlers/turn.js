@@ -52,7 +52,7 @@ const processTurnData = async game => {
     logger.success(
         `turn ${chalk.cyan(game.turn)} for ${chalk.red(
             "g" + game.number
-        )} has been processed in ${duration}ms.`
+        )} has been processed in ${chalk.yellow(duration)}ms.`
     );
 
     // schedule next turn
