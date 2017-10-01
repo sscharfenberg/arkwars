@@ -445,7 +445,8 @@ exports.createPlanets = async (req, res, next) => {
             planetsToCreate.push({
                 game: req.params.id,
                 star: star.id,
-                type: seed.randomType(owner, cfg.planets.types)
+                type: seed.randomType(owner, cfg.planets.types),
+                orbitalIndex: counter + 1 // 0 = sun
             });
         }
     });

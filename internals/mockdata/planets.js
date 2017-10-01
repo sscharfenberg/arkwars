@@ -11,7 +11,8 @@ stars.forEach( star => {
         planets.push({
             game,
             star: star._id,
-            type: seed.randomType(owner, cfg.planets.types)
+            type: seed.randomType(owner, cfg.planets.types),
+            orbitalIndex: counter + 1
         });
     }
 });

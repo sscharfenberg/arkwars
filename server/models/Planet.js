@@ -25,6 +25,13 @@ const planetSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: cfg.planets.types.map(planetType => planetType.name)
+    },
+
+    // orbital index
+    orbitalIndex: {
+        type: Number,
+        min: 1, // 0 = sun
+        max: cfg.stars.planets.player[1] + 4 // +1 because of the sun, +3 because of max planets mod.
     }
 });
 

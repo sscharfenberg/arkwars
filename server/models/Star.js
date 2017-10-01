@@ -41,7 +41,7 @@ const starSchema = new mongoose.Schema({
         enum: cfg.stars.spectralTypes.map(spectralType => spectralType.name)
     },
 
-    // star Name / Designation
+    // star name / designation
     name: {
         type: String
     }

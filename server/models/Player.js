@@ -40,6 +40,12 @@ const playerSchema = new mongoose.Schema({
 
 });
 
+// Define our indexes
+playerSchema.index({
+    namename: "text",
+    ticker: "text"
+});
+
 // find stars that are owned by this player
 playerSchema.virtual("stars", {
     ref: "Star", // what model to link?

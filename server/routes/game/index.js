@@ -12,7 +12,7 @@ const authController = require("../../controllers/auth");
 const gameController = require("../../controllers/game");
 const { catchErrors } = require("../../handlers/error");
 
-// isAdmin Middleware protecting the admin routes
+
 router.use("/", authController.isLoggedIn);
 
 // show "enlist to game" form
@@ -42,8 +42,7 @@ router.get(
 router.get(
     "/:game/withdraw",
     catchErrors(gameController.validateWithdraw), // 1. check if user can withdraw
-    catchErrors(gameController.withdrawEnlistedUser), // 2. update user and player
-    // TODO: 3. deal with the empire. remove ownership of planets
+    catchErrors(gameController.withdrawEnlistedUser) // 2. update user, player and planets
 );
 
 
