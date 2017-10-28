@@ -27,7 +27,7 @@ Number of times `.env` file got submitted to git: **2**
 ## Documentation
 (this needs work!)
 
-* [Changelog](./docs/CHANGELOG.md)
-* [TODO](./docs/TODO.md)
-* [Installation](./docs/INSTALL.md)
+* [Changelog](https://github.com/sscharfenberg/arkwars/blob/master/docs/CHANGELOG.md)
+* [TODO](https://github.com/sscharfenberg/arkwars/blob/master/docs/TODO.md)
+* [Installation](https://github.com/sscharfenberg/arkwars/blob/master/docs/INSTALLATION.md)
 

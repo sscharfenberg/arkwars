@@ -14,7 +14,7 @@ Start by cloning the repository, then `npm install`. This will take a while.
 
 ## Setup Mailserver for Development
 
-I strongly recommend `mailtrap.io` - they pretend to be a mailserver, but do not actually send anything. Instead, the mails are placed conveniently in an inbox for you to study. Create a free inbox, and copy the credentials to `/server/config/.env`. 
+I strongly recommend [https://mailtrap.io/](https://mailtrap.io/) - they pretend to be a mailserver, but do not actually send anything. Instead, the mails are placed conveniently in an inbox for you to study. Create a free inbox, and copy the credentials to `/server/config/.env`. 
 
 ## Setting up MongoDB
 
@@ -52,7 +52,9 @@ The redis server will run as long as you have the shell open.
 
 **2. Vagrant**
 
-[https://github.com/ServiceStack/redis-windows/#option-2-running-the-latest-version-of-redis-with-vagrant](https://github.com/ServiceStack/redis-windows/#option-2-running-the-latest-version-of-redis-with-vagrant) I have no clue about Vagrant ¯\_(ツ)_/¯
+[https://github.com/ServiceStack/redis-windows/#option-2-running-the-latest-version-of-redis-with-vagrant](https://github.com/ServiceStack/redis-windows/#option-2-running-the-latest-version-of-redis-with-vagrant) 
+
+I have no clue about Vagrant ¯\_(ツ)_/¯
 
 **3. Microsoft's Redis Port**
 
