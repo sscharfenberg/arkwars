@@ -9,10 +9,11 @@
  **********************************************************************************************************************/
 const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
-const HtmlWebpackPlugin = require("html-webpack-plugin"); // https://www.npmjs.com/package/html-webpack-plugin
-const {cssLoaders} = require("./cssLoaders");
+// https://www.npmjs.com/package/html-webpack-plugin
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+// https://github.com/webpack-contrib/extract-text-webpack-plugin
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const config = require("../config");
-const isProduction = process.env.NODE_ENV === "production";
 
 const webpackConfig = {
     // Don"t attempt to continue if there are any errors.
@@ -65,7 +66,7 @@ const webpackConfig = {
 
             {
                 // https://github.com/babel/babel-loader
-                test: /\.(js|vue)$/,
+                test: /\.js$/,
                 exclude: /node_modules|vendor|bower_components/,
                 loader: require.resolve("babel-loader"),
                 options: {
@@ -79,24 +80,6 @@ const webpackConfig = {
                             }
                         ]
                     ]
-                }
-            },
-
-            {
-                // https://github.com/vuejs/vue-loader
-                test: /\.vue$/,
-                loader: "vue-loader",
-                options: {
-                    loaders: cssLoaders({
-                        sourceMap: isProduction,
-                        extract: isProduction
-                    }),
-                    transformToRequire: {
-                        video: "src",
-                        source: "src",
-                        img: "src",
-                        image: "xlink:href"
-                    }
                 }
             }
 

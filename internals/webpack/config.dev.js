@@ -44,4 +44,22 @@ let webpackConfig = merge(baseWebpackConfig, {
     ]
 });
 
+// https://github.com/vuejs/vue-loader
+// https://vue-loader.vuejs.org/en/
+webpackConfig.module.rules.push({
+    test: /\.vue$/,
+    loader: "vue-loader",
+    options: {
+        loaders: {
+            "scss": "vue-style-loader!css-loader!sass-loader"
+        },
+        transformToRequire: {
+            video: "src",
+            source: "src",
+            img: "src",
+            image: "xlink:href"
+        }
+    }
+});
+
 module.exports = webpackConfig;
