@@ -7,6 +7,7 @@ html(lang="de")
         //- head block for seperate stylesheets (admin)
         block head
             link(rel='stylesheet', href='/public/assets/styles.css')
+
 body
 
     != h.spritesheet()
@@ -42,8 +43,8 @@ body
                     each locale in cfg.app.locales
                         li.aw-header__submenu-item
                             a.aw-header__submenu-item-link(
-                                href=(`/language/${locale.name}`),
-                                class=(session && session.locale && session.locale === locale.name ? "aw-header__submenu-item-link--active" : "")
+                            href=(`/language/${locale.name}`),
+                            class=(session && session.locale && session.locale === locale.name ? "aw-header__submenu-item-link--active" : "")
                             )
                                 != h.image(`flags/${locale.name}.svg`)
                                 != locale.native
@@ -59,9 +60,9 @@ body
                         each player in user.players
                             li.aw-header__submenu-item
                                 a.aw-header__submenu-item-link(
-                                    href=`/game/${player.game.number}/select`,
-                                    data-gameid=(player.game.number),
-                                    class=(user.selectedPlayer && user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
+                                href=`/game/${player.game.number}/select`,
+                                data-gameid=(player.game.number),
+                                class=(user.selectedPlayer && user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
                                 )= "g" + player.game.number
 
 
@@ -97,16 +98,16 @@ body
                     .aw-turn__value= user.selectedPlayer.game.turn
                 .aw-header__server-time
                     time(
-                        datetime=(h.moment().toISOString()),
-                        data-server-time
+                    datetime=(h.moment().toISOString()),
+                    data-server-time
                     )= h.moment().format("LT")
                 .aw-header__turn-next-progress
                     .aw-progress.aw-progress-turn(data-max="15", data-value="14")
                         != h.progressbar(15, 14)
                 .aw-header__turn-next-time
                     time(
-                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
-                        data-time-next-turn
+                    datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
+                    data-time-next-turn
                     )= h.moment(user.selectedPlayer.game.turnDue).format("LT")
 
 
@@ -144,8 +145,8 @@ body
                                         != h.progressbar(15,14)
                                 .aw-drawer__turn-next-time
                                     time(
-                                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
-                                        data-time-next-turn
+                                    datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
+                                    data-time-next-turn
                                     )= h.moment(user.selectedPlayer.game.turnDue).format("LT")
 
 
@@ -224,6 +225,7 @@ body
                         a#footerJumpTop.aw-footer__link.aw-footer__link--icon(href="#main")
                             != h.icon("arrow_up")
 
-    //- scripts block, can be overridden in templates.
+    //- app scripts - app.js and dev-server
+    include webpack/app.footer.pug
+    //- scripts block, additional scripts from templates.
     block scripts
-        include webpack/app.footer.pug
