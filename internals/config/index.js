@@ -59,8 +59,9 @@ module.exports = {
 
     // webpack chunk entrypoints
     chunks: {
-        app: path.join(PROJECTROOT, "client", "app.js"),
-        admin: path.join(PROJECTROOT, "client", "admin.js")
+        app: path.join(PROJECTROOT, "client", "App.js"),
+        admin: path.join(PROJECTROOT, "client", "Admin.js"),
+        empire: path.join(PROJECTROOT, "client", "game", "empire", "Empire.js")
     },
 
     // https://webpack.js.org/configuration/stats/

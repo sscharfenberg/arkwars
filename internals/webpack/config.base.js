@@ -10,10 +10,12 @@
 const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // https://www.npmjs.com/package/html-webpack-plugin
+const {cssLoaders} = require("./cssLoaders");
 const config = require("../config");
+const isProduction = process.env.NODE_ENV === "production";
 
 const webpackConfig = {
-    // Don't attempt to continue if there are any errors.
+    // Don"t attempt to continue if there are any errors.
     bail: true,
 
     // https://webpack.js.org/configuration/entry-context/
@@ -30,15 +32,17 @@ const webpackConfig = {
 
     // https://webpack.js.org/configuration/module/
     module: {
+
         // An array of Rules which are matched to requests when modules are created.
         // These rules can modify how the module is created.
         // They can apply loaders to the module, or modify the parser.
         rules: [
+
             // http://eslint.org
             // https://www.npmjs.com/package/eslint-loader
-            // It's important to do this before Babel processes the JS.
+            // It"s important to do this before Babel processes the JS.
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|vue)$/,
                 enforce: "pre",
                 exclude: /node_modules|vendor|bower_components/,
                 include: path.join(config.projectRoot, "client"),
@@ -61,7 +65,7 @@ const webpackConfig = {
 
             {
                 // https://github.com/babel/babel-loader
-                test: /\.(js|jsx)$/,
+                test: /\.(js|vue)$/,
                 exclude: /node_modules|vendor|bower_components/,
                 loader: require.resolve("babel-loader"),
                 options: {
@@ -76,7 +80,26 @@ const webpackConfig = {
                         ]
                     ]
                 }
+            },
+
+            {
+                // https://github.com/vuejs/vue-loader
+                test: /\.vue$/,
+                loader: "vue-loader",
+                options: {
+                    loaders: cssLoaders({
+                        sourceMap: isProduction,
+                        extract: isProduction
+                    }),
+                    transformToRequire: {
+                        video: "src",
+                        source: "src",
+                        img: "src",
+                        image: "xlink:href"
+                    }
+                }
             }
+
         ]
     },
 
@@ -90,7 +113,9 @@ const webpackConfig = {
         modules: ["node_modules"],
         // define aliases for imports here, saves typing.
         // https://webpack.js.org/configuration/resolve/#resolve-alias
-        alias: {},
+        alias: {
+            "vue$": "vue/dist/vue.esm.js"
+        },
         // symbolic links. disable if needed
         // https://webpack.js.org/configuration/resolve/#resolve-symlinks
         symlinks: true
@@ -109,13 +134,12 @@ const webpackConfig = {
         // by default due to how Webpack interprets its code. This is a practical
         // solution that requires the user to opt into importing specific locales.
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-        // You can remove this if you don't use Moment.js:
+        // You can remove this if you don"t use Moment.js:
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ]
 };
 
 // https://github.com/jantimon/html-webpack-plugin
-// https://github.com/jaketrent/html-webpack-template
 for (let chunk in config.chunks) {
     let isProd = process.env.NODE_ENV === "production";
     webpackConfig.plugins.push(

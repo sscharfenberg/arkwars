@@ -41,7 +41,7 @@ let webpackConfig = merge(baseWebpackConfig, {
 
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
         new webpack.HotModuleReplacementPlugin()
-   ]
+    ]
 });
 
 module.exports = webpackConfig;

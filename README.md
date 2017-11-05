@@ -1,6 +1,6 @@
 # ArkWars
 
-Frontend and Backend for Arkwars - a strategic turn-based game of galactic conquest.
+Frontend and Backend for Arkwars (**working title!**) - a strategic turn-based game of galactic conquest.
 
 Number of times `.env` file got submitted to git: **2** 
 
@@ -10,7 +10,7 @@ Number of times `.env` file got submitted to git: **2**
 
 * MongoDB 3.4 Database
 * Redis database as session store
-* NodeJS 8.4.0, npm 5.3
+* NodeJS 8.9.0 LTS, npm 5.5.1
 
 ## Usage:: npm Scripts
 

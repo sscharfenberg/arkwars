@@ -11,7 +11,7 @@ process.env.NODE_ENV = "development";
 
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
-const webpackDevServer = require("webpack-dev-server"); // https://webpack.js.org/configuration/dev-server/
+const WebpackDevServer = require("webpack-dev-server"); // https://webpack.js.org/configuration/dev-server/
 const webpackConfig = require("../webpack/config.dev");
 const logger = require("../utils/clientlogger");
 const config = require("../config");
@@ -20,7 +20,7 @@ let initialCompile = true;
 
 // https://webpack.js.org/configuration/dev-server/
 // start the dev server
-let devServer = new webpackDevServer(compiler, {
+let devServer = new WebpackDevServer(compiler, {
     proxy: {
         // https://webpack.js.org/configuration/dev-server/#devserver-proxy
         "*": `http://localhost:${config.webPackPort}`

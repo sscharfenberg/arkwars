@@ -11,6 +11,10 @@ const webpack = require("webpack"); // https://webpack.js.org/
 const merge = require("webpack-merge"); // https://www.npmjs.com/package/webpack-merge
 // https://www.npmjs.com/package/compression-webpack-plugin
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
+// https://github.com/webpack-contrib/extract-text-webpack-plugin
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// https://www.npmjs.com/package/html-webpack-plugin
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const baseWebpackConfig = require("./config.base"); // base webpack config
 const config = require("../config");
@@ -48,7 +52,11 @@ let webpackConfig = merge(baseWebpackConfig, {
             sourceMap: true
         }),
 
-        // Compression Plugin - generates *.gz files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        new ExtractTextPlugin({
+            filename: "[name].[chunkhash].css"
+        }),
+
+        // Compression Plugin - generates *.gz files
         // https://github.com/webpack-contrib/compression-webpack-plugin
         new CompressionWebpackPlugin({
             // The target asset name. [file] is replaced with the original asset. [path] is replaced with the path
@@ -78,8 +86,38 @@ let webpackConfig = merge(baseWebpackConfig, {
             raw: false,
             // if true, the banner will only be added to the entry chunks
             entryOnly: true
-        })
+        }),
+
     ]
+});
+
+// HTML Webpack Plugin
+// prod extracts styles to css file and we need the header include with content hash
+// https://github.com/jantimon/html-webpack-plugin
+const invalidChunks = ["admin", "app"]; // non-Vue chunks that do not need to extract css
+const validChunks = Object.keys(config.chunks).filter(chunk => !invalidChunks.includes(chunk));
+validChunks.forEach( chunk => {
+    webpackConfig.plugins.push(
+        new HtmlWebpackPlugin({
+            template: path.join(
+                config.projectRoot,
+                "internals",
+                "webpack",
+                "templates",
+                `${chunk}.header.ejs`
+            ),
+            filename: path.join(
+                config.projectRoot,
+                "server",
+                "views",
+                "webpack",
+                `${chunk}.header.pug`
+            ),
+            showErrors: true,
+            inject: false,
+            alwaysWriteToDisk: true
+        })
+    );
 });
 
 module.exports = webpackConfig;

@@ -13,5 +13,5 @@
 
 ## Frontend
 
-- [ ] Add a Frontend framework for game screens. Decide on using React or Vue.
-- [ ] Refactor webpack config: changes for framework, bundle-buddy
+- [x] Add a Frontend framework for game screens. Decide on using React or Vue.
+- [ ] Refactor webpack config: bundle-buddy / bundle-analytics

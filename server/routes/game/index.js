@@ -10,6 +10,7 @@ const express = require("express"); // http://expressjs.com/
 const router = express.Router(); // http://expressjs.com/en/api.html#router
 const authController = require("../../controllers/auth");
 const gameController = require("../../controllers/game");
+const empireController = require("../../controllers/game/empire");
 const { catchErrors } = require("../../handlers/error");
 
 
@@ -45,6 +46,10 @@ router.get(
     catchErrors(gameController.withdrawEnlistedUser) // 2. update user, player and planets
 );
 
-
+// game screens ========================================================================================================
+router.get(
+    "/:game/empire",
+    empireController.showIndex
+);
 
 module.exports = router;

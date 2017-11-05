@@ -2,22 +2,29 @@
 // http://eslint.org/docs/rules/
 
 module.exports = {
-    extends: ["eslint:recommended"],
-    plugins: ["import"],
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module",
-        ecmaFeatures: {
-            jsx: false,
-            modules: true
+    "extends": ["eslint:recommended"],
+    "plugins": ["import", "html"],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": false,
+            "modules": true
         }
     },
-    rules: {
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "internals/webpack/config.base.js"
+            }
+        }
+    },
+    "rules": {
         // http://eslint.org/docs/rules/
-        indent: [2, 4, { SwitchCase: 1 }],
-        quotes: [2, "double"],
+        "indent": [2, 4, { SwitchCase: 1 }],
+        "quotes": [2, "double"],
         "linebreak-style": [1, "windows"],
-        semi: [2, "always"],
+        "semi": [2, "always"],
         "comma-style": [2, "last"],
         "no-undef": 2,
         "no-console": ["error", { allow: ["log", "warn", "error", "dir"] }],
@@ -31,13 +38,17 @@ module.exports = {
                     VariableDeclarator: true
                 }
             }
-        ]
-        // import rules https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
+        ],
+        // don"t require .vue extension when importing
+        "import/extensions": ["error", "always", {
+            "js": "never",
+            "vue": "never"
+        }],
     },
-    globals: {
+    "globals": {
         Promise: true
     },
-    env: {
+    "env": {
         browser: true,
         node: true,
         es6: true

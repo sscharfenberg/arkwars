@@ -256,7 +256,7 @@ exports.selectGame = async (req, res) => {
                 `<strong>g${requestedGameNumber}</strong>`
             )
         );
-        return res.redirect(`/game/${requestedGameNumber}`);
+        return res.redirect(`/game/${requestedGameNumber}/empire`);
     }
 };
 

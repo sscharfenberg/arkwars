@@ -38,7 +38,7 @@ gulp.task("watch", function() {
         .on("change", reportChange);
 
     console.log();
-    logger.success(`[gulp] now watching for file changes\n`);
+    logger.success("[gulp] now watching for file changes\n");
 
     return livereload.listen({
         quiet: true
