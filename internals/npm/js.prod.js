@@ -27,18 +27,18 @@ webpack(webpackConfig, (err, stats) => {
         throw err;
     } else {
         process.stdout.write(stats.toString(config.webPackStats) + "\n");
-        logger.debug(`[webpack] done.`);
+        logger.debug("[webpack] done.");
         logger.success(
             `[webpack] site is now in ${chalk.yellow(
                 process.env.NODE_ENV.toUpperCase()
             )} mode.`
         );
         logger.info(
-            `[webpack] pug footer include points to local, app-served static files.`
+            "[webpack] pug footer include points to local, app-served static files."
         );
         logger.info(
-            `[webpack] css is served via local, app-served static files.`
+            "[webpack] css is served via local, app-served static files."
         );
-        process.exit(0); // signal everything went ok if we got this far.
+        //process.exit(0); // signal everything went ok if we got this far.
     }
 });

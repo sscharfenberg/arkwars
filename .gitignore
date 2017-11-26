@@ -1,7 +1,7 @@
 node_modules
 .idea
 .env
-bundle-report.html
+webpack-bundles.report.html
 server/public/assets
 server/public/avatars
 server/views/webpack

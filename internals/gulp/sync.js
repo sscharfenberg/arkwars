@@ -6,6 +6,7 @@
  **********************************************************************************************************************/
 const gulp = require("gulp"); // https://www.npmjs.com/package/gulp
 const imagemin = require("gulp-imagemin"); // https://www.npmjs.com/package/gulp-imagemin
+const imageminMozjpeg = require("imagemin-mozjpeg"); // https://www.npmjs.com/package/imagemin-mozjpeg
 const livereload = require("gulp-livereload"); // https://www.npmjs.com/package/gulp-livereload
 const newer = require("gulp-newer"); // https://www.npmjs.com/package/gulp-newer
 const notify = require("gulp-notify"); // https://www.npmjs.com/package/gulp-notify
@@ -34,21 +35,21 @@ gulp.task("sync:fonts", function() {
     logger.info(`[gulp] syncing ${chalk.blue("fonts")} to build dir.\n`);
 
     return (gulp
-            .src(config.paths.fonts.in)
-            .pipe(
-                plumber({
-                    errorHandler: notify.onError("<%= error.message %>")
-                })
-            )
-            //.pipe(newer(config.paths.fonts.out))
-            .pipe(gulp.dest(config.paths.fonts.out))
-            .pipe(
-                size({
-                    title: "FONT -",
-                    showFiles: true // comment this out if it becomes too verbose.
-                })
-            )
-            .pipe(livereload()) );
+        .src(config.paths.fonts.in)
+        .pipe(
+            plumber({
+                errorHandler: notify.onError("<%= error.message %>")
+            })
+        )
+        //.pipe(newer(config.paths.fonts.out))
+        .pipe(gulp.dest(config.paths.fonts.out))
+        .pipe(
+            size({
+                title: "FONT -",
+                showFiles: true // comment this out if it becomes too verbose.
+            })
+        )
+        .pipe(livereload()) );
 });
 
 /*
@@ -59,27 +60,29 @@ gulp.task("sync:images", function() {
     logger.info(`[gulp] syncing ${chalk.blue("images")} to build dir.\n`);
 
     return (gulp
-            .src(config.paths.images.in)
-            .pipe(
-                plumber({
-                    errorHandler: notify.onError("<%= error.message %>")
-                })
-            )
-            //        .pipe(newer(config.paths.images.out))
-            .pipe(
-                imagemin([
-                    imagemin.gifsicle({ interlaced: true }),
-                    imagemin.jpegtran({ progressive: true }),
-                    imagemin.optipng({ optimizationLevel: 5 }),
-                    imagemin.svgo()
-                ])
-            )
-            .pipe(gulp.dest(config.paths.images.out))
-            .pipe(
-                size({
-                    title: "IMG -",
-                    showFiles: true // comment this out if it becomes too verbose.
-                })
-            )
-            .pipe(livereload()) );
+        .src(config.paths.images.in)
+        .pipe(
+            plumber({
+                errorHandler: notify.onError("<%= error.message %>")
+            })
+        )
+        //        .pipe(newer(config.paths.images.out))
+        .pipe(
+            imagemin([
+                imagemin.gifsicle({ interlaced: true }),
+                imageminMozjpeg({
+                    quality: 85
+                }),
+                imagemin.optipng({ optimizationLevel: 5 }),
+                imagemin.svgo()
+            ])
+        )
+        .pipe(gulp.dest(config.paths.images.out))
+        .pipe(
+            size({
+                title: "IMG -",
+                showFiles: true // comment this out if it becomes too verbose.
+            })
+        )
+        .pipe(livereload()) );
 });
