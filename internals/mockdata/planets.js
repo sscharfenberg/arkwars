@@ -4,9 +4,13 @@ let stars = require("./stars");
 const cfg = require("../../server/config");
 let planets = [];
 
-stars.forEach( star => {
+stars.forEach(star => {
     let owner = star.homeSystem ? 2 : 1;
-    let numPlanets = seed.getNumPlanets(star.spectral, owner, cfg.stars.spectralTypes);
+    let numPlanets = seed.getNumPlanets(
+        star.spectral,
+        owner,
+        cfg.stars.spectralTypes
+    );
     for (let counter = 0; counter < numPlanets; counter++) {
         planets.push({
             game,

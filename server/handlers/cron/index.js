@@ -7,9 +7,10 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const cron = require("node-schedule"); // https://www.npmjs.com/package/node-schedule
-const logger = require("./logger/console");
-const { catchErrors } = require("./error");
-const turnHandlers = require("./turn");
+const logger = require("../logger/console");
+const { catchErrors } = require("../error");
+const turnHandlers = require("../turn");
+require("../../models/Game");
 const Game = mongoose.model("Game");
 
 /*
@@ -49,8 +50,8 @@ const confirmGameIntegrity = async game => {
     // turn processing was interrupted. fuck.
     if (game.processing) {
         logger.error("game is still on 👹👹 processing 👹👹.");
-        game.processing = false;
-        game.turn++; // a half processed turn sucks. skip it for now. TODO: rollback?
+        game.processing = false; // stuck processing the turn probably.
+        game.turnDue = moment().add(game.turnDuration, "minutes");
         doUpdate = true;
     }
     // turn due is in the past. we seem to have been offline quite a while.

@@ -178,6 +178,40 @@ block content
                                             title=(h.__("APP.SORT.DESC"))
                                         )
 
+                            th.aw-sort__sortable
+                                != h.__("ADMIN.GAMES.HEAD.TURNDUE")
+                                .aw-sort
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="turnDue_asc",
+                                            id="sort_turnDue_asc",
+                                            aria-label=(h.__("APP.SORT.ASC")),
+                                            checked=(data && data.sort === "turnDue_asc"),
+                                            aria-checked=(data && data.sort === "turnDue_asc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__asc(
+                                            for="sort_turnDue_asc",
+                                            title=(h.__("APP.SORT.ASC"))
+                                        )
+                                    .aw-sort__item
+                                        input(
+                                            type="radio",
+                                            name="sort",
+                                            value="turnDue_desc",
+                                            id="sort_turnDue_desc",
+                                            aria-label=(h.__("APP.SORT.DESC")),
+                                            checked=(data && data.sort === "turnDue_desc"),
+                                            aria-checked=(data && data.sort === "turnDue_desc"),
+                                            onchange="document.forms.sortGames.submit();"
+                                        )
+                                        label.aw-sort__desc(
+                                            for="sort_turnDue_desc",
+                                            title=(h.__("APP.SORT.DESC"))
+                                        )
+
                             th= h.__("ADMIN.GAMES.HEAD.PROCESSING")
 
                             th= h.__("ADMIN.GAMES.HEAD.SEEDED")
@@ -213,6 +247,8 @@ block content
 
                                 td(class=(h.moment(game.startDate).diff(h.moment()) < 0 ? "admin-listtable__td-highlighted" : ""))
                                     != h.moment(game.startDate).format("LLL")
+
+                                td= h.moment(game.turnDue).format("LLL")
 
                                 td
                                     if game.processing

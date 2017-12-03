@@ -13,7 +13,7 @@ const cron = require("./handlers/cron");
 const {catchErrors} = require("./handlers/error"); // Error handling
 
 // import environmental variables from our .env file to process.env
-require("dotenv").config({ path: "./server/config/.env" });
+require("dotenv").config({path: "./server/config/.env"});
 
 /*
  * connect and prepare MongoDB
@@ -30,13 +30,5 @@ mongoose.connection
         logger.success("[Cron] Successfully connected to MongoDB.");
     });
 
-
-// require all mongoose schemas
-require("./models/User");
-require("./models/Game");
-require("./models/Player");
-require("./models/Star");
-require("./models/Planet");
-
+// TODO: add nodemon monitoring/restart on crash
 catchErrors(cron.startup());
-

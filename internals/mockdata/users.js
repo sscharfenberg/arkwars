@@ -1,6 +1,5 @@
 const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 
-
 let users = [
     {
         _id: "597c523b7331ca2e2436b37f",
@@ -29,13 +28,15 @@ for (let i = 0; i < numRandomUsers; i++) {
     let user = {
         salt: crypto.randomBytes(20).toString("hex"),
         hash: crypto.randomBytes(255).toString("hex"),
-        email: `${crypto.randomBytes(5).toString("hex")}@${crypto.randomBytes(5).toString("hex")}.com`,
+        email: `${crypto.randomBytes(5).toString("hex")}@${crypto
+            .randomBytes(5)
+            .toString("hex")}.com`,
         username: "U" + i + "-" + crypto.randomBytes(5).toString("hex"),
         locale: Math.random > 0.5 ? "de" : "en",
         emailConfirmed: true,
         suspended: false,
         admin: false,
-        mod: false,
+        mod: false
     };
     users.push(user);
 }

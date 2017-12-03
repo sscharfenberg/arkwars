@@ -7,14 +7,6 @@ block head
 block content
 
     main.aw-content__inner
-        header.aw-content-head
-            h1.aw-content-head__title= title
-            nav.aw-content-head__breadcrumbs
-                a.aw-content-head__breadcrumb(href="/")
-                    != h.icon("home", ["home-icon"])
-                a.aw-content-head__breadcrumb(href="/games") Games
-                a.aw-content-head__breadcrumb(href=`/games/`)= title
-
         div#appRoot
 
 block scripts

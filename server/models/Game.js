@@ -100,4 +100,11 @@ gameSchema.virtual("stars", {
     foreignField: "game" // which field on the Star?
 });
 
+// find turns where turn.game === game._id
+gameSchema.virtual("turns", {
+    ref: "Turn", // what model to link?
+    localField: "_id", // which field on the Game?
+    foreignField: "game" // which field on the Turn?
+});
+
 module.exports = mongoose.model("Game", gameSchema);

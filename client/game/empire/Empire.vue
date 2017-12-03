@@ -17,6 +17,7 @@
     @import "../../theme/abstracts/functions";
     @import "../../theme/abstracts/mixins";
     p {
+        margin: 0;
         font-size: 40px;
         text-align: right;
         &:hover {

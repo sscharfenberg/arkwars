@@ -20,11 +20,13 @@ const User = require("../../server/models/User");
 const Player = require("../../server/models/Player");
 const Star = require("../../server/models/Star");
 const Planet = require("../../server/models/Planet");
+const Turn = require("../../server/models/Turn");
 const games = require("../mockdata/games");
 const users = require("../mockdata/users");
 const players = require("../mockdata/players");
 const stars = require("../mockdata/stars");
 const planets = require("../mockdata/planets");
+const turns = require("../mockdata/turns");
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
 mongoose.connect(process.env.DATABASE, {
@@ -48,6 +50,8 @@ async function pruneDatabase() {
         logger.debug("[node] starss removed.");
         await Planet.remove();
         logger.debug("[node] planets removed.");
+        await Turn.remove();
+        logger.debug("[node] turns removed.");
         logger.success("[node] collections deleted.");
     } catch (e) {
         logger.error("[node] error while deleting collections.");
@@ -62,16 +66,18 @@ async function pruneDatabase() {
 async function seedDatabase() {
     logger.info("[node] start seeding database");
     try {
+        logger.debug(`[node] inserting ${games.length} games.`);
         await Game.insertMany(games);
-        logger.info(`[node] inserting ${games.length} games.`);
+        logger.debug(`[node] inserting ${users.length} users.`);
         await User.insertMany(users);
-        logger.info(`[node] inserting ${users.length} users.`);
+        logger.debug(`[node] inserting ${players.length} players.`);
         await Player.insertMany(players);
-        logger.info(`[node] inserting ${players.length} players.`);
+        logger.debug(`[node] inserting ${stars.length} stars.`);
         await Star.insertMany(stars);
-        logger.info(`[node] inserting ${stars.length} stars.`);
+        logger.debug(`[node] inserting ${planets.length} planets.`);
         await Planet.insertMany(planets);
-        logger.info(`[node] inserting ${planets.length} planets.`);
+        logger.debug(`[node] inserting ${turns.length} turns.`);
+        await Turn.insertMany(turns);
         logger.success("[node] done, database seeded!");
     } catch (e) {
         logger.error("[node] error while seeding database.");

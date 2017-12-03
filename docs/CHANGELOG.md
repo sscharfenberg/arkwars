@@ -1,10 +1,22 @@
 # Changelog
 
-- [x] Updated Packages - apparently no side-effects this time \o/ Implemeneted Tooling for Vue Components, reconfigured chunks so app is always needed, admin and empire|fleets|etc are added via pug template. `05.11.2017`
-- [x] externalize cron/turn handling into a seperate node process. `01.10.2017`
-- [x] add orbital index to planets `01.10.2017`
-- [x] enlist => assign random player system `01.10.2017`
-- [x] withhdraw => remove ownership of player systems `01.10.2017`
+`03.12.2017`
+- [x] Updated dependencies again. 
+- [x] Improved admin > games by adding turndue column (sortable). 
+- [x] Edit Games screen now allows editing of current turn and turn due. 
+- [x] Improved cron task; processed turns are written into database with (mockup) logdata.
+ 
+`05.11.2017`
+- [x] Updated Packages - apparently no side-effects this time \o/ 
+- [x] Implemeneted Tooling for Vue Components, reconfigured chunks so app is always needed, admin and empire|fleets|etc are added via pug template.
+ 
+`01.10.2017`
+- [x] externalize cron/turn handling into a seperate node process. 
+- [x] add orbital index to planets
+- [x] enlist => assign random player system 
+- [x] withhdraw => remove ownership of player systems
+
+`older stuff`
 - [x] change Users model and make "players" a virtual field. change controller User.find, add autopopulate players.
 - [x] Add a datetime picker for game generation.
 - [x] delete game => delete stars and planets
@@ -14,5 +26,4 @@
 - [x] Create game
 - [x] Edit game  
 
-
-older changes - see commits.
+even older changes - see commits.

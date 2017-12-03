@@ -24,8 +24,8 @@ const cfg = require("../../config");
 exports.showGames = async (req, res) => {
     const page = parseInt(req.params.page, 10) || 1; // current page
     let sort = {}; // temp sort.
-    let sortField = "startDate"; // default sort column
-    let sortDirection = "desc"; // default sort direction
+    let sortField = "turnDue"; // default sort column
+    let sortDirection = "asc"; // default sort direction
     let limit = cfg.defaultPagination.admin.games; // number of users per page
     let skip = page * limit - limit; // skip entries if we are not on page 1
     let data = req.body;
@@ -126,6 +126,7 @@ exports.editGame = async (req, res) => {
                 {
                     _id: game._id,
                     number: game.number,
+                    turn: game.turn,
                     startDate: game.startDate,
                     created: game.created,
                     turnDuration: game.turnDuration,
@@ -156,7 +157,7 @@ exports.editGame = async (req, res) => {
 exports.deleteGame = async (req, res) => {
     const game = await Game.findById(req.params.id).populate("players");
     const playerIds = game.players.map(player => player.id); // players enlisted in this game.
-    const UserIds = game.players.map(player => player.user); // users with players enlisted in this game
+    //const UserIds = game.players.map(player => player.user); // users with players enlisted in this game
     logger.info(
         `[Admin ${chalk.cyan(
             "@" + req.user.username
@@ -224,6 +225,7 @@ exports.deleteGame = async (req, res) => {
 exports.newGame = async (req, res, next) => {
     req.body.number =
         (await Game.findOne({}).sort({ number: "desc" })).number + 1;
+    req.body.turnDue = req.body.startDate;
     const game = await new Game(req.body).save();
     if (!game) {
         logger.error(

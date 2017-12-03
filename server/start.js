@@ -12,7 +12,7 @@ const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("./handlers/logger/console");
 
 // import environmental variables from our .env file to process.env
-require("dotenv").config({ path: "./server/config/.env" });
+require("dotenv").config({path: "./server/config/.env"});
 
 /*
  * connect and prepare MongoDB
@@ -31,11 +31,12 @@ mongoose.connection
     });
 
 // require all mongoose schemas
-require("./models/User");
 require("./models/Game");
+require("./models/Planet");
 require("./models/Player");
 require("./models/Star");
-require("./models/Planet");
+require("./models/Turn");
+require("./models/User");
 
 /*
  * start the application
@@ -47,6 +48,6 @@ app.set("port", process.env.PORT || 80); // set port
 // start server by listening to requests on app port
 const server = app.listen(app.get("port"), () => {
     logger.info(
-        `[node] Server now listening on port ${chalk.yellow(app.get("port"))}`
+        `[node] Server listening on port ${chalk.yellow(app.get("port"))}`
     );
 });
