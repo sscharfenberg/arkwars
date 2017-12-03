@@ -33,6 +33,16 @@ block content
                     .aw-grid__column= h.__("ADMIN.GAME.CREATED")
                     .aw-grid__column.aw-grid__column--vcentered= h.moment(game.created).format("LLLL")
 
+            if game && game.turn
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.GAME.CURRENTTURN")
+                    .aw-grid__column.aw-grid__column--vcentered= game.turn
+
+            if game && game.turnDue
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.GAME.TURNDUE")
+                    .aw-grid__column.aw-grid__column--vcentered= h.moment(game.turnDue).format("LLLL")
+
             .aw-form__row
                 .aw-form-input
                     label.aw-form-input__label(for="active")= h.__("ADMIN.GAME.ACTIVELABEL")

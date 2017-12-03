@@ -50,11 +50,11 @@ devServer.listen(config.webPackPort, "localhost", err => {
         )} mode.`
     );
     logger.info(
-        `[webpack] pug footer include points to webpack-dev-server for Hot-Module-Reloading.`
+        "[webpack] pug footer include points to webpack-dev-server for Hot-Module-Reloading."
     );
-//    logger.info(
-//        `[webpack] css is served via webpack-dev-server injected as style blob into head.`
-//    );
+    //    logger.info(
+    //        `[webpack] css is served via webpack-dev-server injected as style blob into head.`
+    //    );
 });
 
 // log finished compilations to console

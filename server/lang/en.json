@@ -359,6 +359,8 @@
             "TITLENEW": "New Game",
             "NUMBER": "Game number",
             "CREATED": "Date created",
+            "CURRENTTURN": "Current turn",
+            "TURNDUE": "Next turn calculation",
             "PROCESSINGLABEL": "Game is processing",
             "PROCESSINGDESC": "This set to true if the server has started processing a turn, but is not finished yet. Use with caution.",
             "CANENLIST": "Can enlist to game",

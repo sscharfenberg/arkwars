@@ -358,6 +358,8 @@
             "TITLENEW": "Neues Spiel",
             "NUMBER": "Spiel Nummer",
             "CREATED": "Erstellt am",
+            "CURRENTTURN": "Aktuelle Runde",
+            "TURNDUE": "Berechnung der nächsten Runde",
             "PROCESSINGLABEL": "Spiel wird gerade ausgewertet",
             "PROCESSINGDESC": "Auswerten bedeutet das der Server das Berechnen einer Runde gestartet hat, aber die Berechnung ist noch nicht abgeschlossen. Mit Vorsicht verwenden.",
             "CANENLIST": "Können Benutzer sich einschreiben",

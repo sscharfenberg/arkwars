@@ -13,7 +13,7 @@ const gameSchema = new mongoose.Schema(
         // game number
         number: {
             type: Number,
-            index: { unique: true },
+            index: {unique: true},
             required: true
         },
 
@@ -53,7 +53,7 @@ const gameSchema = new mongoose.Schema(
         // max number of players
         maxPlayers: {
             type: Number,
-            min: 1,
+            min: 1
         },
 
         // dimensions of game (width/height)
@@ -81,8 +81,8 @@ const gameSchema = new mongoose.Schema(
         }
     },
     {
-        toJSON: { virtuals: true },
-        toOjbect: { virtuals: true }
+        toJSON: {virtuals: true},
+        toOjbect: {virtuals: true}
     }
 );
 

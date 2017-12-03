@@ -9,12 +9,11 @@ const cfg = require("../config");
 mongoose.Promise = global.Promise;
 
 const playerSchema = new mongoose.Schema({
-
     // reference to game id
-    game: { type: mongoose.Schema.ObjectId, ref: "Game" },
+    game: {type: mongoose.Schema.ObjectId, ref: "Game"},
 
     // reference to user id
-    user: { type: mongoose.Schema.ObjectId, ref: "User" },
+    user: {type: mongoose.Schema.ObjectId, ref: "User"},
 
     // name of empire
     name: {
@@ -37,7 +36,6 @@ const playerSchema = new mongoose.Schema({
         type: Date,
         default: moment().toISOString()
     }
-
 });
 
 // Define our indexes

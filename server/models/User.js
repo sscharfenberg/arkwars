@@ -11,9 +11,7 @@ const cfg = require("../config");
 //const validator = require("validator"); // https://www.npmjs.com/package/validator
 mongoose.Promise = global.Promise;
 
-
 const userSchema = new mongoose.Schema({
-
     // email address
     email: {
         type: String,
@@ -32,7 +30,7 @@ const userSchema = new mongoose.Schema({
     // locale
     locale: {
         type: String,
-        enum: cfg.app.locales.map(locale => locale.name),
+        enum: cfg.app.locales.map(locale => locale.name)
     },
 
     // avatar filename
@@ -74,7 +72,8 @@ const userSchema = new mongoose.Schema({
 
     // currently selected player
     selectedPlayer: {
-        type: mongoose.Schema.ObjectId, ref: "Player"
+        type: mongoose.Schema.ObjectId,
+        ref: "Player"
     },
 
     // number of failed login attempts
@@ -99,7 +98,6 @@ const userSchema = new mongoose.Schema({
     mod: {
         type: Boolean
     }
-
 });
 
 // Define our indexes
@@ -107,7 +105,6 @@ userSchema.index({
     username: "text",
     email: "text"
 });
-
 
 // https://github.com/saintedlama/passport-local-mongoose
 // configure passport-local-mongoose
@@ -120,7 +117,6 @@ userSchema.plugin(passportLocalMongoose, {
     maxAttempts: 5
 });
 userSchema.plugin(mongodbErrorHandler);
-
 
 // find players where player.user = user._id
 userSchema.virtual("players", {
