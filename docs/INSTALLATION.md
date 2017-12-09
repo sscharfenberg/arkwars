@@ -12,6 +12,9 @@ Installation instructions vary depending on your OS. I'm on Windows 10, so I'm g
 
 Start by cloning the repository, then `npm install`. This will take a while.
 
+Please note that you might run into problems during installation under windows where `fsvents` installation fails with EPERM. In this case, try `npm install --verbose` or `npm install --force` and make sure the console that you run this command in has administrator privileges.
+This is a known issue with npm where some files a race condition fails because required files are already deleted. Lets hope for npm6 I guess? `--verbose` creates more noise and delays the operation a bit, which helps with the race condition. Weird.
+
 ## Setup Mailserver for Development
 
 I strongly recommend [https://mailtrap.io/](https://mailtrap.io/) - they pretend to be a mailserver, but do not actually send anything. Instead, the mails are placed conveniently in an inbox for you to study. Create a free inbox, and copy the credentials to `/server/config/.env`. 

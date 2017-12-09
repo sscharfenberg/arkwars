@@ -4,7 +4,7 @@ Frontend and Backend for Arkwars (**working title!**) - a strategic turn-based g
 
 Number of times `.env` file got submitted to git: **2** 
 
-###Warning
+### Warning
 This is a rough and early work in progress. There are lots of areas that don't work yet, lots of stuff will break again and again :)
  
 Use at your own risk. 
