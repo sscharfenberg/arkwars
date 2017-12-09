@@ -2,6 +2,7 @@
 
 `09.12.2017`
 - [x] make values for progressbar dynamic from server. clock is ticking properly now.
+- [x] do not update progressbar for inactive games, show default (empty) progressbar.
 
 `03.12.2017`
 - [x] Webpack Refactor, +BundleAnalyzer and extract header css link; three chunks at the moment (app, admin, empire)
