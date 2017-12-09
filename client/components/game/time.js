@@ -12,6 +12,7 @@ import cfg from "../../config";
 const SELECTOR_SERVER_TIME = "time[data-server-time]";
 const SELECTOR_MY_TIME = "time[data-my-time]";
 const SELECTOR_PROGRESS = ".aw-progress-turn";
+const SELECTOR_SVG = ".aw-progress__bar";
 const SELECTOR_TIME_NEXT_TURN = "time[data-time-next-turn]";
 const SELECTOR_PROGRESSBAR_VALUE = ".aw-progress__bar-value";
 const SELECTOR_CURRENT_GAME =
@@ -86,6 +87,7 @@ const updateServerTime = time => {
     const _serverTime = document.querySelectorAll(SELECTOR_SERVER_TIME);
     const _progress = document.querySelectorAll(SELECTOR_PROGRESS)[0];
     const oldText = _serverTime[0].textContent;
+    const isActiveGame = document.querySelectorAll(SELECTOR_SVG)[0].classList.contains("active");
     const display = moment(time).format("LT");
     for (let domNode of _serverTime) {
         domNode.textContent = display;
@@ -93,13 +95,12 @@ const updateServerTime = time => {
     }
     // update progress only if servertime changes
     // do not update progress for the first time when we update the textContent
-    if (oldText !== display && oldText !== "00:00") {
-        if (_progress) {
-            updateProgress(
-                parseInt(_progress.getAttribute(DATA_MAX), 10),
-                parseInt(_progress.getAttribute(DATA_VALUE), 10) + 1
-            );
-        }
+    // do not update progress for inactive games
+    if (_progress && oldText !== display && oldText !== "00:00" && isActiveGame) {
+        updateProgress(
+            parseInt(_progress.getAttribute(DATA_MAX), 10),
+            parseInt(_progress.getAttribute(DATA_VALUE), 10) + 1 // increase by one minute
+        );
     }
 };
 

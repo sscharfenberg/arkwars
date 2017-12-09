@@ -98,20 +98,18 @@ body
                     .aw-turn__value= user.selectedPlayer.game.turn
                 .aw-header__server-time
                     time(
-                    datetime=(h.moment().toISOString()),
-                    data-server-time
+                        datetime=(h.moment().toISOString()),
+                        data-server-time
                     )= h.moment().format("LT")
                 .aw-header__turn-next-progress
                     .aw-progress.aw-progress-turn(
                         data-max=(user.selectedPlayer.game.turnDuration),
-                        data-value=(
-                            user.selectedPlayer.game.turnDuration - h.moment(user.selectedPlayer.game.turnDue).diff(h.moment(), "minutes")
-                        )
-                    )!= h.progressbar(user.selectedPlayer.game.turnDuration, user.selectedPlayer.game.turnDuration - h.moment(user.selectedPlayer.game.turnDue).diff(h.moment(), "minutes"))
+                        data-value=(user.selectedPlayer.game.turnMinutesPassed)
+                    )!= h.progressbar(user.selectedPlayer.game.turnDuration, user.selectedPlayer.game.turnMinutesPassed, user.selectedPlayer.game.active)
                 .aw-header__turn-next-time
                     time(
-                    datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
-                    data-time-next-turn
+                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
+                        data-time-next-turn
                     )= h.moment(user.selectedPlayer.game.turnDue).format("LT")
 
 
@@ -147,14 +145,12 @@ body
                                 .aw-drawer__turn-next-progress
                                     .aw-progress.aw-progress-turn(
                                         data-max=(user.selectedPlayer.game.turnDuration),
-                                        data-value=(
-                                            user.selectedPlayer.game.turnDuration - h.moment(user.selectedPlayer.game.turnDue).diff(h.moment(), "minutes")
-                                        )
-                                    )!= h.progressbar(user.selectedPlayer.game.turnDuration, user.selectedPlayer.game.turnDuration - h.moment(user.selectedPlayer.game.turnDue).diff(h.moment(), "minutes"))
+                                        data-value=(user.selectedPlayer.game.turnMinutesPassed)
+                                    )!= h.progressbar(user.selectedPlayer.game.turnDuration, user.selectedPlayer.game.turnMinutesPassed, user.selectedPlayer.game.active)
                                 .aw-drawer__turn-next-time
                                     time(
-                                    datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
-                                    data-time-next-turn
+                                        datetime=(h.moment(user.selectedPlayer.game.turnDue).toISOString()),
+                                        data-time-next-turn
                                     )= h.moment(user.selectedPlayer.game.turnDue).format("LT")
 
 

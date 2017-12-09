@@ -107,4 +107,9 @@ gameSchema.virtual("turns", {
     foreignField: "game" // which field on the Turn?
 });
 
+gameSchema.virtual("turnMinutesPassed").get( function() {
+    let turnMinutesPassed = this.turnDuration - moment(this.turnDue).diff(moment(), "minutes");
+    return turnMinutesPassed >= 0 ? turnMinutesPassed : 0;
+});
+
 module.exports = mongoose.model("Game", gameSchema);
