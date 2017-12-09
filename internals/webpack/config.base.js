@@ -11,9 +11,9 @@ const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
 // https://www.npmjs.com/package/html-webpack-plugin
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// https://github.com/webpack-contrib/extract-text-webpack-plugin
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const config = require("../config");
+let isProd = process.env.NODE_ENV === "production";
+
 
 const webpackConfig = {
     // Don"t attempt to continue if there are any errors.
@@ -81,7 +81,7 @@ const webpackConfig = {
                         ]
                     ]
                 }
-            }
+            },
 
         ]
     },
@@ -122,9 +122,9 @@ const webpackConfig = {
     ]
 };
 
+// HTML Webpack Plugins for FOOTER
 // https://github.com/jantimon/html-webpack-plugin
 for (let chunk in config.chunks) {
-    let isProd = process.env.NODE_ENV === "production";
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
             // write the pug SCRIPT includes (footer)
@@ -152,5 +152,38 @@ for (let chunk in config.chunks) {
         })
     );
 }
+
+// HTML Webpack Plugin for HEADER
+// prod extracts styles to css file and we need the header include with content hash
+// https://github.com/jantimon/html-webpack-plugin
+const invalidChunks = ["admin", "app"]; // non-Vue chunks that do not need to extract css
+const validChunks = Object.keys(config.chunks).filter(chunk => !invalidChunks.includes(chunk));
+validChunks.forEach( chunk => {
+    webpackConfig.plugins.push(
+        new HtmlWebpackPlugin({
+            template: path.join(
+                config.projectRoot,
+                "internals",
+                "webpack",
+                "templates",
+                `${chunk}.header.ejs`
+            ),
+            filename: path.join(
+                config.projectRoot,
+                "server",
+                "views",
+                "webpack",
+                `${chunk}.header.pug`
+            ),
+            showErrors: true,
+            inject: false,
+            alwaysWriteToDisk: true,
+            meta: {
+                isProd: isProd, // make sure we have information in the template if prod or dev
+                webPackPort: config.webPackPort
+            }
+        })
+    );
+});
 
 module.exports = webpackConfig;

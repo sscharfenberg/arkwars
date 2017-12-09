@@ -151,33 +151,4 @@ webpackConfig.module.rules.push({
     }
 });
 
-// HTML Webpack Plugin for HEADER
-// prod extracts styles to css file and we need the header include with content hash
-// https://github.com/jantimon/html-webpack-plugin
-const invalidChunks = ["admin", "app"]; // non-Vue chunks that do not need to extract css
-const validChunks = Object.keys(config.chunks).filter(chunk => !invalidChunks.includes(chunk));
-validChunks.forEach( chunk => {
-    webpackConfig.plugins.push(
-        new HtmlWebpackPlugin({
-            template: path.join(
-                config.projectRoot,
-                "internals",
-                "webpack",
-                "templates",
-                `${chunk}.header.ejs`
-            ),
-            filename: path.join(
-                config.projectRoot,
-                "server",
-                "views",
-                "webpack",
-                `${chunk}.header.pug`
-            ),
-            showErrors: true,
-            inject: false,
-            alwaysWriteToDisk: true
-        })
-    );
-});
-
 module.exports = webpackConfig;

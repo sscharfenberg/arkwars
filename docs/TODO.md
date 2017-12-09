@@ -8,10 +8,9 @@
 - [ ] scaffold game screens
 - [ ] debug and test manage games stuff. shits important, yo.
 - [ ] find a simple way to make binary (/multiple?) stars possible, just because its cool.
-- [ ] make values for progressbar dynamic from server (probably together with frontend push)
-- [x] improve seed database scripts by using server handlers. half done, needs work.
+- [ ] Changes to Database does not restart the server.cron task; this means we need to look for all games and check for dueDates.
 
 ## Frontend
 
 - [ ] Refactor webpack config: bundle-buddy / bundle-analytics
-- [x] Add a Frontend framework for game screens. Decide on using React or Vue.
+

@@ -1,6 +1,10 @@
 # Changelog
 
+`09.12.2017`
+- [x] make values for progressbar dynamic from server. clock is ticking properly now.
+
 `03.12.2017`
+- [x] Webpack Refactor, +BundleAnalyzer and extract header css link; three chunks at the moment (app, admin, empire)
 - [x] Updated dependencies again. 
 - [x] Improved admin > games by adding turndue column (sortable). 
 - [x] Edit Games screen now allows editing of current turn and turn due. 
