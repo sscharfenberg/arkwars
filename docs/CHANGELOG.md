@@ -1,5 +1,8 @@
 # Changelog
 
+`10.12.2017`
+- played around a bit with VueJS tooling. Added child component and included an image via url-loader / file-loader. Not sure I am happy with .Vue files.
+
 `09.12.2017`
 - [x] make values for progressbar dynamic from server. clock is ticking properly now.
 - [x] do not update progressbar for inactive games, show default (empty) progressbar.
