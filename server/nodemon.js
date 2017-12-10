@@ -15,7 +15,7 @@ const logger = require("./handlers/logger/console");
 
 const monitor = nodemon({
     script: path.join(__dirname, "start.js"),
-    ext: "js json jsx pug",
+    ext: "js json vue",
     ignore: [
         "server/public/",
         "client/**/*",

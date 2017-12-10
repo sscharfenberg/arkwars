@@ -20,7 +20,7 @@ let webpackConfig = merge(baseWebpackConfig, {
 
     // https://webpack.js.org/configuration/output
     output: {
-        publicPath: `http://localhost:${config.webPackPort}`,
+        publicPath: `http://localhost:${config.webPackPort}/`,
         filename: "[name].js"
     },
 

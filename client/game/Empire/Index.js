@@ -5,6 +5,6 @@ if (document.getElementById("appRoot")) {
     new Vue({
         el: "#appRoot",
         template: "<Empire/>",
-        components: { Empire },
+        components: {Empire}
     });
 }

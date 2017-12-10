@@ -87,7 +87,6 @@ const updateServerTime = time => {
     const _serverTime = document.querySelectorAll(SELECTOR_SERVER_TIME);
     const _progress = document.querySelectorAll(SELECTOR_PROGRESS)[0];
     const oldText = _serverTime[0].textContent;
-    const isActiveGame = document.querySelectorAll(SELECTOR_SVG)[0].classList.contains("active");
     const display = moment(time).format("LT");
     for (let domNode of _serverTime) {
         domNode.textContent = display;
@@ -96,8 +95,9 @@ const updateServerTime = time => {
     // update progress only if servertime changes
     // do not update progress for the first time when we update the textContent
     // do not update progress for inactive games
-    if (_progress && oldText !== display && oldText !== "00:00" && isActiveGame) {
-        updateProgress(
+    if (_progress && oldText !== display && oldText !== "00:00") {
+        const isActiveGame = document.querySelectorAll(SELECTOR_SVG)[0].classList.contains("active");
+        isActiveGame && updateProgress(
             parseInt(_progress.getAttribute(DATA_MAX), 10),
             parseInt(_progress.getAttribute(DATA_VALUE), 10) + 1 // increase by one minute
         );

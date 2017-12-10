@@ -1,21 +1,26 @@
 <template>
-    <p>{{ greeting }} World from Vue!</p>
+    <div>
+        <app-header areaTitle="Empire" />
+        <p>{{ greeting }} World from Vue!</p>
+    </div>
 </template>
 
 <script>
-    module.exports = {
+    import Header from "../common/Header/Header.vue";
+    export default {
         data: function() {
             return {
                 greeting: "Hello"
             };
+        },
+        components: {
+            "app-header": Header
         }
     };
 </script>
 
 <style lang="scss" scoped>
     @import "../../theme/abstracts/config";
-    @import "../../theme/abstracts/functions";
-    @import "../../theme/abstracts/mixins";
     p {
         margin: 0;
         font-size: 40px;

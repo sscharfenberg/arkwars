@@ -83,6 +83,22 @@ const webpackConfig = {
                 }
             },
 
+            {
+                // loader for images
+                // https://github.com/webpack-contrib/url-loader
+                test: /\.(png|jpe?g|gif|svg)$/,
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192,
+                            name: "[name].[hash].[ext]",
+                            fallback: "file-loader"
+                        }
+                    }
+                ]
+            }
+
         ]
     },
 

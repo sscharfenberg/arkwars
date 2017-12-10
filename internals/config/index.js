@@ -61,7 +61,7 @@ module.exports = {
     chunks: {
         app: path.join(PROJECTROOT, "client", "App.js"),
         admin: path.join(PROJECTROOT, "client", "Admin.js"),
-        empire: path.join(PROJECTROOT, "client", "game", "empire", "Empire.js")
+        empire: path.join(PROJECTROOT, "client", "game", "Empire", "Index.js")
     },
 
     // https://webpack.js.org/configuration/stats/
@@ -103,6 +103,10 @@ module.exports = {
             in: [path.join(PROJECTROOT, "client", "theme", "icons", "**/*")],
             out: path.join(BUILDDIR, "images")
         },
-        cleanup: ["server/public/assets/**/*", "server/views/webpack/**/*"]
+        cleanup: [
+            "server/public/assets/**/*",
+            "server/views/webpack/**/*",
+            "server/public/avatars/**/*"
+        ]
     }
 };

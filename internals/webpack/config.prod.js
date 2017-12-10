@@ -15,8 +15,6 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 // https://github.com/webpack-contrib/extract-text-webpack-plugin
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-// https://www.npmjs.com/package/html-webpack-plugin
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const baseWebpackConfig = require("./config.base"); // base webpack config
 const config = require("../config");

@@ -2,10 +2,13 @@
 
 Frontend and Backend for Arkwars (**working title!**) - a strategic turn-based game of galactic conquest.
 
-Number of times `.env` file got submitted to git: **2** 
+Number of times `.env` file got submitted to github: **2** 
 
 ### Warning
-This is a rough and early work in progress. There are lots of areas that don't work yet, lots of stuff will break again and again. I am using github as remove savefile, so there are lots of commits and no releases (yet!).
+
+This is a rough and early work in progress, it is far from ready to be used in any implementation whatsoever. 
+There are lots of areas that don't work yet, lots of stuff will break again and again. 
+Also, I am (ab-) using git as remote savefile, so there are lots of commits and no releases - yet.
  
 Use at your own risk. 
 
