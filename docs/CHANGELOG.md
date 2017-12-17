@@ -1,12 +1,12 @@
 # Changelog
 
 `17.12.2017`
-- Made cron server more robust: Originally, we used node-schedule to schedule a turn's processing. This worked ok, but it doesn't scale, and changes via admin panel to game settings (active, turnDue etc) would not change the already scheduled turn processing. Now the cron server checks at the beginning of each minute for games that need to be processed. This means the turnDue is not precise anymore, it can vary by 30s. However, this scales better and changes in the admin panel / db will be immediately reflected.
-- Wrapped cron server in nodemon for dev restarts / crashes.
-- Bumped dependencies
+- [x] Made cron server more robust: Originally, we used node-schedule to schedule a turn's processing. This worked ok, but it doesn't scale, and changes via admin panel to game settings (active, turnDue etc) would not change the already scheduled turn processing. Now the cron server checks at the beginning of each minute for games that need to be processed. This means the turnDue is not precise anymore, it can vary by 30s. However, this scales better and changes in the admin panel / db will be immediately reflected.
+- [x] Wrapped cron server in nodemon for dev restarts / crashes.
+- [x] Bumped dependencies
 
 `10.12.2017`
-- played around a bit with VueJS tooling. Added child component and included an image via url-loader / file-loader. Not sure I am happy with .Vue files.
+- [x] played around a bit with VueJS tooling. Added child component and included an image via url-loader / file-loader. Not sure I am happy with .Vue files.
 
 `09.12.2017`
 - [x] make values for progressbar dynamic from server. clock is ticking properly now.

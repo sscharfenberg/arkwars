@@ -71,8 +71,11 @@ exports.showGames = async (req, res) => {
 exports.showEditGame = async (req, res) => {
     let game = {};
     let title = i18n.__("ADMIN.GAME.TITLENEW");
+    let map = [];
+    let numNpcSys = 0;
+    let numPlayerSys = 0;
     if (req.params.id) {
-        game = await Game.findOne({ _id: req.params.id }).populate(
+        game = await Game.findOne({_id: req.params.id}).populate(
             "players stars"
         );
         if (!game) {
@@ -81,10 +84,25 @@ exports.showEditGame = async (req, res) => {
             title = i18n.__("ADMIN.GAME.TITLE", game.number);
         }
     }
+    // scaffold map array with empty sectors
+    for (let i = 0; i < game.dimensions; i++) {
+        map.push(new Array(game.dimensions).fill(0));
+    }
+    // prepare the ascii map as preview. 0 = empty, 1 = npc, 2 = player
+    game.stars.forEach(star => {
+        map[star.coordX][star.coordY] = star.homeSystem ? 2 : 1; // set marker for star
+        if (star.homeSystem) numPlayerSys++;
+        else numNpcSys++;
+    });
     res.render("admin/game", {
         session: req.session,
         title,
-        game
+        game,
+        map: {
+            points: map,
+            numEmptySys: numNpcSys,
+            numPlayerSys
+        }
     });
 };
 
@@ -113,7 +131,7 @@ exports.parseCheckboxes = (req, res, next) => {
  *
  */
 exports.editGame = async (req, res) => {
-    const game = await Game.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    const game = await Game.findOneAndUpdate({_id: req.params.id}, req.body, {
         new: true,
         runValidators: true,
         context: "query"
@@ -166,35 +184,35 @@ exports.deleteGame = async (req, res) => {
 
     if (game.players && game.players.length) {
         logger.info(
-            `[Admin ${chalk.cyan(
-                "@" + req.user.username
-            )}]: removing ${playerIds.length} playerIDs from users.`
+            `[Admin ${chalk.cyan("@" + req.user.username)}]: removing ${
+                playerIds.length
+            } playerIDs from users.`
         );
         // update users and remove SelectedPlayer if player is enlisted to this game
         await User.updateMany(
-            { selectedPlayer: { $in: playerIds } },
+            {selectedPlayer: {$in: playerIds}},
             {
                 $set: {
                     selectedPlayer: undefined
                 }
             },
-            { runValidators: true, context: "query" }
+            {runValidators: true, context: "query"}
         );
         // delete players
         logger.info(
-            `[Admin ${chalk.cyan(
-                "@" + req.user.username
-            )}]: removing ${playerIds.length} players.`
+            `[Admin ${chalk.cyan("@" + req.user.username)}]: removing ${
+                playerIds.length
+            } players.`
         );
         await Player.deleteMany({
-            _id: { $in: playerIds }
+            _id: {$in: playerIds}
         });
     }
 
     // delete stars
-    await Planet.deleteMany({ game: req.params.id });
+    await Planet.deleteMany({game: req.params.id});
     // delete planets
-    await Star.deleteMany({ game: req.params.id });
+    await Star.deleteMany({game: req.params.id});
 
     // finally, delete the game
     const deletedGame = await Game.findByIdAndRemove(req.params.id);
@@ -224,7 +242,7 @@ exports.deleteGame = async (req, res) => {
  */
 exports.newGame = async (req, res, next) => {
     req.body.number =
-        (await Game.findOne({}).sort({ number: "desc" })).number + 1;
+        (await Game.findOne({}).sort({number: "desc"})).number + 1;
     req.body.turnDue = req.body.startDate;
     const game = await new Game(req.body).save();
     if (!game) {
@@ -259,7 +277,7 @@ exports.newGame = async (req, res, next) => {
  *
  */
 exports.showSeedGame = async (req, res) => {
-    const game = await Game.findOne({ _id: req.params.id }).populate("stars");
+    const game = await Game.findOne({_id: req.params.id}).populate("stars");
     if (!game) {
         req.flash("error", i18n.__("ADMIN.GAME.ERROR.GAMENOTFOUND"));
         res.redirect("back");
@@ -285,7 +303,7 @@ exports.showSeedGame = async (req, res) => {
  *
  */
 exports.seedGamePreview = async (req, res) => {
-    const game = await Game.findOne({ _id: req.params.id });
+    const game = await Game.findOne({_id: req.params.id});
     let map = [];
     game.dimensions = req.body.dimensions || cfg.games.dimensions.default;
 
@@ -349,24 +367,24 @@ exports.seedGamePreview = async (req, res) => {
         map.push(new Array(game.dimensions).fill(0));
     }
     let numPlayerSys = 0;
-    let numEmptySys = 0;
+    let numNpcSys = 0;
     // prepare the ascii map as preview. 0 = empty, 1 = npc, 2 = player
     starsFiltered.forEach(star => {
         map[star[0]][star[1]] = star[2]; // set marker for star
-        if (star[2] === 1) numEmptySys++;
+        if (star[2] === 1) numNpcSys++;
         if (star[2] === 2) numPlayerSys++;
     });
 
     // store the seeded map
     let savedGame = await Game.findOneAndUpdate(
-        { _id: req.params.id },
+        {_id: req.params.id},
         {
             $set: {
                 seededMap: JSON.stringify(starsFiltered),
                 dimensions: game.dimensions
             }
         },
-        { new: true, runValidators: true, context: "query" }
+        {new: true, runValidators: true, context: "query"}
     );
 
     if (savedGame) {
@@ -383,7 +401,7 @@ exports.seedGamePreview = async (req, res) => {
         game: savedGame ? savedGame : game,
         map: {
             points: map,
-            numEmptySys,
+            numEmptySys: numNpcSys,
             numPlayerSys
         }
     });
@@ -397,7 +415,7 @@ exports.seedGamePreview = async (req, res) => {
  *
  */
 exports.createStars = async (req, res, next) => {
-    let game = await Game.findOne({ _id: req.params.id });
+    let game = await Game.findOne({_id: req.params.id});
     let points = JSON.parse(game.seededMap);
     let stars = [];
     points.forEach(point => {
@@ -417,7 +435,7 @@ exports.createStars = async (req, res, next) => {
     );
     await Star.insertMany(stars);
     // insertMany does not return the new objects, so we need to find them again
-    req._stars = await Star.find({ game: req.params.id });
+    req._stars = await Star.find({game: req.params.id});
     logger.info(
         `[App] saved ${chalk.red(req._stars.length)} star systems in database.`
     );
@@ -462,14 +480,14 @@ exports.createPlanets = async (req, res, next) => {
 
     // store the seeded map
     await Game.findOneAndUpdate(
-        { _id: req.params.id },
+        {_id: req.params.id},
         {
             $set: {
                 seededMap: undefined,
                 maxPlayers
             }
         },
-        { new: true, runValidators: true, context: "query" }
+        {new: true, runValidators: true, context: "query"}
     );
 
     req.flash("success", i18n.__("ADMIN.GAME.SEED.SUCCESS"));

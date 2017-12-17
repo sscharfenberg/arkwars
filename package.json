@@ -1,7 +1,7 @@
 {
     "name": "arkwars",
     "description": "Arkwars - a strategic turn-based game of galactic conquest.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "url": "https://arkwars.io",
     "author": {
         "name": "Sven Scharfenberg",
@@ -154,7 +154,7 @@
             "<rootDir>/client/**/?(*.)(spec|test).js?(x)"
         ],
         "testEnvironment": "node",
-        "testURL": "http://localhost",
+        "testURL": "http://localhost:7777",
         "transform": {
             "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
             "^.+\\.css$": "<rootDir>/internals/config/jest/cssTransform.js",

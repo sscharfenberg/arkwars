@@ -243,12 +243,20 @@ block content
 
                                 td= h.__("ADMIN.GAMES.BODY.DURATION", game.turnDuration)
 
-                                td= h.moment(game.created).format("LLL")
+                                td
+                                    != h.moment(game.created).format("LLL")
+                                    br
+                                    small= h.moment(game.startDate).fromNow()
 
                                 td(class=(h.moment(game.startDate).diff(h.moment()) < 0 ? "admin-listtable__td-highlighted" : ""))
                                     != h.moment(game.startDate).format("LLL")
+                                    br
+                                    small= h.moment(game.startDate).fromNow()
 
-                                td= h.moment(game.turnDue).format("LLL")
+                                td
+                                    != h.moment(game.turnDue).format("LLL")
+                                    br
+                                    small= h.moment(game.turnDue).fromNow()
 
                                 td
                                     if game.processing

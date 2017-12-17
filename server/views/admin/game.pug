@@ -99,16 +99,6 @@ block content
                         else
                             | /0
 
-            if game && game.stars && game.stars.length
-                .aw-grid__row.aw-grid__row--2col
-                    .aw-grid__column= h.__("ADMIN.GAME.STARS")
-                    .aw-grid__column.aw-grid__column--vcentered= game.stars.length
-
-            if game && game.dimensions
-                .aw-grid__row.aw-grid__row--2col
-                    .aw-grid__column= h.__("ADMIN.GAME.DIMENSIONS")
-                    .aw-grid__column.aw-grid__column--vcentered= game.dimensions + " x " + game.dimensions
-
             .aw-form__row
                 .aw-form-input
                     label.aw-narrowform-input__label(for="startDateInput")= h.__("ADMIN.GAME.STARTDATE")
@@ -159,6 +149,42 @@ block content
                         id="turnDuration",
                         value=(game && game.turnDuration ? game.turnDuration : cfg.games.defaultTurnDuration)
                     )
+
+            if game && game.stars && game.stars.length
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.GAME.STARS")
+                    .aw-grid__column.aw-grid__column--vcentered= game.stars.length
+
+            if game && game.dimensions
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.GAME.DIMENSIONS")
+                    .aw-grid__column.aw-grid__column--vcentered= game.dimensions + " x " + game.dimensions
+
+            if game && game.stars && game.stars.length && map && map.points.length
+                - let tableClass = "admin-map--small"
+                if map.points.length > 50
+                    - tableClass = "admin-map--medium"
+                if map.points.length > 100
+                    - tableClass = "admin-map--large"
+                .aw-form__row
+                    .aw-grid__headline= h.__("ADMIN.GAME.SEED.MAPHDL", map.numEmptySys + map.numPlayerSys)
+                    .aw-grid__row.aw-grid__row--2col
+                        .aw-grid__column= h.__("ADMIN.GAME.SEED.NPCSYSTEM")
+                        .aw-grid__column= "🌏 " + map.numEmptySys
+                    .aw-grid__row.aw-grid__row--2col
+                        .aw-grid__column= h.__("ADMIN.GAME.SEED.PLAYERSYSTEM")
+                        .aw-grid__column= "🌕 " + map.numPlayerSys
+                    .admin-map__wrapper
+                        table.admin-map(class=(tableClass))
+                            each row in map.points
+                                tr.admin-map__row
+                                    each system in row
+                                        if system === 0
+                                            td.admin-map__sector
+                                        if system === 1
+                                            td.admin-map__sector.admin-map__sector--star 🌏
+                                        if system === 2
+                                            td.admin-map__sector.admin-map__sector--star 🌕
 
             .aw-form__row
                 .aw-form__submit
