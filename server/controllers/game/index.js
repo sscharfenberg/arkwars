@@ -196,7 +196,8 @@ exports.validateGameSelect = async (req, res, next) => {
     const myGames = req.user.players.map(game => game.game);
     const game = await Game.findOne({
         number: requestedGame,
-        _id: { $in: myGames } // in my game ids.
+        _id: { $in: myGames }, // in my game ids.
+        active: true // needs to be active to select
     });
     if (!game) {
         logger.debug(

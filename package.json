@@ -18,6 +18,7 @@
         "npm": ">= 5.3.0"
     },
     "scripts": {
+        "tmp": "node internals/mockdata/stars.js",
         "server.start": "node server/monitor-backend.js",
         "server.start.inspect": "node --inspect server/monitor-backend.js",
         "server.cron": "node server/monitor-cron.js",

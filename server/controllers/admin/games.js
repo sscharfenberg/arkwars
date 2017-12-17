@@ -75,7 +75,7 @@ const getMapPreview = game => {
         points.push(new Array(game.dimensions).fill(0));
     }
     // prepare the ascii map as preview. 0 = empty, 1 = npc, 2 = player
-    game.stars.forEach(star => {
+    game.stars && game.stars.forEach(star => {
         points[star.coordX][star.coordY] = star.homeSystem ? 2 : 1; // set marker for star
         if (star.homeSystem) numPlayerSys++;
         else numNpcSys++;
@@ -410,7 +410,7 @@ exports.seedGamePreview = async (req, res) => {
         game: savedGame ? savedGame : game,
         map: {
             points: map,
-            numEmptySys: numNpcSys,
+            numNpcSys,
             numPlayerSys
         }
     });

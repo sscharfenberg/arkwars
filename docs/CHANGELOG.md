@@ -5,6 +5,7 @@
 - [x] Wrapped cron server in nodemon for dev restarts / crashes.
 - [x] Bumped dependencies
 - [x] added map preview to admin > edit game. added moment.fromNow() for games overview
+- [x] improved mockdata by dynamically generating games with stars and planets
 
 `10.12.2017`
 - [x] played around a bit with VueJS tooling. Added child component and included an image via url-loader / file-loader. Not sure I am happy with .Vue files.

@@ -12,7 +12,7 @@ let users = [
         locale: "de",
         emailConfirmed: true,
         suspended: false,
-        selectedPlayer: "59904696a7dba10320d3a092",
+        selectedPlayer: "5990c7871e8258089436d748",
         attempts: 0,
         lastLogin: "2017-07-29T09:17:24.008Z",
         created: "2017-07-29T09:15:05.654Z",

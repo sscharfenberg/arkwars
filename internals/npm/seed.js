@@ -28,6 +28,14 @@ const stars = require("../mockdata/stars");
 const planets = require("../mockdata/planets");
 const turns = require("../mockdata/turns");
 
+// add maxPlayers to game == number of player systems
+games.forEach( game => {
+    let gameStars = stars.filter(star => star.homeSystem && star.game === game._id);
+    game.maxPlayers = gameStars.length;
+    logger.info(`game ${game.number} has ${gameStars.length} maxplayers`);
+});
+
+
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
 mongoose.connect(process.env.DATABASE, {
     useMongoClient: true
@@ -66,14 +74,14 @@ async function pruneDatabase() {
 async function seedDatabase() {
     logger.info("[node] start seeding database");
     try {
+        logger.debug(`[node] inserting ${stars.length} stars.`);
+        await Star.insertMany(stars);
         logger.debug(`[node] inserting ${games.length} games.`);
         await Game.insertMany(games);
         logger.debug(`[node] inserting ${users.length} users.`);
         await User.insertMany(users);
         logger.debug(`[node] inserting ${players.length} players.`);
         await Player.insertMany(players);
-        logger.debug(`[node] inserting ${stars.length} stars.`);
-        await Star.insertMany(stars);
         logger.debug(`[node] inserting ${planets.length} planets.`);
         await Planet.insertMany(planets);
         logger.debug(`[node] inserting ${turns.length} turns.`);
@@ -87,10 +95,15 @@ async function seedDatabase() {
 }
 
 if (process.argv.includes("--prune")) {
-    try { pruneDatabase(); }
-    catch(err) { console.log(err) }
-
+    try {
+        pruneDatabase();
+    } catch (err) {
+        console.log(err);
+    }
 } else if (process.argv.includes("--seed")) {
-    try { seedDatabase(); }
-    catch(err) { console.log(err) }
+    try {
+        seedDatabase();
+    } catch (err) {
+        console.log(err);
+    }
 }
