@@ -19,7 +19,6 @@ const pkg = require("../../package.json");
 const appDirectory = fs.realpathSync(process.cwd());
 
 const appConfig = {
-
     app: {
         // basic settings
         title: pkg.app.name,
@@ -87,6 +86,11 @@ const appConfig = {
                 bounds: [2, 5]
             }
         },
+        turns: {
+            // server tick threshold for game turn processing.
+            // game turns that are due in (threshold) are processed
+            dueThreshold: 30 * 1000
+        },
         defaultTurnDuration: 15,
         dimensions: {
             default: 40,
@@ -94,12 +98,12 @@ const appConfig = {
             max: 200
         },
         distance: {
-            default: [3,5],
-            bounds: [2,20]
+            default: [3, 5],
+            bounds: [2, 20]
         },
         playerDistance: {
-            default: [6,12],
-            bounds: [2,20]
+            default: [6, 12],
+            bounds: [2, 20]
         }
     },
 
@@ -110,32 +114,38 @@ const appConfig = {
                 chance: 5,
                 chanceHome: 0,
                 planetsMod: -3
-            }, {
+            },
+            {
                 name: "B",
                 chance: 5,
                 chanceHome: 0,
                 planetsMod: -2
-            }, {
+            },
+            {
                 name: "A",
                 chance: 5,
                 chanceHome: 10,
                 planetsMod: -2
-            }, {
+            },
+            {
                 name: "F",
                 chance: 10,
                 chanceHome: 30,
                 planetsMod: 0
-            }, {
+            },
+            {
                 name: "G",
                 chance: 20,
                 chanceHome: 30,
                 planetsMod: 1
-            }, {
+            },
+            {
                 name: "K",
                 chance: 20,
                 chanceHome: 30,
                 planetsMod: 2
-            }, {
+            },
+            {
                 name: "M",
                 chance: 35,
                 chanceHome: 0,
@@ -143,12 +153,12 @@ const appConfig = {
             }
         ],
         name: {
-            initial: [4,6], // range for initially generated names
-            bounds: [4,30] // range for player edited names
+            initial: [4, 6], // range for initially generated names
+            bounds: [4, 30] // range for player edited names
         },
         planets: {
             npc: [3, 10], // range for numplanets in npc systems
-            player: [6,12] // range for numplanets in player systems
+            player: [6, 12] // range for numplanets in player systems
         }
     },
 
@@ -158,27 +168,33 @@ const appConfig = {
                 name: "terrestrial",
                 chance: 15,
                 chanceHome: 50
-            }, {
+            },
+            {
                 name: "gas",
                 chance: 12,
                 chanceHome: 10
-            }, {
+            },
+            {
                 name: "ice",
                 chance: 11,
                 chanceHome: 10
-            }, {
+            },
+            {
                 name: "iron",
                 chance: 15,
                 chanceHome: 10
-            }, {
+            },
+            {
                 name: "barren",
                 chance: 50,
                 chanceHome: 10
-            }, {
+            },
+            {
                 name: "toxic",
                 chance: 5,
                 chanceHome: 5
-            }, {
+            },
+            {
                 name: "tomb",
                 chance: 2,
                 chanceHome: 5
@@ -192,7 +208,6 @@ const appConfig = {
             games: 20
         }
     }
-
 };
 
 module.exports = appConfig;

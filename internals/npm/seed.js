@@ -47,7 +47,7 @@ async function pruneDatabase() {
         await Player.remove();
         logger.debug("[node] players removed.");
         await Star.remove();
-        logger.debug("[node] starss removed.");
+        logger.debug("[node] stars removed.");
         await Planet.remove();
         logger.debug("[node] planets removed.");
         await Turn.remove();

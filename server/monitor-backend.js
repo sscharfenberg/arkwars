@@ -1,10 +1,10 @@
 /***********************************************************************************************************************
  *
- * NODEMON
+ * Monitor Backend
  *
  * @type {Node.js}
  *
- * This script starts our app, monitors the node task and restarts the task if files have changed
+ * This script starts our app, monitors the node task and restarts the task if files have changed or a crash occured
  * it is called directly via NPM
  *
  **********************************************************************************************************************/
@@ -16,31 +16,28 @@ const logger = require("./handlers/logger/console");
 const monitor = nodemon({
     script: path.join(__dirname, "start.js"),
     ext: "js json vue",
+    watch: ["server"],
     ignore: [
         "server/public/",
-        "client/**/*",
-        "internals/**/*",
-        "node_modules",
-        "packag*.json"
+        "server/handlers/cron"
     ],
     verbose: true
 });
 
-monitor.on("start", () => {
-    logger.success("[nodemon] server starting up.");
-});
-
-monitor.on("quit", () => {
-    logger.warn("[nodemon] app has quit.");
-    process.exit(0);
-});
-
-monitor.on("restart", files => {
-    logger.debug(
-        "[nodemon] app restarted due to\r\n" + chalk.yellow(files.toString())
-    );
-});
-
-monitor.on("crash", () => {
-    logger.error("[nodemon] app has crashed.");
-});
+monitor
+    .on("start", () => {
+        logger.info("[nodemon] backend server starting up.");
+    })
+    .on("quit", () => {
+        logger.warn("[nodemon] backend server has shut down.");
+        process.exit(0);
+    })
+    .on("restart", files => {
+        logger.debug(
+            "[nodemon] backend server restarted due to\r\n" +
+                chalk.yellow(files.toString())
+        );
+    })
+    .on("crash", () => {
+        logger.error("[nodemon] backend server has crashed.");
+    });

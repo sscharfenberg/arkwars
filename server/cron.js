@@ -10,7 +10,7 @@
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const logger = require("./handlers/logger/console");
 const cron = require("./handlers/cron");
-const {catchErrors} = require("./handlers/error"); // Error handling
+
 
 // import environmental variables from our .env file to process.env
 require("dotenv").config({path: "./server/config/.env"});
@@ -27,8 +27,13 @@ mongoose.connection
         logger.error(err.message);
     })
     .on("connected", () => {
-        logger.success("[Cron] Successfully connected to MongoDB.");
+        logger.success("[cron] Successfully connected to MongoDB.");
     });
 
 // TODO: add nodemon monitoring/restart on crash
-catchErrors(cron.startup());
+
+try {
+    cron.startup();
+} catch(e) {
+    logger.error(e);
+}

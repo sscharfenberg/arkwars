@@ -14,7 +14,6 @@ const Game = mongoose.model("Game");
 require("../../models/Turn");
 const Turn = mongoose.model("Turn");
 
-
 /*
  * process game data for a turn
  * fearlessly mutating game object
@@ -40,8 +39,8 @@ const processGameTurn = async game => {
     // TODO: process game data for realz.
     // MOCKUP!!!
     turn.log = JSON.stringify({
-        fleetsmoved: [4,6],
-        starsprocessed: [14,58]
+        fleetsmoved: [4, 6],
+        starsprocessed: [14, 58]
     });
 
     try {
@@ -50,7 +49,6 @@ const processGameTurn = async game => {
         logger.error(err);
     }
     return game;
-
 };
 
 /*
@@ -69,7 +67,7 @@ const processTurnData = async game => {
     // process game data
     try {
         updatedGame = await processGameTurn(game);
-    } catch(err) {
+    } catch (err) {
         updatedGame = game;
         logger.error(err);
     }
@@ -86,9 +84,6 @@ const processTurnData = async game => {
             moment.duration(moment().diff(startTime)).milliseconds()
         )}ms.`
     );
-
-    // schedule next turn
-    cronHandler.scheduleGameTurn(updatedGame);
 };
 
 exports.processTurnData = processTurnData;

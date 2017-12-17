@@ -88,7 +88,7 @@ Your should get messages like these:
 [App] Successfully connected to MongoDB.
 ```
 
-To start the turn 'clock':
+To start the turn 'clock', start a new console and:
 
 ```
 npm run server.cron

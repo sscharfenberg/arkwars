@@ -54,6 +54,7 @@ playerSchema.virtual("stars", {
 // auto populate games
 function autopopulate(next) {
     this.populate("game");
+    this.populate("stars");
     next();
 }
 playerSchema.pre("find", autopopulate);

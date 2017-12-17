@@ -49,7 +49,7 @@ router.get(
 // game screens ========================================================================================================
 router.get(
     "/:game/empire",
-    empireController.showIndex
+    catchErrors(empireController.showIndex)
 );
 
 module.exports = router;
