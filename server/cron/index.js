@@ -7,17 +7,46 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const cron = require("node-schedule"); // https://www.npmjs.com/package/node-schedule
-const logger = require("../logger/console");
+const logger = require("../handlers/logger/console");
 const turnHandlers = require("./turn");
-require("../../models/Game");
+require("../models/Game");
 const Game = mongoose.model("Game");
-const cfg = require("../../config");
+const cfg = require("../config");
 // server tick threshold for game turn processing.
 // game turns that are due in (threshold) are processed
 const TURNDUE_THRESHOLD = cfg.games.turns.dueThreshold;
 
-const processServerTick = async () => {
-    logger.info("processing server tick.");
+/*
+ * check if a games need to be started and start them (duh)
+ */
+const processGameStarts = async () => {
+    logger.info("checking if games need to be started.");
+    const games = await Game.find({active: false});
+    let gamesToStart = games.filter(game => {
+        return moment().diff(game.startDate) + TURNDUE_THRESHOLD > 0;
+    });
+    if (gamesToStart.length) {
+        logger.info(`starting ${chalk.red(gamesToStart.length)} game(s).`);
+        gamesToStart.forEach(async game => {
+            try {
+                await doStartGame(game);
+            } catch (e) {
+                logger.error(e);
+            }
+        });
+    } else {
+        logger.info("no games need to be started.");
+    }
+};
+
+/*
+ * process game turns
+ * 1) search for active games
+ * 2) filter them and remove processing, processed, not due
+ * 3) process the filtered games.
+ */
+const processGameTurns = async () => {
+    logger.info("processing game turns.");
     const activeGames = await Game.find({active: true}).populate("turns");
     logger.info(
         `found ${chalk.red(activeGames.length)} active games: ${chalk.cyan(
@@ -90,27 +119,65 @@ const processServerTick = async () => {
 };
 
 /*
- * `startup` - script that sets up the server ticks
- * @callee /server/cron.js - called via npm script and started as a seperate process to the backend.
+ * start a specific game
+ */
+const doStartGame = async game => {
+    let updatedGame = game;
+    logger.debug(
+        `starting ${chalk.red("g" + game.number)} startDate @ ${chalk.yellow(
+            moment(game.startDate).format("LLLL")
+        )} ${chalk.cyan(moment(game.startDate).fromNow())}`
+    );
+    updatedGame.active = true;
+    updatedGame.processing = false;
+    updatedGame.canEnlist = false;
+    try {
+        // after the game data has been processed, save to db
+        await Game.findOneAndUpdate({_id: updatedGame._id}, updatedGame, {
+            runValidators: true
+        }).exec();
+        logger.success(
+            `game ${chalk.red(updatedGame.number)} started: ${chalk.yellow(
+                JSON.stringify(updatedGame, null, 2)
+            )}`
+        );
+        // process first turn
+        await turnHandlers.processTurnData(updatedGame);
+    } catch (e) {
+        logger.error(e);
+        logger.error(JSON.stringify(updatedGame,null,2));
+    }
+};
+
+/*
+ * event handler for server ticks:
+ * fn to be called when the server processes a server tick
+ */
+const onServerTick = async () => {
+    logger.debug("processing server tick.");
+    try {
+        await processGameStarts(); // start games if necessary
+        await processGameTurns(); // check if turns need to be processed.
+    } catch (e) {
+        logger.error(e);
+    }
+};
+
+/*
+ * set up the server ticks scheduling
+ * @callee /server/cron.js - called via npm script and started as a seperate process.
  */
 const startup = async () => {
     logger.info("starting cron server.");
     // every minute, check active games again since some might have been set to active.
     cron.scheduleJob("0 * * * * *", async function() {
-        try {
-            await processServerTick();
-        } catch (e) {
-            logger.error(e);
-        }
+        await onServerTick();
     });
     logger.success("server ticks scheduled.");
-    try {
-        await processServerTick();
-    } catch (e) {
-        console.log(e);
-    }
+    //await onServerTick(); // dev
 };
 
-// export the public functions.
+/*
+ * export public fn
+ */
 exports.startup = startup;
-

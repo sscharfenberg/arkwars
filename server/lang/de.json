@@ -366,7 +366,7 @@
             "PROCESSINGDESC": "Auswerten bedeutet das der Server das Berechnen einer Runde gestartet hat, aber die Berechnung ist noch nicht abgeschlossen. Mit Vorsicht verwenden.",
             "CANENLIST": "Können Benutzer sich einschreiben",
             "ACTIVELABEL": "Spiel ist aktiv",
-            "ACTIVEDESC": "Die Runden aktiver Spiele werden vom Server berechnet, falls das StartDatum in der Vergangenheit liegt.",
+            "ACTIVEDESC": "Der Server berechnet Runden nur für aktive Spiele, nur aktive Spiele können ausgewählt werden. Spiele werden automatisch zum Startdatum auf aktiv gesetzt.",
             "MAXPLAYERS": "Maximalzahl an Spielern",
             "ENLISTEDPLAYERS": "Spieler / Maximal",
             "STARTDATE": "Datum des Starts",

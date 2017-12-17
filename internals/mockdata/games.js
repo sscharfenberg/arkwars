@@ -54,10 +54,10 @@ module.exports = [
         maxPlayers: 4,
         dimensions: 10,
         startDate: moment()
-            .add(2, "months")
+            .add(4, "minutes")
             .toISOString(),
         turnDue: moment()
-            .add(2, "months")
+            .add(4, "minutes")
             .toISOString()
     }
 ];

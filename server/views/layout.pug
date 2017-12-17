@@ -58,12 +58,13 @@ body
                         span.keep= user.selectedPlayer ? "g" + user.selectedPlayer.game.number : h.__("APP.HEADER.LABEL_GAME")
                     ul.aw-header__submenu.aw-header__submenu--left(aria-hidden="true")
                         each player in user.players
-                            li.aw-header__submenu-item
-                                a.aw-header__submenu-item-link(
-                                    href=`/game/${player.game.number}/select`,
-                                    data-gameid=(player.game.number),
-                                    class=(user.selectedPlayer && user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
-                                )= "g" + player.game.number
+                            if player.game.active
+                                li.aw-header__submenu-item
+                                    a.aw-header__submenu-item-link(
+                                        href=`/game/${player.game.number}/select`,
+                                        data-gameid=(player.game.number),
+                                        class=(user.selectedPlayer && user.selectedPlayer.game.id === player.game.id ? "aw-header__submenu-item-link--active" : "")
+                                    )= "g" + player.game.number
 
 
             //- links for guests: login, register

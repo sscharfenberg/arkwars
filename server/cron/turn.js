@@ -6,12 +6,10 @@
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
-const logger = require("../logger/console");
-const {to} = require("../error"); // Error handling
-const cronHandler = require("../cron");
-require("../../models/Game");
+const logger = require("../handlers/logger/console");
+require("../models/Game");
+require("../models/Turn");
 const Game = mongoose.model("Game");
-require("../../models/Turn");
 const Turn = mongoose.model("Turn");
 
 /*
@@ -59,8 +57,8 @@ const processTurnData = async game => {
     let startTime = moment(); // remember the starting time so we can calculate runtime.
     let updatedGame;
     logger.debug(
-        `processing turn ${chalk.magenta(game.turn)} for ${chalk.red(
-            "g" + (game.number + 1)
+        `processing turn ${chalk.magenta(game.turn + 1)} for ${chalk.red(
+            "g" + (game.number)
         )}.`
     );
 

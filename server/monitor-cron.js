@@ -16,10 +16,7 @@ const logger = require("./handlers/logger/console");
 const monitor = nodemon({
     script: path.join(__dirname, "cron.js"),
     ext: "js json",
-    watch: [
-        "server/handlers/cron",
-        "server/models"
-    ],
+    watch: ["server/cron", "server/models"],
     ignore: [],
     verbose: true
 });
@@ -40,4 +37,5 @@ monitor
     })
     .on("crash", () => {
         logger.error("[nodemon] cron server has crashed.");
+        process.exit(0);
     });

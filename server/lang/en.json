@@ -367,7 +367,7 @@
             "PROCESSINGDESC": "This set to true if the server has started processing a turn, but is not finished yet. Use with caution.",
             "CANENLIST": "Can enlist to game",
             "ACTIVELABEL": "Game is active",
-            "ACTIVEDESC": "Active games means the server will calculate turns, if startDate is in the past.",
+            "ACTIVEDESC": "The server will only calculate turns for active games, and only active games can be selected. Games are set to active automatically on the startDate.",
             "ENLISTEDPLAYERS": "Players / Max",
             "MAXPLAYERS": "Maximum number of players",
             "STARTDATE": "Date of game start",

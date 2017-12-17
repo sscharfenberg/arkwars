@@ -23,7 +23,7 @@ router.post("/", catchErrors(manageGamesController.showGames));
 router.get("/:id/edit", catchErrors(manageGamesController.showEditGame));
 // post edit gamme formm
 router.post("/:id/edit",
-    manageGamesController.parseCheckboxes, // 1. parse date+time to datetime and assign checkbox values
+    manageGamesController.parseCheckboxes, // 1. parse and assign checkbox values
     catchErrors(manageGamesController.editGame) // 2. edit game metadata
 );
 
@@ -31,9 +31,8 @@ router.post("/:id/edit",
 router.get("/new", catchErrors(manageGamesController.showEditGame));
 // post create gamme formm
 router.post("/new",
-    manageGamesController.parseCheckboxes, // 1. parse date+time to datetime and assign checkbox values
+    manageGamesController.parseCheckboxes, // 1. parse and assign checkbox values
     catchErrors(manageGamesController.newGame) // 2. create new game with metadata
-//    catchErrors(manageGamesController.seedGame) // 3. seed universe with systems
 );
 
 // show seed game

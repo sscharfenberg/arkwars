@@ -167,24 +167,26 @@ block content
                 if map.points.length > 100
                     - tableClass = "admin-map--large"
                 .aw-form__row
-                    .aw-grid__headline= h.__("ADMIN.GAME.SEED.MAPHDL", map.numEmptySys + map.numPlayerSys)
+                    .aw-grid__headline= h.__("ADMIN.GAME.SEED.MAPHDL", map.numNpcSys + map.numPlayerSys)
                     .aw-grid__row.aw-grid__row--2col
                         .aw-grid__column= h.__("ADMIN.GAME.SEED.NPCSYSTEM")
-                        .aw-grid__column= "🌏 " + map.numEmptySys
+                        .aw-grid__column= "🌏 " + map.numNpcSys
                     .aw-grid__row.aw-grid__row--2col
                         .aw-grid__column= h.__("ADMIN.GAME.SEED.PLAYERSYSTEM")
                         .aw-grid__column= "🌕 " + map.numPlayerSys
-                    .admin-map__wrapper
-                        table.admin-map(class=(tableClass))
-                            each row in map.points
-                                tr.admin-map__row
-                                    each system in row
-                                        if system === 0
-                                            td.admin-map__sector
-                                        if system === 1
-                                            td.admin-map__sector.admin-map__sector--star 🌏
-                                        if system === 2
-                                            td.admin-map__sector.admin-map__sector--star 🌕
+                    .aw-grid__row.aw-grid__row--2col
+                        .aw-grid__column
+                        .aw-grid__column
+                            table.admin-map(class=(tableClass))
+                                each row in map.points
+                                    tr.admin-map__row
+                                        each system in row
+                                            if system === 0
+                                                td.admin-map__sector
+                                            if system === 1
+                                                td.admin-map__sector.admin-map__sector--star 🌏
+                                            if system === 2
+                                                td.admin-map__sector.admin-map__sector--star 🌕
 
             .aw-form__row
                 .aw-form__submit

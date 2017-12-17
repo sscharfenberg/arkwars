@@ -63,6 +63,31 @@ exports.showGames = async (req, res) => {
 };
 
 /*
+ * Create Preview Map ==================================================================================================
+ * @param {Mongoose.model("Game")} game
+ */
+const getMapPreview = game => {
+    let points = [];
+    let numNpcSys = 0;
+    let numPlayerSys = 0;
+    // scaffold map array with empty sectors
+    for (let i = 0; i < game.dimensions; i++) {
+        points.push(new Array(game.dimensions).fill(0));
+    }
+    // prepare the ascii map as preview. 0 = empty, 1 = npc, 2 = player
+    game.stars.forEach(star => {
+        points[star.coordX][star.coordY] = star.homeSystem ? 2 : 1; // set marker for star
+        if (star.homeSystem) numPlayerSys++;
+        else numNpcSys++;
+    });
+    return {
+        points,
+        numNpcSys,
+        numPlayerSys
+    };
+};
+
+/*
  * show Games ==========================================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
@@ -71,9 +96,6 @@ exports.showGames = async (req, res) => {
 exports.showEditGame = async (req, res) => {
     let game = {};
     let title = i18n.__("ADMIN.GAME.TITLENEW");
-    let map = [];
-    let numNpcSys = 0;
-    let numPlayerSys = 0;
     if (req.params.id) {
         game = await Game.findOne({_id: req.params.id}).populate(
             "players stars"
@@ -84,25 +106,11 @@ exports.showEditGame = async (req, res) => {
             title = i18n.__("ADMIN.GAME.TITLE", game.number);
         }
     }
-    // scaffold map array with empty sectors
-    for (let i = 0; i < game.dimensions; i++) {
-        map.push(new Array(game.dimensions).fill(0));
-    }
-    // prepare the ascii map as preview. 0 = empty, 1 = npc, 2 = player
-    game.stars.forEach(star => {
-        map[star.coordX][star.coordY] = star.homeSystem ? 2 : 1; // set marker for star
-        if (star.homeSystem) numPlayerSys++;
-        else numNpcSys++;
-    });
     res.render("admin/game", {
         session: req.session,
         title,
         game,
-        map: {
-            points: map,
-            numEmptySys: numNpcSys,
-            numPlayerSys
-        }
+        map: getMapPreview(game)
     });
 };
 
@@ -162,6 +170,7 @@ exports.editGame = async (req, res) => {
         session: req.session,
         title: i18n.__("ADMIN.GAME.TITLE", game.number),
         game,
+        map: getMapPreview(game),
         flashes: req.flash()
     });
 };
