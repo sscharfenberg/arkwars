@@ -8,8 +8,7 @@ const config = {
     DEBUG: true,
     LOCALSTORAGE_KEY: "aw-app",
     LOCALES: {
-        SUPPORT: ["en", "de"],
-        DEFAULT: "en"
+        SUPPORT: ["en", "de"]
     }
 };
 

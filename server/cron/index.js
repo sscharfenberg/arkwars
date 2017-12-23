@@ -78,7 +78,6 @@ const processGameTurns = async () => {
         let processedTurn = game.turns.filter(turn => {
             return turn.slug === `g${game.number}t${game.turn + 1}`; // + 1 = next turn! slugs are unique.
         });
-        // TODO: fix already processed turn (crashed node process during turn processing)
         if (processedTurn.length) {
             logger.error(
                 `${chalk.cyan("g" + game.number)} ${chalk.yellow(

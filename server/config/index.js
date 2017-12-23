@@ -28,6 +28,7 @@ const appConfig = {
             from: `${pkg.app.name} <noreply@arkwars.io>`
         },
         // i18n base settings. the language files can be found in /server/lang/{locale].json
+        // first locale is the default
         locales: [
             {
                 name: "en",

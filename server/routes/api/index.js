@@ -27,4 +27,7 @@ router.post("/user/opendrawer", catchErrors(userController.openDrawer));
 // update user, set draweropen = false
 router.post("/user/closedrawer", catchErrors(userController.closeDrawer));
 
+// get language and area specific textstrings
+router.get("/textstrings/:locale/:area", apiController.getTextStrings);
+
 module.exports = router;

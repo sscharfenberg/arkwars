@@ -1,0 +1,9 @@
+{
+    "version": "RESERVED",
+    "title": "Empire",
+    "stats": {
+        "stars": "Stars",
+        "fleets": "Fleets",
+        "ships": "Ships"
+    }
+}

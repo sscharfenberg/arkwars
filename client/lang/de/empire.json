@@ -1,0 +1,9 @@
+{
+    "version": "RESERVED",
+    "title": "Imperium",
+    "stats": {
+        "stars": "Systeme",
+        "fleets": "Flotten",
+        "ships": "Schiffe"
+    }
+}

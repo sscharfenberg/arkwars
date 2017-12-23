@@ -1,5 +1,5 @@
 doctype html
-html(lang="de")
+html(lang=(session.locale))
     head
         meta(charset="utf-8")
         title= `${title} | ${cfg.app.title}`
@@ -8,7 +8,10 @@ html(lang="de")
         block head
             link(rel='stylesheet', href='/public/assets/styles.css')
 
-body(data-user=(user ? 1 : 0))
+body(
+    data-user=(user ? 1 : 0)
+    data-locale=(session.locale)
+)
 
     != h.spritesheet()
 

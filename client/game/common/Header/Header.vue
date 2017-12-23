@@ -1,7 +1,7 @@
 <template>
     <header>
         <h1>{{areaTitle}}</h1>
-        <button class="refresh" @click="refreshArea">refresh</button>
+        <button class="refresh" @click="refreshArea">{{$txt.common.header.refresh}}</button>
     </header>
 </template>
 

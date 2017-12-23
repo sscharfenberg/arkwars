@@ -1,6 +1,6 @@
 <template>
     <div>
-        <app-header areaTitle="Empire" />
+        <app-header :areaTitle="$txt.title" />
         <p>{{ greeting }} World from Vue!</p>
     </div>
 </template>

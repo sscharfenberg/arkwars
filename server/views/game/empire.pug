@@ -7,7 +7,10 @@ block head
 block content
 
     main.aw-content__inner
-        div#appRoot
+        div#gameData(
+            data-textversion=(gameData.textVersion)
+        )
+            div#gameRoot
 
 block scripts
     include ../webpack/empire.footer.pug

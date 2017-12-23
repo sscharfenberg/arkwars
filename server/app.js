@@ -7,7 +7,6 @@
  * Bootstrap our application
  *
  **********************************************************************************************************************/
-const fs = require("fs"); // https://nodejs.org/api/fs.html
 const path = require("path"); // https://nodejs.org/api/path.html
 const express = require("express"); // http://expressjs.com/
 const compression = require("compression"); // https://github.com/expressjs/compression
@@ -15,7 +14,6 @@ const session = require("express-session"); // https://www.npmjs.com/package/exp
 const expressValidator = require("express-validator"); // https://www.npmjs.com/package/express-validator
 const helmet = require("helmet"); // https://helmetjs.github.io/docs/
 const moment = require("moment"); // http://momentjs.com/
-const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
 const redis = require("redis"); // https://www.npmjs.com/package/redis
 const RedisStore = require("connect-redis")(session); // https://www.npmjs.com/package/connect-mongo
 const cookieParser = require("cookie-parser"); // https://www.npmjs.com/package/cookie-parser
@@ -112,7 +110,7 @@ i18n.configure({
 
 // pass variables to our templates + all requests
 app.use((req, res, next) => {
-    let locale = "en";
+    let locale = cfg.app.locales.map(locale => locale.name).shift() || "en";
     if (req.session && req.session.locale) {
         locale = req.session.locale;
     }
@@ -124,7 +122,6 @@ app.use((req, res, next) => {
     moment.locale(locale);
     res.locals.h = templateHelpers;
     res.locals.flashes = req.flash();
-    //    res.locals.user = req.user || null;
     res.locals.currentPath = req.path;
     res.locals.session = req.session;
     res.locals.user = req.user;

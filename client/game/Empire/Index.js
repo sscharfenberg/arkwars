@@ -1,10 +1,23 @@
 import Vue from "vue";
 import Empire from "./Empire.vue";
+import {loadTextStringsFromCache} from "../handlers/texts";
 
-if (document.getElementById("appRoot")) {
-    new Vue({
-        el: "#appRoot",
-        template: "<Empire/>",
-        components: {Empire}
+const AREA = "empire";
+const LANGUAGE =
+    document.querySelector("body").getAttribute("data-locale") || "";
+
+if (document.getElementById("gameRoot")) {
+    console.log(`starting game, language ${LANGUAGE.toUpperCase()}`);
+    const serverTextVersion = document
+        .getElementById("gameData")
+        .getAttribute("data-textversion");
+    loadTextStringsFromCache(LANGUAGE, AREA, serverTextVersion, text => {
+        console.log("texts are now available.", text);
+        Vue.prototype.$txt = text;
+        new Vue({
+            el: "#gameRoot",
+            template: "<Empire/>",
+            components: {Empire}
+        });
     });
 }

@@ -8,7 +8,7 @@
  * @exports {morgan} accessLogger - Morgan logging instance middleware for use in express
  *
  **********************************************************************************************************************/
-const fs = require("fs"); // https://nodejs.org/api/fs.html
+const fs = require("fs-extra"); // https://nodejs.org/api/fs.html
 const path = require("path"); // https://nodejs.org/api/path.html
 const moment = require("moment"); // https://momentjs.com/
 const morgan = require("morgan"); // https://www.npmjs.com/package/morgan

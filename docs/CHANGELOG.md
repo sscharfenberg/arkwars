@@ -1,6 +1,8 @@
 # Changelog
 
 `23.12.2017`
+- [x] Boilerplating text string handling. language is passed via template from server to client, as well as the version of the json language files on disk. The client then checks if cached texts exists and if they are not older then the server files. If not, client asks server for texts and updates cache. Finally, vue ist extended and $txt is used for all text-strings for use in all components.
+You can now switch languages, and the header in "Empire" screen is dynamically updated.
 - [x] Changed drawer state - now saved on server (User), not in localstorage. Users that are not logged in do not save states during navigation, which is fine. Now, the drawer is open when the page is getting loaded, not having the page load, and after that the drawer gets opened.
 
 `17.12.2017`

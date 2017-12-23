@@ -7,7 +7,7 @@
  * @exports {dump, image, icon, spritesheet, progressbar, appName}
  *
  **********************************************************************************************************************/
-const fs = require("fs"); // https://nodejs.org/api/fs.html
+const fs = require("fs-extra"); // https://nodejs.org/api/fs.html
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const cfg = require("../config");
 
