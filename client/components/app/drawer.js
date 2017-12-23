@@ -7,8 +7,8 @@
 import axios from "axios";
 import cfg from "../../config";
 
-const SELECTOR_DRAWER = ".aw-drawer";
-const SELECTOR_DRAWER_BUTTON = ".aw-header__menu-btn";
+const SELECTOR_DRAWER = "appDrawer";
+const SELECTOR_DRAWER_BUTTON = "appDrawerBtn";
 const CLASSNAME_OPEN = "aw-drawer--open";
 const CLASSNAME_BTN_OPEN = "aw-header__menu-btn--open";
 const CLASSNAME_OPENING = "aw-drawer--opening";
@@ -79,9 +79,13 @@ const closeDrawer = (drawer, button) => {
     }, ANIMATION_DURATION);
 };
 
+/*
+ * initialize drawer by binding event listeners
+ */
 const initDrawer = () => {
-    const drawer = document.querySelector(SELECTOR_DRAWER);
-    const button = document.querySelector(SELECTOR_DRAWER_BUTTON);
+    const drawer = document.getElementById(SELECTOR_DRAWER);
+    const button = document.getElementById(SELECTOR_DRAWER_BUTTON);
+
     // return if no drawer or no trigger
     if (!drawer || !button) return;
     // click event
@@ -94,4 +98,7 @@ const initDrawer = () => {
     });
 };
 
+/*
+ * public export
+ */
 export { initDrawer };

@@ -128,6 +128,7 @@ const doStartGame = async game => {
             moment(game.startDate).format("LLLL")
         )} ${chalk.cyan(moment(game.startDate).fromNow())}`
     );
+    // TODO: seed starting values
     updatedGame.active = true;
     updatedGame.processing = false;
     updatedGame.canEnlist = false;

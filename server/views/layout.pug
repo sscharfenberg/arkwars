@@ -15,7 +15,7 @@ body(data-user=(user ? 1 : 0))
     header.aw-header
 
         .aw-header__menu
-            button.aw-header__menu-btn(
+            button.aw-header__menu-btn#appDrawerBtn(
                 aria-label=(h.__("APP.HEADER.LABEL_MAINMENU")),
                 class=(user && user.settings.drawerOpen ? "aw-header__menu-btn--open" : "")
             )
@@ -120,7 +120,7 @@ body(data-user=(user ? 1 : 0))
     .aw-main-wrapper
 
         //- game drawer
-        section.aw-drawer(
+        section.aw-drawer#appDrawer(
             aria-hidden=(user && user.settings.drawerOpen ? "false" : "true"),
             class=(user && user.settings.drawerOpen ? "aw-drawer--open" : "")
         )
