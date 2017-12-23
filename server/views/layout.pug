@@ -8,14 +8,17 @@ html(lang="de")
         block head
             link(rel='stylesheet', href='/public/assets/styles.css')
 
-body
+body(data-user=(user ? 1 : 0))
 
     != h.spritesheet()
 
     header.aw-header
 
         .aw-header__menu
-            button.aw-header__menu-btn(aria-label=(h.__("APP.HEADER.LABEL_MAINMENU")))
+            button.aw-header__menu-btn(
+                aria-label=(h.__("APP.HEADER.LABEL_MAINMENU")),
+                class=(user && user.settings.drawerOpen ? "aw-header__menu-btn--open" : "")
+            )
                 span
                 span
                 span
@@ -43,8 +46,8 @@ body
                     each locale in cfg.app.locales
                         li.aw-header__submenu-item
                             a.aw-header__submenu-item-link(
-                            href=(`/language/${locale.name}`),
-                            class=(session && session.locale && session.locale === locale.name ? "aw-header__submenu-item-link--active" : "")
+                                href=(`/language/${locale.name}`),
+                                class=(session && session.locale && session.locale === locale.name ? "aw-header__submenu-item-link--active" : "")
                             )
                                 != h.image(`flags/${locale.name}.svg`)
                                 != locale.native
@@ -117,7 +120,10 @@ body
     .aw-main-wrapper
 
         //- game drawer
-        section.aw-drawer(aria-hidden="true")
+        section.aw-drawer(
+            aria-hidden=(user && user.settings.drawerOpen ? "false" : "true"),
+            class=(user && user.settings.drawerOpen ? "aw-drawer--open" : "")
+        )
 
             ul.aw-drawer__list
 

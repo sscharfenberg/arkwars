@@ -1,5 +1,8 @@
 # Changelog
 
+`23.12.2017`
+- [x] Changed drawer state - now saved on server (User), not in localstorage. Users that are not logged in do not save states during navigation, which is fine. Now, the drawer is open when the page is getting loaded, not having the page load, and after that the drawer gets opened.
+
 `17.12.2017`
 - [x] Made cron server more robust: Originally, we used node-schedule to schedule a turn's processing. This worked ok, but it doesn't scale, and changes via admin panel to game settings (active, turnDue etc) would not change the already scheduled turn processing. Now the cron server checks at the beginning of each minute for games that need to be processed. This means the turnDue is not precise anymore, it can vary by 30s. However, this scales better and changes in the admin panel / db will be immediately reflected.
 - [x] Wrapped cron server in nodemon for dev restarts / crashes.

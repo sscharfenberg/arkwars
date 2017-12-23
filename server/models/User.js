@@ -97,7 +97,17 @@ const userSchema = new mongoose.Schema({
     },
     mod: {
         type: Boolean
+    },
+
+    // user settings
+    settings: {
+        // main drawer open or not?
+        drawerOpen: {
+            type: Boolean,
+            default: true
+        }
     }
+
 });
 
 // Define our indexes

@@ -18,7 +18,7 @@ let users = [
         created: "2017-07-29T09:15:05.654Z",
         admin: true,
         mod: true,
-        __v: 0
+        settings: { drawerOpen: true }
     }
 ];
 
@@ -36,7 +36,8 @@ for (let i = 0; i < numRandomUsers; i++) {
         emailConfirmed: true,
         suspended: false,
         admin: false,
-        mod: false
+        mod: false,
+        settings: { drawerOpen: true }
     };
     users.push(user);
 }
