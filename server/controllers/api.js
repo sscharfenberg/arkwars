@@ -15,6 +15,54 @@ const Game = mongoose.model("Game");
 const logger = require("../handlers/logger/console");
 const cfg = require("../config");
 
+const areas = ["empire"];
+const locales = cfg.app.locales.map(locale => locale.name);
+// require all client language files. this is so node can cache the file contents
+const allTexts = [];
+
+// read client text files once and cache them
+areas.forEach(area => {
+    locales.forEach(locale => {
+        const pathArea = path.join(
+            cfg.app.projectDir,
+            "client",
+            "lang",
+            locale,
+            area + ".json"
+        );
+        const pathCommon = path.join(
+            cfg.app.projectDir,
+            "client",
+            "lang",
+            locale,
+            "common.json"
+        );
+        let areaTime, commonTime;
+        let areaContents,
+            commonContents = {};
+        try {
+            areaContents = JSON.parse(fs.readFileSync(pathArea, "utf-8"));
+            areaTime = fs.statSync(pathArea).mtime;
+        } catch (e) {
+            logger.error(e);
+        }
+        try {
+            commonContents = JSON.parse(fs.readFileSync(pathCommon, "utf-8"));
+            areaContents.common = commonContents;
+            commonTime = fs.statSync(pathCommon).mtime;
+        } catch (e) {
+            logger.error(e);
+        }
+        areaContents.version =
+            moment(areaTime).diff(commonTime) > 0 ? areaTime : commonTime;
+        allTexts.push({
+            slug: `txt-${locale}-${area}`,
+            data: areaContents
+        });
+    });
+});
+logger.info(`[App] cached ${allTexts.length} client text objects.`);
+
 /*
  * get game status
  *
@@ -60,44 +108,12 @@ exports.gameStatus = async (req, res, next) => {
  *
  */
 exports.getTextStrings = async (req, res) => {
-    logger.info(
-        `[App] preparing ${req.params.locale} text strings for area ${
-            req.params.area
-        }`
-    );
-    // these two files need to exist
-    const pathArea = path.join(
-        cfg.app.projectDir,
-        "client",
-        "lang",
-        req.params.locale,
-        req.params.area + ".json"
-    );
-    const pathCommon = path.join(
-        cfg.app.projectDir,
-        "client",
-        "lang",
-        req.params.locale,
-        "common.json"
-    );
-    const areaPromise = readFileAsync(pathArea, "utf-8");
-    const commonPromise = readFileAsync(pathCommon, "utf-8");
-    try {
-        // set variables when promises are fulfilled
-        let [areaMessages, commonMessages] = await Promise.all([
-            areaPromise,
-            commonPromise
-        ]);
-        // convert json strings to objects
-        areaMessages = JSON.parse(areaMessages);
-        commonMessages = JSON.parse(commonMessages);
-        areaMessages.common = commonMessages;
-        const areaTime = fs.statSync(pathArea).mtime;
-        const commonTime = fs.statSync(pathCommon).mtime;
-        areaMessages.version = moment(areaTime).diff(commonTime) > 0 ? areaTime : commonTime;
-        res.json(areaMessages);
-    } catch (e) {
-        logger.error(e);
-        res.json({error: "could not find all text files."});
+    const slug = `txt-${req.params.locale}-${req.params.area}`;
+    logger.info(`[App] delivering client text strings for slug ${slug}`);
+    const textObj = allTexts.filter(obj => obj.slug === slug)[0];
+    if (textObj.data) {
+        res.json(textObj.data);
+    } else {
+        res.json({"error":"could not get client text strings."});
     }
 };
