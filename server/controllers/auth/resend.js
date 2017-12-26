@@ -8,12 +8,12 @@ const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
-const { getCaptcha } = require("../../handlers/captcha");
+const {getCaptcha} = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
+const {isUserSuspended} = require("../../handlers/validators/authorized");
 const mail = require("../../handlers/mail");
 const cfg = require("../../config");
 const User = mongoose.model("User");
-
 
 /*
  * show "resend activation email" form =================================================================================
@@ -31,7 +31,6 @@ exports.showResendForm = (req, res) => {
     });
 };
 
-
 /*
  * validate resend request =============================================================================================
  * @param {ExpressHTTPRequest} req
@@ -44,7 +43,7 @@ exports.validateResend = async (req, res, next) => {
             req.body.email
         )}`
     );
-    const emailUser = await User.findOne({ email: req.body.email });
+    const emailUser = await User.findOne({email: req.body.email});
     const errors = [];
     let captchaFail = false;
     if (!emailUser) {
@@ -60,15 +59,16 @@ exports.validateResend = async (req, res, next) => {
         captchaFail = i18n.__("APP.REGISTER.ERROR.CaptchaMismatch");
     }
 
-    // user is suspended and suspendedUntil is > now
+    // user exist, but is suspended?
     if (
         emailUser &&
-        emailUser.suspended &&
-        moment(emailUser.suspendedUntil).diff(moment()) > 0
+        isUserSuspended(emailUser.suspended, emailUser.suspendedUntil)
     ) {
-        errors.push(i18n.__("APP.RESEND.ERR_Suspended") + moment(emailUser.suspendedUntil).format("LLL"));
+        errors.push(
+            i18n.__("APP.RESEND.ERR_Suspended") +
+                moment(emailUser.suspendedUntil).format("LLL")
+        );
     }
-
 
     if (captchaFail) {
         const captcha = getCaptcha(req.session.captcha);
@@ -101,19 +101,19 @@ exports.validateResend = async (req, res, next) => {
     next();
 };
 
-
 /*
  * resend activation link ==============================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  */
 exports.doResend = async (req, res) => {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({email: req.body.email});
     user.emailConfirmationToken = crypto.randomBytes(20).toString("hex");
     user.emailConfirmationExpires = moment().add(1, "hours");
     user.emailConfirmed = false;
-    const confirmURL = `http://${req.headers
-        .host}/auth/confirm/${user.emailConfirmationToken}`;
+    const confirmURL = `http://${req.headers.host}/auth/confirm/${
+        user.emailConfirmationToken
+    }`;
     await user.save();
     await mail.send({
         user,

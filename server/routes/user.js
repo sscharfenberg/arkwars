@@ -21,14 +21,14 @@ router.get("/language/:lang", catchErrors(userController.switchLanguage));
 // user home
 router.get(
     "/dashboard",
-    authController.isLoggedIn,
+    authController.isValidUser,
     catchErrors(dashboardController.showDashboard)
 );
 
 // post change email address
 router.post(
     "/dashboard/email",
-    authController.isLoggedIn, // 1. check if user is logged in
+    authController.isValidUser, // 1. check if user is logged in
     catchErrors(dashboardController.validateChangeEmail), // 2. validate email
     catchErrors(dashboardController.updateEmail), // 3. update user
     catchErrors(dashboardController.sendEmailUpdated)// 4. send email
@@ -37,7 +37,7 @@ router.post(
 // post change password
 router.post(
     "/dashboard/password",
-    authController.isLoggedIn, // 1. check if user is logged in
+    authController.isValidUser, // 1. check if user is logged in
     catchErrors(dashboardController.validateChangePassword), // 2. validate password
     catchErrors(dashboardController.updatePassword) // 3. change password
 );
@@ -45,7 +45,7 @@ router.post(
 // post change avatar
 router.post(
     "/dashboard/avatar",
-    authController.isLoggedIn, // 1. check if user is logged in
+    authController.isValidUser, // 1. check if user is logged in
     dashboardController.bufferAvatarFormData, // 2. multipart/form-data middleware
     catchErrors(dashboardController.validateAvatar), // 3. validate avatar
     catchErrors(dashboardController.writeAvatar), // 4. write avatar to disk
@@ -56,14 +56,14 @@ router.post(
 // delete avatar
 router.get(
     "/dashboard/avatar/delete",
-    authController.isLoggedIn, // 1. check if user is logged in
+    authController.isValidUser, // 1. check if user is logged in
     catchErrors(dashboardController.deleteCurrentAvatar) // 2. delete current avatar
 );
 
 // delete user account
 router.post(
     "/dashboard/delete",
-    authController.isLoggedIn,
+    authController.isValidUser,
     catchErrors(dashboardController.deleteUser)
 );
 

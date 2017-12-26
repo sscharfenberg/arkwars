@@ -10,12 +10,12 @@ const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const User = mongoose.model("User");
-const { getCaptcha } = require("../../handlers/captcha");
+const {getCaptcha} = require("../../handlers/captcha");
+const {isUserSuspended} = require("../../handlers/validators/authorized");
 const logger = require("../../handlers/logger/console");
 const userValidators = require("../../handlers/validators/user");
 const mail = require("../../handlers/mail");
 const cfg = require("../../config");
-
 
 /*
  * show registration form ==============================================================================================
@@ -32,7 +32,6 @@ exports.showRegistration = (req, res) => {
         flashes: req.flash()
     });
 };
-
 
 /*
  * validate a POST registration request. ===============================================================================
@@ -85,12 +84,13 @@ exports.validateRegistration = async (req, res, next) => {
         errorMap.username = error;
         errorList.push(error);
         logger.debug(
-            `[App] attempted registration of ${req.body
-                .username}, a blacklisted username.`
+            `[App] attempted registration of ${
+                req.body.username
+            }, a blacklisted username.`
         );
     }
 
-    if(errorMap.captcha) {
+    if (errorMap.captcha) {
         const captchaError = {
             param: errorMap.captcha.param,
             msg: errorMap.captcha.msg,
@@ -107,7 +107,8 @@ exports.validateRegistration = async (req, res, next) => {
             errors: {captcha: captchaError}, // only pass the captcha error if it fails.
             flashes: req.flash()
         });
-    } else if (errorList.length) { // if there are errors, render the template with errors.
+    } else if (errorList.length) {
+        // if there are errors, render the template with errors.
         logger.debug(`[App] validation errors: ${JSON.stringify(errorList)}`);
         req.flash("error", i18n.__("APP.REGISTER.ERROR.FLASH"));
         return res.render("auth/register", {
@@ -123,7 +124,6 @@ exports.validateRegistration = async (req, res, next) => {
 
     next(); // there where no errors - proceed to next middleware
 };
-
 
 /*
  * register user in the database =======================================================================================
@@ -147,7 +147,6 @@ exports.doRegistration = async (req, res, next) => {
     next(); // no errors - proceed to next middleware
 };
 
-
 /*
  * send confirmation email to user =====================================================================================
  * @param {ExpressHTTPRequest} req
@@ -159,14 +158,16 @@ exports.sendConfirmationEmail = async (req, res) => {
     if (!user) {
         req.flash("error", "Something went wrong registering your account");
         logger.error(
-            `[App] Could not find the user "${req.body
-                .username}" by email "${req.body.email}" after registering.`
+            `[App] Could not find the user "${req.body.username}" by email "${
+                req.body.email
+            }" after registering.`
         );
         return res.redirect("/auth/register");
     }
 
-    const confirmURL = `http://${req.headers
-        .host}/auth/confirm/${user.emailConfirmationToken}`;
+    const confirmURL = `http://${req.headers.host}/auth/confirm/${
+        user.emailConfirmationToken
+    }`;
     await mail.send({
         user,
         filename: "confirm_email",
@@ -180,7 +181,6 @@ exports.sendConfirmationEmail = async (req, res) => {
     res.redirect("/");
 };
 
-
 /*
  * confirm email request ===============================================================================================
  * @param {ExpressHTTPRequest} req
@@ -190,7 +190,7 @@ exports.sendConfirmationEmail = async (req, res) => {
 exports.confirmEmail = async (req, res, next) => {
     const user = await User.findOne({
         emailConfirmationToken: req.params.token,
-        emailConfirmationExpires: { $gt: moment().toISOString() }
+        emailConfirmationExpires: {$gt: moment().toISOString()}
     });
     logger.debug(
         `[App] email confirmation request. token: ${req.params.token}`
@@ -212,12 +212,12 @@ exports.confirmEmail = async (req, res, next) => {
         )} has been activated.`
     );
 
-
-    if (user.suspended && moment(user.suspendedUntil).diff(moment()) > 0) {
+    if (isUserSuspended(user.suspended, user.suspendedUntil)) {
         req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
         res.redirect("/auth/login");
     } else {
-        req.login(user, function (err) { // log in
+        req.login(user, function(err) {
+            // log in
             if (err) return next(err);
             req.user = user;
             logger.info(`[App] user @${user.username} logged in.`);
@@ -225,5 +225,4 @@ exports.confirmEmail = async (req, res, next) => {
             res.redirect("/dashboard");
         });
     }
-
 };

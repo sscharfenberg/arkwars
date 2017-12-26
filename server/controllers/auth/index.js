@@ -7,6 +7,7 @@ const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const passport = require("passport"); // https://github.com/jaredhanson/passport
+const {isUserLoggedIn,isUserSuspended} = require("../../handlers/validators/authorized");
 const logger = require("../../handlers/logger/console");
 
 /*
@@ -58,8 +59,8 @@ exports.login = async (req, res, next) => {
             });
         }
 
-        // user is suspended and suspendedUntil is > now
-        if (user.suspended && moment(user.suspendedUntil).diff(moment()) > 0) {
+        // user is suspended?
+        if (isUserSuspended(user.suspended, user.suspendedUntil)) {
             const message =
                 i18n.__("APP.LOGIN.Suspended") +
                 moment(user.suspendedUntil).format("LLL");
@@ -137,13 +138,12 @@ exports.isMod = (req, res, next) => {
  * @param {ExpressHTTPResponse} res
  * @param {callback} next
  */
-exports.isLoggedIn = (req, res, next) => {
+exports.isValidUser = (req, res, next) => {
     // is user logged in?
-    if (req.isAuthenticated()) {
+    if (isUserLoggedIn(req)) {
         // is user suspended?
         if (
-            req.user.suspended &&
-            moment(req.user.suspendedUntil).diff(moment()) > 0
+            isUserSuspended(req.user.suspended, req.user.suspendedUntil)
         ) {
             req.flash(
                 "error",

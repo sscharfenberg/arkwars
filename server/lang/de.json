@@ -4,7 +4,8 @@
         "AUTH": {
             "ADMIN_REQUIRED": "Diese Seite erfordert Administratoren - Berechtigungen.",
             "MOD_REQUIRED": "Diese Seite erfordert Moderatoren - Berechtigungen.",
-            "LOGIN_REQUIRED": "Sie müssen eingeloggt sein um diese Funktion oder Seite zu verwenden."
+            "LOGIN_REQUIRED": "Sie müssen eingeloggt sein um diese Funktion oder Seite zu verwenden.",
+            "NO_GAME_MEMBER": "Sie sind nicht in Spiel <strong>g%s</strong> eingeschrieben und können nicht auf diese Seite zugreifen."
         },
 
         "PAGINATION": {
@@ -266,7 +267,8 @@
             "Finished": "Das Spiel ist beendet.",
             "FinishedTurn": "Gespielte Runden: %s",
             "Empires": "%s Spieler Start Systeme",
-            "Stars": "%s Sternensysteme"
+            "Stars": "%s Sternensysteme",
+            "DoesNotExist": "Spiel <strong>g%s</strong> existiert nicht."
         }
     },
 

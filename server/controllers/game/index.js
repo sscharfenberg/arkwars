@@ -13,6 +13,7 @@ const User = mongoose.model("User");
 const Star = mongoose.model("Star");
 const logger = require("../../handlers/logger/console");
 const seed = require("../../handlers/game/seed");
+const {userHasPlayerInGame} = require("../../handlers/validators/authorized");
 const enlistValidators = require("../../handlers/validators/game/enlist");
 const cfg = require("../../config");
 
@@ -26,7 +27,7 @@ exports.checkCanEnlist = async (req, res, next) => {
     const game = await Game.findOne({
         number: req.params.game,
         canEnlist: true,
-        startDate: { $gt: moment().toISOString() }
+        startDate: {$gt: moment().toISOString()}
     }).populate("players");
 
     if (!game || game.maxPlayers <= game.players.length) {
@@ -150,7 +151,11 @@ exports.assignHomeSystem = async (req, res) => {
     const availableStars = game.stars.filter(star => {
         return star.homeSystem && !star.owner;
     });
-    logger.info(`[App] select random star from ${chalk.yellow(availableStars.length)} available stars.`);
+    logger.info(
+        `[App] select random star from ${chalk.yellow(
+            availableStars.length
+        )} available stars.`
+    );
     const homeSystem = seed.assignRandomStar(availableStars);
     logger.info(
         `[App] Decided on using Star ${chalk.cyan(
@@ -158,9 +163,9 @@ exports.assignHomeSystem = async (req, res) => {
         )} as home system for player ${chalk.magenta(req._player.name)}.`
     );
     const updatatedStar = await Star.findOneAndUpdate(
-        { _id: homeSystem.id },
-        { $set: { owner: req._player._id } },
-        { new: true, runValidators: true, context: "query" }
+        {_id: homeSystem.id},
+        {$set: {owner: req._player._id}},
+        {new: true, runValidators: true, context: "query"}
     );
     if (updatatedStar) {
         logger.success(
@@ -196,7 +201,7 @@ exports.validateGameSelect = async (req, res, next) => {
     const myGames = req.user.players.map(game => game.game);
     const game = await Game.findOne({
         number: requestedGame,
-        _id: { $in: myGames }, // in my game ids.
+        _id: {$in: myGames}, // in my game ids.
         active: true // needs to be active to select
     });
     if (!game) {
@@ -227,8 +232,8 @@ exports.selectGame = async (req, res) => {
     });
     const updatedUser = await User.findByIdAndUpdate(
         req.user._id,
-        { $set: { selectedPlayer: player._id } },
-        { new: true, runValidators: true, context: "query" }
+        {$set: {selectedPlayer: player._id}},
+        {new: true, runValidators: true, context: "query"}
     );
     if (!updatedUser) {
         logger.debug(
@@ -273,7 +278,7 @@ exports.validateWithdraw = async (req, res, next) => {
     const myGames = req.user.players.map(player => player.game.id);
     const game = await Game.findOne({
         number: requestedGameNumber, // number from url param
-        _id: { $in: myGames } // id of game is in myGames array
+        _id: {$in: myGames} // id of game is in myGames array
     });
     if (!game) {
         logger.debug(
@@ -306,16 +311,16 @@ exports.withdrawEnlistedUser = async (req, res) => {
     if (req._game.id === req.user.selectedPlayer) {
         await User.findByIdAndUpdate(
             req.user._id,
-            { $set: { selectedPlayer: null } },
-            { new: false, runValidators: true, context: "query" }
+            {$set: {selectedPlayer: null}},
+            {new: false, runValidators: true, context: "query"}
         );
     }
     // remove ownership of stars if necessary
     if (removedPlayer.stars && removedPlayer.stars.length) {
         await Star.updateMany(
-            { owner: removedPlayer.id },
-            { $set: { owner: null } },
-            { runValidators: true, context: "query" }
+            {owner: removedPlayer.id},
+            {$set: {owner: null}},
+            {runValidators: true, context: "query"}
         );
     }
     if (!removedPlayer) {
@@ -326,7 +331,7 @@ exports.withdrawEnlistedUser = async (req, res) => {
                 "g" + req._game.number
             )}`
         );
-        req.flash("error", i18n.__("GAMES.WITHDRAW.ERR"));
+        req.flash("error", i18n.__("GAMES.WITHDRAW.ERR", req._game.number));
     } else {
         logger.success(
             `[App] user ${chalk.red(
@@ -335,9 +340,47 @@ exports.withdrawEnlistedUser = async (req, res) => {
         );
         req.flash(
             "success",
-            i18n.__("GAMES.WITHDRAW.SUCCESS"),
+            i18n.__("GAMES.WITHDRAW.SUCCESS", req._game.number),
             `g${req._game.number}`
         );
     }
     return res.redirect("back");
+};
+
+/*
+ * verify the requested game exists and the current user has a player in the game ======================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.verifyGameAuth = async (req, res, next) => {
+    const requestedGameNumber = req.params.game;
+    const chosenGame = await Game.findOne({number: requestedGameNumber});
+    if (!chosenGame) {
+        req.flash(
+            "error",
+            i18n.__("GAME.STATUS.DoesNotExist", requestedGameNumber)
+        );
+        return res.redirect("back");
+    }
+    if (
+        !userHasPlayerInGame(
+            `${chosenGame._id}`,
+            req.user.players.map(player => player.game.id)
+        )
+    ) {
+        logger.debug(
+            `[App] user ${chalk.red(
+                "@" + req.user.username
+            )} tried to access a resource but has no player in game ${chalk.yellow(
+                "g" + requestedGameNumber
+            )}`
+        );
+        req.flash(
+            "error",
+            i18n.__("APP.AUTH.NO_GAME_MEMBER", requestedGameNumber)
+        );
+        return res.redirect("back");
+    }
+    next(); // not returned by now => proceed to next middleware.
 };

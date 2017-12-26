@@ -11,6 +11,7 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
 const { getCaptcha } = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
+const {isUserSuspended} = require("../../handlers/validators/authorized");
 const mail = require("../../handlers/mail");
 const changePasswordValidators = require("../../handlers/validators/changePassword");
 const User = mongoose.model("User");
@@ -85,11 +86,8 @@ exports.validateRequest = async (req, res, next) => {
         );
     }
 
-    // user is suspended and suspendedUntil is > now
-    if (
-        emailUser.suspended &&
-        moment(emailUser.suspendedUntil).diff(moment()) > 0
-    ) {
+    // user is suspended?
+    if (isUserSuspended(emailUser.suspended, emailUser.suspendedUntil)) {
         errors.email = {
             msg:
                 i18n.__("APP.RESET.ERR_UserSuspended") +
@@ -285,7 +283,7 @@ exports.resetChangePassword = async (req, res) => {
     user.resetPasswordExpires = undefined;
     user.attempts = 0;
     const updatedUser = await user.save(); // save to db
-    if (!user.suspended && moment(user.suspendedUntil).diff(moment()) < 0) {
+    if (!isUserSuspended(user.suspended, user.suspendedUntil)) {
         // log in
         req.login(user, function (err) {
             if (err) {

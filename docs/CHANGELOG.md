@@ -1,8 +1,9 @@
 # Changelog
 
 `26.12.2017`
-- [x] Changed api/textstrings so all texts are now cached on server start, api calls to the endpoint parse, filter and deliver the array simply.
+- [x] Changed api/textstrings so all texts are now cached on server start, api calls to the endpoint simply filter and deliver the array.
 - [x] `Admin > Users` and `Admin > Games`: Added `moment.fromNow()` to datetimne displays.
+- [x] created `handlers/authorized.js` with generic functions that return if user is authed, enlisted etc. Refactored controllers to use this handler.
 
 `23.12.2017`
 - [x] Boilerplating text string handling. language is passed via template from server to client, as well as the version of the json language files on disk. The client then checks if cached texts exists and if they are not older then the server files. If not, client asks server for texts and updates cache. Finally, vue ist extended and $txt is used for all text-strings for use in all components.

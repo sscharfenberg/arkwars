@@ -11,10 +11,9 @@ const router = express.Router(); // http://expressjs.com/en/api.html#router
 const authController = require("../../controllers/auth");
 const gameController = require("../../controllers/game");
 const empireController = require("../../controllers/game/empire");
-const { catchErrors } = require("../../handlers/error");
+const {catchErrors} = require("../../handlers/error");
 
-
-router.use("/", authController.isLoggedIn);
+router.use("/", authController.isValidUser);
 
 // show "enlist to game" form
 router.get(
@@ -49,7 +48,8 @@ router.get(
 // game screens ========================================================================================================
 router.get(
     "/:game/empire",
-    catchErrors(empireController.showIndex)
+    catchErrors(gameController.verifyGameAuth), // 1. check if game exists and user is enlisted
+    catchErrors(empireController.showIndex) // 2. show index page
 );
 
 module.exports = router;

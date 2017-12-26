@@ -12,7 +12,7 @@ const userController = require("../../controllers/user");
 const authController = require("../../controllers/auth");
 const {catchErrors} = require("../../handlers/error");
 
-router.use("/", authController.isLoggedIn);
+router.use("/", authController.isValidUser);
 
 // game status pulse - next turn etc.
 router.get(

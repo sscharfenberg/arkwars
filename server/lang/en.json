@@ -4,7 +4,8 @@
         "AUTH": {
             "ADMIN_REQUIRED": "This page requires admin access.",
             "MOD_REQUIRED": "This page requires moderator access.",
-            "LOGIN_REQUIRED": "You need to be logged in to access the requested resource."
+            "LOGIN_REQUIRED": "You need to be logged in to access the requested resource.",
+            "NO_GAME_MEMBER": "You are not enlisted to game <strong>g%s</strong> and can not access this page."
         },
 
         "PAGINATION": {
@@ -267,7 +268,8 @@
             "Finished": "This game has ended.",
             "FinishedTurn": "Played turns: %s",
             "Empires": "%s player home systems",
-            "Stars": "%s star systems"
+            "Stars": "%s star systems",
+            "DoesNotExist": "Game <strong>g%s</strong> does not exist."
         }
     },
 
