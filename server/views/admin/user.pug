@@ -71,6 +71,7 @@ block content
                         span
                             != " "
                             != h.__("ADMIN.USER.SUSPEND.STATUS.Suspended", h.moment(editUser.suspendedUntil).format("LLL"))
+                            != " (" + h.moment(editUser.suspendedUntil).fromNow() + ")"
                     else
                         span!= h.__("ADMIN.USER.SUSPEND.STATUS.NotSuspended", editUser.username)
             form(action=`/admin/users/${editUser.id}/suspend`, method="POST")

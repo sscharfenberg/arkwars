@@ -240,9 +240,15 @@ block content
                                             )
                                                 != h.icon("warning")
 
-                                td= h.moment(user.created).format("LLL")
+                                td
+                                    != h.moment(user.created).format("LLL")
+                                    br
+                                    small= h.moment(user.created).fromNow()
 
-                                td= h.moment(user.lastLogin).format("LLL")
+                                td
+                                    != h.moment(user.lastLogin).format("LLL")
+                                    br
+                                    small= h.moment(user.created).fromNow()
 
                                 td
                                     if user.players && user.players.length
@@ -254,13 +260,15 @@ block content
                                                 | ,&nbsp;
 
                                 td
-                                    .admin-listtable__td-space-between
-                                        if user.suspended && user.suspendedUntil && h.moment(user.suspendedUntil).diff(h.moment()) > 0
+                                    if user.suspended && user.suspendedUntil && h.moment(user.suspendedUntil).diff(h.moment()) > 0
+                                        .admin-listtable__td-space-between
+
                                             != h.moment(user.suspendedUntil).format("LLL")
                                             span.admin-listtable__status.admin-listtable__status--error(
                                                 title=`${h.__("ADMIN.USERS.ALL.BODY.SUSPENDED")}`
                                             )
                                                 != h.icon("lock")
+                                        small= h.__("ADMIN.USERS.ALL.BODY.SUSPENDEDUNTIL") + h.moment(user.suspendedUntil).fromNow()
 
                                 td
                                     | user
