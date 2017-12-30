@@ -8,35 +8,41 @@ const moment = require("moment"); // https://momentjs.com/
 const cfg = require("../config");
 mongoose.Promise = global.Promise;
 
-const playerSchema = new mongoose.Schema({
-    // reference to game id
-    game: {type: mongoose.Schema.ObjectId, ref: "Game"},
+const playerSchema = new mongoose.Schema(
+    {
+        // reference to game id
+        game: {type: mongoose.Schema.ObjectId, ref: "Game"},
 
-    // reference to user id
-    user: {type: mongoose.Schema.ObjectId, ref: "User"},
+        // reference to user id
+        user: {type: mongoose.Schema.ObjectId, ref: "User"},
 
-    // name of empire
-    name: {
-        type: String,
-        required: true,
-        minlength: cfg.games.empire.name.bounds[0],
-        maxlength: cfg.games.empire.name.bounds[1]
+        // name of empire
+        name: {
+            type: String,
+            required: true,
+            minlength: cfg.games.empire.name.bounds[0],
+            maxlength: cfg.games.empire.name.bounds[1]
+        },
+
+        // can users enlist?
+        ticker: {
+            type: String,
+            required: true,
+            minlength: cfg.games.empire.ticker.bounds[0],
+            maxlength: cfg.games.empire.ticker.bounds[1]
+        },
+
+        // date of player creation
+        created: {
+            type: Date,
+            default: moment().toISOString()
+        }
     },
-
-    // can users enlist?
-    ticker: {
-        type: String,
-        required: true,
-        minlength: cfg.games.empire.ticker.bounds[0],
-        maxlength: cfg.games.empire.ticker.bounds[1]
-    },
-
-    // date of player creation
-    created: {
-        type: Date,
-        default: moment().toISOString()
+    {
+        toJSON: {virtuals: true},
+        toOjbect: {virtuals: true}
     }
-});
+);
 
 // Define our indexes
 playerSchema.index({

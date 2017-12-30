@@ -10,7 +10,6 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const {getCaptcha} = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
-const {isUserSuspended} = require("../../handlers/validators/authorized");
 const mail = require("../../handlers/mail");
 const cfg = require("../../config");
 const User = mongoose.model("User");
@@ -58,15 +57,12 @@ exports.validateResend = async (req, res, next) => {
     } else if (req.body.captcha !== req.session.captcha) {
         captchaFail = i18n.__("APP.REGISTER.ERROR.CaptchaMismatch");
     }
-
+    const suspendedUntil = emailUser.isSuspended;
     // user exist, but is suspended?
-    if (
-        emailUser &&
-        isUserSuspended(emailUser.suspended, emailUser.suspendedUntil)
-    ) {
+    if (emailUser && suspendedUntil) {
         errors.push(
             i18n.__("APP.RESEND.ERR_Suspended") +
-                moment(emailUser.suspendedUntil).format("LLL")
+                moment(suspendedUntil).format("LLL")
         );
     }
 

@@ -15,12 +15,14 @@ require("dotenv").config({
 });
 
 // models and mockdata
-const Game = require("../../server/models/Game");
-const User = require("../../server/models/User");
-const Player = require("../../server/models/Player");
-const Star = require("../../server/models/Star");
-const Planet = require("../../server/models/Planet");
-const Turn = require("../../server/models/Turn");
+require("../../server/models/");
+const Game = mongoose.model("Game");
+const User = mongoose.model("User");
+const Player = mongoose.model("Player");
+const Star = mongoose.model("Star");
+const Planet = mongoose.model("Planet");
+const Turn = mongoose.model("Turn");
+const Suspension = mongoose.model("Suspension");
 const games = require("../mockdata/games");
 const users = require("../mockdata/users");
 const players = require("../mockdata/players");
@@ -60,6 +62,8 @@ async function pruneDatabase() {
         logger.debug("[node] planets removed.");
         await Turn.remove();
         logger.debug("[node] turns removed.");
+        await Suspension.remove();
+        logger.debug("[node] suspensions removed.");
         logger.success("[node] collections deleted.");
     } catch (e) {
         logger.error("[node] error while deleting collections.");

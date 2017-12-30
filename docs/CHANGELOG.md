@@ -1,5 +1,8 @@
 # Changelog
 
+`30.12.2017`
+- [x] Changed the way suspensions are handled and created a new schema for suspensions. Added virtual field to User schema and created a "isSuspended" virtual function. Refactored suspension handling and admin pages - suspensions are now visible on the user detail page, and you can now clear specific suspensions.
+
 `26.12.2017`
 - [x] Changed api/textstrings so all texts are now cached on server start, api calls to the endpoint simply filter and deliver the array.
 - [x] `Admin > Users` and `Admin > Games`: Added `moment.fromNow()` to datetimne displays.

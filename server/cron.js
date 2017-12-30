@@ -14,6 +14,9 @@ const cron = require("./cron/index");
 // import environmental variables from our .env file to process.env
 require("dotenv").config({path: "./server/config/.env"});
 
+// require all mongoose schemas
+require("./models/");
+
 /*
  * connect and prepare MongoDB
  */

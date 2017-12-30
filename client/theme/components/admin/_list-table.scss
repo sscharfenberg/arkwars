@@ -36,6 +36,13 @@
         background: palette("grey", "ebony");
     }
 
+    &__row {
+        &--disabled {
+            color: palette("text", "subdued");
+            font-style: italic;
+        }
+    }
+
     &__status {
         display: inline-block;
 

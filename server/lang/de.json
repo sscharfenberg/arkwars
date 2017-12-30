@@ -1,11 +1,14 @@
 {
     "APP": {
-
         "AUTH": {
-            "ADMIN_REQUIRED": "Diese Seite erfordert Administratoren - Berechtigungen.",
-            "MOD_REQUIRED": "Diese Seite erfordert Moderatoren - Berechtigungen.",
-            "LOGIN_REQUIRED": "Sie müssen eingeloggt sein um diese Funktion oder Seite zu verwenden.",
-            "NO_GAME_MEMBER": "Sie sind nicht in Spiel <strong>g%s</strong> eingeschrieben und können nicht auf diese Seite zugreifen."
+            "ADMIN_REQUIRED":
+                "Diese Seite erfordert Administratoren - Berechtigungen.",
+            "MOD_REQUIRED":
+                "Diese Seite erfordert Moderatoren - Berechtigungen.",
+            "LOGIN_REQUIRED":
+                "Sie müssen eingeloggt sein um diese Funktion oder Seite zu verwenden.",
+            "NO_GAME_MEMBER":
+                "Sie sind nicht in Spiel <strong>g%s</strong> eingeschrieben und können nicht auf diese Seite zugreifen."
         },
 
         "PAGINATION": {
@@ -41,7 +44,8 @@
         "INDEX": {
             "TITLE": "Start",
             "HEADLINE": "Willkommen bei Arkwars!",
-            "TEXT1": "DEUTSCH weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen Semikoli, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg."
+            "TEXT1":
+                "DEUTSCH weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen Semikoli, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg."
         },
 
         "LOGIN": {
@@ -49,7 +53,8 @@
             "TITLE_NAV": "Anmelden",
             "EMAIL_LABEL": "E-Mail",
             "EMAIL_PLACEHOLDER": "Bitte E-Mail eingeben",
-            "EMAIL_DESCRIPTION": "Geben Sie Ihre E-Mail Adresse nicht an andere Spieler weiter.",
+            "EMAIL_DESCRIPTION":
+                "Geben Sie Ihre E-Mail Adresse nicht an andere Spieler weiter.",
             "PWD_LABEL": "Passwort",
             "PWD_PLACEHOLDER": "Bitte passwort eingeben",
             "PWD_DESCRIPTION": "Schützen Sie Ihr Passwort.",
@@ -58,15 +63,23 @@
             "REGISTER": "Konto registrieren",
             "RESEND_CONFIRMATION": "Aktivierungs-E-Mail erneut anfordern",
             "MissingPasswordError": "Passwort wurde nicht angegeben.",
-            "AttemptTooSoonError": "Konto ist vorrübergehend gesperrt. Bitte versuchen Sie es später noch einmal.",
-            "TooManyAttemptsError": "Das Konto ist wegen zu vieler Fehlerversuche gesperrt.",
-            "NoSaltValueStoredError": "Authentifizierung nicht möglich, kein Salt gespeichert.",
-            "IncorrectPasswordError": "Passwort oder Benutzername sind nicht korrekt.",
-            "IncorrectUsernameError": "Passwort oder Benutzername sind nicht korrekt.",
+            "AttemptTooSoonError":
+                "Konto ist vorrübergehend gesperrt. Bitte versuchen Sie es später noch einmal.",
+            "TooManyAttemptsError":
+                "Das Konto ist wegen zu vieler Fehlerversuche gesperrt.",
+            "NoSaltValueStoredError":
+                "Authentifizierung nicht möglich, kein Salt gespeichert.",
+            "IncorrectPasswordError":
+                "Passwort oder Benutzername sind nicht korrekt.",
+            "IncorrectUsernameError":
+                "Passwort oder Benutzername sind nicht korrekt.",
             "MissingUsernameError": "Benutzername wurde nicht angegeben.",
-            "UserExistsError": "Ein Benutzer mit dieser E-Mail Adresse ist bereits registriert.",
-            "NotConfirmedError": "Sie haben Ihre E-Mail Adresse noch nicht bestätigt. Bitte überprüfen Sie Ihren Mail-Eingang.",
-            "Suspended": "Sie können sich aktuell nicht anmelden da Ihr Konto gesperrt wurde. Ablauf der Sperre: ",
+            "UserExistsError":
+                "Ein Benutzer mit dieser E-Mail Adresse ist bereits registriert.",
+            "NotConfirmedError":
+                "Sie haben Ihre E-Mail Adresse noch nicht bestätigt. Bitte überprüfen Sie Ihren Mail-Eingang.",
+            "Suspended":
+                "Sie können sich aktuell nicht anmelden da Ihr Konto gesperrt wurde. Ablauf der Sperre: ",
             "SUCCESS": "Erfolgreich angemeldet."
         },
 
@@ -79,68 +92,90 @@
             "TITLE_NAV": "Registrierung",
             "USERNAME_LABEL": "Benutzername",
             "USERNAME_PLACEHOLDER": "Bitte Benutzername angeben",
-            "USERNAME_DESCRIPTION": "Ihr Benutzername ist sichtbar für andere Benutzer.",
+            "USERNAME_DESCRIPTION":
+                "Ihr Benutzername ist sichtbar für andere Benutzer.",
             "EMAIL_LABEL": "E-Mail",
             "EMAIL_PLACEHOLDER": "Bitte E-Mail-Adresse angeben",
-            "EMAIL_DESCRIPTION": "Ihre E-Mail-Adresse ist nötig zum <strong>einloggen</strong>, und um Ihnen Aktivierungs- und Bestätigungs-Links zu schicken.",
+            "EMAIL_DESCRIPTION":
+                "Ihre E-Mail-Adresse ist nötig zum <strong>einloggen</strong>, und um Ihnen Aktivierungs- und Bestätigungs-Links zu schicken.",
             "PWD_LABEL": "Passwort",
             "PWD_PLACEHOLDER": "Passwort eingeben",
             "PWD_DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
             "PWD_CONFIRM_LABEL": "Passwort bestätigen",
             "PWD_CONFIRM_PLACEHOLDER": "Bitte das Passwort wiederholen",
-            "PWD_CONFIRM_DESCRIPTION": "Bitte wiederholen Sie das Passwort. Das nervt, verhindert aber ärgerliche Tippfehler im Passwort.",
-            "CAPTCHA_PLACEHOLDER": "Überzeugen Sie uns das Sie keine Maschine sind.",
-            "CAPTCHA_DESCRIPTION": "Bitte geben Sie die Zeichen aus dem Bild oben ein.",
+            "PWD_CONFIRM_DESCRIPTION":
+                "Bitte wiederholen Sie das Passwort. Das nervt, verhindert aber ärgerliche Tippfehler im Passwort.",
+            "CAPTCHA_PLACEHOLDER":
+                "Überzeugen Sie uns das Sie keine Maschine sind.",
+            "CAPTCHA_DESCRIPTION":
+                "Bitte geben Sie die Zeichen aus dem Bild oben ein.",
             "ACCEPT_LABEL": "Nutzungsedingungen",
-            "ACCEPT_DESCRIPTION": "Bitte akzeptieren Sie unseren <a class=\"aw-textlink\" href=\"/terms_and_conditions/\">Nutzungsedingungen</a>.",
+            "ACCEPT_DESCRIPTION":
+                "Bitte akzeptieren Sie unseren <a class=\"aw-textlink\" href=\"/terms_and_conditions/\">Nutzungsedingungen</a>.",
             "SUBMIT": "Registrieren",
             "ERROR": {
                 "FLASH": "Halte durch, Skelett - du hast es fast geschafft!",
                 "UsernameEmpty": "Bitte geben Sie Ihren Benutzernamen an.",
-                "UsernameOutOfBounds": "Der Benutzername muss %s Zeichen enthalten.",
+                "UsernameOutOfBounds":
+                    "Der Benutzername muss %s Zeichen enthalten.",
                 "UsernameTaken": "Der Benutzername ist bereits vergeben.",
                 "UsernameBlacklisted": "Der Benutzername ist nicht erlaubt.",
                 "EmailEmpty": "Bitte geben Sie Ihre E-Mail-Adresse an.",
-                "EmailInvalid": "Diese E-Mail-Adresse scheint ungültig zu sein.",
+                "EmailInvalid":
+                    "Diese E-Mail-Adresse scheint ungültig zu sein.",
                 "EmailTaken": "Die E-Mail-Adresse wurde bereits registriert.",
                 "PasswordEmpty": "Bitte geben Sie Ihr Passwort an.",
                 "PasswordOutOfBounds": "Das Passwort muss %s Zeichen haben.",
-                "PasswordConfirmEmpty": "Bitte geben Sie das Passwort erneut ein.",
+                "PasswordConfirmEmpty":
+                    "Bitte geben Sie das Passwort erneut ein.",
                 "PasswordsNoMatch": "Die Passwörter stimmen nicht überein.",
                 "CaptchaEmpty": "Bitte geben Sie die Zeichen aus dem Bild ein.",
-                "CaptchaMismatch": "Die Zeichen stimmen nicht mit dem Bild überein.",
-                "AcceptEmpty": "Bitte akzeptieren Sie unsere Nutzungsbedingungen."
+                "CaptchaMismatch":
+                    "Die Zeichen stimmen nicht mit dem Bild überein.",
+                "AcceptEmpty":
+                    "Bitte akzeptieren Sie unsere Nutzungsbedingungen."
             },
-            "SUCCESS": "Danke für die Registrierung! Wir haben Ihnen eine Bestätigungs E-Mail geschickt - bitte überprüfen Sie Ihren Maileingang und klicken Sie auf \"Mein Konto aktivieren\".",
+            "SUCCESS":
+                "Danke für die Registrierung! Wir haben Ihnen eine Bestätigungs E-Mail geschickt - bitte überprüfen Sie Ihren Maileingang und klicken Sie auf \"Mein Konto aktivieren\".",
             "MAIL_SUBJECT": "Willkommen bei %s!",
             "CONFIRM_SUCCESS": "Ihr Benutzerkonto wurde aktiviert.",
-            "CONFIRM_FAILED": "Bestätigungs Marker ist ungültig oder abgelaufen."
+            "CONFIRM_FAILED":
+                "Bestätigungs Marker ist ungültig oder abgelaufen."
         },
 
         "RESEND": {
             "TITLE": "Aktivierungs E-Mail anfordern",
             "TITLE_NAV": "Aktivierungs E-Mail",
-            "INTRO": "Falls Ihr Benutzerkonto noch nicht aktiviert wurde, können Sie hier eine neue Aktivierungs E-Mail anfordern. Wir schicken Ihnen dann einen Link um das Konto zu aktivieren.",
+            "INTRO":
+                "Falls Ihr Benutzerkonto noch nicht aktiviert wurde, können Sie hier eine neue Aktivierungs E-Mail anfordern. Wir schicken Ihnen dann einen Link um das Konto zu aktivieren.",
             "SUBMIT": "E-Mail anfordern",
             "ERR_EmailNotFound": "Wir konnten diese E-Mail nicht finden.",
-            "ERR_EmailAlreadyConfirmed": "Diese E-Mail wurde bereits bestätigt, das Konto ist aktiviert.",
-            "ERR_Suspended": "Das Benutzerkonto ist gesperrt. Ablauf der Sperre: ",
+            "ERR_EmailAlreadyConfirmed":
+                "Diese E-Mail wurde bereits bestätigt, das Konto ist aktiviert.",
+            "ERR_Suspended":
+                "Das Benutzerkonto ist gesperrt. Ablauf der Sperre: ",
             "MAIL_SUBJECT": "%s Konto Aktivierung",
-            "SUCCESS": "Wir haben Ihnen einen neuen Aktivierungs Link geschickt. Bitte überprüfen Sie Ihren Maileingang!"
+            "SUCCESS":
+                "Wir haben Ihnen einen neuen Aktivierungs Link geschickt. Bitte überprüfen Sie Ihren Maileingang!"
         },
 
         "RESET": {
             "TITLE": "Passwort zurücksetzen",
             "TITLE_NAV": "Passwort zurücksetzen",
-            "INTRO": "Falls Sie sich nicht an Ihr Passwort erinnern können schicken wir Ihnen einen Link um das Passwort ändern.",
+            "INTRO":
+                "Falls Sie sich nicht an Ihr Passwort erinnern können schicken wir Ihnen einen Link um das Passwort ändern.",
             "SUBMIT": "E-Mail anfordern",
             "ERR_EmailNotFound": "Wir konnten diese E-Mail nicht finden.",
-            "ERR_EmailNotYetConfirmed": "Diese E-Mail-Adresse ist noch nicht bestätigt worden. Bitte überprüfen Sie Ihren Maileingang oder fordern Sie einen neuen Aktivierungs-Link an.",
-            "ERR_UserSuspended": "Das Benutzerkonto dieser E-Mail-Adresse ist gesperrt. Ablauf der Sperre: ",
+            "ERR_EmailNotYetConfirmed":
+                "Diese E-Mail-Adresse ist noch nicht bestätigt worden. Bitte überprüfen Sie Ihren Maileingang oder fordern Sie einen neuen Aktivierungs-Link an.",
+            "ERR_UserSuspended":
+                "Das Benutzerkonto dieser E-Mail-Adresse ist gesperrt. Ablauf der Sperre: ",
             "DB_ERROR": "Fehler beim Aktualisieren der Datenbank.",
             "MAIL_SUBJECT": "%s Passwort Änderung",
-            "MAIL_SENT": "Wir haben Ihnen einen Link zum Ändern Ihres Passwortes zugeschickt. Bitte überprüfen Sie Ihren Maileingang!",
-            "ERR_TOKEN": "Passwort Änderungs Marker ist ungültig oder abgelaufen.",
+            "MAIL_SENT":
+                "Wir haben Ihnen einen Link zum Ändern Ihres Passwortes zugeschickt. Bitte überprüfen Sie Ihren Maileingang!",
+            "ERR_TOKEN":
+                "Passwort Änderungs Marker ist ungültig oder abgelaufen.",
             "CHANGE": {
                 "TITLE": "Passwort ändern",
                 "INTRO": "Sie können jetzt Ihr Passwort ändern.",
@@ -149,12 +184,15 @@
                 "PWD_DESCRIPTION": "Bitte wählen Sie ein sicheres Passwort.",
                 "PWD_CONFIRM_LABEL": "Passwort bestätigen",
                 "PWD_CONFIRM_PLACEHOLDER": "Bitte das Passwort wiederholen",
-                "PWD_CONFIRM_DESCRIPTION": "Bitte wiederholen Sie das Passwort. Umständlich, verhindert aber ärgerliche Tippfehler im Passwort.",
+                "PWD_CONFIRM_DESCRIPTION":
+                    "Bitte wiederholen Sie das Passwort. Umständlich, verhindert aber ärgerliche Tippfehler im Passwort.",
                 "SUBMIT": "Passwort ändern",
                 "ERROR": {
                     "PasswordEmpty": "Bitte geben Sie Ihr Passwort an.",
-                    "PasswordOutOfBounds": "Das Passwort muss zwischen 6 und 32 Zeichen haben.",
-                    "PasswordConfirmEmpty": "Bitte geben Sie das Passwort erneut ein.",
+                    "PasswordOutOfBounds":
+                        "Das Passwort muss zwischen 6 und 32 Zeichen haben.",
+                    "PasswordConfirmEmpty":
+                        "Bitte geben Sie das Passwort erneut ein.",
                     "PasswordsNoMatch": "Die Passwörter stimmen nicht überein.",
                     "FLASH": "Passwort ändern fehlgeschlagen."
                 },
@@ -164,23 +202,28 @@
 
         "DASHBOARD": {
             "TITLE": "Meine Zentrale",
-            "INTRO": "Hier kommt der Einleitungstext für die Zentrale. Oder so.",
+            "INTRO":
+                "Hier kommt der Einleitungstext für die Zentrale. Oder so.",
             "INFOBOX": {
                 "HDL": "Benutzerdaten",
                 "USERNAME": "Benutzername",
                 "REGISTERED": "Registriert am",
                 "DELETE": {
                     "SUBMIT": "Benutzerkonto unwiderruflich löschen",
-                    "EXPLANATION": "Wir verwenden aus Datenschutzgründen keine soft-deletes - Ihr Benutzerkonto und alle Spiel-Einschreibungen werden unwiderruflich aus unserer Datenbank gelöscht.",
-                    "CONFIRM": "Sind Sie sicher das Sie Ihr Benutzerkonto löschen wollen? Diese Aktion lässt sich nicht rückgängig machen.",
-                    "SUCCESS": "Ihr Benutzerkonto wurde unwiderruflich gelöscht.",
+                    "EXPLANATION":
+                        "Wir verwenden aus Datenschutzgründen keine soft-deletes - Ihr Benutzerkonto und alle Spiel-Einschreibungen werden unwiderruflich aus unserer Datenbank gelöscht.",
+                    "CONFIRM":
+                        "Sind Sie sicher das Sie Ihr Benutzerkonto löschen wollen? Diese Aktion lässt sich nicht rückgängig machen.",
+                    "SUCCESS":
+                        "Ihr Benutzerkonto wurde unwiderruflich gelöscht.",
                     "FAILED": "Wir konnten Ihr Benutzerkonto nicht löschen."
                 }
             },
             "GAMES": {
                 "AVAILABLE": {
                     "HDL": "Verfügbares Spiel",
-                    "INTRO": "Wenn Sie sich in ein Spiel einschreiben startet das Spiel automatisch zur angegebenen Zeit. Manche Spiele erlauben es sich nach Spiel-Start einzuschreiben.",
+                    "INTRO":
+                        "Wenn Sie sich in ein Spiel einschreiben startet das Spiel automatisch zur angegebenen Zeit. Manche Spiele erlauben es sich nach Spiel-Start einzuschreiben.",
                     "NAME": "Spiel",
                     "TURNDURATION": "Rundendauer",
                     "DURATION_VALUE": "%s Minuten",
@@ -209,37 +252,44 @@
                 "HDL": "E-Mail Adresse ändern",
                 "LABEL": "E-Mail",
                 "PLACEHOLDER": "Neue E-Mail Adresse",
-                "DESCRIPTION": "Wenn Sie Ihre E-Mail-Adresse ändern schicken wir Ihnen eine neue E-Mail mit einem Aktivierungs-Link und <strong>melden Sie ab</strong>.",
+                "DESCRIPTION":
+                    "Wenn Sie Ihre E-Mail-Adresse ändern schicken wir Ihnen eine neue E-Mail mit einem Aktivierungs-Link und <strong>melden Sie ab</strong>.",
                 "SUBMIT": "E-Mail ändern",
                 "ERR": {
-                    "NoChange": "Die neue E-Mail-Adresse ist identisch mit der gespeicherten.",
+                    "NoChange":
+                        "Die neue E-Mail-Adresse ist identisch mit der gespeicherten.",
                     "NotEmpty": "Bitte geben Sie Ihre neue E-Mail-Adresse an.",
-                    "NotValid": "Das scheint keine gültige E-Mail-Adresse zu sein.",
+                    "NotValid":
+                        "Das scheint keine gültige E-Mail-Adresse zu sein.",
                     "DB": "Fehler beim Aktualisieren der Datenbank."
                 },
                 "MAIL_SUBJECT": "%s E-Mail Änderung und Aktivierung",
-                "SUCCESS": "Ihre E-Mail-Adresse wurde geändert, und wir haben Ihnen einen neuen Aktivierungs-Link geschickt. Bitte überprüfen Sie Ihren Maileingang!"
+                "SUCCESS":
+                    "Ihre E-Mail-Adresse wurde geändert, und wir haben Ihnen einen neuen Aktivierungs-Link geschickt. Bitte überprüfen Sie Ihren Maileingang!"
             },
             "AVATAR": {
                 "HDL": "Avatar ändern",
                 "LABEL": "Avatar auswählen",
                 "REMOVE": "Aktuellen Avatar löschen",
                 "SUBMIT": "Avatar Speichern",
-                "DESCRIPTION": "Verfügbare Bildtypen: <strong>PNG</strong>, <strong>JPEG</strong>.<br />Maximale Dateigröße: 100Kb<br />Ihr Avatar sollte quadratisch sein, wir werden die Grafik auf 196px x 196px skalieren.",
+                "DESCRIPTION":
+                    "Verfügbare Bildtypen: <strong>PNG</strong>, <strong>JPEG</strong>.<br />Maximale Dateigröße: 100Kb<br />Ihr Avatar sollte quadratisch sein, wir werden die Grafik auf 196px x 196px skalieren.",
                 "ERR": {
-                    "TypeNotAllowed": "Diese Art von Bild ist nicht erlaubt. Zulässige Bildtypen: <strong>%s</strong>.",
-                    "FileSize": "Das Bild überschreitet die maximale Dateigröße um %s Kb.",
+                    "TypeNotAllowed":
+                        "Diese Art von Bild ist nicht erlaubt. Zulässige Bildtypen: <strong>%s</strong>.",
+                    "FileSize":
+                        "Das Bild überschreitet die maximale Dateigröße um %s Kb.",
                     "DbFail": "Fehler beim Aktualisieren der Datenbank.",
                     "Empty": "Sie haben keinen Avatar ausgewählt."
                 },
                 "SUCCESS": "Ihr Avatar wurde aktualisiert.",
-                "DELETED": "Ihr Avatar wurde gelöscht. Sie nutzen jetzt das hässliche Standard-Symbol."
+                "DELETED":
+                    "Ihr Avatar wurde gelöscht. Sie nutzen jetzt das hässliche Standard-Symbol."
             }
         }
     },
 
     "GAME": {
-
         "LABEL_CURRENTTURN": "Aktuelle Runde",
         "LABEL_NEXTTURN": "Nächste Runde",
         "EMPIRE": {
@@ -261,8 +311,10 @@
             "LABEL": "GalNet"
         },
         "STATUS": {
-            "Active": "Das Spiel ist aktiv und Runden werden vom Server berechnet. Aktuelle Runde: %s",
-            "Enlisted": "Sie sind eingeschrieben, aber das Spiel ist noch nicht gestartet.<br />Start des Spiels: %s",
+            "Active":
+                "Das Spiel ist aktiv und Runden werden vom Server berechnet. Aktuelle Runde: %s",
+            "Enlisted":
+                "Sie sind eingeschrieben, aber das Spiel ist noch nicht gestartet.<br />Start des Spiels: %s",
             "Enlistable": "Benutzer können sich in das Spiel einschreiben.",
             "Finished": "Das Spiel ist beendet.",
             "FinishedTurn": "Gespielte Runden: %s",
@@ -287,38 +339,45 @@
             "EMPIRENAME": {
                 "LABEL": "<strong>Name</strong> des Imperiums",
                 "PLACEHOLDER": "Wählen Sie mit Bedacht.",
-                "DESCRIPTION": "Der Name Ihres Imperiums muss %s Zeichen enthalten.",
+                "DESCRIPTION":
+                    "Der Name Ihres Imperiums muss %s Zeichen enthalten.",
                 "ERR": {
                     "Empty": "Bitte geben Sie den Namen des Imperiums an.",
                     "Length": "Der Name des Imperiums muss %s Zeichen haben.",
                     "NotUnique": "Dieser Name ist bereits vergeben -.-",
-                    "NotAlphaNum": "Der Name des Imperium darf nur Aplhanummerische Zeichen enthalten - Buchstaben und Zahlen."
+                    "NotAlphaNum":
+                        "Der Name des Imperium darf nur Aplhanummerische Zeichen enthalten - Buchstaben und Zahlen."
                 }
             },
             "EMPIRETICKER": {
                 "LABEL": "<strong>Ticker</strong> des Imperiums",
                 "PLACEHOLDER": "Abkürzung Ihres Imperiums-Namens",
-                "DESCRIPTION": "Ihr Ticker wird als Kurzform Ihres Imperiums praktisch überall angezeigt. Er muss %s Zeichen (Buchstaben!) enthalten.",
+                "DESCRIPTION":
+                    "Ihr Ticker wird als Kurzform Ihres Imperiums praktisch überall angezeigt. Er muss %s Zeichen (Buchstaben!) enthalten.",
                 "ERR": {
                     "Empty": "Bitte geben Sie den Ticker Ihres Imperiums an.",
                     "Length": "Der Ticker des Imperiums muss %s Zeichen haben.",
                     "NotUnique": "Dieser Ticker ist bereits vergeben -.-",
-                    "NotAlphaNum": "Empire Ticker darf nur Aplhanummerische Zeichen enthalten - Buchstaben und Zahlen."
+                    "NotAlphaNum":
+                        "Empire Ticker darf nur Aplhanummerische Zeichen enthalten - Buchstaben und Zahlen."
                 }
             },
             "ERR": {
-                "NotEnlistable": "Sie können sich in dieses Spiel nicht einschreiben.",
+                "NotEnlistable":
+                    "Sie können sich in dieses Spiel nicht einschreiben.",
                 "Flash": "Fehler beim Einschreiben!"
             },
             "SUBMIT": "Jetzt einschreiben",
-            "SUCCESS": "Sie haben sich erfolgreich für %s eingeschrieben. Viel Spaß!"
+            "SUCCESS":
+                "Sie haben sich erfolgreich für %s eingeschrieben. Viel Spaß!"
         },
         "CHANGE": {
             "ERR": "Sie können nicht zu Spiel %s wechseln.",
             "SUCCESS": "Erfolgreich zu Spiel %s gewechselt."
         },
         "WITHDRAW": {
-            "ERR": "Sie können die Einschreibung für Spiel %s nicht zurückziehen.",
+            "ERR":
+                "Sie können die Einschreibung für Spiel %s nicht zurückziehen.",
             "SUCCESS": "Sie haben die Einschreibung für Spiel %s zurückgezogen."
         }
     },
@@ -363,29 +422,37 @@
             "CREATED": "Erstellt am",
             "CURRENTTURN": "Aktuelle Runde",
             "TURNDUE": "Berechnung der nächsten Runde",
-            "TURNDUEDESC": "Achtung - der server.cron task muss bei Änderungen neu gestartet werden. Mit Bedacht verwenden.",
+            "TURNDUEDESC":
+                "Achtung - der server.cron task muss bei Änderungen neu gestartet werden. Mit Bedacht verwenden.",
             "PROCESSINGLABEL": "Spiel wird gerade ausgewertet",
-            "PROCESSINGDESC": "Auswerten bedeutet das der Server das Berechnen einer Runde gestartet hat, aber die Berechnung ist noch nicht abgeschlossen. Mit Vorsicht verwenden.",
+            "PROCESSINGDESC":
+                "Auswerten bedeutet das der Server das Berechnen einer Runde gestartet hat, aber die Berechnung ist noch nicht abgeschlossen. Mit Vorsicht verwenden.",
             "CANENLIST": "Können Benutzer sich einschreiben",
             "ACTIVELABEL": "Spiel ist aktiv",
-            "ACTIVEDESC": "Der Server berechnet Runden nur für aktive Spiele, nur aktive Spiele können ausgewählt werden. Spiele werden automatisch zum Startdatum auf aktiv gesetzt.",
+            "ACTIVEDESC":
+                "Der Server berechnet Runden nur für aktive Spiele, nur aktive Spiele können ausgewählt werden. Spiele werden automatisch zum Startdatum auf aktiv gesetzt.",
             "MAXPLAYERS": "Maximalzahl an Spielern",
             "ENLISTEDPLAYERS": "Spieler / Maximal",
             "STARTDATE": "Datum des Starts",
             "TURNDURATION": "Dauer einer Runde (Minuten)",
             "DIMENSIONS": "Kartengröße",
             "DISTANCELABEL": "Stern Distanz",
-            "DISTANCEDESC": "Wählen Sie die minimale und maximale Entfernung von Sternensystemen zueinander. Die Karte wird mit Sternensystemen gefüllt unter Beachtung der min/max Entfernung; durch diese Einstellung können Sie Dichte und Anzahl der Systeme steuern.",
+            "DISTANCEDESC":
+                "Wählen Sie die minimale und maximale Entfernung von Sternensystemen zueinander. Die Karte wird mit Sternensystemen gefüllt unter Beachtung der min/max Entfernung; durch diese Einstellung können Sie Dichte und Anzahl der Systeme steuern.",
             "PLAYERDISTANCELABEL": "Spieler Distanz",
-            "PLAYERDISTANCEDESC": "Wählen Sie die minimale und maximale Entfernung von Spielern zueinander. Dies beeinflusst die maximale Anzahl der Spieler.",
+            "PLAYERDISTANCEDESC":
+                "Wählen Sie die minimale und maximale Entfernung von Spielern zueinander. Dies beeinflusst die maximale Anzahl der Spieler.",
             "SUBMIT": "Spiel Speichern",
             "DELETE": "Spiel löschen",
-            "DELETECONFIRM": "Sind Sie sicher das Sie das Spiel g%s löschen wollen? Diese Aktion kann nicht rückgängig gemacht werden.",
-            "DELETEDESC": "Löschen eines Spieles entfernt alle Spieler von dem Spiel, benachrichtigt sie (TODO) und löscht schließlich das Spiel. <strong>Diese Aktion kann nicht rückgängig gemacht werden.</strong>",
+            "DELETECONFIRM":
+                "Sind Sie sicher das Sie das Spiel g%s löschen wollen? Diese Aktion kann nicht rückgängig gemacht werden.",
+            "DELETEDESC":
+                "Löschen eines Spieles entfernt alle Spieler von dem Spiel, benachrichtigt sie (TODO) und löscht schließlich das Spiel. <strong>Diese Aktion kann nicht rückgängig gemacht werden.</strong>",
             "STARS": "Sternensysteme",
             "SUCCESS": {
                 "EDIT": "Spiel <strong>g%s</strong> geändert.",
-                "NEW": "Spiel <strong>g%s</strong> wurde (ohne Karte) erstellt - erzeugen Sie die Sternensysteme jetzt.",
+                "NEW":
+                    "Spiel <strong>g%s</strong> wurde (ohne Karte) erstellt - erzeugen Sie die Sternensysteme jetzt.",
                 "DELETE": "Successfully deleted <strong>g%s</strong>."
             },
             "ERROR": {
@@ -398,11 +465,14 @@
                 "MAPHDL": "Vorschau der Karte mit %s Sternensystemen",
                 "NPCSYSTEM": "Sternensysteme ohne Besitzer",
                 "PLAYERSYSTEM": "Spieler Startsysteme",
-                "SAVE": "Sternensysteme speichern und Erzeugen der Karte abschließen",
+                "SAVE":
+                    "Sternensysteme speichern und Erzeugen der Karte abschließen",
                 "ERROR": {
-                    "AlreadySeeded": "Spiel g%s hat bereits erzeugte Sternensysteme."
+                    "AlreadySeeded":
+                        "Spiel g%s hat bereits erzeugte Sternensysteme."
                 },
-                "SUCCESS": "Sternensysteme und Planeten wurden erfolgreich verteilt."
+                "SUCCESS":
+                    "Sternensysteme und Planeten wurden erfolgreich verteilt."
             }
         },
 
@@ -448,25 +518,35 @@
             },
             "ACTIVEGAMES": "Aktive Spiele",
             "SUCCESS": {
-                "USERNAME": "Benutzername erfolgreich in <strong>%s</strong> geändert.",
-                "EMAIL": "E-Mail-Adresse erfolgreich in <strong>%s</strong> geändert.",
+                "USERNAME":
+                    "Benutzername erfolgreich in <strong>%s</strong> geändert.",
+                "EMAIL":
+                    "E-Mail-Adresse erfolgreich in <strong>%s</strong> geändert.",
                 "AVATAR": "Der Avatar dieses Benutzers wurde zurückgesetzt.",
                 "SUSPENSION": "Benutzerkonto gesperrt bis %s.",
-                "CLEARSUSPENSION": "Sperre des Benutzerkontos von <strong>@%s</strong> aufgehoben.",
-                "PASSWORD": "\"Passwort zurücksetzen\" E-Mail erfolgreich an <strong>@%s</strong> verschickt.",
-                "EMAILCONFIRMATION": "Bestätigungs-E-Mail erfolgreich an <strong>@%s</strong> verschickt.",
-                "EMAILCONFIRM": "E-Mail-Adresse von <strong>@%s</strong> erfolgreich bestätigt."
+                "CLEARSUSPENSION":
+                    "Sperre des Benutzerkontos von <strong>@%s</strong> aufgehoben.",
+                "PASSWORD":
+                    "\"Passwort zurücksetzen\" E-Mail erfolgreich an <strong>@%s</strong> verschickt.",
+                "EMAILCONFIRMATION":
+                    "Bestätigungs-E-Mail erfolgreich an <strong>@%s</strong> verschickt.",
+                "EMAILCONFIRM":
+                    "E-Mail-Adresse von <strong>@%s</strong> erfolgreich bestätigt."
             },
             "ERROR": {
-                "UserNotFound": "Benutzer mit ObjectId <strong>%s</strong> nicht gefunden.",
-                "NoAvatarToReset": "Es existiert kein Avatar der gelöscht werden könnte.",
+                "UserNotFound":
+                    "Benutzer mit ObjectId <strong>%s</strong> nicht gefunden.",
+                "NoAvatarToReset":
+                    "Es existiert kein Avatar der gelöscht werden könnte.",
                 "SuspensionNoDuration": "Bitte Dauer der Sperre angeben."
             },
             "SUSPEND": {
                 "HDL": "Benutzerkonto sperren",
                 "STATUS": {
-                    "NotSuspended": "Benutzerkonto von @%s ist <strong>nicht</strong> gesperrt.",
-                    "Suspended": "Benutzerkonto ist <strong>gesperrt bis %s</strong>"
+                    "NotSuspended":
+                        "Benutzerkonto von @%s ist <strong>nicht</strong> gesperrt.",
+                    "Suspended":
+                        "Benutzerkonto ist <strong>gesperrt bis %s</strong>"
                 },
                 "LABEL": "Dauer der Sperre",
                 "PERIOD": {
@@ -477,10 +557,30 @@
                     "1YEAR": "Ein Jahr",
                     "FOREVER": "Für immer"
                 },
+                "REASON": {
+                    "LABEL": "Grund der Sperre",
+                    "PLACEHOLDER": "Bitte Grund angeben."
+                },
                 "SUBMIT": "Benutzer sperren",
                 "CLEAR": "Sperre entfernen"
             },
+            "SUSPENSIONS": {
+                "LABEL": "Sperren",
+                "LIST": {
+                    "LABELS": {
+                        "STATE": "Status",
+                        "UNTIL": "Gesperrt bis",
+                        "BY": "Gesperrt von",
+                        "REASON": "Grund"
+                    }
+                },
+                "STATE": {
+                    "ACTIVE": "Die Sperre ist aktiv.",
+                    "CANCELED": "Die Sperre wurde aufgehoben."
+                }
+            },
             "PASSWORD": {
+                "HEADLINE": "Passwort zurücksetzen",
                 "TITLE": "Passwort",
                 "SUBMIT": "Sende \"Passwort Zurücksetzen\" E-Mail",
                 "TOKEN": "\"Passwort zurücksetzen\" Marker",
@@ -501,5 +601,4 @@
             "HDL_TEMPLATE": "E-Mail Vorlage: <strong>%s</strong>"
         }
     }
-
 }

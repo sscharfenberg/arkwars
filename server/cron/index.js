@@ -9,7 +9,6 @@ const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const cron = require("node-schedule"); // https://www.npmjs.com/package/node-schedule
 const logger = require("../handlers/logger/console");
 const turnHandlers = require("./turn");
-require("../models/Game");
 const Game = mongoose.model("Game");
 const cfg = require("../config");
 // server tick threshold for game turn processing.
@@ -22,7 +21,7 @@ const TURNDUE_THRESHOLD = cfg.games.turns.dueThreshold;
 const processGameStarts = async () => {
     logger.info("checking if games need to be started.");
     const games = await Game.find({active: false});
-    let gamesToStart = games.filter(game => {
+    const gamesToStart = games.filter(game => {
         return moment().diff(game.startDate) + TURNDUE_THRESHOLD > 0;
     });
     if (gamesToStart.length) {
@@ -48,11 +47,12 @@ const processGameStarts = async () => {
 const processGameTurns = async () => {
     logger.info("processing game turns.");
     const activeGames = await Game.find({active: true}).populate("turns");
-    logger.info(
-        `found ${chalk.red(activeGames.length)} active games: ${chalk.cyan(
-            "[" + activeGames.map(game => game.number) + "]"
-        )}`
-    );
+    activeGames.length &&
+        logger.info(
+            `found ${chalk.red(activeGames.length)} active games: ${chalk.cyan(
+                "[" + activeGames.map(game => game.number) + "]"
+            )}`
+        );
 
     // filter active games and remove the ones that we do not need to process
     let gamesToProcess = activeGames.filter(game => {
@@ -75,7 +75,7 @@ const processGameTurns = async () => {
             return false;
         }
         // c) games where the next turn was already processed
-        let processedTurn = game.turns.filter(turn => {
+        const processedTurn = game.turns.filter(turn => {
             return turn.slug === `g${game.number}t${game.turn + 1}`; // + 1 = next turn! slugs are unique.
         });
         if (processedTurn.length) {
@@ -145,7 +145,7 @@ const doStartGame = async game => {
         await turnHandlers.processTurnData(updatedGame);
     } catch (e) {
         logger.error(e);
-        logger.error(JSON.stringify(updatedGame,null,2));
+        logger.error(JSON.stringify(updatedGame, null, 2));
     }
 };
 

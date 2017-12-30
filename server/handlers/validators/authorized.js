@@ -4,7 +4,9 @@
  * @type {NodeJS}
  *
  **********************************************************************************************************************/
-const moment = require("moment"); // https://momentjs.com/
+//const moment = require("moment"); // https://momentjs.com/
+//const mongoose = require("mongoose"); // http://mongoosejs.com/
+//const User = mongoose.model("User");
 
 /*
  * does the request come from a logged in user?
@@ -13,16 +15,6 @@ const moment = require("moment"); // https://momentjs.com/
  */
 const isUserLoggedIn = req => {
     return req.isAuthenticated();
-};
-
-/*
- * is the current user suspended?
- * @param {Boolean} suspended
- * @param {String.ISO8601} suspendedUntil
- * @returns {Boolean}
- */
-const isUserSuspended = (suspended, suspendedUntil) => {
-    return suspended && moment(suspendedUntil).diff(moment()) > 0;
 };
 
 /*
@@ -36,4 +28,4 @@ const userHasPlayerInGame = (gameId, userGameIds) => {
     return userGameIds.includes(gameId);
 };
 
-module.exports = {isUserLoggedIn, isUserSuspended, userHasPlayerInGame};
+module.exports = {isUserLoggedIn, userHasPlayerInGame};

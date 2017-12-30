@@ -14,6 +14,9 @@ const logger = require("./handlers/logger/console");
 // import environmental variables from our .env file to process.env
 require("dotenv").config({path: "./server/config/.env"});
 
+// require all mongoose schemas
+require("./models/");
+
 /*
  * connect and prepare MongoDB
  *
@@ -29,14 +32,6 @@ mongoose.connection
     .on("connected", () => {
         logger.success("[App] Successfully connected to MongoDB.");
     });
-
-// require all mongoose schemas
-require("./models/Game");
-require("./models/Planet");
-require("./models/Player");
-require("./models/Star");
-require("./models/Turn");
-require("./models/User");
 
 /*
  * start the application

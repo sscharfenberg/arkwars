@@ -260,15 +260,15 @@ block content
                                                 | ,&nbsp;
 
                                 td
-                                    if user.suspended && user.suspendedUntil && h.moment(user.suspendedUntil).diff(h.moment()) > 0
+                                    if user.isSuspended
                                         .admin-listtable__td-space-between
 
-                                            != h.moment(user.suspendedUntil).format("LLL")
+                                            != h.moment(user.isSuspended).format("LLL")
                                             span.admin-listtable__status.admin-listtable__status--error(
                                                 title=`${h.__("ADMIN.USERS.ALL.BODY.SUSPENDED")}`
                                             )
                                                 != h.icon("lock")
-                                        small= h.__("ADMIN.USERS.ALL.BODY.SUSPENDEDUNTIL") + h.moment(user.suspendedUntil).fromNow()
+                                        small= h.__("ADMIN.USERS.ALL.BODY.SUSPENDEDUNTIL") + h.moment(user.isSuspended).fromNow()
 
                                 td
                                     | user

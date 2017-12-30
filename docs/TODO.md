@@ -8,7 +8,7 @@
 - [ ] scaffold game screens
 - [ ] debug and test manage games stuff. shits important, yo.
 - [ ] find a simple way to make binary (/multiple?) stars possible, just because its cool.
-- [ ] add `suspension` model and save user suspensions so we can remember and look up past suspensions, possibly even automatically escalate.
+- [ ] game not active: make all features available, but tell Vue that the game is not active.
 
 ## Frontend
 - [ ] scaffold game screens

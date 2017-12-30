@@ -27,13 +27,13 @@ block content
                 .aw-grid__column.aw-grid__column--vcentered
                     if editUser.emailConfirmed
                         span.admin-userlist__status.admin-userlist__status--success(
-                        title=`${h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")}`
+                            title=`${h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")}`
                         )
                             != h.icon("done")
                         span= " " + h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")
                     else
                         span.admin-userlist__status.admin-userlist__status--warning(
-                        title=`${h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")}`
+                            title=`${h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")}`
                         )
                             != h.icon("warning")
                         span= " " + h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")
@@ -60,21 +60,70 @@ block content
                                 != h.__("ADMIN.USER.EMAILCONFIRMED.CONFIRM")
 
             //- user suspended / suspend user
+
             .aw-grid__row.aw-grid__row--2col
                 .aw-grid__column
                 .aw-grid__column.aw-grid__column--vcentered
-                    if editUser.suspended && editUser.suspendedUntil && h.moment(editUser.suspendedUntil).diff(h.moment()) > 0
+                    if editUser.isSuspended
                         span.admin-userlist__status.admin-userlist__status--error(
                             title=`${h.__("ADMIN.USERS.ALL.BODY.SUSPENDED")}`
                         )
                             != h.icon("lock")
                         span
                             != " "
-                            != h.__("ADMIN.USER.SUSPEND.STATUS.Suspended", h.moment(editUser.suspendedUntil).format("LLL"))
-                            != " (" + h.moment(editUser.suspendedUntil).fromNow() + ")"
+                            != h.__("ADMIN.USER.SUSPEND.STATUS.Suspended", h.moment(editUser.isSuspended).format("LLL"))
+                            != " (" + h.moment(editUser.isSuspended).fromNow() + ")"
                     else
                         span!= h.__("ADMIN.USER.SUSPEND.STATUS.NotSuspended", editUser.username)
-            form(action=`/admin/users/${editUser.id}/suspend`, method="POST")
+
+            if editUser.suspensions && editUser.suspensions.length
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.USER.SUSPENSIONS.LABEL")
+                    .aw-grid__column
+                        table.admin-listtable
+                            thead
+                                tr.admin-listtable__row
+                                    th= h.__("ADMIN.USER.SUSPENSIONS.LIST.LABELS.STATE")
+                                    th= h.__("ADMIN.USER.SUSPENSIONS.LIST.LABELS.UNTIL")
+                                    th= h.__("ADMIN.USER.SUSPENSIONS.LIST.LABELS.BY")
+                                    th= h.__("ADMIN.USER.SUSPENSIONS.LIST.LABELS.REASON")
+                                    th
+                            tbody
+                                each suspension in editUser.suspensions
+                                    tr.admin-listtable__row(
+                                        class=(suspension.canceled ? "admin-listtable__row--disabled" : "")
+                                    )
+                                        td(
+                                            title=(suspension.canceled ? h.__("ADMIN.USER.SUSPENSIONS.STATE.CANCELED") : h.__("ADMIN.USER.SUSPENSIONS.STATE.ACTIVE"))
+                                        )
+                                            span.admin-listtable__status(
+                                                class=(suspension.canceled ? "admin-listtable__status--error" : "admin-listtable__status--success")
+                                            )
+                                                if suspension.canceled
+                                                    != h.icon("cancel")
+                                                else
+                                                    != h.icon("lock")
+                                        td.admin-listtable__td-highlighted(
+                                            title=h.moment(suspension.until).format("LLLL"),
+                                            aria-label=h.moment(suspension.until).format("LLLL")
+                                        )= h.moment(suspension.until).fromNow()
+                                        td
+                                            != `@${suspension.by} `
+                                            span(
+                                                title=h.moment(suspension.dateSuspended).format("LLLL"),
+                                                aria-label=h.moment(suspension.dateSuspended).format("LLLL")
+                                            )
+                                                != h.moment(suspension.dateSuspended).fromNow()
+                                        td= suspension.reason
+                                        td
+                                            if !suspension.canceled
+                                                a.aw-btn.aw-btn--icon(href=`/admin/users/${editUser.id}/clearsuspension/${suspension.id}`)
+                                                    != h.icon("cancel", ["small"])
+                                                    != h.__("ADMIN.USER.SUSPEND.CLEAR")
+            form(
+                action=`/admin/users/${editUser.id}/suspend`,
+                method="POST"
+            )
                 .aw-form__row
                     .aw-form-input
                         label.aw-form-input__label(for="email")= h.__("ADMIN.USER.SUSPEND.LABEL")
@@ -86,32 +135,21 @@ block content
                             option(value="1_years")= h.__("ADMIN.USER.SUSPEND.PERIOD.1YEAR")
                             option(value="99_years")= h.__("ADMIN.USER.SUSPEND.PERIOD.FOREVER")
                 .aw-form__row
+                    .aw-form-input
+                        label.aw-form-input__label(for="reason")= h.__("ADMIN.USER.SUSPEND.REASON.LABEL")
+                        input.aw-form-input__input(
+                            type="text",
+                            name="reason",
+                            id="reason",
+                            placeholder=h.__("ADMIN.USER.SUSPEND.REASON.PLACEHOLDER"),
+                            required,
+                            aria-required="true"
+                        )
+                .aw-form__row
                     .aw-form__submit.aw-btn-group
                         button.aw-btn.aw-btn--icon(type="submit")
                             != h.icon("warning", ["small"])
                             != h.__("ADMIN.USER.SUSPEND.SUBMIT")
-                        a.aw-btn.aw-btn--icon(href=`/admin/users/${editUser.id}/suspend/clear`)
-                            != h.icon("cancel", ["small"])
-                            != h.__("ADMIN.USER.SUSPEND.CLEAR")
-
-            //- send reset password email
-            form(action=`/admin/users/${editUser.id}/password`, method="POST")
-                br
-                if editUser.resetPasswordToken && editUser.resetPasswordExpires
-                    .aw-grid__row.aw-grid__row--2col
-                        .aw-grid__column= h.__("ADMIN.USER.PASSWORD.TOKEN")
-                        .aw-grid__column= editUser.resetPasswordToken
-                    .aw-grid__row.aw-grid__row--2col
-                        .aw-grid__column= h.__("ADMIN.USER.PASSWORD.EXPIRES")
-                        .aw-grid__column
-                            != h.moment(editUser.resetPasswordExpires).format("LLLL")
-                            br
-                            != `(${h.moment(editUser.resetPasswordExpires).fromNow()})`
-                .aw-form__row
-                    .aw-form__submit
-                        button.aw-btn.aw-btn--icon(type="submit")
-                            != h.icon("key", ["small"])
-                            != h.__("ADMIN.USER.PASSWORD.SUBMIT")
 
             //- active games
             if editUser.players && editUser.players.length
@@ -125,7 +163,10 @@ block content
 
 
         //- change username form
-        form.aw-form(action=`/admin/users/${editUser.id}/username`, method="POST")
+        form.aw-form(
+            action=`/admin/users/${editUser.id}/username`,
+            method="POST"
+        )
             .aw-grid__headline= h.__("ADMIN.USER.CHANGE.USERNAME")
             .aw-form__row
                 .aw-form-input
@@ -147,7 +188,10 @@ block content
 
 
         //- change email address form
-        form.aw-form(action=`/admin/users/${editUser.id}/email`, method="POST")
+        form.aw-form(
+            action=`/admin/users/${editUser.id}/email`,
+            method="POST"
+        )
             .aw-grid__headline= h.__("ADMIN.USER.CHANGE.EMAIL")
             .aw-form__row
                 .aw-form-input
@@ -168,10 +212,39 @@ block content
                         != h.__("ADMIN.USER.CHANGE.EMAIL")
 
 
+        //- send reset password email
+        form.aw-form(
+            action=`/admin/users/${editUser.id}/password`,
+            method="POST"
+        )
+            .aw-grid__headline= h.__("ADMIN.USER.PASSWORD.HEADLINE")
+            if editUser.resetPasswordToken && editUser.resetPasswordExpires
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.USER.PASSWORD.TOKEN")
+                    .aw-grid__column= editUser.resetPasswordToken
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.USER.PASSWORD.EXPIRES")
+                    .aw-grid__column
+                        != h.moment(editUser.resetPasswordExpires).format("LLLL")
+                        br
+                        != `(${h.moment(editUser.resetPasswordExpires).fromNow()})`
+            .aw-form__row
+                .aw-form__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("key", ["small"])
+                        != h.__("ADMIN.USER.PASSWORD.SUBMIT")
+
         //- Change Avatar form
-        form.aw-form(action=`/admin/users/${editUser.id}/avatar/reset`, method="POST")
+        form.aw-form(
+            action=`/admin/users/${editUser.id}/avatar/reset`,
+            method="POST"
+        )
             .aw-grid__headline= h.__("ADMIN.USER.CHANGE.AVATARHDL")
-            input(type="hidden" name="currAvatarUrl" value=(editUser.avatar))
+            input(
+                type="hidden",
+                name="currAvatarUrl",
+                value=(editUser.avatar)
+            )
             .aw-change-avatar
                 .aw-change-avatar__current
                     != h.getAvatar(editUser.avatar, "large")

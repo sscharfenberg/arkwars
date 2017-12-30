@@ -9,14 +9,12 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
-const { getCaptcha } = require("../../handlers/captcha");
+const {getCaptcha} = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
-const {isUserSuspended} = require("../../handlers/validators/authorized");
 const mail = require("../../handlers/mail");
 const changePasswordValidators = require("../../handlers/validators/changePassword");
 const User = mongoose.model("User");
 const cfg = require("../../config");
-
 
 /*
  * resend activation link ==============================================================================================
@@ -32,7 +30,6 @@ exports.showResetForm = (req, res) => {
         captcha: captcha.data
     });
 };
-
 
 /*
  * validate a POST reset password request. =============================================================================
@@ -56,7 +53,7 @@ exports.validateRequest = async (req, res, next) => {
     }
     if (captchaFail) {
         const captcha = getCaptcha(req.session.captcha);
-        errors.captcha = { msg: captchaFail };
+        errors.captcha = {msg: captchaFail};
         return res.render("auth/reset", {
             title: i18n.__("APP.RESET.TITLE"),
             session: req.session,
@@ -68,30 +65,33 @@ exports.validateRequest = async (req, res, next) => {
     }
 
     // check if we found a user with that email address
-    const emailUser = await User.findOne({ email: req.body.email });
+    const emailUser = await User.findOne({email: req.body.email});
     if (!emailUser) {
-        errors.email = { msg: i18n.__("APP.RESET.ERR_EmailNotFound") };
+        errors.email = {msg: i18n.__("APP.RESET.ERR_EmailNotFound")};
         logger.error(
-            `[App] got reset request, could not find the email "${req.body
-                .email}".`
+            `[App] got reset request, could not find the email "${
+                req.body.email
+            }".`
         );
     }
 
     // check if user email has been confirmed
     if (!emailUser.emailConfirmed) {
-        errors.email = { msg: i18n.__("APP.RESET.ERR_EmailNotYetConfirmed") };
+        errors.email = {msg: i18n.__("APP.RESET.ERR_EmailNotYetConfirmed")};
         logger.error(
-            `[App] got reset request, email not yet confirmed "${req.body
-                .email}".`
+            `[App] got reset request, email not yet confirmed "${
+                req.body.email
+            }".`
         );
     }
 
     // user is suspended?
-    if (isUserSuspended(emailUser.suspended, emailUser.suspendedUntil)) {
+    const suspendedUntil = emailUser.isSuspended;
+    if (suspendedUntil) {
         errors.email = {
             msg:
                 i18n.__("APP.RESET.ERR_UserSuspended") +
-                moment(emailUser.suspendedUntil).format("LLL")
+                moment(suspendedUntil).format("LLL")
         };
         logger.error(
             `[App] got reset request, user with email "${chalk.cyan(
@@ -118,7 +118,6 @@ exports.validateRequest = async (req, res, next) => {
     }
 };
 
-
 /*
  * update reset user with a fresh token. ===============================================================================
  * @param {ExpressHTTPRequest} req
@@ -127,14 +126,14 @@ exports.validateRequest = async (req, res, next) => {
  */
 exports.updateResetUser = async (req, res, next) => {
     const user = await User.findOneAndUpdate(
-        { _id: req._user._id },
+        {_id: req._user._id},
         {
             $set: {
                 resetPasswordToken: crypto.randomBytes(20).toString("hex"),
                 resetPasswordExpires: moment().add(1, "hours")
             }
         },
-        { new: true, runValidators: true, context: "query" }
+        {new: true, runValidators: true, context: "query"}
     );
     if (!user) {
         logger.error(
@@ -162,7 +161,6 @@ exports.updateResetUser = async (req, res, next) => {
     }
 };
 
-
 /*
  * send password reset email ===========================================================================================
  * @param {ExpressHTTPRequest} req
@@ -171,8 +169,9 @@ exports.updateResetUser = async (req, res, next) => {
  */
 exports.sendResetEmail = async (req, res) => {
     const user = req._user;
-    const confirmURL = `http://${req.headers
-        .host}/auth/reset/${user.resetPasswordToken}`;
+    const confirmURL = `http://${req.headers.host}/auth/reset/${
+        user.resetPasswordToken
+    }`;
     await mail.send({
         user,
         filename: "reset_email",
@@ -180,13 +179,10 @@ exports.sendResetEmail = async (req, res) => {
         confirmURL,
         adminEmail: false
     });
-    logger.info(
-        `[App] sent reset email to ${chalk.yellow(user.email)}.`
-    );
+    logger.info(`[App] sent reset email to ${chalk.yellow(user.email)}.`);
     req.flash("success", i18n.__("APP.RESET.MAIL_SENT"));
     res.redirect("/");
 };
-
 
 /*
  * validate reset token ================================================================================================
@@ -200,7 +196,7 @@ exports.validateResetToken = async (req, res, next) => {
     );
     const user = await User.findOne({
         resetPasswordToken: req.params.token,
-        resetPasswordExpires: { $gt: moment().toISOString() }
+        resetPasswordExpires: {$gt: moment().toISOString()}
     });
     if (!user) {
         req.flash("error", i18n.__("APP.RESET.ERR_TOKEN"));
@@ -211,12 +207,13 @@ exports.validateResetToken = async (req, res, next) => {
     } else {
         req._user = user;
         logger.debug(
-            `[App] password reset token for ${chalk.cyan("@" + user.username)} is ${chalk.magenta("valid")}.`
+            `[App] password reset token for ${chalk.cyan(
+                "@" + user.username
+            )} is ${chalk.magenta("valid")}.`
         );
         next();
     }
 };
-
 
 /*
  * show password reset change form =====================================================================================
@@ -234,7 +231,6 @@ exports.showChangeForm = async (req, res) => {
     });
 };
 
-
 /*
  * valdiate password change request ====================================================================================
  * @param {ExpressHTTPRequest} req
@@ -243,7 +239,9 @@ exports.showChangeForm = async (req, res) => {
  */
 exports.validateChangeForm = async (req, res, next) => {
     logger.info(
-        `[App] validating change password request for user ${chalk.magenta("@" + req._user.username)}`
+        `[App] validating change password request for user ${chalk.magenta(
+            "@" + req._user.username
+        )}`
     );
     req = changePasswordValidators.defaultValidators(req); // default validators
     const validationResult = await req.getValidationResult();
@@ -252,7 +250,9 @@ exports.validateChangeForm = async (req, res, next) => {
         next();
     } else {
         logger.error(
-            `[App] form errors for change password request ${chalk.magenta("@" + req._user.username)}. ${validationResult.array().length} errors.`
+            `[App] form errors for change password request ${chalk.magenta(
+                "@" + req._user.username
+            )}. ${validationResult.array().length} errors.`
         );
         req.flash("error", i18n.__("APP.RESET.CHANGE.ERROR.FLASH"));
         return res.render("auth/reset_change", {
@@ -269,7 +269,6 @@ exports.validateChangeForm = async (req, res, next) => {
     }
 };
 
-
 /*
  * update password =====================================================================================================
  * @param {ExpressHTTPRequest} req
@@ -283,19 +282,25 @@ exports.resetChangePassword = async (req, res) => {
     user.resetPasswordExpires = undefined;
     user.attempts = 0;
     const updatedUser = await user.save(); // save to db
-    if (!isUserSuspended(user.suspended, user.suspendedUntil)) {
+    if (!user.isSuspended) {
         // log in
-        req.login(user, function (err) {
+        req.login(user, function(err) {
             if (err) {
                 return next(err);
             }
             req.user = updatedUser;
             logger.info(`[App] user @${updatedUser.username} logged in.`);
-            req.flash("success", i18n.__("APP.RESET.CHANGE.SUCCESS", updatedUser.username));
+            req.flash(
+                "success",
+                i18n.__("APP.RESET.CHANGE.SUCCESS", updatedUser.username)
+            );
             res.redirect("/dashboard");
         });
     } else {
-        req.flash("success", i18n.__("APP.RESET.CHANGE.SUCCESS", updatedUser.username));
+        req.flash(
+            "success",
+            i18n.__("APP.RESET.CHANGE.SUCCESS", updatedUser.username)
+        );
         res.redirect("/auth/login");
     }
 };
