@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header :class="area">
         <h1>{{areaTitle}}</h1>
         <button class="refresh" @click="refreshArea">{{$txt.common.header.refresh}}</button>
     </header>
@@ -9,6 +9,10 @@
     export default {
         props: {
             areaTitle: {
+                type: String,
+                required: true
+            },
+            area: {
                 type: String,
                 required: true
             }
@@ -30,8 +34,14 @@
 
         min-height: 16rem;
 
-        background: palette("grey", "bunker") url("bg/empire.jpg") 50% 50% no-repeat;
+        background: palette("grey", "bunker") none 50% 50% no-repeat;
         background-size: cover;
+        &.empire { background-image: url("bg/empire.jpg"); }
+        &.fleets { background-image: url("bg/fleets.jpg"); }
+        &.shipyards { background-image: url("bg/shipyards.jpg"); }
+        &.research { background-image: url("bg/research.jpg"); }
+        &.starmap { background-image: url("bg/starmap.jpg"); }
+        &.galnet { background-image: url("bg/galnet.jpg"); }
     }
     h1 {
         align-self: flex-end;
