@@ -15,6 +15,10 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 // https://github.com/webpack-contrib/extract-text-webpack-plugin
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// https://www.npmjs.com/package/imagemin-webpack-plugin
+const ImageminPlugin = require("imagemin-webpack-plugin").default;
+const imageminMozjpeg = require("imagemin-mozjpeg");
+
 
 const baseWebpackConfig = require("./config.base"); // base webpack config
 const config = require("../config");
@@ -88,6 +92,22 @@ let webpackConfig = merge(baseWebpackConfig, {
             entryOnly: true
         }),
 
+        // https://github.com/Klathmon/imagemin-webpack-plugin
+        // match options to /internals/gulp/sync.js
+        new ImageminPlugin({
+            gifsicle: {interlaced: true},
+            optipng: {optimizationLevel: 5},
+            svgo: {plugins:[]}, // https://github.com/svg/svgo#what-it-can-do
+            jpegtran: null, // set to null to disable jpegtran
+            plugins: [
+                // https://github.com/imagemin/imagemin-mozjpeg
+                imageminMozjpeg({
+                    quality: 65, // 65 is quite low, watch for image quality
+                    progressive: true
+                })
+            ]
+        }),
+
         // https://www.npmjs.com/package/webpack-bundle-analyzer
         new BundleAnalyzerPlugin({
             // Can be `server`, `static` or `disabled`.
@@ -109,10 +129,10 @@ let webpackConfig = merge(baseWebpackConfig, {
             // Automatically open report in default browser
             openAnalyzer: false,
             // If `true`, Webpack Stats JSON file will be generated in bundles output directory
-            generateStatsFile: false,
+            generateStatsFile: true,
             // Name of Webpack Stats JSON file that will be generated if `generateStatsFile` is `true`.
             // Relative to bundles output directory.
-            //statsFilename: "webpack-stats.json",
+            statsFilename: "../../../webpack-stats.json",
             // Options for `stats.toJson()` method.
             // For example you can exclude sources of your modules from stats file with `source: false` option.
             // See more options here: https://github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21

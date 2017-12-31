@@ -1,5 +1,11 @@
 # Changelog
 
+`31.12.2017`
+- [x] improved mockdata and added a homesystem to players
+- [x] improved webpack tooling - added imagemin-webpack-plugin for image optimization.
+- [x] added a common chunk since it starts to make sense (moment, axios, later Vue etc.). simple for now. 
+- [x] added "enlisted games" to admin > edit user
+
 `30.12.2017`
 - [x] Changed the way suspensions are handled and created a new schema for suspensions. Added virtual field to User schema and created a "isSuspended" virtual function. Refactored suspension handling and admin pages - suspensions are now visible on the user detail page, and you can now clear specific suspensions.
 - [x] bumped dependencies, except for mongoose5 (way too many breaking changes, will look into this later)

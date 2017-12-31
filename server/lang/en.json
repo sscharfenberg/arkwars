@@ -493,11 +493,15 @@
             "TITLE": "Edit @%s",
             "CHANGE": {
                 "USERNAME": "Change username",
-                "EMAIL": "Change E-Mail address",
+                "USERNAMEHDL": "Username",
+                "EMAIL": "E-Mail address",
                 "AVATAR": "Reset Avatar",
                 "AVATARHDL": "Avatar"
             },
-            "ACTIVEGAMES": "Active games",
+            "GAMES": {
+                "HDL": "Enlisted games",
+                "STARS": "Systems"
+            },
             "SUCCESS": {
                 "USERNAME":
                     "Username successfully changed to <strong>%s</strong>.",

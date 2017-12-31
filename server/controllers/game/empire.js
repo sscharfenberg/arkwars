@@ -41,7 +41,7 @@ exports.showIndex = async (req, res) => {
     const areaTime = fs.statSync(pathArea).mtime;
     const commonTime = fs.statSync(pathCommon).mtime;
 
-    console.log("stars: ", player.stars);
+    //console.log("stars: ", player.stars);
 
     res.render("game/empire", {
         title: "Game Empire",

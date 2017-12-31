@@ -17,50 +17,33 @@ block content
                 a.aw-content-head__breadcrumb(href="/admin/users")= h.__("ADMIN.USERS.TITLE_NAV")
                 a.aw-content-head__breadcrumb(href=`/admin/users/${editUser.id}`)= title
 
-        //- summary
+        //- change username form
+        form.aw-form(
+            action=`/admin/users/${editUser.id}/username`,
+            method="POST"
+        )
+            .aw-grid__headline= h.__("ADMIN.USER.CHANGE.USERNAMEHDL")
+            .aw-form__row
+                .aw-form-input
+                    label.aw-form-input__label(for="username")= h.__("APP.REGISTER.USERNAME_LABEL")
+                    input.aw-form-input__input(
+                        type="text",
+                        name="username",
+                        id="username",
+                        placeholder=h.__("APP.REGISTER.USERNAME_PLACEHOLDER"),
+                        required,
+                        aria-required="true",
+                        value=(editUser.username)
+                    )
+            .aw-form__row
+                .aw-form__submit
+                    button.aw-btn.aw-btn--icon(type="submit")
+                        != h.icon("save", ["small"])
+                        != h.__("ADMIN.USER.CHANGE.USERNAME")
+
+        //- suspensions
         .aw-grid
-            .aw-grid__headline= "@" + editUser.username
-
-            //- email confirmation status
-            .aw-grid__row.aw-grid__row--2col
-                .aw-grid__column
-                .aw-grid__column.aw-grid__column--vcentered
-                    if editUser.emailConfirmed
-                        span.admin-userlist__status.admin-userlist__status--success(
-                            title=`${h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")}`
-                        )
-                            != h.icon("done")
-                        span= " " + h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")
-                    else
-                        span.admin-userlist__status.admin-userlist__status--warning(
-                            title=`${h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")}`
-                        )
-                            != h.icon("warning")
-                        span= " " + h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")
-            if editUser.emailConfirmationToken
-                .aw-grid__row.aw-grid__row--2col
-                    .aw-grid__column= h.__("ADMIN.USER.EMAILCONFIRMED.TOKEN")
-                    .aw-grid__column.aw-grid__column--vcentered= editUser.emailConfirmationToken
-            if editUser.emailConfirmationExpires
-                .aw-grid__row.aw-grid__row--2col
-                    .aw-grid__column= h.__("ADMIN.USER.EMAILCONFIRMED.EXPIRES")
-                    .aw-grid__column.aw-grid__column--vcentered
-                        != h.moment(editUser.emailConfirmationExpires).format("LLLL")
-                        br
-                        != `(${h.moment(editUser.emailConfirmationExpires).fromNow()})`
-            if !editUser.emailConfirmed
-                .aw-form__row
-                    form(action=`/admin/users/${editUser.id}/email/resend`, method="POST")
-                        .aw-form__submit.aw-btn-group
-                            button.aw-btn.aw-btn--icon(type="submit")
-                                != h.icon("key", ["small"])
-                                != h.__("ADMIN.USER.EMAILCONFIRMED.RESEND")
-                            a.aw-btn.aw-btn--icon(href=`/admin/users/${editUser.id}/email/confirm`)
-                                != h.icon("done", ["small"])
-                                != h.__("ADMIN.USER.EMAILCONFIRMED.CONFIRM")
-
-            //- user suspended / suspend user
-
+            .aw-grid__headline= h.__("ADMIN.USER.SUSPENSIONS.LABEL")
             .aw-grid__row.aw-grid__row--2col
                 .aw-grid__column
                 .aw-grid__column.aw-grid__column--vcentered
@@ -75,7 +58,7 @@ block content
                             != " (" + h.moment(editUser.isSuspended).fromNow() + ")"
                     else
                         span!= h.__("ADMIN.USER.SUSPEND.STATUS.NotSuspended", editUser.username)
-
+            //- show suspensions if they exist
             if editUser.suspensions && editUser.suspensions.length
                 .aw-grid__row.aw-grid__row--2col
                     .aw-grid__column= h.__("ADMIN.USER.SUSPENSIONS.LABEL")
@@ -151,48 +134,52 @@ block content
                             != h.icon("warning", ["small"])
                             != h.__("ADMIN.USER.SUSPEND.SUBMIT")
 
-            //- active games
-            if editUser.players && editUser.players.length
-                .aw-grid__row.aw-grid__row--2col
-                    .aw-grid__column= h.__("ADMIN.USER.ACTIVEGAMES")
-                    .aw-grid__column
-                        each player, index in editUser.players
-                            a.aw-textlink(href=`/admin/games/${player.game.number}`)= "g" + player.game.number
-                            if index !== editUser.players.length - 1
-                                | ,&nbsp;
-
-
-        //- change username form
-        form.aw-form(
-            action=`/admin/users/${editUser.id}/username`,
-            method="POST"
-        )
-            .aw-grid__headline= h.__("ADMIN.USER.CHANGE.USERNAME")
-            .aw-form__row
-                .aw-form-input
-                    label.aw-form-input__label(for="username")= h.__("APP.REGISTER.USERNAME_LABEL")
-                    input.aw-form-input__input(
-                        type="text",
-                        name="username",
-                        id="username",
-                        placeholder=h.__("APP.REGISTER.USERNAME_PLACEHOLDER"),
-                        required,
-                        aria-required="true",
-                        value=(editUser.username)
-                    )
-            .aw-form__row
-                .aw-form__submit
-                    button.aw-btn.aw-btn--icon(type="submit")
-                        != h.icon("save", ["small"])
-                        != h.__("ADMIN.USER.CHANGE.USERNAME")
-
-
-        //- change email address form
+        //- email address form
         form.aw-form(
             action=`/admin/users/${editUser.id}/email`,
             method="POST"
         )
             .aw-grid__headline= h.__("ADMIN.USER.CHANGE.EMAIL")
+
+            //- email confirmation status
+            .aw-grid__row.aw-grid__row--2col
+                .aw-grid__column
+                .aw-grid__column.aw-grid__column--vcentered
+                    if editUser.emailConfirmed
+                        span.admin-userlist__status.admin-userlist__status--success(
+                        title=`${h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")}`
+                        )
+                            != h.icon("done")
+                        span= " " + h.__("ADMIN.USERS.ALL.BODY.CONFIRMED")
+                    else
+                        span.admin-userlist__status.admin-userlist__status--warning(
+                        title=`${h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")}`
+                        )
+                            != h.icon("warning")
+                        span= " " + h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")
+            if editUser.emailConfirmationToken
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.USER.EMAILCONFIRMED.TOKEN")
+                    .aw-grid__column.aw-grid__column--vcentered= editUser.emailConfirmationToken
+            if editUser.emailConfirmationExpires
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column= h.__("ADMIN.USER.EMAILCONFIRMED.EXPIRES")
+                    .aw-grid__column.aw-grid__column--vcentered
+                        != h.moment(editUser.emailConfirmationExpires).format("LLLL")
+                        br
+                        != `(${h.moment(editUser.emailConfirmationExpires).fromNow()})`
+            if !editUser.emailConfirmed
+                .aw-form__row
+                    form(action=`/admin/users/${editUser.id}/email/resend`, method="POST")
+                        .aw-form__submit.aw-btn-group
+                            button.aw-btn.aw-btn--icon(type="submit")
+                                != h.icon("key", ["small"])
+                                != h.__("ADMIN.USER.EMAILCONFIRMED.RESEND")
+                            a.aw-btn.aw-btn--icon(href=`/admin/users/${editUser.id}/email/confirm`)
+                                != h.icon("done", ["small"])
+                                != h.__("ADMIN.USER.EMAILCONFIRMED.CONFIRM")
+
+            //- change email address
             .aw-form__row
                 .aw-form-input
                     label.aw-form-input__label(for="email")= h.__("APP.REGISTER.EMAIL_LABEL")
@@ -210,6 +197,26 @@ block content
                     button.aw-btn.aw-btn--icon(type="submit")
                         != h.icon("save", ["small"])
                         != h.__("ADMIN.USER.CHANGE.EMAIL")
+
+
+        //- active games
+        if editUser.players && editUser.players.length
+            .aw-grid
+                .aw-grid__headline= h.__("ADMIN.USER.GAMES.HDL")
+                each player, index in editUser.players
+                    .aw-grid__row.aw-grid__row--2col
+                        .aw-grid__column
+                            a.aw-textlink(href=`/admin/games/${player.game.number}`)= "g" + player.game.number
+                        .aw-grid__column
+                            strong= `[${player.ticker}] `
+                            != player.name
+                            if player.stars && player.stars.length
+                            br
+                            != h.__("ADMIN.USER.GAMES.STARS") + ": "
+                            each star, index in player.stars
+                                != star.name
+                                if index !== player.stars.length - 1
+                                    |= ,%nbsp;
 
 
         //- send reset password email

@@ -127,8 +127,10 @@ exports.showEditUser = async (req, res) => {
             return {
                 id: suspension.id,
                 until: suspension.until,
-                // admin and suspension IDs mongoDB objectIds, thus object-like.
-                // In order to use strict equality === we need to convert these object-likes to strings
+                /* admin and suspension IDs are properties of the mongoose model and reference
+                 * MongoDB ObjectIds - they are object-like, not Strings.
+                 * In order to use strict equality === we need to convert these object-likes to strings
+                 * Javascript, the weird parts (tm) */
                 by: admins
                     .filter(admin => `${admin.id}` === `${suspension.by}`)
                     .shift().username,

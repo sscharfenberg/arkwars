@@ -14,9 +14,7 @@
             }
         },
         methods: {
-            refreshArea: () => {
-                console.log("refresh area");
-            }
+            refreshArea: () => { console.log("refresh area"); }
         }
     };
 </script>

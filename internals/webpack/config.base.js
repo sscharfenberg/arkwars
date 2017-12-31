@@ -14,7 +14,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const config = require("../config");
 let isProd = process.env.NODE_ENV === "production";
 
-
 const webpackConfig = {
     // Don"t attempt to continue if there are any errors.
     bail: true,
@@ -33,12 +32,10 @@ const webpackConfig = {
 
     // https://webpack.js.org/configuration/module/
     module: {
-
         // An array of Rules which are matched to requests when modules are created.
         // These rules can modify how the module is created.
         // They can apply loaders to the module, or modify the parser.
         rules: [
-
             // http://eslint.org
             // https://www.npmjs.com/package/eslint-loader
             // It"s important to do this before Babel processes the JS.
@@ -75,7 +72,7 @@ const webpackConfig = {
                             // https://github.com/babel/babel-preset-env
                             "env",
                             {
-                                targets: { browsers: config.browsers },
+                                targets: {browsers: config.browsers},
                                 useBuiltIns: true // https://github.com/babel/babel-preset-env#usebuiltins
                             }
                         ]
@@ -113,7 +110,7 @@ const webpackConfig = {
         // define aliases for imports here, saves typing.
         // https://webpack.js.org/configuration/resolve/#resolve-alias
         alias: {
-            "vue$": "vue/dist/vue.esm.js"
+            vue$: "vue/dist/vue.esm.js"
         },
         // symbolic links. disable if needed
         // https://webpack.js.org/configuration/resolve/#resolve-symlinks
@@ -127,14 +124,20 @@ const webpackConfig = {
     // https://webpack.js.org/configuration/plugins/
     // https://webpack.js.org/plugins/
     plugins: [
-
-
         // Moment.js is an extremely popular library that bundles large locale files
         // by default due to how Webpack interprets its code. This is a practical
         // solution that requires the user to opt into importing specific locales.
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-        // You can remove this if you don"t use Moment.js:
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
+        // https://webpack.js.org/plugins/commons-chunk-plugin
+        // The CommonsChunkPlugin is an opt-in feature that creates a separate file
+        // (known as a chunk), consisting of common modules shared between multiple entry points.
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "common",
+            filename: "common.js",
+            minChunks: 2
+        })
     ]
 };
 
@@ -172,9 +175,11 @@ for (let chunk in config.chunks) {
 // HTML Webpack Plugin for HEADER
 // prod extracts styles to css file and we need the header include with content hash
 // https://github.com/jantimon/html-webpack-plugin
-const invalidChunks = ["admin", "app"]; // non-Vue chunks that do not need to extract css
-const validChunks = Object.keys(config.chunks).filter(chunk => !invalidChunks.includes(chunk));
-validChunks.forEach( chunk => {
+const invalidChunks = ["admin", "app"]; // non-Vue gulp chunks that do not need to extract css
+const validChunks = Object.keys(config.chunks).filter(
+    chunk => !invalidChunks.includes(chunk)
+);
+validChunks.forEach(chunk => {
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
             template: path.join(

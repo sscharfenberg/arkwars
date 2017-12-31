@@ -134,7 +134,8 @@ exports.systems = (game, user, distMin, distMax) => {
  * assign a random star fromm an array of stars ========================================================================
  * @param {Array} stars - array of Mongoose.Model("Star")
  * @returns {Object} - Mongoose.model("Star")
- *
+ * since we return the chose star by index (random integer),
+ * first element is 0, last element is stars.length - 1.
  */
 exports.assignRandomStar = (stars) => {
     return stars[Math.floor(Math.random() * stars.length)];

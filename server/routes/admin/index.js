@@ -9,10 +9,10 @@ const express = require("express"); // http://expressjs.com/
 const router = express.Router(); // http://expressjs.com/en/api.html#router
 const adminController = require("../../controllers/admin");
 const authController = require("../../controllers/auth");
-const { catchErrors } = require("../../handlers/error");
+const {catchErrors} = require("../../handlers/error");
 
 // isAdmin Middleware protecting the admin routes
-router.use("/", authController.isAdmin);
+router.use("/", authController.isValidUser, authController.isAdmin);
 
 // admin dashboard
 router.get("/", catchErrors(adminController.showDashboard));

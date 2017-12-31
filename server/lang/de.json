@@ -299,7 +299,7 @@
             "LABEL": "Flotten"
         },
         "SHIPYARDS": {
-            "LABEL": "Werftem"
+            "LABEL": "Werften"
         },
         "RESEARCH": {
             "LABEL": "Forschung"
@@ -512,11 +512,15 @@
             "TITLE": "@%s bearbeiten",
             "CHANGE": {
                 "USERNAME": "Benutzername ändern",
-                "EMAIL": "E-Mail-Adresse ändern",
+                "USERNAMEHDL": "Benutzername",
+                "EMAIL": "E-Mail-Adresse",
                 "AVATAR": "Avatar zurücksetzen",
                 "AVATARHDL": "Avatar"
             },
-            "ACTIVEGAMES": "Aktive Spiele",
+            "GAMES": {
+                "HDL": "Eingeschriebene Spiele",
+                "STARS": "Systeme"
+            },
             "SUCCESS": {
                 "USERNAME":
                     "Benutzername erfolgreich in <strong>%s</strong> geändert.",

@@ -255,13 +255,13 @@ exports.selectGame = async (req, res) => {
                 "@" + req.user.username
             )} selected ${chalk.yellow("g" + requestedGameNumber)}`
         );
-        req.flash(
-            "success",
-            i18n.__(
-                "GAMES.CHANGE.SUCCESS",
-                `<strong>g${requestedGameNumber}</strong>`
-            )
-        );
+        //req.flash(
+        //    "success",
+        //    i18n.__(
+        //        "GAMES.CHANGE.SUCCESS",
+        //        `<strong>g${requestedGameNumber}</strong>`
+        //    )
+        //);
         return res.redirect(`/game/${requestedGameNumber}/empire`);
     }
 };
