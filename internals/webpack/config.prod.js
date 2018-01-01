@@ -144,29 +144,4 @@ let webpackConfig = merge(baseWebpackConfig, {
     ]
 });
 
-// https://github.com/vuejs/vue-loader
-// https://vue-loader.vuejs.org/en/
-webpackConfig.module.rules.push({
-    test: /\.vue$/,
-    loader: "vue-loader",
-    options: {
-        loaders: {
-            // for prod, we need to extract an actual css file
-            "scss": ExtractTextPlugin.extract({
-                use: [
-                    "css-loader",
-                    "sass-loader"
-                ],
-                fallback: "vue-style-loader"
-            })
-        },
-        transformToRequire: {
-            video: "src",
-            source: "src",
-            img: "src",
-            image: "xlink:href"
-        }
-    }
-});
-
 module.exports = webpackConfig;

@@ -40,26 +40,11 @@ let webpackConfig = merge(baseWebpackConfig, {
         }),
 
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
-        new webpack.HotModuleReplacementPlugin()
-    ]
-});
+        new webpack.HotModuleReplacementPlugin(),
 
-// https://github.com/vuejs/vue-loader
-// https://vue-loader.vuejs.org/en/
-webpackConfig.module.rules.push({
-    test: /\.vue$/,
-    loader: "vue-loader",
-    options: {
-        loaders: {
-            "scss": "vue-style-loader!css-loader!sass-loader"
-        },
-        transformToRequire: {
-            video: "src",
-            source: "src",
-            img: "src",
-            image: "xlink:href"
-        }
-    }
+        // HMR shows correct file names in console on update.
+        new webpack.NamedModulesPlugin()
+    ]
 });
 
 module.exports = webpackConfig;

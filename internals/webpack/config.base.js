@@ -11,22 +11,35 @@ const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
 // https://www.npmjs.com/package/html-webpack-plugin
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const config = require("../config");
-let isProd = process.env.NODE_ENV === "production";
+// https://github.com/webpack-contrib/extract-text-webpack-plugin
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const cfg = require("../config");
+const isProd = process.env.NODE_ENV === "production";
+const vueScssLoaders = () => {
+    if (isProd) {
+        // for prod, we need to extract an actual css file
+        return ExtractTextPlugin.extract({
+            use: ["css-loader", "sass-loader"],
+            fallback: "vue-style-loader"
+        });
+    } else {
+        return "vue-style-loader!css-loader!sass-loader";
+    }
+};
 
 const webpackConfig = {
     // Don"t attempt to continue if there are any errors.
     bail: true,
 
     // https://webpack.js.org/configuration/entry-context/
-    context: path.join(config.projectRoot, "client"),
+    context: path.join(cfg.projectRoot, "client"),
 
     // get configured chunks from config file so we can loop them
-    entry: config.chunks,
+    entry: cfg.chunks,
 
     // https://webpack.js.org/configuration/output/
     output: {
-        path: path.join(config.projectRoot, "server", "public", "assets"),
+        path: path.join(cfg.projectRoot, "server", "public", "assets"),
         filename: "[name].[chunkhash].js"
     },
 
@@ -43,7 +56,7 @@ const webpackConfig = {
                 test: /\.(js|vue)$/,
                 enforce: "pre",
                 exclude: /node_modules|vendor|bower_components/,
-                include: path.join(config.projectRoot, "client"),
+                include: path.join(cfg.projectRoot, "client"),
                 use: [
                     {
                         // http://eslint.org/docs/user-guide/configuring
@@ -51,7 +64,7 @@ const webpackConfig = {
                         options: {
                             formatter: require("eslint-friendly-formatter"),
                             configFile: path.join(
-                                config.projectRoot,
+                                cfg.projectRoot,
                                 "internals",
                                 "config",
                                 ".eslintrc.js"
@@ -63,7 +76,7 @@ const webpackConfig = {
 
             {
                 // https://github.com/babel/babel-loader
-                test: /\.js$/,
+                test: /\.(js|vue)$/,
                 exclude: /node_modules|vendor|bower_components/,
                 loader: require.resolve("babel-loader"),
                 options: {
@@ -72,10 +85,33 @@ const webpackConfig = {
                             // https://github.com/babel/babel-preset-env
                             "env",
                             {
-                                targets: {browsers: config.browsers},
+                                targets: {browsers: cfg.browsers},
                                 useBuiltIns: true // https://github.com/babel/babel-preset-env#usebuiltins
                             }
                         ]
+                    ]
+                }
+            },
+
+            {
+                // https://github.com/vuejs/vue-loader
+                // https://vue-loader.vuejs.org/en/
+                test: /\.vue$/,
+                loader: "vue-loader",
+                options: {
+                    loaders: {
+                        scss: vueScssLoaders()
+                    },
+                    transformToRequire: {
+                        video: "src",
+                        source: "src",
+                        img: "src",
+                        image: "xlink:href"
+                    },
+                    postcss: [
+                        require("postcss-flexbugs-fixes")(),
+                        require("autoprefixer")(),
+                        require("cssnano")()
                     ]
                 }
             },
@@ -95,7 +131,6 @@ const webpackConfig = {
                     }
                 ]
             }
-
         ]
     },
 
@@ -143,19 +178,19 @@ const webpackConfig = {
 
 // HTML Webpack Plugins for FOOTER
 // https://github.com/jantimon/html-webpack-plugin
-for (let chunk in config.chunks) {
+for (let chunk in cfg.chunks) {
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
             // write the pug SCRIPT includes (footer)
             template: path.join(
-                config.projectRoot,
+                cfg.projectRoot,
                 "internals",
                 "webpack",
                 "templates",
                 `${chunk}.footer.ejs`
             ),
             filename: path.join(
-                config.projectRoot,
+                cfg.projectRoot,
                 "server",
                 "views",
                 "webpack",
@@ -166,7 +201,7 @@ for (let chunk in config.chunks) {
             alwaysWriteToDisk: true,
             meta: {
                 isProd: isProd, // make sure we have information in the template if prod or dev
-                webPackPort: config.webPackPort
+                webPackPort: cfg.webPackPort
             }
         })
     );
@@ -176,21 +211,21 @@ for (let chunk in config.chunks) {
 // prod extracts styles to css file and we need the header include with content hash
 // https://github.com/jantimon/html-webpack-plugin
 const invalidChunks = ["admin", "app"]; // non-Vue gulp chunks that do not need to extract css
-const validChunks = Object.keys(config.chunks).filter(
+const validChunks = Object.keys(cfg.chunks).filter(
     chunk => !invalidChunks.includes(chunk)
 );
 validChunks.forEach(chunk => {
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
             template: path.join(
-                config.projectRoot,
+                cfg.projectRoot,
                 "internals",
                 "webpack",
                 "templates",
                 `${chunk}.header.ejs`
             ),
             filename: path.join(
-                config.projectRoot,
+                cfg.projectRoot,
                 "server",
                 "views",
                 "webpack",
@@ -201,7 +236,7 @@ validChunks.forEach(chunk => {
             alwaysWriteToDisk: true,
             meta: {
                 isProd: isProd, // make sure we have information in the template if prod or dev
-                webPackPort: config.webPackPort
+                webPackPort: cfg.webPackPort
             }
         })
     );
