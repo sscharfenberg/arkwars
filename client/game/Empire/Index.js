@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Empire from "./Empire.vue";
 import {loadTextStringsFromCache} from "../handlers/texts";
+import store from "../store/store";
 
 const AREA = "empire";
 const LANGUAGE =
@@ -16,6 +17,7 @@ if (document.getElementById("gameRoot")) {
         Vue.prototype.$txt = text;
         new Vue({
             el: "#gameRoot",
+            store,
             template: "<Empire/>",
             components: {Empire}
         });

@@ -9,7 +9,8 @@ module.exports = {
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": false,
-            "modules": true
+            "modules": true,
+            "experimentalObjectRestSpread": true
         }
     },
     "settings": {

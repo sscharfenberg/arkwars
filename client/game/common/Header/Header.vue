@@ -1,7 +1,7 @@
 <template>
     <header :class="area">
         <h1>{{areaTitle}}</h1>
-        <button class="refresh" @click="refreshArea">{{$txt.common.header.refresh}}</button>
+        <button class="refresh" @click="getGameData">{{$txt.common.header.refresh}}</button>
     </header>
 </template>
 
@@ -18,7 +18,9 @@
             }
         },
         methods: {
-            refreshArea: () => { console.log("refresh area"); }
+            getGameData: function() {
+                this.$store.dispatch("FETCH_GAMEDATA_FROM_API");
+            }
         }
     };
 </script>

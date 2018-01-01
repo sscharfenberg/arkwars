@@ -2,6 +2,7 @@
     <div>
         <app-header :areaTitle="$txt.title" area="empire" />
         <p>{{ greeting }} World from Vue!</p>
+        <p>{{ $store.state.gameId }}</p>
     </div>
 </template>
 

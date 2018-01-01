@@ -89,7 +89,8 @@ const webpackConfig = {
                                 useBuiltIns: true // https://github.com/babel/babel-preset-env#usebuiltins
                             }
                         ]
-                    ]
+                    ],
+                    plugins: []
                 }
             },
 
