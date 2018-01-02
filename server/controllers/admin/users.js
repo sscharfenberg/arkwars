@@ -252,20 +252,35 @@ exports.suspendUser = async (req, res) => {
     // moment.add needs {Number}, {string}
     const duration = req.body.duration.split("_");
     const suspendUntil = moment().add(parseInt(duration[0], 10), duration[1]);
+    const suspendedUser = await User.findOne({_id: req.params.userid});
     const suspension = await new Suspension({
         user: req.params.userid,
         by: req.user._id,
         until: suspendUntil,
         reason: req.body.reason
     }).save();
-    if (suspension) {
+    if (suspension && suspendedUser) {
         logger.success(
             `[Admin ${chalk.cyan(
                 "@" + req.user.username
-            )}]: suspended userid ${chalk.red("@" + req.params.userid)} for ${
+            )}]: suspended user ${chalk.red("@" + suspendedUser.username)} for ${
                 req.body.duration
             } until ${chalk.yellow(suspendUntil.format("LL"))}.`
         );
+        await mail.send({
+            user: suspendedUser,
+            filename: "suspend_user",
+            subject: i18n.__(
+                {
+                    phrase: "ADMIN.USER.SUSPEND.MAIL_SUBJECT",
+                    locale: suspendedUser.locale
+                }
+            ) + `${suspension._id}`,
+            reason: req.body.reason,
+            suspendedUntil: `${moment(suspendUntil).format("LLLL")} (${moment(suspendUntil).fromNow()})`,
+            admin: req.user
+        });
+
         req.flash(
             "success",
             i18n.__("ADMIN.USER.SUCCESS.SUSPENSION", suspendUntil.format("LL"))
@@ -295,6 +310,17 @@ exports.clearUserSuspension = async (req, res) => {
                 "@" + suspendedUser.username
             )}.`
         );
+        await mail.send({
+            user: suspendedUser,
+            filename: "clear_user_suspension",
+            subject: i18n.__(
+                {
+                    phrase: "ADMIN.USER.SUSPEND.CLEAR_MAIL_SUBJECT",
+                    locale: suspendedUser.locale
+                }
+            ) + `${canceledSuspension._id}`,
+            admin: req.user
+        });
         req.flash(
             "success",
             i18n.__(

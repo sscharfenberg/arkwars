@@ -89,4 +89,14 @@
         }
     }
 
+    &__flag svg {
+        display: inline-block;
+
+        width: 40px;
+        border: 1px solid palette("grey", "white");
+
+        border-radius: 2px;
+    }
+
+
 }

@@ -141,6 +141,8 @@ block content
                                             title=(h.__("APP.SORT.DESC"))
                                         )
 
+                            th= h.__("ADMIN.USERS.ALL.HEAD.LOCALE")
+
                             th.aw-sort__sortable
                                 != h.__("ADMIN.USERS.ALL.HEAD.REGISTERED")
                                 .aw-sort
@@ -209,7 +211,7 @@ block content
                                             title=(h.__("APP.SORT.DESC"))
                                         )
 
-                            th= h.__("ADMIN.USERS.ALL.HEAD.ACTIVEGAMES")
+                            th= h.__("ADMIN.USERS.ALL.HEAD.GAMES")
 
                             th= h.__("ADMIN.USERS.ALL.HEAD.SUSPENDED")
 
@@ -239,6 +241,12 @@ block content
                                                 title=`${h.__("ADMIN.USERS.ALL.BODY.NOTCONFIRMED")}`
                                             )
                                                 != h.icon("warning")
+
+                                td.admin-listtable__td-flag(
+                                    title=user.locale,
+                                    aria-title=user.locale
+                                )
+                                    != h.image(`flags/${user.locale}.svg`)
 
                                 td
                                     != h.moment(user.created).format("LLL")

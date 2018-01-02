@@ -128,6 +128,15 @@ block content
                             required,
                             aria-required="true"
                         )
+                .aw-grid__row.aw-grid__row--2col
+                    .aw-grid__column Sprache
+                    .aw-grid__column.aw-grid__column--vcentered(
+                        title=editUser.locale,
+                        aria-title=editUser.locale
+                    )
+                        .aw-grid__flag
+                            != h.image(`flags/${editUser.locale}.svg`)
+
                 .aw-form__row
                     .aw-form__submit.aw-btn-group
                         button.aw-btn.aw-btn--icon(type="submit")

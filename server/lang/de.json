@@ -493,9 +493,10 @@
                 "HEAD": {
                     "USER": "Benutzer",
                     "EMAIL": "E-Mail",
+                    "LOCALE": "Sprache",
                     "REGISTERED": "Registriert am",
                     "LASTLOGIN": "Letzter Login",
-                    "ACTIVEGAMES": "Aktive Spiele",
+                    "GAMES": "Spiele",
                     "SUSPENDED": "Gesperrt",
                     "PERMISSIONS": "Rechte"
                 },
@@ -566,7 +567,9 @@
                     "PLACEHOLDER": "Bitte Grund angeben."
                 },
                 "SUBMIT": "Benutzer sperren",
-                "CLEAR": "Sperre entfernen"
+                "CLEAR": "Sperre entfernen",
+                "MAIL_SUBJECT": "Kontosperrung #",
+                "CLEAR_MAIL_SUBJECT": "AW: Kontosperrung #"
             },
             "SUSPENSIONS": {
                 "LABEL": "Sperren",

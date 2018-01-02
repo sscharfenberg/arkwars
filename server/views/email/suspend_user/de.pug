@@ -1,0 +1,12 @@
+extends ../email_layout
+
+block content
+    h2 Hallo @#{user.username}, Ihr Konto wurde gesperrt.
+    p Admin @#{admin.username} hat Ihr Benutzerkonto gesperrt.
+    p
+        strong Grund:
+        != ` ${reason}`
+    p
+        strong Gesperrt bis:
+        != ` ${suspendedUntil}`
+

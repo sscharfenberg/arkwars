@@ -6,6 +6,7 @@
 const fs = require("fs-extra"); // https://nodejs.org/api/fs.html
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const mongoose = require("mongoose"); // http://mongoosejs.com/
+const moment = require("moment"); // https://momentjs.com
 const path = require("path"); // https://www.npmjs.com/package/path
 const User = mongoose.model("User");
 const cfg = require("../../config");
@@ -21,10 +22,20 @@ exports.showEmail = async (req, res) => {
     const user = await User.findOne({ email: "ashaltiriak@gmail.com" });
     const url = `http://${req.headers.host}/`;
     // add all necessary data options here, since we can't add them dynamically
+    const adminEmail = true;
+    const admin = {
+        username: "Ash"
+    };
+    const reason = "Just a test reason.";
+    const suspendedUntil = moment().add(7, "days").toISOString();
     res.render(`email/${req.params.template}/${req.params.language}`, {
         user,
         session: req.session,
-        confirmURL: url
+        confirmURL: url,
+        adminEmail,
+        admin,
+        reason,
+        suspendedUntil
     });
 };
 

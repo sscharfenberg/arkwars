@@ -474,9 +474,10 @@
                 "HEAD": {
                     "USER": "User",
                     "EMAIL": "E-Mail",
+                    "LOCALE": "Language",
                     "REGISTERED": "Registered",
                     "LASTLOGIN": "Last Login",
-                    "ACTIVEGAMES": "Active Games",
+                    "GAMES": "Games",
                     "SUSPENDED": "Suspended",
                     "PERMISSIONS": "Permissions"
                 },
@@ -546,7 +547,9 @@
                         "Please provide the reason for the suspension."
                 },
                 "SUBMIT": "Suspend user",
-                "CLEAR": "Clear suspension"
+                "CLEAR": "Clear suspension",
+                "MAIL_SUBJECT": "Account suspension #",
+                "CLEAR_MAIL_SUBJECT": "Re: Account suspension #"
             },
             "SUSPENSIONS": {
                 "LABEL": "Suspensions",

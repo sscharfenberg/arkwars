@@ -33,7 +33,7 @@ for (let i = 0; i < numRandomUsers; i++) {
             .randomBytes(5)
             .toString("hex")}.com`,
         username: "U" + i + "-" + crypto.randomBytes(5).toString("hex"),
-        locale: Math.random > 0.5 ? "de" : "en",
+        locale: Math.random() > 0.5 ? "de" : "en",
         emailConfirmed: true,
         admin: false,
         mod: false,
