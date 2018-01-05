@@ -6,6 +6,7 @@
 const seed = require("../../server/handlers/game/seed");
 const logger = require("../../server/handlers/logger/console");
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
+const mongoose = require("mongoose");
 const games = require("./games");
 const cfg = require("../../server/config");
 let allStarObjects = [];
@@ -47,6 +48,7 @@ games.forEach(game => {
     starsFiltered.forEach(point => {
         let spectral = seed.randomType(point[2], cfg.stars.spectralTypes);
         let star = {
+            _id: mongoose.Types.ObjectId(),
             name: seed.getStarName(spectral),
             game: game._id,
             coordX: point[0],

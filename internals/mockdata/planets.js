@@ -1,5 +1,5 @@
 const seed = require("../../server/handlers/game/seed");
-let game = "598b652d0404e604046bd35e";
+//let game = "598b652d0404e604046bd35e";
 let stars = require("./stars");
 const cfg = require("../../server/config");
 let planets = [];
@@ -11,9 +11,12 @@ stars.forEach(star => {
         owner,
         cfg.stars.spectralTypes
     );
+    //console.log( "star " + star._id + " => " + numPlanets + " planets.");
+
     for (let counter = 0; counter < numPlanets; counter++) {
+        //console.log("adding planet to star " + star.id);
         planets.push({
-            game,
+            game: star.game,
             star: star._id,
             type: seed.randomType(owner, cfg.planets.types),
             orbitalIndex: counter + 1

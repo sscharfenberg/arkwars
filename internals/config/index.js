@@ -16,7 +16,7 @@ const pkg = require("../../package.json");
 const PROJECTROOT = fs.realpathSync(process.cwd());
 const APPFOLDER = path.join(PROJECTROOT, "client");
 const BUILDDIR = path.join(PROJECTROOT, "server", "public", "assets");
-moment.locale("de");
+moment.locale("de"); // english comments, de locale for build timestamps. am I weird?
 
 module.exports = {
     projectRoot: PROJECTROOT,
@@ -52,7 +52,7 @@ module.exports = {
 ░░░█░░░░░░░░░░░████▀
 `,
 
-    // folder for pug script includes. we need this because of hash names.
+    // folder for pug script includes. we need this because of hashed names.
     pugScriptInclude: path.join(PROJECTROOT, "server", "views", "webpack"),
 
     webPackPort: 8000, // make sure this is different from the node server port.
@@ -84,12 +84,7 @@ module.exports = {
             in: [path.join(PROJECTROOT, "client", "theme", "*.scss")],
             out: BUILDDIR,
             lint: path.join(PROJECTROOT, "client", "theme", "**/*.scss"),
-            styleLintRc: path.join(
-                PROJECTROOT,
-                "internals",
-                "config",
-                ".stylelintrc.json"
-            )
+            styleLintRc: path.join(PROJECTROOT, "internals", "config", ".stylelintrc")
         },
         fonts: {
             in: [path.join(PROJECTROOT, "client", "theme", "fonts", "**/*")],
@@ -103,10 +98,7 @@ module.exports = {
             in: [path.join(PROJECTROOT, "client", "theme", "icons", "**/*")],
             out: path.join(BUILDDIR, "images")
         },
-        cleanup: [
-            "server/public/assets/**/*",
-            "server/views/webpack/**/*",
-            "server/public/avatars/**/*"
-        ]
+        eslintrc: path.join(PROJECTROOT, "internals", "config", ".eslintrc"),
+        cleanup: ["server/public/assets/**/*", "server/views/webpack/**/*", "server/public/avatars/**/*"]
     }
 };

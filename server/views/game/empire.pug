@@ -8,7 +8,9 @@ block content
 
     main.aw-content__inner
         div#gameData(
-            data-textversion=(textVersion)
+            data-textversion=(textVersion),
+            data-playerid=(user.selectedPlayer._id),
+            data-gameid=(user.selectedPlayer.game._id)
         )
             div#gameRoot
 

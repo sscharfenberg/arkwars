@@ -1,0 +1,22 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "browsers": ["last 2 versions", "ie >= 11", "safari >= 10"]
+                },
+                "useBuiltIns": "usage"
+            }
+        ]
+    ],
+    "plugins": [
+        "@babel/plugin-transform-modules-commonjs",
+        "@babel/plugin-syntax-object-rest-spread"
+    ],
+    "env": {
+        "test": {},
+        "production": {},
+        "development": {}
+    }
+}

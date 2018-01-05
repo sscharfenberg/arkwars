@@ -21,8 +21,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "../../theme/abstracts/config";
-    @import "../../theme/abstracts/functions";
+
     p {
         text-align: right;
         margin: 0;

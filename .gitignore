@@ -1,6 +1,7 @@
-node_modules
 .idea
 .env
+.babel-cache
+node_modules
 webpack-bundles.report.html
 webpack-stats.json
 server/public/assets

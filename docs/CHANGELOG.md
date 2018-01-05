@@ -1,5 +1,12 @@
 # Changelog
 
+`05.01.2017`
+- [x] `gamedata` api endpoint now delivers correct gamedata to the client.
+- [x] fixed a nasty bug that resulted in player homesystems without planets. whoops.
+- [x] bumped dependencies - switching to babel7/babel-loader8.
+- [x] improved tooling: moved generic babel options to .babelrc file, renamed eslint and stylelint config files to default values. added babel cache directory.
+- [x] some small style improvements - global scss files are now imported via sass-loader data, no need to import them in every component.
+
 `31.12.2017`
 - [x] improved mockdata and added a homesystem to players
 - [x] improved webpack tooling - added imagemin-webpack-plugin for image optimization.

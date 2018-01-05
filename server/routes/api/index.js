@@ -1,6 +1,7 @@
 /***********************************************************************************************************************
  *
  * API ROUTES
+ * Api Endpoints always answer with JSON instead of rendered HTML templates.
  *
  * @exports {Express.Router} router
  *
@@ -29,5 +30,11 @@ router.post("/user/closedrawer", catchErrors(userController.closeDrawer));
 
 // get language and area specific textstrings
 router.get("/textstrings/:locale/:area", apiController.getTextStrings);
+
+router.get(
+    "/game/:gameid/player/:playerid/data",
+    apiController.checkGameDataPermission, // 1. make sure the current user is allowed to get game data
+    catchErrors(apiController.getGameData) // 2. get game data, shuffle it around and send to client
+);
 
 module.exports = router;

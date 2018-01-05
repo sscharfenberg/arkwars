@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import actions from "./actions";
+import mutations from "./mutations";
 
 Vue.use(Vuex);
 
@@ -11,17 +13,6 @@ export default new Vuex.Store({
         gameData: {}
     },
     getters: {},
-    mutations: {
-        updateFullGameData: (state, payload) => {
-            console.log("committing new game data to store", payload);
-            state.gameData = payload;
-        }
-    },
-    actions: {
-        FETCH_GAMEDATA_FROM_API: (context) => {
-            console.log("fetching game data from api.");
-            const payload = {stars:[]};
-            context.commit("updateFullGameData", payload);
-        }
-    }
+    mutations,
+    actions
 });

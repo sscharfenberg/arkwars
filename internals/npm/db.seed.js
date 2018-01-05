@@ -2,13 +2,10 @@
  *
  * SEED DATABASE
  *
- * @type {Node.js}
- *
  **********************************************************************************************************************/
-const mongoose = require("mongoose"); // http://mongoosejs.com/
 const path = require("path"); // https://nodejs.org/api/path.html
+const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
-const fs = require("fs");
 const config = require("../config");
 const seed = require("../../server/handlers/game/seed");
 const logger = require("../utils/clientlogger");
@@ -32,33 +29,6 @@ const stars = require("../mockdata/stars");
 const planets = require("../mockdata/planets");
 const turns = require("../mockdata/turns");
 
-/*
- * prune database and throw everything away.
- */
-const pruneDatabase = async () => {
-    logger.info("[node] deleting collections ...");
-    try {
-        await Game.remove();
-        logger.debug("[node] games removed.");
-        await User.remove();
-        logger.debug("[node] users removed.");
-        await Player.remove();
-        logger.debug("[node] players removed.");
-        await Star.remove();
-        logger.debug("[node] stars removed.");
-        await Planet.remove();
-        logger.debug("[node] planets removed.");
-        await Turn.remove();
-        logger.debug("[node] turns removed.");
-        await Suspension.remove();
-        logger.debug("[node] suspensions removed.");
-        logger.success("[node] collections deleted.");
-    } catch (e) {
-        logger.error("[node] error while deleting collections.");
-        logger.error(e);
-    }
-    process.exit(0);
-};
 
 /*
  * seed database with mock json data
@@ -66,18 +36,18 @@ const pruneDatabase = async () => {
 const seedDatabase = async () => {
     logger.info("[node] start seeding database");
     try {
-        logger.debug(`[node] inserting ${stars.length} stars.`);
-        await Star.insertMany(stars);
         logger.debug(`[node] inserting ${games.length} games.`);
         await Game.insertMany(games);
         logger.debug(`[node] inserting ${users.length} users.`);
         await User.insertMany(users);
         logger.debug(`[node] inserting ${players.length} players.`);
         await Player.insertMany(players);
-        logger.debug(`[node] inserting ${planets.length} planets.`);
-        await Planet.insertMany(planets);
         logger.debug(`[node] inserting ${turns.length} turns.`);
         await Turn.insertMany(turns);
+        logger.debug(`[node] inserting ${stars.length} stars.`);
+        await Star.insertMany(stars);
+        logger.debug(`[node] inserting ${planets.length} planets.`);
+        await Planet.insertMany(planets);
         logger.debug("[node] done inserting.");
         logger.success("[node] finished seeding database.");
     } catch (e) {
@@ -113,25 +83,14 @@ logger.info(
     `[node] seeding homesystems for ${chalk.red(players.length)} Players.`
 );
 players.forEach(player => {
+    // available stars as homesystem have
     const gameStars = stars.filter(
         star =>
-            star.game === player.game &&
-            star.homeSystem === true &&
-            star.owner === undefined
+            star.game === player.game && // a) correct gameid
+            star.homeSystem === true && // b) are a player homesystem
+            star.owner === undefined // c) do not have an owner
     );
     const homeSystem = seed.assignRandomStar(gameStars);
-    let index = 0;
-    stars.forEach(star => {
-        if (
-            player.game === star.game &&
-            star.name === homeSystem.name &&
-            star.coordX === homeSystem.coordX &&
-            star.coordY === homeSystem.coordY
-        ) {
-            stars[index].owner = player._id;
-        }
-        index++;
-    });
     logger.info(
         `[node] chosen Star ${chalk.yellow(
             homeSystem.name
@@ -139,7 +98,21 @@ players.forEach(player => {
             player.name
         )}`
     );
+    stars.forEach( function(star) {
+        /* become owner if ...
+         * we don't have the ID of the stars, so we need to match by name and coords
+         */
+        if (
+            player.game === star.game && // a) correct gameid
+            star.name === homeSystem.name && // b) name matches chosen name
+            star.coordX === homeSystem.coordX && // c) coordX matches chosen coordX
+            star.coordY === homeSystem.coordY // d) and, just to be extra sure, coordY matches as well.
+        ) {
+            star.owner = player._id;
+        }
+    });
 });
+
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
 mongoose.connect(process.env.DATABASE, {
@@ -147,16 +120,8 @@ mongoose.connect(process.env.DATABASE, {
 });
 mongoose.Promise = global.Promise;
 
-if (process.argv.includes("--prune")) {
-    try {
-        pruneDatabase();
-    } catch (err) {
-        console.log(err);
-    }
-} else if (process.argv.includes("--seed")) {
-    try {
-        seedDatabase();
-    } catch (err) {
-        console.log(err);
-    }
+try {
+    seedDatabase();
+} catch (err) {
+    console.log(err);
 }

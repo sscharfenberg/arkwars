@@ -15,15 +15,46 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const cfg = require("../config");
 const isProd = process.env.NODE_ENV === "production";
+
+/*
+ * base style loaders: sass, then css
+ * @returns {Array}
+ */
+const baseLoaders = [
+    // translates CSS into CommonJS
+    {loader: "css-loader", options: {sourceMap: true}},
+    // compiles SCSS to CSS
+    {
+        loader: "sass-loader",
+        options: {
+            sourceMap: true,
+            data: `@import "~theme/abstracts/config";
+@import "~theme/abstracts/functions";
+@import "~theme/abstracts/mixins";`
+        }
+    }
+];
+
+/*
+ * construct all our scss loaders
+ * @returns {Array} of loaders
+ * @returns {ExtractTextPlugin} with baseloaders
+ */
 const vueScssLoaders = () => {
     if (isProd) {
         // for prod, we need to extract an actual css file
-        return ExtractTextPlugin.extract({
-            use: ["css-loader", "sass-loader"],
-            fallback: "vue-style-loader"
-        });
+        return ExtractTextPlugin.extract({use: baseLoaders});
     } else {
-        return "vue-style-loader!css-loader!sass-loader";
+        // prepare array with only vue-style-loader
+        const styleLoaders = [
+            {
+                loader: "vue-style-loader", // inject styles into DOM
+                options: {sourceMap: true}
+            }
+        ];
+        // return them so vue-style-loader is first item of array
+        // which means it is executed last
+        return styleLoaders.concat(baseLoaders);
     }
 };
 
@@ -34,7 +65,7 @@ const webpackConfig = {
     // https://webpack.js.org/configuration/entry-context/
     context: path.join(cfg.projectRoot, "client"),
 
-    // get configured chunks from config file so we can loop them
+    // get configured chunks from config file
     entry: cfg.chunks,
 
     // https://webpack.js.org/configuration/output/
@@ -55,7 +86,7 @@ const webpackConfig = {
             {
                 test: /\.(js|vue)$/,
                 enforce: "pre",
-                exclude: /node_modules|vendor|bower_components/,
+                exclude: /node_modules/,
                 include: path.join(cfg.projectRoot, "client"),
                 use: [
                     {
@@ -63,12 +94,7 @@ const webpackConfig = {
                         loader: require.resolve("eslint-loader"),
                         options: {
                             formatter: require("eslint-friendly-formatter"),
-                            configFile: path.join(
-                                cfg.projectRoot,
-                                "internals",
-                                "config",
-                                ".eslintrc.js"
-                            )
+                            configFile: cfg.paths.eslintrc
                         }
                     }
                 ]
@@ -77,20 +103,11 @@ const webpackConfig = {
             {
                 // https://github.com/babel/babel-loader
                 test: /\.(js|vue)$/,
-                exclude: /node_modules|vendor|bower_components/,
+                exclude: /node_modules/,
                 loader: require.resolve("babel-loader"),
                 options: {
-                    presets: [
-                        [
-                            // https://github.com/babel/babel-preset-env
-                            "env",
-                            {
-                                targets: {browsers: cfg.browsers},
-                                useBuiltIns: true // https://github.com/babel/babel-preset-env#usebuiltins
-                            }
-                        ]
-                    ],
-                    plugins: []
+                    extends: path.join(cfg.projectRoot, "internals", "config", ".babelrc"),
+                    cacheDirectory: path.join(cfg.projectRoot, ".babel-cache")
                 }
             },
 
@@ -109,11 +126,7 @@ const webpackConfig = {
                         img: "src",
                         image: "xlink:href"
                     },
-                    postcss: [
-                        require("postcss-flexbugs-fixes")(),
-                        require("autoprefixer")(),
-                        require("cssnano")()
-                    ]
+                    postcss: [require("postcss-flexbugs-fixes")(), require("autoprefixer")(), require("cssnano")()]
                 }
             },
 
@@ -125,7 +138,7 @@ const webpackConfig = {
                     {
                         loader: "url-loader",
                         options: {
-                            limit: 8192,
+                            limit: 4096,
                             name: "[name].[hash].[ext]",
                             fallback: "file-loader"
                         }
@@ -146,7 +159,8 @@ const webpackConfig = {
         // define aliases for imports here, saves typing.
         // https://webpack.js.org/configuration/resolve/#resolve-alias
         alias: {
-            vue$: "vue/dist/vue.esm.js"
+            vue$: "vue/dist/vue.esm.js",
+            theme: path.join(cfg.projectRoot, "client", "theme")
         },
         // symbolic links. disable if needed
         // https://webpack.js.org/configuration/resolve/#resolve-symlinks
@@ -183,20 +197,8 @@ for (let chunk in cfg.chunks) {
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
             // write the pug SCRIPT includes (footer)
-            template: path.join(
-                cfg.projectRoot,
-                "internals",
-                "webpack",
-                "templates",
-                `${chunk}.footer.ejs`
-            ),
-            filename: path.join(
-                cfg.projectRoot,
-                "server",
-                "views",
-                "webpack",
-                `${chunk}.footer.pug`
-            ),
+            template: path.join(cfg.projectRoot, "internals", "webpack", "templates", `${chunk}.footer.ejs`),
+            filename: path.join(cfg.projectRoot, "server", "views", "webpack", `${chunk}.footer.pug`),
             showErrors: true,
             inject: false,
             alwaysWriteToDisk: true,
@@ -212,26 +214,12 @@ for (let chunk in cfg.chunks) {
 // prod extracts styles to css file and we need the header include with content hash
 // https://github.com/jantimon/html-webpack-plugin
 const invalidChunks = ["admin", "app"]; // non-Vue gulp chunks that do not need to extract css
-const validChunks = Object.keys(cfg.chunks).filter(
-    chunk => !invalidChunks.includes(chunk)
-);
+const validChunks = Object.keys(cfg.chunks).filter(chunk => !invalidChunks.includes(chunk));
 validChunks.forEach(chunk => {
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
-            template: path.join(
-                cfg.projectRoot,
-                "internals",
-                "webpack",
-                "templates",
-                `${chunk}.header.ejs`
-            ),
-            filename: path.join(
-                cfg.projectRoot,
-                "server",
-                "views",
-                "webpack",
-                `${chunk}.header.pug`
-            ),
+            template: path.join(cfg.projectRoot, "internals", "webpack", "templates", `${chunk}.header.ejs`),
+            filename: path.join(cfg.projectRoot, "server", "views", "webpack", `${chunk}.header.pug`),
             showErrors: true,
             inject: false,
             alwaysWriteToDisk: true,

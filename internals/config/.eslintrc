@@ -1,7 +1,4 @@
-// Configure ESLint
-// http://eslint.org/docs/rules/
-
-module.exports = {
+{
     "extends": ["eslint:recommended"],
     "plugins": ["import", "html"],
     "parserOptions": {
@@ -22,21 +19,21 @@ module.exports = {
     },
     "rules": {
         // http://eslint.org/docs/rules/
-        "indent": [2, 4, { SwitchCase: 1 }],
+        "indent": [2, 4, { "SwitchCase": 1 }],
         "quotes": [2, "double"],
         "linebreak-style": [1, "windows"],
         "semi": [2, "always"],
         "comma-style": [2, "last"],
         "no-undef": 2,
-        "no-console": ["error", { allow: ["log", "warn", "error", "dir"] }],
-        "comma-spacing": [2, { before: false, after: true }],
-        "new-cap": [2, { newIsCap: true, capIsNew: false }],
+        "no-console": ["error", { "allow": ["log", "warn", "error", "dir"] }],
+        "comma-spacing": [2, { "before": false, after: true }],
+        "new-cap": [2, { "newIsCap": true, "capIsNew": false }],
         "no-multi-spaces": [
             1,
             {
-                exceptions: {
-                    ImportDeclaration: true,
-                    VariableDeclarator: true
+                "exceptions": {
+                    "ImportDeclaration": true,
+                    "VariableDeclarator": true
                 }
             }
         ],
@@ -47,11 +44,11 @@ module.exports = {
         }],
     },
     "globals": {
-        Promise: true
+        "Promise": true
     },
     "env": {
-        browser: true,
-        node: true,
-        es6: true
+        "browser": true,
+        "node": true,
+        "es6": true
     }
-};
+}

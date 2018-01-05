@@ -1,11 +1,12 @@
 <template>
     <header :class="area">
         <h1>{{areaTitle}}</h1>
-        <button class="refresh" @click="getGameData">{{$txt.common.header.refresh}}</button>
+        <refresh-btn />
     </header>
 </template>
 
 <script>
+    import RefreshGameDataBtn from "./RefreshGameDataBtn.vue";
     export default {
         props: {
             areaTitle: {
@@ -17,17 +18,13 @@
                 required: true
             }
         },
-        methods: {
-            getGameData: function() {
-                this.$store.dispatch("FETCH_GAMEDATA_FROM_API");
-            }
+        components: {
+            "refresh-btn": RefreshGameDataBtn
         }
     };
 </script>
 
 <style lang="scss" scoped>
-    @import "../../../theme/abstracts/config";
-    @import "../../../theme/abstracts/functions";
     header {
         display: flex;
         flex-wrap: wrap;
@@ -62,11 +59,5 @@
             2px -2px 0 palette("grey", "bunker");
         text-transform: uppercase;
     }
-    .refresh {
-        border: 0;
-        flex: 0 0 auto;
 
-        padding: 0;
-        margin: 1.6rem;
-    }
 </style>

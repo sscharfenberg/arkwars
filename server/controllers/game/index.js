@@ -228,7 +228,8 @@ exports.validateGameSelect = async (req, res, next) => {
 exports.selectGame = async (req, res) => {
     const requestedGameNumber = req._game.number;
     const player = await Player.findOne({
-        game: req._game._id
+        game: req._game._id,
+        user: req.user._id
     });
     const updatedUser = await User.findByIdAndUpdate(
         req.user._id,
