@@ -17,6 +17,7 @@ const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 // https://www.npmjs.com/package/imagemin-webpack-plugin
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
+// https://github.com/imagemin/imagemin-mozjpeg
 const imageminMozjpeg = require("imagemin-mozjpeg");
 
 

@@ -13,6 +13,8 @@ const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // https://github.com/webpack-contrib/extract-text-webpack-plugin
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// https://github.com/JaKXz/stylelint-webpack-plugin
+const StylelintPlugin = require("stylelint-webpack-plugin");
 const cfg = require("../config");
 const isProd = process.env.NODE_ENV === "production";
 
@@ -193,6 +195,14 @@ const webpackConfig = {
             name: "common",
             filename: "common.js",
             minChunks: 2
+        }),
+
+        // https://github.com/JaKXz/stylelint-webpack-plugin
+        new StylelintPlugin({
+            files: ["**/*.vue"],
+            syntax: "scss",
+            reporters: [{ formatter: "verbose", console: true }],
+            configFile: path.join(cfg.projectRoot, "internals", "config", ".stylelintrc")
         })
     ]
 };
