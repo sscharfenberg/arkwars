@@ -8,7 +8,7 @@ const gulp = require("gulp"); // https://www.npmjs.com/package/gulp
 const imagemin = require("gulp-imagemin"); // https://www.npmjs.com/package/gulp-imagemin
 const imageminMozjpeg = require("imagemin-mozjpeg"); // https://www.npmjs.com/package/imagemin-mozjpeg
 const livereload = require("gulp-livereload"); // https://www.npmjs.com/package/gulp-livereload
-//const newer = require("gulp-newer"); // https://www.npmjs.com/package/gulp-newer
+const newer = require("gulp-newer"); // https://www.npmjs.com/package/gulp-newer
 const notify = require("gulp-notify"); // https://www.npmjs.com/package/gulp-notify
 const plumber = require("gulp-plumber"); // https://www.npmjs.com/package/gulp-plumber
 const size = require("gulp-size"); // https://www.npmjs.com/package/gulp-size
@@ -22,13 +22,13 @@ const config = require("../config");
  */
 gulp.task("build:static", ["cleanup"], function(callback) {
     return run(
-        ["sync:fonts", "sync:images", "icons", "styles:build"],
+        ["sync:fonts", "sync:images", "app:icons", "game:icons", "styles:build"],
         callback
     );
 });
 
 /*
- * copy fonts from /client/theme/fonts/ to /server/public/assets/fonts/
+ * compile svg spritesheet from SVGs in "/client/theme/fonts/"
  */
 gulp.task("sync:fonts", function() {
     console.log();
@@ -41,7 +41,7 @@ gulp.task("sync:fonts", function() {
                 errorHandler: notify.onError("<%= error.message %>")
             })
         )
-        //.pipe(newer(config.paths.fonts.out))
+        .pipe(newer(config.paths.fonts.out))
         .pipe(gulp.dest(config.paths.fonts.out))
         .pipe(
             size({
@@ -53,7 +53,7 @@ gulp.task("sync:fonts", function() {
 });
 
 /*
- * copy images from /client/theme/images/ to /server/public/assets/images/
+ * compile svg spritesheet from SVGs in "client/game/common/Icon/"
  */
 gulp.task("sync:images", function() {
     console.log();
@@ -66,7 +66,7 @@ gulp.task("sync:images", function() {
                 errorHandler: notify.onError("<%= error.message %>")
             })
         )
-        //        .pipe(newer(config.paths.images.out))
+        .pipe(newer(config.paths.images.out))
         .pipe(
             imagemin([
                 imagemin.gifsicle({ interlaced: true }),

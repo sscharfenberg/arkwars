@@ -99,6 +99,10 @@ module.exports = {
             in: [path.join(PROJECTROOT, "client", "theme", "icons", "**/*")],
             out: path.join(BUILDDIR, "images")
         },
+        gameIcons: {
+            in: [path.join(PROJECTROOT, "client", "game", "common", "Icon", "**/*.svg")],
+            out: path.join(BUILDDIR, "images")
+        },
         eslintrc: path.join(PROJECTROOT, "internals", "config", ".eslintrc"),
         cleanup: ["server/public/assets/**/*", "server/views/webpack/**/*", "server/public/avatars/**/*"]
     }

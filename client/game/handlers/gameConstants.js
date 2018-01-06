@@ -1,6 +1,7 @@
 /***********************************************************************************************************************
  *
  * get variables that don't change during app lifetime
+ * the values for these are stored as data-attributes in #gameData
  *
  **********************************************************************************************************************/
 import moment from "moment/moment";

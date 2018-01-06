@@ -31,7 +31,8 @@
         "app.styles.lint": "gulp styles:lint",
         "app.fonts.sync": "gulp sync:fonts",
         "app.images.sync": "gulp sync:images",
-        "app.icons": "gulp icons",
+        "app.icons": "gulp icons:app",
+        "game.icons": "gulp icons:game",
         "files.cleanup": "gulp cleanup",
         "db.prune": "node internals/npm/db.prune.js",
         "db.seed": "node internals/npm/db.seed.js"

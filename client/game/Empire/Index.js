@@ -26,6 +26,9 @@ if (document.getElementById("gameRoot")) {
             i18n,
             template: "<Empire/>",
             components: {Empire},
+            beforeCreate: function() {
+                return this.$store.dispatch("FETCH_GAMEDATA_FROM_API");
+            }
         });
     });
 }

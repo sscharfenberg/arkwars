@@ -1,6 +1,6 @@
 .idea
 .env
-.babel-cache
+.babel-cache/*.gz
 node_modules
 webpack-bundles.report.html
 webpack-stats.json

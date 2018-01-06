@@ -15,10 +15,10 @@ const Planet = mongoose.model("Planet");
 const logger = require("../handlers/logger/console");
 const cfg = require("../config");
 
-
 /*
  * prepare an array of text strings from filesystem ====================================================================
  * this array is kept in memory and can be accessed fast by the api endpoint
+ * TODO: fs.statSync.mtime does not always return the correct time -.-
  */
 const allTexts = [];
 const locales = cfg.app.locales.map(locale => locale.name);
@@ -28,41 +28,30 @@ const areaLanguageFileNames = fs
     .filter(fileName => fileName !== "common.json");
 // read client text files once and cache them
 locales.forEach(locale => {
-    const pathCommon = path.join(
-        cfg.app.projectDir,
-        "client",
-        "lang",
-        locale,
-        "common.json"
-    );
+    const pathCommon = path.join(cfg.app.projectDir, "client", "lang", locale, "common.json");
     let commonTime = fs.statSync(pathCommon).mtime;
     let commonContents = JSON.parse(fs.readFileSync(pathCommon, "utf-8"));
+    logger.info(`${locale}/common.json ${moment(commonTime).format("HH:MM")}`);
     areaLanguageFileNames.forEach(areaFileName => {
-        const pathArea = path.join(
-            cfg.app.projectDir,
-            "client",
-            "lang",
-            locale,
-            areaFileName
-        );
+        const pathArea = path.join(cfg.app.projectDir, "client", "lang", locale, areaFileName);
         let areaTime;
         let areaContents;
         try {
             areaContents = JSON.parse(fs.readFileSync(pathArea, "utf-8"));
-            areaContents.common = commonContents;
+            areaContents.common = commonContents; // add common.json translations
             areaTime = fs.statSync(pathArea).mtime;
         } catch (e) {
             logger.error(e);
         }
-        areaContents.version =
-            moment(areaTime).diff(commonTime) > 0 ? areaTime : commonTime;
+        logger.info(`${locale}/${areaFileName} ${moment(areaTime).format("HH:MM")}`);
+        areaContents.version = moment(areaTime).diff(commonTime) > 0 ? areaTime : commonTime;
         allTexts.push({
-            slug: `txt-${locale}-${areaFileName.replace(".json","")}`,
+            slug: `txt-${locale}-${areaFileName.replace(".json", "")}`,
             data: areaContents
         });
     });
 });
-logger.info(`[App] cached ${chalk.yellow(allTexts.length)} client text objects.`);
+logger.debug(`[App] cached ${chalk.yellow(allTexts.length)} client text objects.`);
 
 /*
  * get game status =====================================================================================================
@@ -169,28 +158,34 @@ exports.getGameData = async (req, res) => {
             name: player.name,
             ticker: player.ticker
         },
-        stars: [],
+        stars: []
     };
-    player.stars.length && player.stars.forEach( star => {
-        let starPlanets = [];
-        planets.length && planets.forEach( planet => {
-            // make sure the planet belongs to this star before adding
-            if (`${planet.star}` === `${star._id}`) {
-                starPlanets.push({
-                    id: planet._id,
-                    type: planet.type,
-                    orbitalIndex: planet.orbitalIndex
+    player.stars.length &&
+        player.stars.forEach(star => {
+            let starPlanets = [];
+            planets.length &&
+                planets.forEach(planet => {
+                    // make sure the planet belongs to this star before adding
+                    if (`${planet.star}` === `${star._id}`) {
+                        starPlanets.push({
+                            id: planet._id,
+                            type: planet.type,
+                            orbitalIndex: planet.orbitalIndex
+                        });
+                    }
                 });
-            }
+            returnData.stars.push({
+                id: star._id,
+                name: star.name,
+                spectral: star.spectral,
+                coordX: star.coordX,
+                coordY: star.coordY,
+                planets: starPlanets
+            });
         });
-        returnData.stars.push({
-            id: star._id,
-            name: star.name,
-            spectral: star.spectral,
-            coordX: star.coordX,
-            coordY: star.coordY,
-            planets: starPlanets
-        });
-    });
-    return res.json(returnData);
+
+    setTimeout( () => {
+        return res.json(returnData);
+    }, 10000);
+
 };

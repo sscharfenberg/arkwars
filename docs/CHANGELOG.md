@@ -1,8 +1,12 @@
 # Changelog
 
 `06.01.2018`
-- [x] Refactoring of SCSS. Since we switched to "stylelint-config-standard", which is very restrictive, we had to refactor the scss - and extend `.stylelintrc` on the way. Changed formatting to fix ~280 new issues. Quite happy with style-tooling now.
-- [x] Added a session timeout of 30 minutes.
+- [x] Refactoring of SCSS. Since we switched to "stylelint-config-standard", which is very restrictive, we had to refactor the scss - and extend `.stylelintrc` on the way. Changed formatting to fix ~280 new issues. Quite happy with style tooling now.
+- [x] Added a session timeout, which resulted in me losing session sometimes. need to watch this, meh.
+- [x] Learning VueJS: Added `vue-i18n` and cleaned up messageString handling. Still cached via localStorage, still requested from api. Added `beforeCreate` hook with gamedata api fetch. New/refactored Components:
+  - common/Icon: for SVG icons (via external spritesheet, generated via gulp of all things)
+  - Header/RefreshGameDataBtn: sets global state, asks server forgame data. Handles state (fetching/disabled). Also added a bit of styling ^.^
+  - common/Spinner - taken from [sergeyloysha](https://github.com/sergeyloysha/vue-spinner-component/) and stripped down :) 
 
 `05.01.2018`
 - [x] `gamedata` api endpoint now delivers correct gamedata to the client.

@@ -5,7 +5,6 @@
  *
  **********************************************************************************************************************/
 const fs = require("fs"); // https://nodejs.org/api/fs.html
-const path = require("path"); // https://nodejs.org/api/path.html
 const gulp = require("gulp"); // https://www.npmjs.com/package/gulp
 const autoprefixer = require("autoprefixer"); // https://www.npmjs.com/package/autoprefixer
 const cached = require("gulp-cached"); // https://www.npmjs.com/package/gulp-cached

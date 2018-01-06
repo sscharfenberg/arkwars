@@ -27,7 +27,7 @@ const appConfig = {
         email: {
             from: `${pkg.app.name} <noreply@arkwars.io>`
         },
-        sessionTimeOut: 30 * 60 * 1000,
+        sessionTimeOut: 120 * 60 * 1000,
         // i18n base settings. the language files can be found in /server/lang/{locale].json
         // first locale is the default
         locales: [

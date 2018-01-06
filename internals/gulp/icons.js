@@ -20,10 +20,10 @@ const config = require("../config");
 /*
  * copy SVGs from /client/theme/icons/ as spritesheet to /server/public/assets/icons/sprite.svg
  */
-gulp.task("icons", () => {
+gulp.task("app:icons", () => {
     console.log();
     logger.info(
-        `[gulp] creating SVG spritesheet for ${chalk.blue("icons")}.\n`
+        `[gulp] creating SVG spritesheet for ${chalk.blue("APP")}.\n`
     );
 
     return gulp
@@ -44,11 +44,49 @@ gulp.task("icons", () => {
             ])
         )
         .pipe(svgstore())
-        .pipe(rename("sprite.svg"))
+        .pipe(rename("icons-app.svg"))
         .pipe(gulp.dest(config.paths.icons.out))
         .pipe(
             size({
-                title: "SVG icon spritesheet generated."
+                title: "APP icon spritesheet generated."
+            })
+        )
+        .pipe(livereload());
+});
+
+
+/*
+ * copy SVGs from /client/theme/icons/ as spritesheet to /server/public/assets/icons/sprite.svg
+ */
+gulp.task("game:icons", () => {
+    console.log();
+    logger.info(
+        `[gulp] creating SVG spritesheet for ${chalk.blue("GAME")}.\n`
+    );
+
+    return gulp
+        .src(config.paths.gameIcons.in)
+        .pipe(
+            plumber({
+                errorHandler: notify.onError("<%= error.message %>")
+            })
+        )
+        .pipe(flatten())
+        .pipe(
+            imagemin([
+                imagemin.svgo({
+                    plugins: [
+                        {removeTitle: true}
+                    ]
+                })
+            ])
+        )
+        .pipe(svgstore())
+        .pipe(rename("icons-game.svg"))
+        .pipe(gulp.dest(config.paths.gameIcons.out))
+        .pipe(
+            size({
+                title: "GAME icon spritesheet generated."
             })
         )
         .pipe(livereload());

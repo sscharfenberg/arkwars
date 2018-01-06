@@ -1,5 +1,9 @@
 {
     "header": {
-        "refresh": "Refresh"
+        "refreshGameDataBtn" : {
+            "fetching": "Loading",
+            "fetch": "Refresh"
+        }
     }
 }
+
