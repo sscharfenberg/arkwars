@@ -1,10 +1,15 @@
-/******************************************************************************
- * Vuex mutations (sync)
- *****************************************************************************/
+/***********************************************************************************************************************
+ *
+ * VUEX MUTATIONS
+ * SYNC
+ *
+ **********************************************************************************************************************/
+import cfg from "../../config";
+
 const MUTATIONS = {
 
-    updateFullGameData: (state, payload) => {
-        console.log("committing new game data to store", payload);
+    SET_GAME_DATA: (state, payload) => {
+        cfg.DEBUG && console.log("committing new game data to store", payload);
         state.gameData = payload;
     }
 

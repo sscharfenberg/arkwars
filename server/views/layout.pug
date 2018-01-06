@@ -8,10 +8,7 @@ html(lang=(session.locale))
         block head
             link(rel='stylesheet', href='/public/assets/styles.css')
 
-body(
-    data-user=(user ? 1 : 0)
-    data-locale=(session.locale)
-)
+body(data-user=(user ? 1 : 0))
 
     != h.spritesheet()
 

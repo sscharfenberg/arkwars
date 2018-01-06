@@ -82,9 +82,8 @@ app.use(
         key: process.env.KEY,
         resave: false,
         saveUninitialized: true,
-        store: new RedisStore({
-            client: redisClient
-        })
+        cookie: {maxAge: cfg.app.sessionTimeOut},
+        store: new RedisStore({client: redisClient})
     })
 );
 

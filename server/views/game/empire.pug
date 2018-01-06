@@ -10,7 +10,9 @@ block content
         div#gameData(
             data-textversion=(textVersion),
             data-playerid=(user.selectedPlayer._id),
-            data-gameid=(user.selectedPlayer.game._id)
+            data-gameid=(user.selectedPlayer.game._id),
+            data-locale=(session.locale),
+            data-area="empire"
         )
             div#gameRoot
 

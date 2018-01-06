@@ -1,3 +1,8 @@
+/***********************************************************************************************************************
+ *
+ * VUEX STORE
+ *
+ **********************************************************************************************************************/
 import Vue from "vue";
 import Vuex from "vuex";
 import actions from "./actions";
@@ -5,7 +10,7 @@ import mutations from "./mutations";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     state: {
         gameId: "123123",
         playerId: "123123",
@@ -16,3 +21,5 @@ export default new Vuex.Store({
     mutations,
     actions
 });
+
+export default store;

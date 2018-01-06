@@ -1,7 +1,8 @@
 # Changelog
 
 `06.01.2018`
-- [x] Refactoring of SCSS. Since we switched to "stylelint-config-standard", which is very restrictive, we had to refactor the scss - and extend `.stylelintrc` on the way.
+- [x] Refactoring of SCSS. Since we switched to "stylelint-config-standard", which is very restrictive, we had to refactor the scss - and extend `.stylelintrc` on the way. Changed formatting to fix ~280 new issues. Quite happy with style-tooling now.
+- [x] Added a session timeout of 30 minutes.
 
 `05.01.2018`
 - [x] `gamedata` api endpoint now delivers correct gamedata to the client.

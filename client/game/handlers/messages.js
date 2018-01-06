@@ -48,13 +48,10 @@ const objectToJsonString = object => {
  * @param {object} texts - Object containing the texts to cache
  * @returns {Boolean}
  */
-const saveTextStringsToCache = (language, area, texts) => {
+const cacheMessages = (language, area, texts) => {
     if (!window.localStorage || !language || !area || !texts) return;
     cfg.DEBUG && console.log(`caching texts "txt-${language}-${area}" `, texts);
-    localStorage.setItem(
-        `txt-${language}-${area}`,
-        objectToJsonString(texts)
-    );
+    localStorage.setItem(`txt-${language}-${area}`, objectToJsonString(texts));
 };
 
 /*
@@ -64,8 +61,8 @@ const saveTextStringsToCache = (language, area, texts) => {
  * @param {string} version - ISO 8601 string
  * @param {function} cb - callback
  */
-const loadTextStringsFromCache = (language, area, version, cb) => {
-    if (!window.localStorage || !language || !area) return;
+const getAreaMessages = (language, area, version, cb) => {
+    if (!window.localStorage || !language || !area) cb({});
     let textCache = localStorage.getItem(`txt-${language}-${area}`);
     let texts = jsonStringToObject(textCache);
     let noCache = !textCache;
@@ -75,15 +72,13 @@ const loadTextStringsFromCache = (language, area, version, cb) => {
     versionDiffers && cfg.DEBUG && console.warn("cached texts have a different version.");
 
     if (noCache || versionDiffers) {
-        console.log(
-            `asking server for texts "txt-${language}-${area}".`
-        );
+        console.log(`asking server for texts "txt-${language}-${area}".`);
         axios
             .get(`/api/textstrings/${language}/${area}`)
             .then(response => {
                 if (response.status === 200 && response.data) {
                     cfg.DEBUG && console.log("recieved texts from server: ", response.data);
-                    saveTextStringsToCache(language, area, response.data);
+                    cacheMessages(language, area, response.data);
                     cb(response.data);
                 }
             })
@@ -96,5 +91,4 @@ const loadTextStringsFromCache = (language, area, version, cb) => {
     }
 };
 
-export {saveTextStringsToCache, loadTextStringsFromCache};
-
+export {cacheMessages, getAreaMessages};

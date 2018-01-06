@@ -1,32 +1,31 @@
-/******************************************************************************
- * Vuex actions (async)
- *****************************************************************************/
-import cfg from "../../config";
+/***********************************************************************************************************************
+ *
+ * VUEX ACTIONS
+ * ASYNC
+ *
+ **********************************************************************************************************************/
 import axios from "axios";
+import cfg from "../../config";
+//import {getAreaMessages} from "../handlers/texts";
+import {getGameId, getPlayerId} from "../handlers/gameConstants";
 
-const PLAYER_ID = document.getElementById("gameData").getAttribute("data-playerid");
-const GAME_ID = document.getElementById("gameData").getAttribute("data-gameid");
-
-console.log(PLAYER_ID, GAME_ID);
-
+/*
+ * STORE ACTIONS =======================================================================================================
+ */
 const ACTIONS = {
-
-    FETCH_GAMEDATA_FROM_API: (context) => {
+    FETCH_GAMEDATA_FROM_API: function(context) {
         cfg.DEBUG && console.log("fetching game data from api.");
         axios
-            .get(`/api/game/${GAME_ID}/player/${PLAYER_ID}/data`)
+            .get(`/api/game/${getGameId()}/player/${getPlayerId()}/data`)
             .then(response => {
                 if (response.status === 200 && response.data) {
-                    cfg.DEBUG && console.log("recieved gameData from server: ", response.data);
-                    context.commit("updateFullGameData", response.data);
+                    context.commit("SET_GAME_DATA", response.data);
                 }
             })
             .catch(error => {
-                cfg.DEBUG && console.error(error);
+                console.error(error);
             });
-
     }
-
 };
 
 export default ACTIONS;

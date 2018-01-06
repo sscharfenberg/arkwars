@@ -1,6 +1,6 @@
 <template>
     <button @click="fetchGameData">
-        {{$txt.common.header.refresh}}
+        {{ $t("common.header.refresh")}}
     </button>
 </template>
 

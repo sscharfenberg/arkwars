@@ -1,25 +1,31 @@
+/***********************************************************************************************************************
+ *
+ * Empire entrypoint
+ *
+ **********************************************************************************************************************/
 import Vue from "vue";
-import Empire from "./Empire.vue";
-import {loadTextStringsFromCache} from "../handlers/texts";
+import VueI18n from "vue-i18n";
 import store from "../store/store";
-
-const AREA = "empire";
-const LANGUAGE =
-    document.querySelector("body").getAttribute("data-locale") || "";
+import Empire from "./Empire.vue";
+import {getAreaMessages} from "../handlers/messages";
+import {getLocale, getAreaSlug, getMessagesVersion} from "../handlers/gameConstants";
 
 if (document.getElementById("gameRoot")) {
-    console.log(`starting game, language ${LANGUAGE.toUpperCase()}`);
-    const serverTextVersion = document
-        .getElementById("gameData")
-        .getAttribute("data-textversion");
-    loadTextStringsFromCache(LANGUAGE, AREA, serverTextVersion, text => {
-        console.log("texts are now available.", text);
-        Vue.prototype.$txt = text;
+    const locale = getLocale();
+    Vue.use(VueI18n);
+    getAreaMessages(locale, getAreaSlug(), getMessagesVersion(), messages => {
+        let i18nConfig = {
+            locale: locale,
+            messages: {}
+        };
+        i18nConfig.messages[locale] = messages;
+        const i18n = new VueI18n(i18nConfig);
         new Vue({
             el: "#gameRoot",
             store,
+            i18n,
             template: "<Empire/>",
-            components: {Empire}
+            components: {Empire},
         });
     });
 }

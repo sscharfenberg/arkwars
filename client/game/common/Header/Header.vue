@@ -64,5 +64,4 @@
         text-transform: uppercase;
         letter-spacing: 0.2rem;
     }
-
 </style>
