@@ -126,7 +126,13 @@ const webpackConfig = {
                         img: "src",
                         image: "xlink:href"
                     },
-                    postcss: [require("postcss-flexbugs-fixes")(), require("autoprefixer")(), require("cssnano")()]
+                    // we use the same postcss plugins for prod and dev
+                    // to make sure there are no differences and funny surprises in prod
+                    postcss: [
+                        require("postcss-flexbugs-fixes")(),
+                        require("autoprefixer")(),
+                        require("cssnano")()
+                    ]
                 }
             },
 

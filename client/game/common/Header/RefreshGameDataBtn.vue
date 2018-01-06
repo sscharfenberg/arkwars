@@ -16,11 +16,12 @@
 
 <style lang="scss" scoped>
     button {
+        padding: 0;
         border: 0;
+        margin: 1.6rem;
         flex: 0 0 auto;
 
-        padding: 0;
-        margin: 1.6rem;
         background: orange;
     }
 </style>
+

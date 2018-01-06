@@ -6,11 +6,15 @@
  * @exports {object} webpackConfig
  *
  **********************************************************************************************************************/
+const path = require("path");
 const webpack = require("webpack"); // https://webpack.js.org/
 const merge = require("webpack-merge"); // https://www.npmjs.com/package/webpack-merge
 const baseWebpackConfig = require("./config.base"); // base webpack config
-const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin"); // https://www.npmjs.com/package/html-webpack-harddisk-plugin
-const config = require("../config");
+// https://www.npmjs.com/package/html-webpack-harddisk-plugin
+const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
+// https://github.com/JaKXz/stylelint-webpack-plugin
+const StylelintPlugin = require("stylelint-webpack-plugin");
+const cfg = require("../config");
 
 let webpackConfig = merge(baseWebpackConfig, {
     // https://webpack.js.org/configuration/devtool/
@@ -20,7 +24,7 @@ let webpackConfig = merge(baseWebpackConfig, {
 
     // https://webpack.js.org/configuration/output
     output: {
-        publicPath: `http://localhost:${config.webPackPort}/`,
+        publicPath: `http://localhost:${cfg.webPackPort}/`,
         filename: "[name].js"
     },
 
@@ -43,7 +47,14 @@ let webpackConfig = merge(baseWebpackConfig, {
         new webpack.HotModuleReplacementPlugin(),
 
         // HMR shows correct file names in console on update.
-        new webpack.NamedModulesPlugin()
+        new webpack.NamedModulesPlugin(),
+
+        new StylelintPlugin({
+            files: ["**/*.vue"],
+            syntax: "scss",
+            reporters: [{ formatter: "verbose", console: true }],
+            configFile: path.join(cfg.projectRoot, "internals", "config", ".stylelintrc")
+        })
     ]
 });
 

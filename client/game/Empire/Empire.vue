@@ -21,11 +21,12 @@
 </script>
 
 <style lang="scss" scoped>
-
     p {
-        text-align: right;
         margin: 0;
+
         font-size: 40px;
+        text-align: right;
+
         &:hover {
             background: palette("brand", "christine");
         }
