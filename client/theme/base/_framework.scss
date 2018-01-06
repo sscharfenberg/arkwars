@@ -7,16 +7,15 @@
 @import "../abstracts/functions";
 @import "../abstracts/mixins";
 
-
 html {
     height: 100%;
 
     font-size: 62.5%; // @ default 16px 1 rem => 10px
 }
 
-
 body {
     overflow-y: hidden;
+
     height: 100%;
 
     background: palette("grey", "ebony") image("bg-circuit-board.svg");
@@ -40,6 +39,7 @@ strong {
 .aw-main-wrapper {
     display: flex;
     position: relative;
+
     height: calc(100vh - 7rem);
     padding-top: 7rem;
 

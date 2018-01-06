@@ -7,6 +7,7 @@
 @import "../../abstracts/functions";
 @import "../../abstracts/mixins";
 
+// app header ==========================================================================================================
 .aw-header {
     display: flex;
     position: fixed;
@@ -30,7 +31,6 @@
         height: 5.4rem;
     }
 
-
     /*
      * 1 - main menu button ============================================================================================
      */
@@ -51,7 +51,6 @@
         outline: 0;
         cursor: pointer;
 
-
         @include respond-to("small") {
             width: 3.4rem;
             height: 3.4rem;
@@ -59,6 +58,7 @@
 
         > span {
             display: block;
+
             width: 100%;
             height: 2px;
             border: 1px solid palette("grey", "charcoal");
@@ -88,13 +88,15 @@
         }
 
         &--open {
-
             &:hover > span {
                 opacity: 1;
+
                 background-color: palette("brand", "gorse");
             }
+
             > span {
                 opacity: 0.4;
+
                 background-color: palette("brand", "viking");
                 border-color: palette("brand", "viking");
 
@@ -121,7 +123,6 @@
                 }
             }
         }
-
     }
 
     /*
@@ -134,6 +135,7 @@
         margin-left: 10px;
 
         color: palette("brand", "viking");
+
         text-decoration: none;
 
         @include respond-to("small") {
@@ -168,6 +170,7 @@
 
         > span { // this is the text ${appName}
             display: none;
+
             margin-left: 12px;
 
             color: palette("brand", "viking");
@@ -204,6 +207,7 @@
 
     &__action {
         position: relative;
+
         margin-right: 8px;
 
         .aw-icon {
@@ -228,6 +232,7 @@
         color: palette("text", "light");
 
         text-decoration: none;
+
         transition:
             background-color map-get($animation-speeds, "fast") linear,
             color map-get($animation-speeds, "fast") linear;
@@ -264,7 +269,6 @@
             color: palette("brand", "viking");
         }
     }
-
 
     /*
      * 3.1 submenus ====================================================================================================
@@ -309,7 +313,6 @@
             animation-name: closeSubmenu;
         }
 
-
         &::before {
             display: block;
             position: absolute;
@@ -318,8 +321,8 @@
             width: 0;
             height: 0;
             border-width: 0 #{$arrowSize} #{$arrowSize};
-            border-style: solid;
 
+            border-style: solid;
             border-color: transparent transparent palette("grey", "abbey") transparent;
 
             content: " ";
@@ -338,6 +341,7 @@
 
             &::before {
                 left: 10px;
+
                 @include respond-to("small") {
                     left: 14px;
                 }
@@ -364,6 +368,7 @@
 
     &__submenu-item {
         display: block;
+
         border: 2px solid palette("grey", "abbey");
         border-bottom-width: 0;
 
@@ -399,6 +404,7 @@
 
         &:hover:not(&--active) {
             background-color: palette("grey", "bunker");
+
             > svg {
                 filter: none;
             }
@@ -406,6 +412,7 @@
 
         &--active {
             background-color: palette("grey", "black");
+
             > svg {
                 filter: none;
             }
@@ -446,7 +453,6 @@
     &__server-time {
         margin-left: 1rem;
     }
-
 }
 
 /*
@@ -455,11 +461,15 @@
 @keyframes openSubmenu {
     from {
         opacity: 0;
+
         transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+
         animation-timing-function: ease-in;
     }
+
     to {
         opacity: 1;
+
         transform: perspective(400px);
     }
 }
@@ -470,11 +480,13 @@
 @keyframes closeSubmenu {
     from {
         opacity: 1;
+
         transform: perspective(400px);
     }
 
     to {
         opacity: 0;
+
         transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
     }
 }

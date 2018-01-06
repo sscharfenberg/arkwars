@@ -42,12 +42,15 @@
         &--success {
             border-color: palette("state", "success");
         }
+
         &--warning {
             border-color: palette("state", "warning");
         }
+
         &--error {
             border-color: palette("state", "error");
         }
+
         &--info {
             border-color: palette("brand", "viking");
         }

@@ -9,8 +9,9 @@
 
 /*
  * input fields for full width, narrow forms (max 768px width) =========================================================
+ * TODO: cleanup namespacing. this is shit.
+ * I realize this namespacing will probably survive me -.-
  */
-// TODO: cleanup namespacing. its shit.
 .aw-form-input,
 .aw-narrowform-input {
     display: inline-block;
@@ -32,6 +33,7 @@
         border-left: 5px solid transparent;
 
         background: palette("grey", "iron");
+
         line-height: 1.4;
 
         transition:
@@ -72,8 +74,8 @@
 
         background: palette("grey", "asher");
         color: palette("text", "light");
-        text-shadow: 0 1px 0 rgba(palette("text", "light"), 0.4);
 
+        text-shadow: 0 1px 0 rgba(palette("text", "light"), 0.4);
         white-space: nowrap;
         text-overflow: ellipsis;
 
@@ -91,8 +93,8 @@
 
         @include respond-to("medium") {
             flex: 0 0 30rem;
+
             text-align: right;
         }
     }
-
 }

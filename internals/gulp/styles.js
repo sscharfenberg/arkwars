@@ -4,6 +4,8 @@
  * @type {Gulp}
  *
  **********************************************************************************************************************/
+const fs = require("fs"); // https://nodejs.org/api/fs.html
+const path = require("path"); // https://nodejs.org/api/path.html
 const gulp = require("gulp"); // https://www.npmjs.com/package/gulp
 const autoprefixer = require("autoprefixer"); // https://www.npmjs.com/package/autoprefixer
 const cached = require("gulp-cached"); // https://www.npmjs.com/package/gulp-cached
@@ -14,7 +16,6 @@ const livereload = require("gulp-livereload"); // https://www.npmjs.com/package/
 const postcssFlexBugs = require("postcss-flexbugs-fixes"); // https://github.com/luisrudge/postcss-flexbugs-fixes
 const postcssBanner = require("postcss-banner"); // https://www.npmjs.com/package/postcss-banner
 const postcssNano = require("cssnano"); // http://cssnano.co/
-//const rename = require("gulp-rename"); // https://www.npmjs.com/package/gulp-rename
 const sass = require("gulp-sass"); // https://www.npmjs.com/package/gulp-sass
 const size = require("gulp-size"); // https://www.npmjs.com/package/gulp-size
 const styleLint = require("gulp-stylelint"); // https://stylelint.io/
@@ -22,6 +23,8 @@ const sourcemaps = require("gulp-sourcemaps"); // https://www.npmjs.com/package/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../utils/clientlogger");
 const config = require("../config");
+const styleLintConfig = JSON.parse(fs.readFileSync(config.paths.css.styleLintRc, "utf-8"));
+delete styleLintConfig.processors;
 
 /*
  * lints scss via style-lint
@@ -34,22 +37,16 @@ gulp.task("styles:lint", function() {
     return gulp
         .src(config.paths.css.lint)
         .pipe(
-            plumber({
-                errorHandler: notify.onError("<%= error.message %>")
-            })
+            plumber({errorHandler: notify.onError("<%= error.message %>")})
         )
         .pipe(cached("styleLint"))
         .pipe(
             styleLint({
-                configFile: config.paths.css.styleLintRc,
-                reporters: [{ formatter: "verbose", console: true }]
+                config: styleLintConfig,
+                reporters: [{formatter: "verbose", console: true}]
             })
         )
-        .pipe(
-            size({
-                title: "linting done."
-            })
-        )
+        .pipe(size({title: "linting done."}))
         .pipe(livereload());
 });
 
@@ -83,7 +80,7 @@ gulp.task("styles:build", ["styles:lint"], function() {
         )
         .pipe(
             postcss([
-                autoprefixer({ browsers: config.browsers }),
+                autoprefixer({browsers: config.browsers}),
                 postcssFlexBugs,
                 postcssNano({
                     safe: true // set to true to experiment with more aggressive optimization

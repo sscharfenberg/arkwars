@@ -7,10 +7,11 @@
 @import "../../abstracts/functions";
 @import "../../abstracts/mixins";
 
-
+// call to action are big square links =================================================================================
 .admin-cta {
     display: flex;
     justify-content: space-around;
+
     box-sizing: border-box;
     width: 100%;
 

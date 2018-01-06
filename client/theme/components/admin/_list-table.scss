@@ -7,13 +7,14 @@
 @import "../../abstracts/functions";
 @import "../../abstracts/mixins";
 
-
+// basic admin table ===================================================================================================
 .admin-listtable {
     $border: 1px solid palette("borders", "darkbg");
 
     width: 100%;
     border-top: $border;
     border-left: $border;
+
     border-collapse: collapse;
 
     td,
@@ -39,6 +40,7 @@
     &__row {
         &--disabled {
             color: palette("text", "subdued");
+
             font-style: italic;
         }
     }
@@ -52,6 +54,7 @@
         margin-left: 1rem;
 
         background: palette("grey", "charcoal");
+
         line-height: 2.2rem;
 
         &--success {
@@ -76,7 +79,6 @@
             color: palette("brand", "gorse");
             border-radius: 50%;
         }
-
     }
 
     &__td-space-between {

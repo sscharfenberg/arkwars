@@ -63,7 +63,9 @@
     @if map-has-key($palettes, $palette) {
         @return map-get(map-get($palettes, $palette), $tone);
     }
+
     @warn "Unknown `#{$palette}` in $palettes.";
+
     @return null;
 }
 
@@ -79,6 +81,8 @@
     @if map-has-key($z-layers, $key) {
         @return map-get($z-layers, $key);
     }
+
     @warn "Unknown `#{$key}` in $z-layers.";
+
     @return null;
 }

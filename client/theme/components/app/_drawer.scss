@@ -70,6 +70,7 @@
 
         list-style: none;
     }
+
     &__list-item {
         border-top: 2px solid palette("grey", "ebony");
 
@@ -116,11 +117,13 @@
             padding: 1.5rem;
         }
     }
+
     &__turn-current {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
+
     &__turn-next {
         display: flex;
         align-items: center;
@@ -129,12 +132,15 @@
 
         margin-top: 0.5rem;
     }
+
     &__turn-next-label {
         flex: 0 0 100%;
     }
+
     &__turn-next-progress {
         display: flex;
         align-items: center;
+
         flex: 0 0 calc(100% - 7.5rem);
     }
 
@@ -151,26 +157,27 @@
 
         background-color: palette("grey", "bunker");
         color: palette("text", "light");
+
         text-decoration: none;
 
         transition:
             background-color map-get($animation-speeds, "fast") linear,
             color map-get($animation-speeds, "fast") linear;
 
-        &:hover,
-        &--active {
+        > .aw-icon {
+            margin-right: 0.5rem;
+
+            transition: color map-get($animation-speeds, "fast") linear;
+        }
+
+        &--active,
+        &:hover {
             background: palette("grey", "ebony");
             color: palette("brand", "viking");
 
             > .aw-icon {
                 color: palette("brand", "christine");
             }
-        }
-
-        > .aw-icon {
-            margin-right: 0.5rem;
-
-            transition: color map-get($animation-speeds, "fast") linear;
         }
 
         @include respond-to("small") {
@@ -188,7 +195,6 @@
             border-bottom-color: palette("brand", "gorse");
         }
     }
-
 }
 
 /*
@@ -197,6 +203,7 @@
 @keyframes openDrawer {
     from {
         visibility: visible;
+
         transform: translate3d(-100%, 0, 0);
     }
 
@@ -215,6 +222,7 @@
 
     to {
         visibility: hidden;
+
         transform: translate3d(-100%, 0, 0);
     }
 }

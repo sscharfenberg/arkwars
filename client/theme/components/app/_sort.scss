@@ -75,6 +75,7 @@
     // sort ascending
     &__asc::before {
         border-width: 0 0.6rem 0.6rem;
+
         border-color: transparent transparent palette("text", "base") transparent;
     }
 
@@ -84,8 +85,8 @@
 
         &::before {
             border-width: 0.6rem 0.6rem 0;
+
             border-color: palette("text", "base") transparent transparent transparent;
         }
     }
-
 }

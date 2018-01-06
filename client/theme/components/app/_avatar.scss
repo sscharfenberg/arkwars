@@ -7,7 +7,7 @@
 @import "../../abstracts/functions";
 @import "../../abstracts/mixins";
 
-
+// change avatar: display and upload field =============================================================================
 .aw-change-avatar {
     box-sizing: border-box;
     width: 100%;
@@ -35,6 +35,7 @@
 
         @include respond-to("medium") {
             flex: 0 0 30rem;
+
             text-align: right;
         }
     }
@@ -79,12 +80,14 @@
         .aw-icon {
             margin-right: 1rem;
         }
+
         &:hover,
         &:focus {
             background-color: palette("grey", "asher");
             color: palette("grey", "white");
         }
     }
+
     &__upload-input {
         display: block;
         position: absolute;
@@ -124,6 +127,7 @@
         color: palette("text", "light");
 
         cursor: pointer;
+
         line-height: 1.4;
         text-decoration: none;
 
@@ -156,10 +160,12 @@
      */
     &__description {
         margin-bottom: 2rem;
+
         color: palette("text", "tint");
     }
 }
 
+// show user avatar ====================================================================================================
 .aw-show-avatar {
 
     padding: 4px;

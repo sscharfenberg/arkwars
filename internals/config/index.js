@@ -85,6 +85,7 @@ module.exports = {
             out: BUILDDIR,
             lint: path.join(PROJECTROOT, "client", "theme", "**/*.scss"),
             styleLintRc: path.join(PROJECTROOT, "internals", "config", ".stylelintrc")
+
         },
         fonts: {
             in: [path.join(PROJECTROOT, "client", "theme", "fonts", "**/*")],

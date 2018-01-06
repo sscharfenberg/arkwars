@@ -7,7 +7,7 @@
 @import "../../abstracts/functions";
 @import "../../abstracts/mixins";
 
-
+// base two column grid ================================================================================================
 .aw-grid {
     box-sizing: border-box;
     width: 100%;
@@ -36,8 +36,10 @@
          */
         @include respond-to("small") {
             flex-direction: row;
+
             &--2col .aw-grid__column {
                 flex-grow: 1;
+
                 &:first-child {
                     flex: 0 0 30rem;
                 }
@@ -74,6 +76,7 @@
             flex-grow: 1;
 
             background-color: palette("brand", "gorse");
+
             content: " ";
         }
     }
@@ -97,6 +100,4 @@
 
         border-radius: 2px;
     }
-
-
 }

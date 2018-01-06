@@ -60,8 +60,8 @@
         display: flex;
         position: relative;
         align-items: center;
-        box-sizing: border-box;
 
+        box-sizing: border-box;
         height: $baseheight;
         padding: 0 0.6rem;
 
@@ -90,6 +90,28 @@
             }
         }
 
+        &::after {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            z-index: z("form");
+
+            width: 0;
+            height: 0;
+            border-width: #{$baseheight / 2} 0.7rem;
+
+            border-style: solid;
+            border-color: transparent transparent transparent $basecolor;
+
+            content: " ";
+
+            transition: border-color map-get($animation-speeds, "fast") linear;
+
+            @include respond-to("small") {
+                border-width: #{$bigheight / 2} 0.8rem;
+            }
+        }
+
         &:nth-child(2n) {
             background-color: $altcolor;
 
@@ -111,28 +133,6 @@
             }
         }
 
-        &::after {
-            position: absolute;
-            top: 0;
-            left: 100%;
-            z-index: z("form");
-            width: 0;
-            height: 0;
-
-            border-width: #{$baseheight / 2} 0.7rem;
-            border-style: solid;
-
-            border-color: transparent transparent transparent $basecolor;
-
-            content: " ";
-
-            transition: border-color map-get($animation-speeds, "fast") linear;
-
-            @include respond-to("small") {
-                border-width: #{$bigheight / 2} 0.8rem;
-            }
-        }
-
         .fonts-loaded & {
             font-family: map-get($fonts, "text");
         }
@@ -147,5 +147,4 @@
             height: 2rem;
         }
     }
-
 }

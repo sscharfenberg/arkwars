@@ -7,13 +7,11 @@
 @import "../../abstracts/functions";
 @import "../../abstracts/mixins";
 
-
 $basecolor: darken(palette("grey", "raven"), 6%);
 $altcolor: palette("grey", "raven");
 $hovercolor: palette("grey", "iron");
 $baseheight: 2.6rem;
 $bigheight: 3.2rem;
-
 
 .aw-pagination {
     display: flex;
@@ -34,8 +32,8 @@ $bigheight: 3.2rem;
         display: flex;
         position: relative;
         align-items: center;
-        box-sizing: border-box;
 
+        box-sizing: border-box;
         height: $baseheight;
         padding: 0 0.6rem;
         margin: 0 0.5rem 0 0;
@@ -82,12 +80,12 @@ $bigheight: 3.2rem;
                 position: absolute;
                 top: 0;
                 left: 100%;
-
                 z-index: z("form");
+
                 width: 0;
                 height: 0;
-
                 border-width: #{$baseheight / 2} 0.7rem;
+
                 border-style: solid;
                 border-color: transparent transparent transparent $altcolor;
 
@@ -122,12 +120,12 @@ $bigheight: 3.2rem;
                 position: absolute;
                 top: 0;
                 right: 100%;
-
                 z-index: z("form");
+
                 width: 0;
                 height: 0;
-
                 border-width: #{$baseheight / 2} 0.7rem;
+
                 border-style: solid;
                 border-color: transparent $altcolor transparent transparent;
 
@@ -151,6 +149,7 @@ $bigheight: 3.2rem;
                 }
             }
         }
+
         &--prev {
             margin-right: 0.5rem;
         }

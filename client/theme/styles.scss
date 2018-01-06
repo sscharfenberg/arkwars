@@ -9,12 +9,11 @@
  * https://www.npmjs.com/package/normalize-scss
  */
 @import "normalize-scss/sass/normalize/import-now";
-
 @import "base/framework";
 @import "base/typography"; // @font-face declarations
 
+// static components
 @import "components/icon";
-
 @import "components/app/avatar";
 @import "components/app/drawer";
 @import "components/app/header";
@@ -28,7 +27,7 @@
 @import "components/app/grid";
 @import "components/app/link";
 @import "components/app/content-head";
-//@import "components/app/pagination";
 
+// game stuff
 @import "components/game/turn";
 @import "components/game/progress";

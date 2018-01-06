@@ -9,6 +9,37 @@
     "rules": {
         "indentation": 4,
         "declaration-empty-line-before": null,
+        "no-descending-specificity": null,
+        "at-rule-empty-line-before": [ "always", {
+            "except": [
+                "blockless-after-same-name-blockless",
+                "first-nested"
+            ],
+            "ignore": ["after-comment"],
+            "ignoreAtRules": ["import"]
+        } ],
+        "media-feature-name-no-unknown": [
+            true,
+            {
+                "ignoreMediaFeatureNames": ["/device-pixel-ratio/"]
+            }
+        ],
+        "at-rule-no-unknown": [
+            true,
+            {
+                "ignoreAtRules": [
+                    "function",
+                    "mixin",
+                    "return",
+                    "if",
+                    "else",
+                    "content",
+                    "include",
+                    "extend",
+                    "warn"
+                ]
+            }
+        ],
         "order/properties-order": [
             {
                 "emptyLineBefore": "always",

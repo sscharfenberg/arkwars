@@ -10,49 +10,49 @@
  */
 $palettes: (
     "brand": (
-        "base": #6fc3df
-        , "viking": #6fc3df
-        , "gorse": #ffe64d
-        , "christine": #df740c
-    )
-    , "grey": (
-        "base": #757c84
-        , "white": #fff
-        , "mystic": #eaf0f2
-        , "iron": #afb2b2
-        , "fog": #b7b7af
-        , "charcoal": #757c84
-        , "asher": #555f61
-        , "abbey": #4c4f56
-        , "raven": #373d3f
-        , "sunken": #141721
-        , "bunker": #12141c
-        , "ebony": #06060f
-        , "black": #000
-    )
-    , "text": (
-        "base": #cdd0d0
-        , "lighter": #eaf0f2
-        , "light": #cdd0d0
-        , "tint": #939393
-        , "subdued": #737676
-        , "dark": #182226
-    )
-    , "progress": (
-        "1": #f63a0f
-        , "2": #f27011
-        , "3": #f2b01e
-        , "4": #cbd81c
-        , "5": #86e01e
-    )
-    , "state": (
-        "success": #4b9b29
-        , "warning": #f2b01e
-        , "error": #c82a05
-    )
-    , "borders": (
-        "lightbg": rgba(#000, 0.1)
-        , "darkbg": rgba(#fff, 0.1)
+        "base": #6fc3df,
+        "viking": #6fc3df,
+        "gorse": #ffe64d,
+        "christine": #df740c
+    ),
+    "grey": (
+        "base": #757c84,
+        "white": #fff,
+        "mystic": #eaf0f2,
+        "iron": #afb2b2,
+        "fog": #b7b7af,
+        "charcoal": #757c84,
+        "asher": #555f61,
+        "abbey": #4c4f56,
+        "raven": #373d3f,
+        "sunken": #141721,
+        "bunker": #12141c,
+        "ebony": #06060f,
+        "black": #000
+    ),
+    "text": (
+        "base": #cdd0d0,
+        "lighter": #eaf0f2,
+        "light": #cdd0d0,
+        "tint": #939393,
+        "subdued": #737676,
+        "dark": #182226
+    ),
+    "progress": (
+        "1": #f63a0f,
+        "2": #f27011,
+        "3": #f2b01e,
+        "4": #cbd81c,
+        "5": #86e01e
+    ),
+    "state": (
+        "success": #4b9b29,
+        "warning": #f2b01e,
+        "error": #c82a05
+    ),
+    "borders": (
+        "lightbg": rgba(#000, 0.1),
+        "darkbg": rgba(#fff, 0.1)
     )
 );
 
@@ -60,53 +60,62 @@ $palettes: (
  * animation speeds for transition-duration and animation-duration
  */
 $animation-speeds: (
-    "fast": 150ms
-    , "quick": 250ms
-    , "medium": 450ms
-    , "portly": 650ms
-    , "slow": 1000ms
-    , "delayed": 1500ms
+    "fast": 150ms,
+    "quick": 250ms,
+    "medium": 450ms,
+    "portly": 650ms,
+    "slow": 1000ms,
+    "delayed": 1500ms
 );
 
 /*
  * font
  */
 $fonts: (
-    "system": #{-apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif}
-    , "mono": #{Courier, monospace}
-    , "text": #{"Roboto", sans-serif}
-    , "headline": #{"Roboto", sans-serif}
+    "system": #{-apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif},
+    "mono": #{Courier, monospace},
+    "text": #{"Roboto", sans-serif},
+    "headline": #{"Roboto", sans-serif}
 );
 
 // refers to min-width breakpoints. lets do this mobile first.
 $breakpoints: (
-    "small": 480px
-    , "medium": 768px
-    , "large": 1024px
-    , "xlarge": 1240px
-    , "max": 1440px
+    "small": 480px,
+    "medium": 768px,
+    "large": 1024px,
+    "xlarge": 1240px,
+    "max": 1440px
 );
 
 $z-layers: (
-    "bottomless": -9999
-    , "background": -1
-    , "default": 0
-    , "form": 1
-    , "drawer": 5
-    , "header": 6
-    , "dropdown": 200
-    , "overlay": 1000
-    , "modal": 2000
+    "bottomless": -9999,
+    "background": -1,
+    "default": 0,
+    "form": 1,
+    "drawer": 5,
+    "header": 6,
+    "dropdown": 200,
+    "overlay": 1000,
+    "modal": 2000
 );
 
 $shadows: (
-    "shine1dp": #{0 0 15px map-get(map-get($palettes, "brand"), "christine")}
-    , "light1dp": #{1px 1.5px 0 rgba(#fff, 0.12), 0 1px 1px 0 rgba(#fff, 0.24)}
-    , "light2dp": #{0 2px 2px 0 rgba(#fff, 0.14), 0 3px 1px -2px rgba(#fff, 0.2), 0 1px 5px 0 rgba(#fff, 0.12)}
-    , "light4dp": #{0 4px 5px 0 rgba(#fff, 0.14), 0 1px 10px 0 rgba(#fff, 0.12), 0 2px 4px -1px rgba(#fff, 0.2)}
-    , "light1dpsimple": #{0 2px 15px 0 rgba(#fff, 0.26)}
+    "shine1dp":
+    #{0 0 15px map-get(map-get($palettes, "brand"), "christine")},
+    "light1dp":
+    #{1px 1.5px 0 rgba(#fff, 0.12),
+    0 1px 1px 0 rgba(#fff, 0.24)},
+    "light2dp":
+    #{0 2px 2px 0 rgba(#fff, 0.14),
+    0 3px 1px -2px rgba(#fff, 0.2),
+    0 1px 5px 0 rgba(#fff, 0.12)},
+    "light4dp":
+    #{0 4px 5px 0 rgba(#fff, 0.14),
+    0 1px 10px 0 rgba(#fff, 0.12),
+    0 2px 4px -1px rgba(#fff, 0.2)},
+    "light1dpsimple":
+    #{0 2px 15px 0 rgba(#fff, 0.26)}
 );
-
 
 /***********************************************************************************************************************
  *
@@ -121,5 +130,3 @@ $shadows: (
 $base-font-size: 16px !default;
 // The default font family.
 $base-font-family: map-get($fonts, "system") !default;
-
-

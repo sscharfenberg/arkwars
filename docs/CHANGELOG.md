@@ -1,6 +1,9 @@
 # Changelog
 
-`05.01.2017`
+`06.01.2018`
+- [x] Refactoring of SCSS. Since we switched to "stylelint-config-standard", which is very restrictive, we had to refactor the scss - and extend `.stylelintrc` on the way.
+
+`05.01.2018`
 - [x] `gamedata` api endpoint now delivers correct gamedata to the client.
 - [x] fixed a nasty bug that resulted in player homesystems without planets. whoops.
 - [x] bumped dependencies - switching to babel7/babel-loader8.
