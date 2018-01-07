@@ -54,6 +54,21 @@ locales.forEach(locale => {
 logger.debug(`[App] cached ${chalk.yellow(allTexts.length)} client text objects.`);
 
 /*
+ * get game data =======================================================================================================
+ * we do not want to send full mongoose objects to the client,
+ * (there might be parts that we don't want to tell the player)
+ * so we massage the data a bit.
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.cspViolation = (req, res) => {
+    logger.error(`[App] CSP violation recieved from ${req.ip} ${req.user ? req.user.id : ""}`);
+    logger.info("report: " + JSON.stringify(req.body, null, 2));
+    logger.info("headers: " + JSON.stringify(req.headers, null, 2));
+    res.end();
+};
+
+/*
  * get game status =====================================================================================================
  *
  * @param {ExpressHTTPRequest} req
@@ -184,8 +199,7 @@ exports.getGameData = async (req, res) => {
             });
         });
 
-    setTimeout( () => {
+    setTimeout(() => {
         return res.json(returnData);
     }, 10000);
-
 };

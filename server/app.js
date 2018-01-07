@@ -21,18 +21,47 @@ const bodyParser = require("body-parser"); // https://www.npmjs.com/package/body
 const passport = require("passport"); // https://github.com/jaredhanson/passport
 const flash = require("connect-flash"); // https://www.npmjs.com/package/connect-flash
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
+const uuid = require("uuid"); // https://www.npmjs.com/package/uuid
 const routes = require("./routes/index"); // Express routes
 const accessLogger = require("./handlers/logger/access"); // Access logging
 const errorHandlers = require("./handlers/error"); // Error handling
-const logger = require("./handlers/logger/console"); // stub console.log and make it funky.
+const logger = require("./handlers/logger/console"); // stub console.log
 const templateHelpers = require("./handlers/template"); // Template helpers
 const cfg = require("./config"); // base app config
+const devPort = require("../internals/config").webPackPort;
 
 // create our Express app
 const app = express();
 
+// add nonce to locals so we can mark scripts as safe to execute via none
+app.use(function(req, res, next) {
+    res.locals.nonce = uuid.v4();
+    next();
+});
+
 // set specific headers.
 app.use(helmet());
+// Content Security Policy
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "data:", "'unsafe-inline'"],
+        imgSrc: ["'self'", `localhost:${devPort}`],
+        scriptSrc: [
+            "'self'",
+            "'unsafe-eval'", // Vue.js uses new Function(), which is a eval-type function.
+            function(req, res) {
+                return `'nonce-${res.locals.nonce}'`;
+            }
+        ],
+        connectSrc: ["'self'", `ws://localhost:${devPort}`, `localhost:${devPort}`],
+        // these props are not defaulting to defaultSrc
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+        frameAncestors: ["'self'"],
+        reportUri: "/api/csp-violation/"
+    }
+}));
 
 // view engine setup
 // https://pugjs.org/
@@ -46,18 +75,21 @@ app.use(compression());
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Takes the raw requests and turns them into usable properties on req.body
-app.use(bodyParser.json());
+app.use(bodyParser.json({type: "application/json"}));
+
 // https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // validate data middleWare
-app.use(expressValidator({
-    customValidators: {
-        isNotEqual: function(param, value) {
-            return param !== value;
+app.use(
+    expressValidator({
+        customValidators: {
+            isNotEqual: function(param, value) {
+                return param !== value;
+            }
         }
-    }
-}));
+    })
+);
 
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());

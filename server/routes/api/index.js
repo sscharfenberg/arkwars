@@ -12,8 +12,17 @@ const apiController = require("../../controllers/api");
 const userController = require("../../controllers/user");
 const authController = require("../../controllers/auth");
 const {catchErrors} = require("../../handlers/error");
+const bodyParser = require("body-parser");
+const cspParser = bodyParser.json({type: "application/csp-report"});
 
 router.use("/", authController.isValidUser);
+
+// Content Security Policy Violations
+router.post(
+    "/csp-violation",
+    cspParser,
+    apiController.cspViolation
+);
 
 // game status pulse - next turn etc.
 router.get(
@@ -31,6 +40,7 @@ router.post("/user/closedrawer", catchErrors(userController.closeDrawer));
 // get language and area specific textstrings
 router.get("/textstrings/:locale/:area", apiController.getTextStrings);
 
+// get game data for player
 router.get(
     "/game/:gameid/player/:playerid/data",
     apiController.checkGameDataPermission, // 1. make sure the current user is allowed to get game data
