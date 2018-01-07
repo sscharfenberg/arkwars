@@ -2,6 +2,9 @@
 
 `07.01.2018`
 - [x] Apparently I am easily influenced/scared - [HackerNoon](https://hackernoon.com/im-harvesting-credit-card-numbers-and-passwords-from-your-site-here-s-how-9a8cb347c5b5) made me implement a CSP policy. It doesn't hurt, but I am not happy with Vue's "unsafe-eval" requirement - and I probably spend too much time on twitter. CSP report API endpoint created, which simply logs the report, header and user.
+- [x] switched to `UglifyJS3`, mainly to remove an error message (UglifyJS@2 has problems with the webpack output "unexcepted token punc"). Turns out v3 minifies better, bundle size went down ~30%. I'll take it.
+- [x] Tried to get Jest to work and failed -.- Main problem was some dependency hell with the new babel7 and older babel plugins - [babel/babel#7110](https://github.com/babel/babel/issues/7110). Needs to be revisited ...
+- [x] Scaffolding Stars / Star Component for empire view.
 
 `06.01.2018`
 - [x] Refactoring of SCSS. Since we switched to "stylelint-config-standard", which is very restrictive, we had to refactor the scss - and extend `.stylelintrc` on the way. Changed formatting to fix ~280 new issues. Quite happy with style tooling now.

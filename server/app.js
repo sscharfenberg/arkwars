@@ -114,7 +114,7 @@ app.use(
         key: process.env.KEY,
         resave: false,
         saveUninitialized: true,
-        cookie: {maxAge: cfg.app.sessionTimeOut},
+        cookie: {sameSite: true},
         store: new RedisStore({client: redisClient})
     })
 );

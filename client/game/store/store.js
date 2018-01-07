@@ -20,8 +20,11 @@ const store = new Vuex.Store({
         fetchingGameDataFromApi: false
     },
     getters: {
-        fetchingGameDataFromApi: state => {
+        GET_fetchingGameDataFromApi: state => {
             return state.fetchingGameDataFromApi;
+        },
+        GET_stars: state => {
+            return state.gameData.stars || [];
         }
     },
     mutations,

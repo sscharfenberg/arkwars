@@ -27,7 +27,6 @@ const appConfig = {
         email: {
             from: `${pkg.app.name} <noreply@arkwars.io>`
         },
-        sessionTimeOut: 120 * 60 * 1000,
         // i18n base settings. the language files can be found in /server/lang/{locale].json
         // first locale is the default
         locales: [
@@ -139,19 +138,25 @@ const appConfig = {
                 name: "G",
                 chance: 20,
                 chanceHome: 30,
-                planetsMod: 1
+                planetsMod: 2
             },
             {
                 name: "K",
                 chance: 20,
                 chanceHome: 30,
-                planetsMod: 2
+                planetsMod: 1
             },
             {
                 name: "M",
-                chance: 35,
+                chance: 30,
                 chanceHome: 0,
-                planetsMod: 3
+                planetsMod: 0
+            },
+            {
+                name: "Y",
+                chance: 5,
+                chanceHome: 0,
+                planetsMod: -2
             }
         ],
         name: {
@@ -168,27 +173,27 @@ const appConfig = {
         types: [
             {
                 name: "terrestrial",
-                chance: 15,
+                chance: 20,
                 chanceHome: 50
             },
             {
                 name: "gas",
-                chance: 12,
+                chance: 17,
                 chanceHome: 10
             },
             {
                 name: "ice",
-                chance: 11,
+                chance: 16,
                 chanceHome: 10
             },
             {
                 name: "iron",
-                chance: 15,
+                chance: 20,
                 chanceHome: 10
             },
             {
-                name: "barren",
-                chance: 50,
+                name: "desert",
+                chance: 30,
                 chanceHome: 10
             },
             {
@@ -197,7 +202,7 @@ const appConfig = {
                 chanceHome: 5
             },
             {
-                name: "tomb",
+                name: "carbon",
                 chance: 2,
                 chanceHome: 5
             }

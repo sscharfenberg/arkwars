@@ -1,12 +1,9 @@
-<template>
-    <div>
-        <app-header :areaTitle="$t('title')" area="empire" />
-        <p>{{ greeting }} World from Vue!</p>
-    </div>
-</template>
-
 <script>
+    /*******************************************************************************************************************
+     * Empire (entry) Component
+     ******************************************************************************************************************/
     import Header from "../common/Header/Header.vue";
+    import StarsList from "./Stars/Stars.vue";
     export default {
         data: function() {
             return {
@@ -14,10 +11,18 @@
             };
         },
         components: {
-            "app-header": Header
+            "app-header": Header,
+            "stars-list": StarsList
         }
     };
 </script>
+
+<template>
+    <div>
+        <app-header :areaTitle="$t('title')" area="empire" />
+        <stars-list />
+    </div>
+</template>
 
 <style lang="scss" scoped>
     p {
