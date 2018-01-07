@@ -9,19 +9,15 @@
 process.env.BABEL_ENV = "test";
 process.env.NODE_ENV = "test";
 process.env.PUBLIC_URL = "";
-
 const path = require("path"); // https://www.npmjs.com/package/path
 const jest = require("jest"); // https://facebook.github.io/jest/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../utils/clientlogger");
-const config = require("../../config");
+const jestConfig = require("../config/.jest");
+const cfg = require("../config");
 const argv = process.argv.slice(2);
 
-logger.info(
-    `[jest] starting tests in ${chalk.yellow(
-        process.env.NODE_ENV.toUpperCase()
-    )} environment.`
-);
+logger.info(`[jest] starting tests in ${chalk.yellow(process.env.NODE_ENV.toUpperCase())} environment.`);
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -31,17 +27,8 @@ process.on("unhandledRejection", err => {
 });
 
 if (argv.indexOf("--coverage") > -1) {
-    let coverageReportUrl = path.join(
-        config.projectRoot,
-        "coverage",
-        "lcov-report",
-        "index.html"
-    );
-    logger.info(
-        `[jest] created Code coverage report for all files\n${chalk.yellow(
-            coverageReportUrl
-        )}`
-    );
+    let coverageReportUrl = path.join(cfg.projectRoot, "coverage", "lcov-report", "index.html");
+    logger.info(`[jest] created Code coverage report for all files\n${chalk.yellow(coverageReportUrl)}`);
 }
 
 jest.run(argv);

@@ -15,7 +15,12 @@
         "@babel/plugin-syntax-object-rest-spread"
     ],
     "env": {
-        "test": {},
+        "test": {
+            "plugins": [
+                "@babel/plugin-transform-modules-commonjs",
+                "@babel/plugin-syntax-object-rest-spread"
+            ]
+        },
         "production": {},
         "development": {}
     }

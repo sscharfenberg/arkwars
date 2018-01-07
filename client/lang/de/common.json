@@ -2,7 +2,7 @@
     "header": {
         "refreshGameDataBtn" : {
             "fetching": "Lade Daten",
-            "fetch": "Neu Laden1"
+            "fetch": "Neu Laden"
         }
     }
 }

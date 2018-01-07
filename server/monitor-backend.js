@@ -15,8 +15,11 @@ const logger = require("./handlers/logger/console");
 
 const monitor = nodemon({
     script: path.join(__dirname, "start.js"),
-    ext: ["js", "json"],
-    watch: ["server"],
+    ext: "js,json",
+    watch: [
+        "server",
+        "client/lang"
+    ],
     ignore: ["server/public/", "server/handlers/cron"],
     verbose: true
 });
