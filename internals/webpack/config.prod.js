@@ -17,6 +17,8 @@ const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 // https://www.npmjs.com/package/imagemin-webpack-plugin
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
+//https://github.com/webpack-contrib/uglifyjs-webpack-plugin
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 // https://github.com/imagemin/imagemin-mozjpeg
 const imageminMozjpeg = require("imagemin-mozjpeg");
 
@@ -44,21 +46,56 @@ let webpackConfig = merge(baseWebpackConfig, {
             }
         }),
 
-        // UglifyJS Plugin
-        // https://github.com/mishoo/UglifyJS2
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                dead_code: true // discard unreachable code
-            },
-            output: {
-                comments: false
-            },
-            sourceMap: true
+        // https://github.com/Klathmon/imagemin-webpack-plugin
+        // match options to /internals/gulp/sync.js
+        new ImageminPlugin({
+            gifsicle: {interlaced: true},
+            optipng: {optimizationLevel: 5},
+            svgo: {plugins:[]}, // https://github.com/svg/svgo#what-it-can-do
+            jpegtran: null, // set to null to disable jpegtran
+            plugins: [
+                // https://github.com/imagemin/imagemin-mozjpeg
+                imageminMozjpeg({
+                    quality: 65, // 65 is quite low, watch for image quality
+                    progressive: true
+                })
+            ]
         }),
 
         new ExtractTextPlugin({
             filename: "[name].[chunkhash].css"
+        }),
+
+        // https://github.com/webpack-contrib/uglifyjs-webpack-plugin
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                ie8: false,
+                ecma: 8,
+                mangle: {
+                    keep_fnames: true
+                },
+                output: {
+                    comments: false,
+                    beautify: false,
+                    safari10: true
+
+                },
+                compress: {
+                    warnings: true,
+                    dead_code: true // discard unreachable code
+                },
+                warnings: false
+            }
+        }),
+
+        // Banner Plugin
+        // https://webpack.js.org/plugins/banner-plugin/
+        new webpack.BannerPlugin({
+            banner: config.banner,
+            // if true, banner will not be wrapped in a comment
+            raw: false,
+            // if true, the banner will only be added to the entry chunks
+            entryOnly: true
         }),
 
         // Compression Plugin - generates *.gz files
@@ -81,32 +118,6 @@ let webpackConfig = merge(baseWebpackConfig, {
             minRatio: 0.8,
             // Whether to delete the original assets or not. Defaults to false.
             deleteOriginalAssets: false
-        }),
-
-        // Banner Plugin
-        // https://webpack.js.org/plugins/banner-plugin/
-        new webpack.BannerPlugin({
-            banner: config.banner,
-            // if true, banner will not be wrapped in a comment
-            raw: false,
-            // if true, the banner will only be added to the entry chunks
-            entryOnly: true
-        }),
-
-        // https://github.com/Klathmon/imagemin-webpack-plugin
-        // match options to /internals/gulp/sync.js
-        new ImageminPlugin({
-            gifsicle: {interlaced: true},
-            optipng: {optimizationLevel: 5},
-            svgo: {plugins:[]}, // https://github.com/svg/svgo#what-it-can-do
-            jpegtran: null, // set to null to disable jpegtran
-            plugins: [
-                // https://github.com/imagemin/imagemin-mozjpeg
-                imageminMozjpeg({
-                    quality: 65, // 65 is quite low, watch for image quality
-                    progressive: true
-                })
-            ]
         }),
 
         // https://www.npmjs.com/package/webpack-bundle-analyzer

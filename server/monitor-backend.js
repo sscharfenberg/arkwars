@@ -15,12 +15,9 @@ const logger = require("./handlers/logger/console");
 
 const monitor = nodemon({
     script: path.join(__dirname, "start.js"),
-    ext: "js json vue",
+    ext: ["js", "json"],
     watch: ["server"],
-    ignore: [
-        "server/public/",
-        "server/handlers/cron"
-    ],
+    ignore: ["server/public/", "server/handlers/cron"],
     verbose: true
 });
 
@@ -33,10 +30,7 @@ monitor
         process.exit(0);
     })
     .on("restart", files => {
-        logger.debug(
-            "[nodemon] backend server restarted due to\r\n" +
-                chalk.yellow(files.toString())
-        );
+        logger.debug("[nodemon] backend server restarted due to\r\n" + chalk.yellow(files.toString()));
     })
     .on("crash", () => {
         logger.error("[nodemon] backend server has crashed.");

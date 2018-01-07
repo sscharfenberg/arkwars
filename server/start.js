@@ -27,10 +27,14 @@ mongoose.connect(process.env.DATABASE, {
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection
     .on("error", err => {
-        logger.error(err.message);
+        logger.error("[App] Error connecting to MongoDB.");
+        logger.error(err);
     })
     .on("connected", () => {
         logger.success("[App] Successfully connected to MongoDB.");
+    })
+    .on("close", str => {
+        logger.error("[App] MongoDB Connection closed: " + str);
     });
 
 /*
