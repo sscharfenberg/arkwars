@@ -10,6 +10,7 @@ const path = require("path"); // https://nodejs.org/api/path.html
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
+const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const Game = mongoose.model("Game");
 const Planet = mongoose.model("Planet");
 const logger = require("../../handlers/logger/console");
@@ -83,7 +84,7 @@ exports.cspViolation = (req, res) => {
  * {String.ISO8601} nextProcess - time when the next turn is processed.
  */
 exports.gameStatus = async (req, res, next) => {
-    const gameNumber = req.params.game || 0;
+    const gameNumber = strip(req.params.game) || 0;
     const now = moment();
     const game = await Game.findOne({number: gameNumber});
 

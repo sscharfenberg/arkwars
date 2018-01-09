@@ -7,9 +7,11 @@
  **********************************************************************************************************************/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const mongoose = require("mongoose"); // http://mongoosejs.com/
+const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const Planet = mongoose.model("Planet");
 const Star = mongoose.model("Star");
 const logger = require("../../handlers/logger/console");
+const cfg = require("../../config");
 
 /*
  * get game data =======================================================================================================
@@ -75,7 +77,6 @@ exports.getGameData = async (req, res) => {
 
 /*
  * XHR POST save star name =============================================================================================
-
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  */
@@ -88,12 +89,16 @@ exports.saveStarName = async (req, res) => {
     );
     // don't trust the client.
     if (!playerStars.includes(req.body.id)) {
-        logger.error(`[App] user ${req.user.username} was not allowed to edit star.`);
+        logger.error(`[App] user ${req.user.username} is not owner of the star.`);
         return res.status(403).json({message: "you are not allowed to edit this star."});
     }
+    if (req.body.name.length < cfg.stars.name.bounds[0] || req.body.name.length > cfg.stars.name.bounds[1]) {
+        logger.error(`[App] star name ${req.body.name} length is out of bounds.`);
+        return res.status(406).json({message: "length of star name out of bounds."});
+    }
     const updatedStar = await Star.findOneAndUpdate(
-        {_id: req.body.id},
-        {$set: {name: req.body.name}},
+        {_id: strip(req.body.id)},
+        {$set: {name: strip(req.body.name)}},
         {new: true, runValidators: true, context: "query"}
     );
     if (updatedStar) {

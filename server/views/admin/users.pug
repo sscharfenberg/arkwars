@@ -54,12 +54,15 @@ block content
                         button.aw-btn.aw-btn--icon(type="submit")
                             != h.icon("key", ["small"])
                             != h.__("ADMIN.USERS.ALL.SEARCH.SUBMIT")
-                        button.aw-btn.aw-btn--icon(
-                            onclick="document.forms.searchUsers.email.value = ''; document.forms.searchUsers.username.value = ''; return true;"
-                        )
+                        button#resetButton.aw-btn.aw-btn--icon
                             != h.icon("cancel", ["small"])
                             != h.__("ADMIN.USERS.ALL.SEARCH.ALLUSERS")
-
+                        script(nonce=(nonce)).
+                            document.getElementById("resetButton").addEventListener("click", function () {
+                                document.forms.searchUsers.email.value = "";
+                                document.forms.searchUsers.username.value = "";
+                                return true;
+                            });
 
             if !data.username && !data.email
                 +pagination(page, pages, count, "/admin/users/p", `/s/${sortField}/d/${sortDirection}`)
@@ -84,8 +87,7 @@ block content
                                             id="sort_username_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "username_asc"),
-                                            aria-checked=(data && data.sort === "username_asc"),
-                                            onchange="document.forms.searchUsers.submit();"
+                                            aria-checked=(data && data.sort === "username_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_username_asc",
@@ -99,8 +101,7 @@ block content
                                             id="sort_username_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "username_desc"),
-                                            aria-checked=(data && data.sort === "username_desc"),
-                                            onchange="document.forms.searchUsers.submit();"
+                                            aria-checked=(data && data.sort === "username_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_username_desc",
@@ -118,8 +119,7 @@ block content
                                             id="sort_email_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "email_asc"),
-                                            aria-checked=(data && data.sort === "email_asc"),
-                                            onchange="document.forms.searchUsers.submit();"
+                                            aria-checked=(data && data.sort === "email_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_email_asc",
@@ -133,8 +133,7 @@ block content
                                             id="sort_email_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "email_desc"),
-                                            aria-checked=(data && data.sort === "email_desc"),
-                                            onchange="document.forms.searchUsers.submit();"
+                                            aria-checked=(data && data.sort === "email_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_email_desc",
@@ -154,8 +153,7 @@ block content
                                             id="sort_created_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "created_asc"),
-                                            aria-checked=(data && data.sort === "created_asc"),
-                                            onchange="document.forms.searchUsers.submit();"
+                                            aria-checked=(data && data.sort === "created_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_created_asc",
@@ -169,8 +167,7 @@ block content
                                             id="sort_created_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "created_desc"),
-                                            aria-checked=(data && data.sort === "created_desc"),
-                                            onchange="document.forms.searchUsers.submit();"
+                                            aria-checked=(data && data.sort === "created_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_created_desc",
@@ -188,8 +185,7 @@ block content
                                             id="sort_lastLogin_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "lastLogin_asc"),
-                                            aria-checked=(data && data.sort === "lastLogin_asc"),
-                                            onchange="document.forms.searchUsers.submit();"
+                                            aria-checked=(data && data.sort === "lastLogin_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_lastLogin_asc",
@@ -203,8 +199,7 @@ block content
                                             id="sort_lastLogin_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "lastLogin_desc"),
-                                            aria-checked=(data && data.sort === "lastLogin_desc"),
-                                            onchange="document.forms.searchUsers.submit();"
+                                            aria-checked=(data && data.sort === "lastLogin_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_lastLogin_desc",
@@ -287,7 +282,14 @@ block content
                                         |
                                         | mod
 
-
+                //- simple page specific js
+                script(nonce=(nonce)).
+                    var _sort = document.querySelectorAll("input[type=radio]");
+                    for (var i = 0; i < _sort.length; i++) {
+                        _sort[i].addEventListener("change", function () {
+                            document.forms.searchUsers.submit();
+                        });
+                    }
 
 block scripts
     include ../webpack/admin.footer.pug

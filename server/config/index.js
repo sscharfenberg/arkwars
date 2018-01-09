@@ -161,6 +161,7 @@ const appConfig = {
         ],
         name: {
             initial: [4, 6], // range for initially generated names
+            // this needs to be synced with /client/game/Empire/Stars/Star.vue
             bounds: [4, 40] // range for player edited names
         },
         planets: {

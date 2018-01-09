@@ -2,7 +2,7 @@
     /*******************************************************************************************************************
      * Empire (entry) Component
      ******************************************************************************************************************/
-    import Header from "../common/Header/Header.vue";
+    import Header from "Game/common/Header/Header.vue";
     import StarsList from "./Stars/Stars.vue";
     export default {
         data: function() {

@@ -7,6 +7,7 @@ const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
+const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const Game = mongoose.model("Game");
 const Player = mongoose.model("Player");
 const User = mongoose.model("User");
@@ -25,7 +26,7 @@ const cfg = require("../../config");
  */
 exports.checkCanEnlist = async (req, res, next) => {
     const game = await Game.findOne({
-        number: req.params.game,
+        number: strip(req.params.game),
         canEnlist: true,
         startDate: {$gt: moment().toISOString()}
     }).populate("players");
@@ -71,10 +72,7 @@ exports.showEnlistForm = (req, res) => {
 exports.validateEnlistForm = async (req, res, next) => {
     // default validators
     req = enlistValidators.defaultValidators(req);
-
     const validatorPromise = req.getValidationResult();
-
-    console.log(req.body.ticker);
     const tickerPromise = enlistValidators.tickerPromise(req);
     const namePromise = enlistValidators.namePromise(req);
 
@@ -134,8 +132,8 @@ exports.enlistUser = async (req, res, next) => {
     const player = new Player({
         game: req._game._id,
         user: req.user._id,
-        name: req.body.empirename,
-        ticker: req.body.empireticker.toUpperCase()
+        name: strip(req.body.empirename),
+        ticker: strip(req.body.empireticker.toUpperCase())
     });
     req._player = await player.save();
     next();
@@ -197,7 +195,7 @@ exports.assignHomeSystem = async (req, res) => {
  */
 exports.validateGameSelect = async (req, res, next) => {
     // User.players gets populated with players object, which includes game id.
-    const requestedGame = req.params.game;
+    const requestedGame = strip(req.params.game);
     const myGames = req.user.players.map(game => game.game);
     const game = await Game.findOne({
         number: requestedGame,
@@ -274,7 +272,7 @@ exports.selectGame = async (req, res) => {
  * @param {callback} next
  */
 exports.validateWithdraw = async (req, res, next) => {
-    const requestedGameNumber = req.params.game;
+    const requestedGameNumber = strip(req.params.game);
     // prepare an array of my game ids
     const myGames = req.user.players.map(player => player.game.id);
     const game = await Game.findOne({
@@ -355,7 +353,7 @@ exports.withdrawEnlistedUser = async (req, res) => {
  * @param {callback} next
  */
 exports.verifyGameAuth = async (req, res, next) => {
-    const requestedGameNumber = req.params.game;
+    const requestedGameNumber = strip(req.params.game);
     const chosenGame = await Game.findOne({number: requestedGameNumber});
     if (!chosenGame) {
         req.flash(

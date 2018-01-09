@@ -10,6 +10,7 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const path = require("path"); // https://www.npmjs.com/package/path
+const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const User = mongoose.model("User");
 const Suspension = mongoose.model("Suspension");
 const mail = require("../../handlers/mail");
@@ -160,7 +161,7 @@ exports.changeUsername = async (req, res) => {
         {_id: req.params.userid},
         {
             $set: {
-                username: req.body.username
+                username: strip(req.body.username)
             }
         },
         {new: true, runValidators: true, context: "query"}
@@ -189,7 +190,7 @@ exports.changeUsername = async (req, res) => {
 exports.changeEmail = async (req, res) => {
     const editedUser = await User.findOneAndUpdate(
         {_id: req.params.userid},
-        {$set: {email: req.body.email}},
+        {$set: {email: strip(req.body.email)}},
         {new: true, runValidators: true, context: "query"}
     );
     logger.success(
@@ -220,7 +221,7 @@ exports.resetAvatar = async (req, res) => {
     await del(filepath);
     logger.info(`[App] deleted old avatar ${req.body.currAvatarUrl}`);
     const editedUser = await User.findOneAndUpdate(
-        {_id: req.params.userid},
+        {_id: strip(req.params.userid)},
         {$set: {avatar: undefined}},
         {new: true, runValidators: true, context: "query"}
     );

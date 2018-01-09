@@ -9,6 +9,7 @@ const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
+const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const {getCaptcha} = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
 const mail = require("../../handlers/mail");
@@ -65,7 +66,7 @@ exports.validateRequest = async (req, res, next) => {
     }
 
     // check if we found a user with that email address
-    const emailUser = await User.findOne({email: req.body.email});
+    const emailUser = await User.findOne({email: strip(req.body.email)});
     if (!emailUser) {
         errors.email = {msg: i18n.__("APP.RESET.ERR_EmailNotFound")};
         logger.error(
@@ -195,7 +196,7 @@ exports.validateResetToken = async (req, res, next) => {
         `[App] password reset token validation. token: ${req.params.token}`
     );
     const user = await User.findOne({
-        resetPasswordToken: req.params.token,
+        resetPasswordToken: strip(req.params.token),
         resetPasswordExpires: {$gt: moment().toISOString()}
     });
     if (!user) {
@@ -226,7 +227,7 @@ exports.showChangeForm = async (req, res) => {
         session: req.session,
         data: {
             user: req._user,
-            token: req.params.token
+            token: strip(req.params.token)
         }
     });
 };
@@ -261,7 +262,7 @@ exports.validateChangeForm = async (req, res, next) => {
             data: {
                 password: req.body.password,
                 passwordConfirm: req.body.passwordConfirm,
-                token: req.params.token
+                token: strip(req.params.token)
             },
             errors: validationResult.mapped(),
             flashes: req.flash()

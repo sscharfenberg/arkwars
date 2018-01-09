@@ -1,8 +1,23 @@
 {
     "title": "Empire",
-    "stats": {
+    "res": {
         "stars": "Stars",
         "fleets": "Fleets",
         "ships": "Ships"
+    },
+    "star": {
+        "spectralType": "Spectral type",
+        "name": {
+            "edit": "Edit star name",
+            "inputPlaceHolder": "Enter new star name",
+            "cancel": "Cancel editing and discard changes",
+            "save": "Save star name",
+            "validation": {
+                "minLength": "Star name must have at least {min} characters.",
+                "maxLength": "Star name must not have more than {max} characters.",
+                "required": "Star name is required."
+            }
+        },
+        "location": "Star Location"
     }
 }

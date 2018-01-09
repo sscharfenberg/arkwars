@@ -14,6 +14,7 @@ const multer = require("multer"); // https://github.com/expressjs/multer
 const path = require("path"); // https://www.npmjs.com/package/path
 const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
 const uuid = require("uuid"); // https://www.npmjs.com/package/uuid
+const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const User = mongoose.model("User");
 const Game = mongoose.model("Game");
 const Player = mongoose.model("Player");
@@ -134,7 +135,7 @@ exports.updateEmail = async (req, res, next) => {
         { _id: req.user._id },
         {
             $set: {
-                email: req.body.email,
+                email: strip(req.body.email),
                 emailConfirmed: false,
                 emailConfirmationToken: crypto.randomBytes(20).toString("hex"),
                 emailConfirmationExpires: moment().add(1, "hours")

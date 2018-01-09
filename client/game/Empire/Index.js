@@ -5,6 +5,7 @@
  **********************************************************************************************************************/
 import Vue from "vue";
 import VueI18n from "vue-i18n";
+import Vuelidate from "vuelidate";
 import store from "../store/store";
 import Empire from "./Empire.vue";
 import {getAreaMessages} from "../handlers/messages";
@@ -13,6 +14,7 @@ import {getLocale, getAreaSlug, getMessagesVersion} from "../handlers/gameConsta
 if (document.getElementById("gameRoot")) {
     const locale = getLocale();
     Vue.use(VueI18n);
+    Vue.use(Vuelidate);
     getAreaMessages(locale, getAreaSlug(), getMessagesVersion(), messages => {
         let i18nConfig = {
             locale: locale,
@@ -32,3 +34,4 @@ if (document.getElementById("gameRoot")) {
         });
     });
 }
+

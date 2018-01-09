@@ -123,12 +123,16 @@ block content
             .aw-form__row
                 .aw-form__submit
                     //- this is embarassignly simple. TODO: use some sort of modal.
-                    button.aw-btn.aw-btn--icon(
+                    button#deleteActButton.aw-btn.aw-btn--icon(
                         type="submit",
-                        onclick="if (!window.confirm(\"" + h.__("APP.DASHBOARD.INFOBOX.DELETE.CONFIRM") + "\")) return false;"
+                        data-confirm=(h.__("APP.DASHBOARD.INFOBOX.DELETE.CONFIRM"))
                     )
                         != h.icon("delete", ["small"])
                         != h.__("APP.DASHBOARD.INFOBOX.DELETE.SUBMIT")
+                    script(nonce=(nonce)).
+                        document.getElementById("deleteActButton").addEventListener("click", function () {
+                            if (!window.confirm(this.getAttribute("data-confirm"))) return false;
+                        });
                     .aw-form__row-description!= h.__("APP.DASHBOARD.INFOBOX.DELETE.EXPLANATION")
 
 

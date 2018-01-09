@@ -85,12 +85,17 @@ block content
             if map && map.points
                 .aw-form__row
                     .aw-form__submit
-                        button.aw-btn.aw-btn--icon(
-                            type="submit",
-                            onclick="document.forms.seedGameForm.action=\"/admin/games/" + game.id + "/seed/save\""
+                        button#submitBtn.aw-btn.aw-btn--icon(
+                            type="submit"
+                            data-gameid=(game.id)
                         )
                             != h.icon("save", ["small"])
                             != h.__("ADMIN.GAME.SEED.SAVE")
+                        script(nonce=(nonce)).
+                            document.getElementById("submitBtn").addEventListener("click", function () {
+                                const url = "/admin/games/" + this.getAttribute("data-gameid") + "/seed/save";
+                                document.forms.seedGameForm.action = url;
+                            });
 
             if map && map.points
                 - let tableClass = "admin-map--small"

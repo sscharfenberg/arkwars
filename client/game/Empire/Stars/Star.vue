@@ -6,12 +6,21 @@
     import Icon from "Game/common/Icon/Icon.vue";
     import Button from "Game/common/Button/Button.vue";
     import Spinner from "Game/common/Spinner/Spinner.vue";
+    import { required, minLength, maxLength } from "vuelidate/lib/validators";
     export default {
         data: function() {
             return {
                 starName: this.name,
                 savingStarName: false
             };
+        },
+        validations: {
+            starName: {
+                // this needs to be synced with /server/config/index.js
+                required,
+                minLength: minLength(4),
+                maxLength: maxLength(40)
+            }
         },
         props: {
             id: {
@@ -33,11 +42,18 @@
             name: {
                 type: String,
                 required: true
+            },
+            planets: {
+                type: Array,
+                required: true
             }
         },
         computed: {
             spectralClassName: function () {
                 return `star__spectral--${this.spectral}`;
+            },
+            spectralTypeString: function() {
+                return this.$t("star.spectralType") + ": " + this.spectral;
             },
             isStarNameSaving: function () {
                 return this.$store.getters.savingStarNameIds.includes(this.id);
@@ -76,8 +92,8 @@
         <header class="star__header">
             <div class="star__spectral"
                 v-bind:class="spectralClassName"
-                aria-label="Spectral Type"
-                title="Spectral Type"></div>
+                :aria-label="spectralTypeString"
+                :title="spectralTypeString"></div>
 
             <h1 class="star__name">
                 <span
@@ -88,46 +104,77 @@
                     :onClick="startEditStarName"
                     iconName="edit"
                     class="star__btn star__btn--edit"
-                    label="edit star name"/>
+                    :label="$t('star.name.edit')"
+                    :aria-label="$t('star.name.edit')" />
 
-                <span v-show="isStarNameEditing" class="star__edit">
-                    <input
-                        type="text"
-                        v-model="starName"
-                        maxlength="40"
-                        ref="starNameInput"
-                        @keyup.enter="saveStarName"
-                        @keyup.esc="cancelEditStarName" />
+                <div v-show="isStarNameEditing" class="star__edit">
+                    <div class="star__name-input">
+                        <input
+                            type="text"
+                            v-model="starName"
+                            maxlength="40"
+                            ref="starNameInput"
+                            :placeholder="$t('star.name.inputPlaceHolder')"
+                            :aria-label="$t('star.name.inputPlaceHolder')"
+                            @keyup.enter="saveStarName"
+                            @keyup.esc="cancelEditStarName"
+                            @keyup="$v.starName.$touch()"
+                            required />
+                    </div>
                     <btn
                         v-if="!isStarNameSaving"
                         :onClick="saveStarName"
                         iconName="done"
                         class="star__btn star__btn--save"
-                        label="Save star name" />
+                        :disabled="$v.starName.$error"
+                        :aria-disabled="$v.starName.$error"
+                        :label="$t('star.name.save')"
+                        :aria-label="$t('star.name.save')" />
                     <btn
                         v-if="!isStarNameSaving"
                         :onClick="cancelEditStarName"
                         iconName="cancel"
                         class="star__btn star__btn--cancel"
-                        label="Cancel editing starname" />
+                        :label="$t('star.name.cancel')"
+                        :aria-label="$t('star.name.cancel')" />
                     <spinner v-if="isStarNameSaving" />
-                </span>
+                </div>
             </h1>
 
             <aside class="star__location"
-                   aria-label="Star Location"
-                   title="Star Location">
+                   :aria-label="$t('star.location')"
+                   :title="$t('star.location')">
                 <div class="star__location-inner">
                     <icon class="location-icon" name="location" />
                     <span>{{ coordX }}/{{ coordY }}</span>
                 </div>
             </aside>
         </header>
+        <div v-if="$v.starName.$error" class="error-message">
+            <div v-if="!$v.starName.minLength">
+                {{ $t('star.name.validation.minLength', { min: $v.starName.$params.minLength.min }) }}
+            </div>
+            <div v-if="!$v.starName.maxLength">
+                {{ $t('star.name.validation.maxLength', { max: $v.starName.$params.maxLength.max }) }}
+            </div>
+            <div v-if="!$v.starName.required">
+                {{ $t('star.name.validation.required') }}
+            </div>
+        </div>
     </article>
 </template>
 
 <style lang="scss" scoped>
     .star {
+
+        background:
+            radial-gradient(
+                ellipse 35px 35px at 25px 25px,
+                transparent 0%,
+                transparent 99%,
+                palette("grey", "sunken") 100%
+            );
+
         &__header {
             display: flex;
 
@@ -180,13 +227,13 @@
             @include respond-to("small") {
                 margin-left: -1rem;
 
-                background:
-                    radial-gradient(
-                        ellipse 35px 35px at -12px 50%,
-                        transparent 0%,
-                        transparent 99%,
-                        palette("grey", "sunken") 100%
-                    );
+                //background:
+                //    radial-gradient(
+                //        ellipse 35px 35px at -12px 50%,
+                //        transparent 0%,
+                //        transparent 99%,
+                //        palette("grey", "sunken") 100%
+                //    );
             }
         }
 
@@ -204,16 +251,20 @@
             align-items: center;
 
             flex-grow: 1;
+        }
+
+        &__name-input {
+            flex-grow: 1;
 
             > input[type="text"] {
+                width: calc(100% - 2.5rem);
                 padding: 0.5rem 1rem;
                 border: 0;
-                flex-grow: 1;
 
                 background: transparent;
                 color: palette("text");
 
-                font-size: 0.8em;
+                font-size: 0.7em;
                 font-weight: 100;
                 line-height: 1;
 
@@ -269,6 +320,26 @@
 
                 text-align: center;
             }
+        }
+
+        .error-message {
+            padding: 0.2rem 1rem;
+
+            background: palette("grey", "sunken");
+            color: palette("state", "error");
+
+            font-size: 1.2rem;
+            text-align: center;
+
+            //&:first-of-type {
+            //    background:
+            //        radial-gradient(
+            //            ellipse 35px 35px at 26px -24px,
+            //            transparent 0%,
+            //            transparent 99%,
+            //            palette("grey", "sunken") 100%
+            //        );
+            //}
         }
     }
 </style>

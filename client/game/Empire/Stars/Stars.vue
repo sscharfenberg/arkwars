@@ -3,7 +3,7 @@
      * List all my stars
      * this component lists the stars
      ******************************************************************************************************************/
-    import Star from "./Star/Star.vue";
+    import Star from "./Star.vue";
     export default {
         computed: {
             stars: function () {
@@ -24,7 +24,8 @@
                 :name="star.name"
                 :coord-x="star.coordX"
                 :coord-y="star.coordY"
-                :spectral="star.spectral" />
+                :spectral="star.spectral"
+                :planets="star.planets" />
         </li>
     </ul>
     <div v-else>

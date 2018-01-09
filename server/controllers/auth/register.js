@@ -9,6 +9,7 @@ const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6
 const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
+const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const User = mongoose.model("User");
 const {getCaptcha} = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
@@ -132,8 +133,8 @@ exports.validateRegistration = async (req, res, next) => {
  */
 exports.doRegistration = async (req, res, next) => {
     const user = new User({
-        email: req.body.email,
-        username: req.body.username,
+        email: strip(req.body.email),
+        username: strip(req.body.username),
         locale: req.session.locale || "en",
         emailConfirmationToken: crypto.randomBytes(20).toString("hex"),
         emailConfirmationExpires: moment().add(1, "hours")
@@ -188,7 +189,7 @@ exports.sendConfirmationEmail = async (req, res) => {
  */
 exports.confirmEmail = async (req, res, next) => {
     const user = await User.findOne({
-        emailConfirmationToken: req.params.token,
+        emailConfirmationToken: strip(req.params.token),
         emailConfirmationExpires: {$gt: moment().toISOString()}
     });
     logger.debug(

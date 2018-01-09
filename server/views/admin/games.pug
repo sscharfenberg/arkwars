@@ -47,8 +47,7 @@ block content
                                             id="sort_number_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "number_asc"),
-                                            aria-checked=(data && data.sort === "number_asc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "number_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_number_asc",
@@ -62,8 +61,7 @@ block content
                                             id="sort_number_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "number_desc"),
-                                            aria-checked=(data && data.sort === "number_desc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "number_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_number_desc",
@@ -85,8 +83,7 @@ block content
                                             id="sort_turn_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "turn_asc"),
-                                            aria-checked=(data && data.sort === "turn_asc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "turn_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_turn_asc",
@@ -100,8 +97,7 @@ block content
                                             id="sort_turn_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "turn_desc"),
-                                            aria-checked=(data && data.sort === "turn_desc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "turn_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_turn_desc",
@@ -121,8 +117,7 @@ block content
                                             id="sort_created_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "created_asc"),
-                                            aria-checked=(data && data.sort === "created_asc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "created_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_created_asc",
@@ -136,8 +131,7 @@ block content
                                             id="sort_created_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "created_desc"),
-                                            aria-checked=(data && data.sort === "created_desc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "created_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_created_desc",
@@ -155,8 +149,7 @@ block content
                                             id="sort_startDate_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "startDate_asc"),
-                                            aria-checked=(data && data.sort === "startDate_asc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "startDate_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_startDate_asc",
@@ -170,8 +163,7 @@ block content
                                             id="sort_startDate_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "startDate_desc"),
-                                            aria-checked=(data && data.sort === "startDate_desc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "startDate_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_startDate_desc",
@@ -189,8 +181,7 @@ block content
                                             id="sort_turnDue_asc",
                                             aria-label=(h.__("APP.SORT.ASC")),
                                             checked=(data && data.sort === "turnDue_asc"),
-                                            aria-checked=(data && data.sort === "turnDue_asc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "turnDue_asc")
                                         )
                                         label.aw-sort__asc(
                                             for="sort_turnDue_asc",
@@ -204,8 +195,7 @@ block content
                                             id="sort_turnDue_desc",
                                             aria-label=(h.__("APP.SORT.DESC")),
                                             checked=(data && data.sort === "turnDue_desc"),
-                                            aria-checked=(data && data.sort === "turnDue_desc"),
-                                            onchange="document.forms.sortGames.submit();"
+                                            aria-checked=(data && data.sort === "turnDue_desc")
                                         )
                                         label.aw-sort__desc(
                                             for="sort_turnDue_desc",
@@ -285,8 +275,16 @@ block content
                                             title=`${h.__("GAME.STATUS.Enlistable")}`
                                         )
                                             != h.icon("galnet")
-        h1 data
-        pre= h.dump(data)
+
+                //- simple page specific js
+                script(nonce=(nonce)).
+                    var _sort = document.querySelectorAll("input[type=radio]");
+                    for (var i = 0; i < _sort.length; i++) {
+                        _sort[i].addEventListener("change", function() {
+                            document.forms.sortGames.submit();
+                        });
+                    }
+
 
 block scripts
     include ../webpack/admin.footer.pug

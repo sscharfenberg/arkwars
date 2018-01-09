@@ -6,6 +6,7 @@
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const mongoose = require("mongoose"); // http://mongoosejs.com/
+const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const logger = require("../../handlers/logger/console");
 const Game = mongoose.model("Game");
 const Player = mongoose.model("Player");
@@ -37,7 +38,7 @@ exports.showGames = async (req, res) => {
         sortField = req.params.sortField;
         sortDirection = req.params.sortDirection;
     }
-    sort[sortField] = sortDirection; // object notation for mongoose
+    sort[sortField] = strip(sortDirection); // object notation for mongoose
     data.sort = `${sortField}_${sortDirection}`; // pass to pug as value of input[name=sort]
 
     const gamesPromise = Game.find({})
@@ -253,7 +254,7 @@ exports.newGame = async (req, res, next) => {
     req.body.number =
         (await Game.findOne({}).sort({number: "desc"})).number + 1;
     req.body.turnDue = req.body.startDate;
-    const game = await new Game(req.body).save();
+    const game = await new Game(strip(req.body)).save();
     if (!game) {
         logger.error(
             `[Admin ${chalk.cyan(
@@ -312,7 +313,7 @@ exports.showSeedGame = async (req, res) => {
  *
  */
 exports.seedGamePreview = async (req, res) => {
-    const game = await Game.findOne({_id: req.params.id});
+    const game = await Game.findOne({_id: strip(req.params.id)});
     let map = [];
     game.dimensions = req.body.dimensions || cfg.games.dimensions.default;
 

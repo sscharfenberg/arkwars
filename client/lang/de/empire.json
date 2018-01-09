@@ -1,8 +1,23 @@
 {
     "title": "Imperium",
-    "stats": {
+    "res": {
         "stars": "Systeme",
         "fleets": "Flotten",
         "ships": "Schiffe"
+    },
+    "star": {
+        "spectralType": "Spektralklasse",
+        "name": {
+            "edit": "Name des Sterns ändern",
+            "inputPlaceHolder": "Bitte geben Sie den neuen Namen des Sterns ein",
+            "cancel": "Ändern abbrechen und Änderungen verwerfen",
+            "save": "Name speichern",
+            "validation": {
+                "minLength": "Name des Sterns muss mindestens {min} Zeichen enthalten.",
+                "maxLength": "Name des Sterns darf nicht mehr als {max} Zeichen enthalten.",
+                "required": "Name des Sterns muss ausgefüllt werden."
+            }
+        },
+        "location": "Sternenposition"
     }
 }

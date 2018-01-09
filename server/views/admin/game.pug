@@ -205,12 +205,18 @@ block content
 
                 .aw-form__row
                     .aw-form__submit
-                        a.aw-btn.aw-btn--icon(
+
+                        a#deleteBtn.aw-btn.aw-btn--icon(
                             href=`/admin/games/${game.id}/delete`,
-                            onclick="if (!window.confirm(\"" + h.__("ADMIN.GAME.DELETECONFIRM", game.number) + "\")) return false;"
+                            data-confirm=(h.__("ADMIN.GAME.DELETECONFIRM", game.number))
                         )
                             != h.icon("delete", ["small"])
                             != h.__("ADMIN.GAME.DELETE")
+                        script(nonce=(nonce)).
+                            document.getElementById("deleteBtn").addEventListener("click", function () {
+                                if (!window.confirm(this.getAttribute("data-confirm"))) return false;
+                            });
+
                         .aw-form__row-description!= h.__("ADMIN.GAME.DELETEDESC")
 
 block scripts
