@@ -100,7 +100,7 @@ module.exports = {
             out: path.join(BUILDDIR, "images")
         },
         gameIcons: {
-            in: [path.join(PROJECTROOT, "client", "game", "common", "Icon", "**/*.svg")],
+            in: [path.join(PROJECTROOT, "client", "game", "common", "Icon", "*.svg")],
             out: path.join(BUILDDIR, "images")
         },
         eslintrc: path.join(PROJECTROOT, "internals", "config", ".eslintrc"),

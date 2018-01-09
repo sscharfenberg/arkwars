@@ -1,13 +1,13 @@
 <script>
     /*******************************************************************************************************************
-     * StarsList
+     * List all my stars
      * this component lists the stars
      ******************************************************************************************************************/
     import Star from "./Star/Star.vue";
     export default {
         computed: {
             stars: function () {
-                return this.$store.getters.GET_stars;
+                return this.$store.getters.stars;
             }
         },
         components: {
@@ -20,6 +20,7 @@
     <ul v-if="stars.length > 0">
         <li v-for="star in stars">
             <star
+                :id="star.id"
                 :name="star.name"
                 :coord-x="star.coordX"
                 :coord-y="star.coordY"
@@ -27,7 +28,7 @@
         </li>
     </ul>
     <div v-else>
-        No Stars
+        No Stars!
     </div>
 </template>
 
@@ -37,9 +38,23 @@
         margin: 1rem 0 0 0;
 
         list-style: none;
+
+        @include respond-to("medium") {
+            margin-top: 2rem;
+        }
     }
 
     li {
-        background: palette("grey", "bunker");
+        display: block;
+
+        margin-bottom: 1rem;
+
+        @include respond-to("medium") {
+            margin-bottom: 2rem;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 </style>

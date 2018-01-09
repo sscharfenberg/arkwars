@@ -40,11 +40,7 @@ router.post("/user/closedrawer", catchErrors(userController.closeDrawer));
 // get language and area specific textstrings
 router.get("/textstrings/:locale/:area", apiController.getTextStrings);
 
-// get game data for player
-router.get(
-    "/game/:gameid/player/:playerid/data",
-    apiController.checkGameDataPermission, // 1. make sure the current user is allowed to get game data
-    catchErrors(apiController.getGameData) // 2. get game data, shuffle it around and send to client
-);
+// api/game/empire routes
+router.use("/game/empire/", require("./empire"));
 
 module.exports = router;

@@ -1,5 +1,10 @@
 # Changelog
 
+`09.01.2018`
+- [x] VueJS is a joy to work with.
+- [x] improving Stars / Star Components for Empire screen. Star shows spectral type image, name of the star, and the location. Also, there is an edit button to change the name of the star; since editing should be done inline we needed different states (editing, saving) and show different buttons (edit, save, cancel) as well as a loading spinner while the XHR request is pending. API saves the name of the star and the state (gameData) is updated.
+- [x] switched npm scripts around a bit. now you need two seperate node tasks for development, `app.static.watch` and `js.dev`. Splitting them means we don't have a massive task; restarts are not as bad then.
+
 `07.01.2018`
 - [x] Apparently I am easily influenced/scared - [HackerNoon](https://hackernoon.com/im-harvesting-credit-card-numbers-and-passwords-from-your-site-here-s-how-9a8cb347c5b5) made me implement a CSP policy. It doesn't hurt, but I am not happy with Vue's "unsafe-eval" requirement - and I probably spend too much time on twitter. CSP report API endpoint created, which simply logs the report, header and user.
 - [x] switched to `UglifyJS3`, mainly to remove an error message (UglifyJS@2 has problems with the webpack output "unexcepted token punc"). Turns out v3 minifies better, bundle size went down ~30%. I'll take it.

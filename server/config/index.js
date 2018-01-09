@@ -161,7 +161,7 @@ const appConfig = {
         ],
         name: {
             initial: [4, 6], // range for initially generated names
-            bounds: [4, 30] // range for player edited names
+            bounds: [4, 40] // range for player edited names
         },
         planets: {
             npc: [3, 10], // range for numplanets in npc systems

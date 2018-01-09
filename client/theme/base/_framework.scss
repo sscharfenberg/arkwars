@@ -21,13 +21,21 @@ body {
     background: palette("grey", "ebony") image("bg-circuit-board.svg");
     color: palette("text", "light");
 
-    font-family: map-get($fonts, "system");
     font-size: 1.6rem;
     font-weight: 300;
     line-height: 1.4;
     text-decoration-skip: ink;
+}
 
-    &.fonts-loaded {
+body,
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: map-get($fonts, "system");
+
+    .fonts-loaded & {
         font-family: map-get($fonts, "text");
     }
 }

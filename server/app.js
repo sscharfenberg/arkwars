@@ -74,9 +74,6 @@ app.use(compression());
 // serves up static files from the public folder. Anything in public/ will just be served up as the file it is
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-// Takes the raw requests and turns them into usable properties on req.body
-app.use(bodyParser.json({type: "application/json"}));
-
 // https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions
 app.use(bodyParser.urlencoded({extended: true}));
 

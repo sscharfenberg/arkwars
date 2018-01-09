@@ -5,9 +5,15 @@
  * SYNC
  *
  **********************************************************************************************************************/
+import Vue from "vue";
 import cfg from "../../config";
 
 const MUTATIONS = {
+
+    /* =================================================================================================================
+     * COMMON MUTATIONS ================================================================================================
+     * ============================================================================================================== */
+
     /*
      * SET gameData
      * @param {Object} state - Vuex $store.state
@@ -26,6 +32,51 @@ const MUTATIONS = {
     FETCHING_GAME_DATA_FROM_API: (state, payload) => {
         state.fetchingGameDataFromApi = payload;
     },
+
+
+    /* =================================================================================================================
+     * EMPIRE MUTATIONS ================================================================================================
+     * ============================================================================================================== */
+
+    /*
+     * SET/UNSET "Editing star name" for a specific star
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload - {id:Mongoose.ObjectId, editing:Boolean}
+     */
+    EDITING_STAR_NAME: (state, payload) => {
+        if (payload.editing) {
+            state.editingStarName.push(payload.id); // add ID to array
+        } else {
+            state.editingStarName.splice(state.editingStarName.indexOf(payload.id), 1); // remove ID from array
+        }
+    },
+
+    /*
+     * SET/UNSET "Saving star name" for a specific star
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
+     */
+    SAVING_STAR_NAME: (state, payload) => {
+        if (payload.saving) {
+            state.savingStarName.push(payload.id); // add ID to array
+        } else {
+            state.savingStarName.splice(state.savingStarName.indexOf(payload.id), 1); // remove ID from array
+        }
+    },
+
+    /*
+     * update game data and set star name for a specific star
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload - {id:Mongoose.ObjectId, name:String}
+     */
+    SET_STAR_NAME: (state, payload) => {
+        state.gameData.stars.forEach( (star, index) => {
+            if ( star.id === payload.id ) {
+                star.name = payload.name;
+                Vue.set(state.gameData.stars, index, star);
+            }
+        });
+    }
 
 };
 

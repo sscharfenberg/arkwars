@@ -17,14 +17,22 @@ const store = new Vuex.Store({
         playerId: getPlayerId(),
         serverTextsVersion: getMessagesVersion(),
         gameData: {},
-        fetchingGameDataFromApi: false
+        fetchingGameDataFromApi: false,
+        savingStarName: [],
+        editingStarName: []
     },
     getters: {
-        GET_fetchingGameDataFromApi: state => {
+        fetchingGameDataFromApi: state => {
             return state.fetchingGameDataFromApi;
         },
-        GET_stars: state => {
+        stars: state => {
             return state.gameData.stars || [];
+        },
+        savingStarNameIds: state => {
+            return state.savingStarName;
+        },
+        editingStarNameIds: state => {
+            return state.editingStarName;
         }
     },
     mutations,

@@ -19,10 +19,9 @@
     },
     "scripts": {
         "server.start": "node server/monitor-backend.js",
-        "server.start.inspect": "node --inspect server/monitor-backend.js",
         "server.cron": "node server/monitor-cron.js",
-        "dev.watch": "gulp watch",
         "app.static.build": "gulp build:static",
+        "app.static.watch": "gulp watch",
         "js.prod": "node internals/npm/js.prod.js",
         "js.dev": "node internals/npm/js.dev.js",
         "app.styles.build": "gulp styles:build",

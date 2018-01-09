@@ -30,9 +30,10 @@ const baseLoaders = [
         loader: "sass-loader",
         options: {
             sourceMap: true,
-            data: `@import "~theme/abstracts/config";
-@import "~theme/abstracts/functions";
-@import "~theme/abstracts/mixins";`
+            // "~" means "resolve as a module"
+            data: `@import "~Theme/abstracts/config";
+@import "~Theme/abstracts/functions";
+@import "~Theme/abstracts/mixins";`
         }
     }
 ];
@@ -168,7 +169,8 @@ const webpackConfig = {
         // https://webpack.js.org/configuration/resolve/#resolve-alias
         alias: {
             vue$: "vue/dist/vue.esm.js",
-            theme: path.join(cfg.projectRoot, "client", "theme")
+            Theme: path.join(cfg.projectRoot, "client", "theme"),
+            Game: path.join(cfg.projectRoot, "client", "game")
         },
         // symbolic links. disable if needed
         // https://webpack.js.org/configuration/resolve/#resolve-symlinks
