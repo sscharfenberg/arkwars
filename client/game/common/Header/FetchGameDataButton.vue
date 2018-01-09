@@ -5,17 +5,6 @@
     import Icon from "Game/common/Icon/Icon.vue";
     import Spinner from "Game/common/Spinner/Spinner.vue";
     export default {
-        data() {
-            return {
-                spinner: {
-                    size: 14,
-                    status: true,
-                    depth: 5,
-                    rotation: true,
-                    speed: 0.8,
-                }
-            };
-        },
         components: {
             "icon": Icon,
             "spinner": Spinner
@@ -42,11 +31,8 @@
         :aria-label="fetching ? $t('common.header.refreshGameDataBtn.fetching') : $t('common.header.refreshGameDataBtn.fetch')">
         <span v-if="fetching">
             <spinner
-                :status="spinner.status"
-                :size="spinner.size"
-                :depth="spinner.depth"
-                :rotation="spinner.rotation"
-                :speed="spinner.speed" />
+                :size="20"
+                :depth="2" />
             {{ $t("common.header.refreshGameDataBtn.fetching") }} ...
         </span>
         <span v-else>
@@ -58,13 +44,14 @@
 
 <style lang="scss" scoped>
     button {
+        position: relative;
+
         height: 3.6rem;
         padding: 0.5rem 1rem;
         border: 1px solid palette("grey", "sunken");
-        margin: 1.6rem;
-        flex: 0 0 auto;
+        margin: 1.6rem 0 0 1.6rem;
 
-        background: rgba(palette("grey", "raven"), 0.5);
+        background: rgba(palette("grey", "raven"), 0.6);
         color: palette("text", "base");
 
         cursor: pointer;
@@ -72,6 +59,14 @@
         transition:
             background-color map-get($animation-speeds, "fast") linear,
             color map-get($animation-speeds, "fast") linear;
+
+        @include respond-to("small") {
+            position: absolute;
+            top: 1.6rem;
+            right: 1.6rem;
+
+            margin: 0;
+        }
 
         &:hover:not([disabled]),
         &:focus {

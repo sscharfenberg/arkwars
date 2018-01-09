@@ -33,6 +33,9 @@ const store = new Vuex.Store({
         },
         editingStarNameIds: state => {
             return state.editingStarName;
+        },
+        player: state => {
+            return state.gameData.player;
         }
     },
     mutations,

@@ -3,6 +3,7 @@
 `09.01.2018`
 - [x] VueJS is a joy to work with.
 - [x] improving Stars / Star Components for Empire screen. Star shows spectral type image, name of the star, and the location. Also, there is an edit button to change the name of the star; since editing should be done inline we needed different states (editing, saving) and show different buttons (edit, save, cancel) as well as a loading spinner while the XHR request is pending. API saves the name of the star and the state (gameData) is updated.
+- [x] added resources mockup and player name/ticker to header. need to consider how to implement them, possibly as get functions in the Mongoose player model. 
 - [x] switched npm scripts around a bit. now you need two seperate node tasks for development, `app.static.watch` and `js.dev`. Splitting them means we don't have a massive task; restarts are not as bad then.
 
 `07.01.2018`
