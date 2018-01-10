@@ -7,7 +7,7 @@
 - [x] switched npm scripts around a bit. now you need two seperate node tasks for development, `app.static.watch` and `js.dev`. Splitting them means we don't have a massive task; restarts are not as bad then.
 - [x] added lazy sanitization.
 - [x] added form validation via `vuelidate` (love the name!) so the client can't enter invalid star names. server validates this as well.
-- [x] paid some technical debt - I lazily used `onClick` and `onChange` event handler in the pug template. Under our CSP policy, these are `unsafe-inline`and should be avoided at all cost. Refactored these event handlers and turned them into script tags including our generated UUID nonce. better.
+- [x] paid some technical debt - I lazily used `onClick` and `onChange` event handlers in the pug template. Under our CSP policy, these are `unsafe-inline` and should be avoided at all cost. Refactored these event handlers and turned them into script tags including our generated UUID nonce. better.
 
 `07.01.2018`
 - [x] Apparently I am easily influenced/scared - [HackerNoon](https://hackernoon.com/im-harvesting-credit-card-numbers-and-passwords-from-your-site-here-s-how-9a8cb347c5b5) made me implement a CSP policy. It doesn't hurt, but I am not happy with Vue's "unsafe-eval" requirement - and I probably spend too much time on twitter. CSP report API endpoint created, which simply logs the report, header and user.

@@ -100,7 +100,7 @@
                     class="star__name-text"
                     v-show="!isStarNameEditing">{{ name }}</span>
                 <btn
-                    v-if="!isStarNameEditing"
+                    v-show="!isStarNameEditing"
                     :onClick="startEditStarName"
                     iconName="edit"
                     class="star__btn star__btn--edit"
@@ -122,7 +122,7 @@
                             required />
                     </div>
                     <btn
-                        v-if="!isStarNameSaving"
+                        v-show="!isStarNameSaving"
                         :onClick="saveStarName"
                         iconName="done"
                         class="star__btn star__btn--save"
@@ -131,7 +131,7 @@
                         :label="$t('star.name.save')"
                         :aria-label="$t('star.name.save')" />
                     <btn
-                        v-if="!isStarNameSaving"
+                        v-show="!isStarNameSaving"
                         :onClick="cancelEditStarName"
                         iconName="cancel"
                         class="star__btn star__btn--cancel"

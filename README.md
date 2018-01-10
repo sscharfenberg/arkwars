@@ -1,4 +1,5 @@
 # ArkWars
+![](./docs/license.svg) ![](./docs/mongodb.svg) ![](./docs/node.svg) ![](./docs/npm.svg)
 
 Frontend and Backend for Arkwars (**working title!**) - a strategic turn-based game of galactic conquest.
 
@@ -16,7 +17,7 @@ Use at your own risk.
 
 * MongoDB 3.4 Database
 * Redis database as session store
-* NodeJS 8.9.0 LTS, npm 5.5.1
+* NodeJS 8.9.4 LTS, npm 5.6.0
 
 ## Usage: npm Scripts
 
