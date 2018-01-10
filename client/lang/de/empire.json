@@ -19,5 +19,19 @@
             }
         },
         "location": "Sternenposition"
+    },
+    "planet": {
+        "typeLabel": "Planetarer Typ",
+        "types": {
+            "terrestrial": "Terrestrisch",
+            "gas": "Gas",
+            "ice": "Eis",
+            "iron": "Eisen",
+            "desert": "Wüste",
+            "toxic": "Toxisch",
+            "carbon": "Karbon",
+            "tomb": "Grabwelt"
+        },
+        "name": "Planeten Name"
     }
 }

@@ -108,10 +108,6 @@
 
         list-style: none;
 
-        //@include respond-to("medium") {
-        //    align-self: flex-end;
-        //}
-
         > li {
             padding: 0.2rem 0.5rem;
             border: 1px solid palette("grey", "sunken");

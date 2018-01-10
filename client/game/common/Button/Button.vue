@@ -15,23 +15,35 @@
             iconName: {
                 type: String
             },
-            disabled: {
+            disable: {
                 type: Boolean,
                 default: false
             },
             label: {
                 type: String
+            },
+            scale: {
+                type: Number, // [0..2]
+                default: 2
             }
         },
         computed: {
             isDisabled() {
-                return this.disabled;
+                return this.disable;
             },
             typeModifier() {
                 return this.iconName && !this.textString ? "btn--icon" : "btn--text";
             },
             getLabel() {
                 return this.label || this.textString || "";
+            },
+            getSizeClass() {
+                switch(this.scale) {
+                    case 0: return "tiny";
+                    case 1: return "small";
+                    case 2: return "";
+                    case 3: return "large";
+                }
             }
         },
         components: {
@@ -42,13 +54,15 @@
 
 <template>
     <button class="btn"
+            v-bind:class="[typeModifier, getSizeClass]"
             @click="onClick"
             :disabled="isDisabled"
             :aria-disabled="isDisabled"
-            v-bind:class="typeModifier"
             :aria-label="getLabel"
             :title="getLabel">
-        <icon v-if="iconName" :name="iconName" />
+        <icon v-if="iconName"
+            :name="iconName"
+            :size="scale" />
         <span v-if="textString">{{ textString }}</span>
     </button>
 </template>
@@ -89,6 +103,10 @@
             width: $btnBaseHeight;
 
             border-radius: 50%;
+
+            &.tiny { width: 2.6rem; }
+            &.small { width: 3rem; }
+            &.large { width: 4.2rem; }
         }
 
         &[disabled] {
@@ -96,6 +114,10 @@
 
             cursor: not-allowed;
         }
+
+        &.tiny { height: 2.6rem; }
+        &.small { height: 3rem; }
+        &.large { height: 4.2rem; }
     }
 </style>
 

@@ -178,12 +178,12 @@ const appConfig = {
                 chanceHome: 50
             },
             {
-                name: "gas",
+                name: "gas", // jupiter
                 chance: 17,
                 chanceHome: 10
             },
             {
-                name: "ice",
+                name: "ice", //
                 chance: 16,
                 chanceHome: 10
             },
@@ -193,8 +193,8 @@ const appConfig = {
                 chanceHome: 10
             },
             {
-                name: "desert",
-                chance: 30,
+                name: "desert", // mars
+                chance: 29,
                 chanceHome: 10
             },
             {
@@ -203,9 +203,14 @@ const appConfig = {
                 chanceHome: 5
             },
             {
-                name: "carbon",
+                name: "carbon", // venus recolored
                 chance: 2,
                 chanceHome: 5
+            },
+            {
+                name: "tomb",
+                chance: 1,
+                chanceHome: 0
             }
         ]
     },

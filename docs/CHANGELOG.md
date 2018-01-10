@@ -1,5 +1,9 @@
 # Changelog
 
+`10.01.2018`
+- [x] small(ish) finetuning for responsive layout of star.
+- [x] more Vue Components: `Planets` and `Planet`. Empire screen now lists planets below every star, including an image of the planet type, the name of the planet and some mockups (for population, resource extractor slots, pds etc). Apart from the ice planet (which comes from DeviantArt User [opreadorin1](https://opreadorin1.deviantart.com/)), all planets are public domain NASA images of our solar system. 
+
 `09.01.2018`
 - [x] VueJS is a joy to work with.
 - [x] improving Stars / Star Components for Empire screen. Star shows spectral type image, name of the star, and the location. Also, there is an edit button to change the name of the star; since editing should be done inline we needed different states (editing, saving) and show different buttons (edit, save, cancel) as well as a loading spinner while the XHR request is pending. API saves the name of the star and the state (gameData) is updated.

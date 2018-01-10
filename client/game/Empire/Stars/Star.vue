@@ -6,12 +6,12 @@
     import Icon from "Game/common/Icon/Icon.vue";
     import Button from "Game/common/Button/Button.vue";
     import Spinner from "Game/common/Spinner/Spinner.vue";
+    import Planets from "../Planets/Planets.vue";
     import { required, minLength, maxLength } from "vuelidate/lib/validators";
     export default {
         data: function() {
             return {
-                starName: this.name,
-                savingStarName: false
+                starName: this.name
             };
         },
         validations: {
@@ -65,7 +65,8 @@
         components: {
             "icon": Icon,
             "btn": Button,
-            "spinner": Spinner
+            "spinner": Spinner,
+            "planets": Planets
         },
         methods: {
             startEditStarName() {
@@ -80,7 +81,6 @@
                 return this.$store.dispatch("EDIT_STAR_NAME", {id: this.id, editing: false});
             },
             saveStarName() {
-                this.savingStarName = true;
                 return this.$store.dispatch("SAVE_STAR_NAME", {id: this.id, starName: this.starName});
             }
         }
@@ -104,16 +104,16 @@
                     :onClick="startEditStarName"
                     iconName="edit"
                     class="star__btn star__btn--edit"
-                    :label="$t('star.name.edit')"
-                    :aria-label="$t('star.name.edit')" />
+                    :scale="1"
+                    :label="$t('star.name.edit')" />
 
                 <div v-show="isStarNameEditing" class="star__edit">
                     <div class="star__name-input">
                         <input
-                            type="text"
                             v-model="starName"
-                            maxlength="40"
                             ref="starNameInput"
+                            type="text"
+                            maxlength="40"
                             :placeholder="$t('star.name.inputPlaceHolder')"
                             :aria-label="$t('star.name.inputPlaceHolder')"
                             @keyup.enter="saveStarName"
@@ -124,19 +124,18 @@
                     <btn
                         v-show="!isStarNameSaving"
                         :onClick="saveStarName"
-                        iconName="done"
                         class="star__btn star__btn--save"
-                        :disabled="$v.starName.$error"
-                        :aria-disabled="$v.starName.$error"
-                        :label="$t('star.name.save')"
-                        :aria-label="$t('star.name.save')" />
+                        :disable="$v.starName.$error"
+                        iconName="done"
+                        :scale="1"
+                        :label="$t('star.name.save')" />
                     <btn
                         v-show="!isStarNameSaving"
                         :onClick="cancelEditStarName"
                         iconName="cancel"
                         class="star__btn star__btn--cancel"
-                        :label="$t('star.name.cancel')"
-                        :aria-label="$t('star.name.cancel')" />
+                        :scale="1"
+                        :label="$t('star.name.cancel')" />
                     <spinner v-if="isStarNameSaving" />
                 </div>
             </h1>
@@ -161,6 +160,7 @@
                 {{ $t('star.name.validation.required') }}
             </div>
         </div>
+        <planets :planets="planets" :starName="name"/>
     </article>
 </template>
 
@@ -226,14 +226,6 @@
 
             @include respond-to("small") {
                 margin-left: -1rem;
-
-                //background:
-                //    radial-gradient(
-                //        ellipse 35px 35px at -12px 50%,
-                //        transparent 0%,
-                //        transparent 99%,
-                //        palette("grey", "sunken") 100%
-                //    );
             }
         }
 
@@ -242,8 +234,14 @@
 
             flex: 1 1 auto;
 
+            font-size: 2.4rem;
+            line-height: 4.8rem;
             white-space: nowrap;
             text-overflow: ellipsis;
+
+            @include respond-to("small") {
+                font-size: 3rem;
+            }
         }
 
         &__edit {
@@ -316,9 +314,16 @@
             }
 
             > span {
-                width: 4rem;
+                width: 3rem;
 
+                font-size: 0.8em;
                 text-align: center;
+
+                @include respond-to("small") {
+                    width: 4rem;
+
+                    font-size: 1em;
+                }
             }
         }
 
@@ -330,16 +335,6 @@
 
             font-size: 1.2rem;
             text-align: center;
-
-            //&:first-of-type {
-            //    background:
-            //        radial-gradient(
-            //            ellipse 35px 35px at 26px -24px,
-            //            transparent 0%,
-            //            transparent 99%,
-            //            palette("grey", "sunken") 100%
-            //        );
-            //}
         }
     }
 </style>

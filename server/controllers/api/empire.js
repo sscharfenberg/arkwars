@@ -48,6 +48,7 @@ exports.getGameData = async (req, res) => {
             planets.length &&
                 planets.forEach(planet => {
                     // make sure the planet belongs to this star before adding
+                    // again, MongoDB IDs != String
                     if (`${planet.star}` === `${star._id}`) {
                         starPlanets.push({
                             id: planet._id,
