@@ -2,7 +2,8 @@
 
 `11.01.2018`
 - [x] Created the four basic resources - `energy`, `minerals`, `food` and `research`. Added base rules to server config, adjusted Player model and passed the information from the header component to `Resource` components that display what and how much the player has. These are global (player) resources that can be accessed from anywhere (logistics get tedious, no thanks...).
-- [x] Learned that you should not use nested properties in Vuex state - Arrays that contain objects are fine, objects that contain objects are not. 
+- [x] Learned that you should not use nested properties in Vuex state - Arrays that contain objects are fine, objects that contain objects are not.
+- [x] refactored server config a bit since the file became way too big; extracted game rules in seperate files. 
 
 `10.01.2018`
 - [x] small(ish) finetuning for responsive layout of star.

@@ -61,7 +61,7 @@ const playerSchema = new mongoose.Schema(
                             cfg.player.resourceTypes[0].max.increase.by
                 }
             },
-            minerals: {
+            food: {
                 current: {
                     type: Number,
                     default: cfg.player.resourceTypes[1].start,
@@ -79,7 +79,7 @@ const playerSchema = new mongoose.Schema(
                             cfg.player.resourceTypes[1].max.increase.by
                 }
             },
-            food: {
+            minerals: {
                 current: {
                     type: Number,
                     default: cfg.player.resourceTypes[2].start,

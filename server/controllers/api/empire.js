@@ -42,8 +42,8 @@ exports.getGameData = async (req, res) => {
         },
         resources: [
             {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
-            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
             {type: "food", current: player.resources.food.current, max: player.resources.food.max},
+            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
             {type: "research", current: player.resources.research.current, max: player.resources.research.max}
         ],
         stars: []
