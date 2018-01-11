@@ -48,17 +48,17 @@ const playerSchema = new mongoose.Schema(
                     type: Number,
                     default: cfg.player.resourceTypes[0].start,
                     max:
-                        cfg.player.resourceTypes[0].storage.start +
-                        cfg.player.resourceTypes[0].storage.increase.steps *
-                            cfg.player.resourceTypes[0].storage.increase.by
+                        cfg.player.resourceTypes[0].max.start +
+                        cfg.player.resourceTypes[0].max.increase.steps *
+                            cfg.player.resourceTypes[0].max.increase.by
                 },
-                storage: {
+                max: {
                     type: Number,
-                    default: cfg.player.resourceTypes[0].storage.start,
+                    default: cfg.player.resourceTypes[0].max.start,
                     max:
-                        cfg.player.resourceTypes[0].storage.start +
-                        cfg.player.resourceTypes[0].storage.increase.steps *
-                            cfg.player.resourceTypes[0].storage.increase.by
+                        cfg.player.resourceTypes[0].max.start +
+                        cfg.player.resourceTypes[0].max.increase.steps *
+                            cfg.player.resourceTypes[0].max.increase.by
                 }
             },
             minerals: {
@@ -66,17 +66,17 @@ const playerSchema = new mongoose.Schema(
                     type: Number,
                     default: cfg.player.resourceTypes[1].start,
                     max:
-                        cfg.player.resourceTypes[1].storage.start +
-                        cfg.player.resourceTypes[1].storage.increase.steps *
-                            cfg.player.resourceTypes[1].storage.increase.by
+                        cfg.player.resourceTypes[1].max.start +
+                        cfg.player.resourceTypes[1].max.increase.steps *
+                            cfg.player.resourceTypes[1].max.increase.by
                 },
-                storage: {
+                max: {
                     type: Number,
-                    default: cfg.player.resourceTypes[1].storage.start,
+                    default: cfg.player.resourceTypes[1].max.start,
                     max:
-                        cfg.player.resourceTypes[1].storage.start +
-                        cfg.player.resourceTypes[1].storage.increase.steps *
-                            cfg.player.resourceTypes[1].storage.increase.by
+                        cfg.player.resourceTypes[1].max.start +
+                        cfg.player.resourceTypes[1].max.increase.steps *
+                            cfg.player.resourceTypes[1].max.increase.by
                 }
             },
             food: {
@@ -84,17 +84,17 @@ const playerSchema = new mongoose.Schema(
                     type: Number,
                     default: cfg.player.resourceTypes[2].start,
                     max:
-                        cfg.player.resourceTypes[2].storage.start +
-                        cfg.player.resourceTypes[2].storage.increase.steps *
-                            cfg.player.resourceTypes[2].storage.increase.by
+                        cfg.player.resourceTypes[2].max.start +
+                        cfg.player.resourceTypes[2].max.increase.steps *
+                            cfg.player.resourceTypes[2].max.increase.by
                 },
-                storage: {
+                max: {
                     type: Number,
-                    default: cfg.player.resourceTypes[2].storage.start,
+                    default: cfg.player.resourceTypes[2].max.start,
                     max:
-                        cfg.player.resourceTypes[2].storage.start +
-                        cfg.player.resourceTypes[2].storage.increase.steps *
-                            cfg.player.resourceTypes[2].storage.increase.by
+                        cfg.player.resourceTypes[2].max.start +
+                        cfg.player.resourceTypes[2].max.increase.steps *
+                            cfg.player.resourceTypes[2].max.increase.by
                 }
             },
             research: {
@@ -102,17 +102,17 @@ const playerSchema = new mongoose.Schema(
                     type: Number,
                     default: cfg.player.resourceTypes[3].start,
                     max:
-                        cfg.player.resourceTypes[3].storage.start +
-                        cfg.player.resourceTypes[3].storage.increase.steps *
-                            cfg.player.resourceTypes[3].storage.increase.by
+                        cfg.player.resourceTypes[3].max.start +
+                        cfg.player.resourceTypes[3].max.increase.steps *
+                            cfg.player.resourceTypes[3].max.increase.by
                 },
-                storage: {
+                max: {
                     type: Number,
-                    default: cfg.player.resourceTypes[3].storage.start,
+                    default: cfg.player.resourceTypes[3].max.start,
                     max:
-                        cfg.player.resourceTypes[3].storage.start +
-                        cfg.player.resourceTypes[3].storage.increase.steps *
-                            cfg.player.resourceTypes[3].storage.increase.by
+                        cfg.player.resourceTypes[3].max.start +
+                        cfg.player.resourceTypes[3].max.increase.steps *
+                            cfg.player.resourceTypes[3].max.increase.by
                 }
             }
         }

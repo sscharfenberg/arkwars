@@ -13,6 +13,10 @@
 const fs = require("fs-extra");
 const path = require("path"); // https://www.npmjs.com/package/path
 const pkg = require("../../package.json");
+const RULES_PLAYER = require("./rules/player");
+const RULES_GAMES = require("./rules/games");
+const RULES_STARS = require("./rules/stars");
+const RULES_PLANETS = require("./rules/planets");
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -78,201 +82,13 @@ const appConfig = {
         }
     },
 
-    player: {
-        name: {bounds: [6, 32]}, // [min, max] player/empire name
-        ticker: {bounds: [2, 5]}, // {min, max] player/empire ticker
-        // order is important since array index is used in Mongoose.model("Player")
-        resourceTypes: [
-            {
-                type: "energy",
-                start: 50,
-                storage: {start: 1000, increase: {steps: 5, by: 200}}
-            },
-            {
-                type: "food",
-                start: 50,
-                storage: {start: 500, increase: {steps: 5, by: 100}}
-            },
-            {
-                type: "minerals",
-                start: 50,
-                storage: {start: 1000, increase: {steps: 5, by: 200}}
-            },
-            {
-                type: "research",
-                start: 50,
-                storage: {start: 500, increase: {steps: 5, by: 100}}
-            }
-        ]
-    },
+    player: RULES_PLAYER,
 
-    games: {
-        empire: {
-            name: {bounds: [6, 32]}, // [min, max]
-            ticker: {bounds: [2, 5]} // [min, max]
-        },
-        turns: {
-            // server tick threshold for game turn processing.
-            // game turns that are due in (threshold) are processed
-            dueThreshold: 30 * 1000
-        },
-        defaultTurnDuration: 15,
-        dimensions: {
-            default: 40,
-            min: 10,
-            max: 200
-        },
-        distance: {
-            default: [3, 5], // [min, max]
-            bounds: [2, 20] // [min, max]
-        },
-        playerDistance: {
-            default: [6, 12], // [min, max]
-            bounds: [2, 20] // [min, max]
-        }
-    },
+    games: RULES_GAMES,
 
-    stars: {
-        spectralTypes: [
-            {
-                name: "O",
-                chance: 5,
-                chanceHome: 0,
-                planetsMod: -3
-            },
-            {
-                name: "B",
-                chance: 5,
-                chanceHome: 0,
-                planetsMod: -2
-            },
-            {
-                name: "A",
-                chance: 5,
-                chanceHome: 0,
-                planetsMod: -2
-            },
-            {
-                name: "F",
-                chance: 10,
-                chanceHome: 30,
-                planetsMod: 0
-            },
-            {
-                name: "G",
-                chance: 20,
-                chanceHome: 40,
-                planetsMod: 2
-            },
-            {
-                name: "K",
-                chance: 20,
-                chanceHome: 30,
-                planetsMod: 1
-            },
-            {
-                name: "M",
-                chance: 30,
-                chanceHome: 0,
-                planetsMod: 0
-            },
-            {
-                name: "Y",
-                chance: 5,
-                chanceHome: 0,
-                planetsMod: -2
-            }
-        ],
-        name: {
-            initial: [4, 6], // range for initially generated names
-            // this needs to be synced with /client/game/Empire/Stars/Star.vue
-            bounds: [4, 40] // range for player edited names
-        },
-        planets: {
-            npc: [4, 6], // range for numplanets in npc systems
-            player: [6, 9] // range for numplanets in player systems
-        }
-    },
+    stars: RULES_STARS,
 
-    planets: {
-        // these need to be synced with /client/game/Empire/Planets/Planets.vue
-        types: [
-            {
-                name: "terrestrial",
-                chance: 20,
-                chanceHome: 50,
-                resourceSlots: [
-                    {type: "food", chance: 120, max: 3, potential: [2000, 4000]},
-                    {type: "energy", chance: 80, max: 2, potential: [1000, 2000]}
-                ]
-            },
-            {
-                name: "gas",
-                chance: 17,
-                chanceHome: 10,
-                resourceSlots: [
-                    {type: "research", chance: 100, max: 3, potential: [1500, 3000]},
-                    {type: "energy", chance: 80, max: 2, potential: [1000, 2000]}
-                ]
-            },
-            {
-                name: "ice",
-                chance: 16,
-                chanceHome: 10,
-                resourceSlots: [
-                    {type: "minerals", chance: 60, max: 1, potential: [800, 1600]},
-                    {type: "food", chance: 100, max: 2, potential: [1500, 3000]}
-                ]
-            },
-            {
-                name: "iron",
-                chance: 20,
-                chanceHome: 10,
-                resourceSlots: [
-                    {type: "minerals", chance: 100, max: 3, potential: [1500, 3000]},
-                    {type: "research", chance: 60, max: 1, potential: [800, 1600]}
-                ]
-            },
-            {
-                name: "desert",
-                chance: 29,
-                chanceHome: 10,
-                resourceSlots: [
-                    {type: "energy", chance: 80, max: 2, potential: [1000, 2000]},
-                    {type: "food", chance: 80, max: 2, potential: [1000, 2000]}
-                ]
-            },
-            {
-                name: "toxic",
-                chance: 5,
-                chanceHome: 5,
-                resourceSlots: [
-                    {type: "minerals", chance: 80, max: 2, potential: [1000, 2000]},
-                    {type: "energy", chance: 80, max: 2, potential: [1000, 2000]}
-                ]
-            },
-            {
-                name: "carbon",
-                chance: 2,
-                chanceHome: 5,
-                resourceSlots: [
-                    {type: "minerals", chance: 80, max: 2, potential: [1000, 2000]},
-                    {type: "research", chance: 120, max: 4, potential: [2000, 4000]}
-                ]
-            },
-            {
-                name: "tomb",
-                chance: 1,
-                chanceHome: 0,
-                resourceSlots: [
-                    {type: "energy", chance: 50, max: 1, potential: [500, 1000]},
-                    {type: "minerals", chance: 50, max: 1, potential: [500, 1000]},
-                    {type: "food", chance: 50, max: 1, potential: [500, 1000]},
-                    {type: "research", chance: 120, max: 3, potential: [2000, 4000]}
-                ]
-            }
-        ]
-    },
+    planets: RULES_PLANETS,
 
     defaultPagination: {
         admin: {
