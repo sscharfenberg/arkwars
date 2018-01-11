@@ -6,6 +6,5 @@ webpack-bundles.report.html
 webpack-stats.json
 server/public/assets
 server/public/avatars
-server/views/webpack
-coverage
+server/views/webpack/*.pug
 *.log
