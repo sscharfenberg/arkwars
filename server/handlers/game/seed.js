@@ -45,7 +45,7 @@ const normalizeStars = (points, dimensions) => {
  * @returns {string} objectType
  *
  */
-exports.randomType = (owner, cfgArray) => {
+const randomType = (owner, cfgArray) => {
     let objectType = "";
     let chanceAccumulated = 0;
     let found = false;
@@ -73,7 +73,7 @@ exports.randomType = (owner, cfgArray) => {
  * @returns {Number} numPlanets;
  *
  */
-exports.getNumPlanets = (spectral, owner, cfgArray) => {
+const getNumPlanets = (spectral, owner, cfgArray) => {
     let min = owner === 2 ? cfg.stars.planets.player[0] : cfg.stars.planets.npc[0];
     let max = owner === 2 ? cfg.stars.planets.player[1] : cfg.stars.planets.npc[1];
     let types = cfgArray.filter(spectralType => spectralType.name === spectral);
@@ -89,7 +89,7 @@ exports.getNumPlanets = (spectral, owner, cfgArray) => {
  * @returns {String} starName;
  *
  */
-exports.getStarName = () => {
+const getStarName = () => {
     let starName = "";
     let lengthMin = cfg.stars.name.initial[0];
     let lengthMax = cfg.stars.name.initial[1];
@@ -112,7 +112,7 @@ exports.getStarName = () => {
  * @returns {array} filteredPoints - array of arrays with x/y coordinates
  *
  */
-exports.systems = (game, user, distMin, distMax) => {
+const systems = (game, user, distMin, distMax) => {
     // limit tries for bigger dimensions - very large datasets result in perf problems
     const tries = cfg.games.dimensions.max + 50 - game.dimensions;
     let pds = new PoissonDiskSampling(
@@ -137,6 +137,37 @@ exports.systems = (game, user, distMin, distMax) => {
  * since we return the chose star by index (random integer),
  * first element is 0, last element is stars.length - 1.
  */
-exports.assignRandomStar = (stars) => {
+const assignRandomStar = (stars) => {
     return stars[Math.floor(Math.random() * stars.length)];
 };
+
+/*
+ * create and return a random planet ===================================================================================
+ * @param {Mongoose.ObjectId} gameId
+ * @param {Mongoose.ObjectId} starId
+ * @param {Integer} orbitalIndex
+ * @param {Boolean} npc - optional, true for npc systems, falsy for player systems.
+ * @returns {Mongoose.model("Planet")}
+ *
+ */
+const randomPlanet = (gameId, starId, orbitalIndex, npc) => {
+    let planet = {
+        game: gameId,
+        star: starId,
+        type: randomType(npc ? 1 : 2, cfg.planets.types),
+        orbitalIndex
+    };
+    return planet;
+};
+
+
+module.exports = {
+    normalizeStars,
+    randomType,
+    getNumPlanets,
+    getStarName,
+    systems,
+    assignRandomStar,
+    randomPlanet
+};
+

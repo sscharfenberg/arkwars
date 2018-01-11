@@ -9,7 +9,7 @@ const RULES =  {
         {
             name: "terrestrial",
             chance: 20,
-            chanceHome: 50,
+            chanceHome: 40,
             resourceSlots: [
                 {type: "food", chance: 120, max: 3, potential: [2000, 4000]},
                 {type: "energy", chance: 80, max: 2, potential: [1000, 2000]}
@@ -54,7 +54,7 @@ const RULES =  {
         {
             name: "toxic",
             chance: 5,
-            chanceHome: 5,
+            chanceHome: 10,
             resourceSlots: [
                 {type: "minerals", chance: 80, max: 2, potential: [1000, 2000]},
                 {type: "energy", chance: 80, max: 2, potential: [1000, 2000]}
@@ -63,7 +63,7 @@ const RULES =  {
         {
             name: "carbon",
             chance: 2,
-            chanceHome: 5,
+            chanceHome: 10,
             resourceSlots: [
                 {type: "minerals", chance: 80, max: 2, potential: [1000, 2000]},
                 {type: "research", chance: 120, max: 4, potential: [2000, 4000]}

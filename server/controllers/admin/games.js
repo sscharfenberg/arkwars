@@ -185,34 +185,23 @@ exports.editGame = async (req, res) => {
 exports.deleteGame = async (req, res) => {
     const game = await Game.findById(req.params.id).populate("players");
     const playerIds = game.players.map(player => player.id); // players enlisted in this game.
-    //const UserIds = game.players.map(player => player.user); // users with players enlisted in this game
     logger.info(
-        `[Admin ${chalk.cyan(
-            "@" + req.user.username
-        )}]: deleting game ${chalk.yellow("g" + game.number)}.`
+        `[Admin ${chalk.cyan("@" + req.user.username)}]: deleting game ${chalk.yellow("g" + game.number)}.`
     );
 
     if (game.players && game.players.length) {
         logger.info(
-            `[Admin ${chalk.cyan("@" + req.user.username)}]: removing ${
-                playerIds.length
-            } playerIDs from users.`
+            `[Admin ${chalk.cyan("@" + req.user.username)}]: removing ${playerIds.length} playerIDs from users.`
         );
         // update users and remove SelectedPlayer if player is enlisted to this game
         await User.updateMany(
             {selectedPlayer: {$in: playerIds}},
-            {
-                $set: {
-                    selectedPlayer: undefined
-                }
-            },
+            { $set: {selectedPlayer: undefined}},
             {runValidators: true, context: "query"}
         );
         // delete players
         logger.info(
-            `[Admin ${chalk.cyan("@" + req.user.username)}]: removing ${
-                playerIds.length
-            } players.`
+            `[Admin ${chalk.cyan("@" + req.user.username)}]: removing ${playerIds.length} players.`
         );
         await Player.deleteMany({
             _id: {$in: playerIds}
@@ -228,18 +217,13 @@ exports.deleteGame = async (req, res) => {
     const deletedGame = await Game.findByIdAndRemove(req.params.id);
     if (deletedGame) {
         logger.success(
-            `[Admin ${chalk.cyan(
-                "@" + req.user.username
-            )}]: deleted game ${chalk.yellow("g" + deletedGame.number)}.`
+            `[Admin ${chalk.cyan("@" + req.user.username)}]: deleted game ${chalk.yellow("g" + deletedGame.number)}.`
         );
     }
 
     // TODO: notify users by email
 
-    req.flash(
-        "success",
-        i18n.__("ADMIN.GAME.SUCCESS.DELETE", deletedGame.number)
-    );
+    req.flash("success", i18n.__("ADMIN.GAME.SUCCESS.DELETE", deletedGame.number));
     res.redirect("/admin/games");
 };
 
@@ -256,11 +240,7 @@ exports.newGame = async (req, res, next) => {
     req.body.turnDue = req.body.startDate;
     const game = await new Game(strip(req.body)).save();
     if (!game) {
-        logger.error(
-            `[Admin ${chalk.cyan(
-                "@" + req.user.username
-            )}]: failed to create new game`
-        );
+        logger.error(`[Admin ${chalk.cyan("@" + req.user.username)}]: failed to create new game`);
         res.render("admin/game", {
             session: req.session,
             title: i18n.__("ADMIN.GAME.TITLENEW"),
@@ -293,10 +273,7 @@ exports.showSeedGame = async (req, res) => {
         res.redirect("back");
     }
     if (game.stars.length) {
-        req.flash(
-            "error",
-            i18n.__("ADMIN.GAME.SEED.ERROR.AlreadySeeded", game.number)
-        );
+        req.flash("error",i18n.__("ADMIN.GAME.SEED.ERROR.AlreadySeeded", game.number));
         res.redirect("back");
     }
     res.render("admin/game-seed", {
@@ -318,9 +295,7 @@ exports.seedGamePreview = async (req, res) => {
     game.dimensions = req.body.dimensions || cfg.games.dimensions.default;
 
     logger.info(
-        `[Admin ${chalk.cyan(
-            "@" + req.user.username
-        )}]: seed universe for game ${chalk.yellow("g" + game.number)}.`
+        `[Admin ${chalk.cyan("@" + req.user.username)}]: seed universe for game ${chalk.yellow("g" + game.number)}.`
     );
 
     /*
@@ -328,25 +303,14 @@ exports.seedGamePreview = async (req, res) => {
      * are enforced. it leads to slight clumping though, player systems can be right beside
      * npc systems. this is fine though, player distance enforcement is more important
      */
-    let stars = seed.systems(
-        game,
-        req.user,
-        req.body.distanceMin,
-        req.body.distanceMax
-    );
-    let playerStars = seed.systems(
-        game,
-        req.user,
-        req.body.playerDistanceMin,
-        req.body.playerDistanceMax
-    );
+    let stars = seed.systems(game, req.user, req.body.distanceMin, req.body.distanceMax);
+    let playerStars = seed.systems(game, req.user, req.body.playerDistanceMin, req.body.playerDistanceMax);
     // set the type accordingly
     stars = stars.map(star => [star[0], star[1], 1]); // set to npc system by default.
     playerStars = playerStars.map(star => [star[0], star[1], 2]); // set to player system.
     // player systems first, npc systems last.
-    let allStars = playerStars
-        .concat(stars)
-        .sort((a, b) => (a[0] === b[0] ? 0 : a[0] < b[0] ? -1 : 1)); // sort by row value / x
+    // sort by row value / x
+    let allStars = playerStars.concat(stars).sort((a, b) => (a[0] === b[0] ? 0 : a[0] < b[0] ? -1 : 1));
     logger.info(
         `[App] generated ${chalk.magenta(
             allStars.length
@@ -388,12 +352,7 @@ exports.seedGamePreview = async (req, res) => {
     // store the seeded map
     let savedGame = await Game.findOneAndUpdate(
         {_id: req.params.id},
-        {
-            $set: {
-                seededMap: JSON.stringify(starsFiltered),
-                dimensions: game.dimensions
-            }
-        },
+        {$set: {seededMap: JSON.stringify(starsFiltered),dimensions: game.dimensions}},
         {new: true, runValidators: true, context: "query"}
     );
 
@@ -440,15 +399,11 @@ exports.createStars = async (req, res, next) => {
         };
         stars.push(star);
     });
-    logger.info(
-        `[App] prepared stats for ${chalk.yellow(stars.length)} star systems.`
-    );
+    logger.info(`[App] prepared stats for ${chalk.yellow(stars.length)} star systems.`);
     await Star.insertMany(stars);
     // insertMany does not return the new objects, so we need to find them again
     req._stars = await Star.find({game: req.params.id});
-    logger.info(
-        `[App] saved ${chalk.red(req._stars.length)} star systems in database.`
-    );
+    logger.info(`[App] saved ${chalk.red(req._stars.length)} star systems in database.`);
     next(); // no exceptions, proceed.
 };
 
@@ -466,18 +421,9 @@ exports.createPlanets = async (req, res, next) => {
 
     stars.forEach(star => {
         let owner = star.homeSystem ? 2 : 1;
-        let numPlanets = seed.getNumPlanets(
-            star.spectral,
-            owner,
-            cfg.stars.spectralTypes
-        );
+        let numPlanets = seed.getNumPlanets(star.spectral, owner, cfg.stars.spectralTypes );
         for (let counter = 0; counter < numPlanets; counter++) {
-            planetsToCreate.push({
-                game: req.params.id,
-                star: star.id,
-                type: seed.randomType(owner, cfg.planets.types),
-                orbitalIndex: counter + 1 // 0 = sun
-            });
+            planetsToCreate.push(seed.randomPlanet(req.params.id, star.id, counter + 1, star.homeSystem ));
         }
     });
 

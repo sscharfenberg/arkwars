@@ -25,9 +25,10 @@ const Suspension = mongoose.model("Suspension");
 const games = require("../mockdata/games");
 const users = require("../mockdata/users");
 const players = require("../mockdata/players");
-const stars = require("../mockdata/stars");
-const planets = require("../mockdata/planets");
 const turns = require("../mockdata/turns");
+const stellar = require("../mockdata/starsAndPlanets");
+const stars = stellar.stars;
+const planets = stellar.planets;
 
 
 /*

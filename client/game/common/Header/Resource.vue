@@ -1,7 +1,7 @@
 <script>
     /*******************************************************************************************************************
      * Resource Component
-     * this componenet lists a single resource
+     * this componenet displays a single resource
      ******************************************************************************************************************/
     import Icon from "Game/common/Icon/Icon.vue";
     export default {
@@ -25,8 +25,10 @@
         computed: {
             getResourceBarWidth () { return `${100 - (this.current / this.max) * 100}%`; },
             getResourceTypeIcon () { return "res-" + this.type; },
-            getTranslatedType () { return this.$t("common.resourceTypes." + this.type); },
-            getProgressBarPct () { return 100 - (this.current / this.max) * 100; }
+            getProgressBarPct () { return this.current / this.max * 100; },
+            getFullTypeLabel () {
+                return this.$t("common.resourceTypes.label") + this.$t("common.resourceTypes." + this.type);
+            }
         }
     };
 </script>
@@ -40,14 +42,13 @@
             aria-valuemax="100"
             :aria-valuenow="getProgressBarPct">{{ getProgressBarPct + "%" }}</div>
         <div class="res__type"
-            :title="getTranslatedType">
+            :title="getFullTypeLabel"
+            :aria-label="getFullTypeLabel">
             <icon :name="getResourceTypeIcon"
                 class="res__icon"
                 aria-hidden="true" />
-            <span class="res__name"
-                :aria-label="$t('common.resourceTypes.label')">{{ getTranslatedType }}</span>
         </div>
-        <div class="res__amount">{{ current }} / {{ max }}</div>
+        <div class="res__amount">{{ current }} / {{ max }} ({{ getProgressBarPct }}%)</div>
     </div>
 </template>
 
@@ -56,7 +57,9 @@
         display: flex;
         position: relative;
         align-items: center;
+        justify-content: center;
 
+        width: 17rem;
         padding: 0.2rem 0.5rem;
         border: 1px solid palette("grey", "sunken");
         margin: 0 0.4rem 0.4rem 0;
@@ -79,11 +82,7 @@
         }
 
         &__type {
-            padding-right: 1rem;
-        }
-
-        @include respond-to("medium") {
-            &__name { display: none; }
+            padding-right: 0.5rem;
         }
 
         &__type,

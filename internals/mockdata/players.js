@@ -4,8 +4,8 @@ module.exports = [
         _id: "5990c7871e8258089436d748",
         game: "598b652d0404e604046bd35b",
         user: "597c523b7331ca2e2436b37f",
-        name: "Testempire Part Two Reloaded",
-        ticker: "TEST",
+        name: "Per Aspera Ad Astra",
+        ticker: "PAAA",
         created: "2017-08-14T19:31:10.861Z"
     },
     {

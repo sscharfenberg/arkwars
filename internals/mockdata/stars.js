@@ -14,8 +14,8 @@ let allStarObjects = [];
 games.forEach(game => {
     logger.info(`generating stars for ${chalk.red("g"+game.number)}`);
     // mockdata taken mainly from server/controllers/admin/game.js@seedGamePreview()
-    let stars = seed.systems(game, {}, 2, 4);
-    let playerStars = seed.systems(game, {}, 3, 6);
+    let stars = seed.systems(game, {}, 4, 8); // 2,4
+    let playerStars = seed.systems(game, {}, 6, 12); // 3,6
     // set the type accordingly
     stars = stars.map(star => [star[0], star[1], 1]); // set to npc system by default.
     playerStars = playerStars.map(star => [star[0], star[1], 2]); // set to player system.

@@ -33,9 +33,7 @@ exports.checkCanEnlist = async (req, res, next) => {
 
     if (!game || game.maxPlayers <= game.players.length) {
         logger.debug(
-            `[${chalk.yellow(
-                "@" + req.user.username
-            )}] show enlist page for ${chalk.red(
+            `[${chalk.yellow("@" + req.user.username)}] show enlist page for ${chalk.red(
                 "g" + req.params.game
             )} - game can not be enlisted.`
         );
@@ -76,11 +74,7 @@ exports.validateEnlistForm = async (req, res, next) => {
     const tickerPromise = enlistValidators.tickerPromise(req);
     const namePromise = enlistValidators.namePromise(req);
 
-    const [results, existingTicker, existingName] = await Promise.all([
-        validatorPromise,
-        tickerPromise,
-        namePromise
-    ]);
+    const [results, existingTicker, existingName] = await Promise.all([validatorPromise, tickerPromise, namePromise]);
     let errorMap = results.mapped();
     let errorList = results.array();
 
@@ -99,9 +93,7 @@ exports.validateEnlistForm = async (req, res, next) => {
     }
 
     if (errorList.length) {
-        logger.debug(
-            `[App] enlist validation errors: ${JSON.stringify(errorList)}`
-        );
+        logger.debug(`[App] enlist validation errors: ${JSON.stringify(errorList)}`);
         req.flash("error", i18n.__("GAMES.ENLIST.ERR.Flash"));
         return res.render("game/enlist", {
             title: i18n.__("GAMES.ENLIST.TITLE"),
@@ -115,9 +107,9 @@ exports.validateEnlistForm = async (req, res, next) => {
     }
     // no errors, proceed to next middleware
     logger.info(
-        `[App] user ${chalk.red(
-            "@" + req.user.username
-        )} passed enlist validation for ${chalk.yellow("g" + req.params.game)}`
+        `[App] user ${chalk.red("@" + req.user.username)} passed enlist validation for ${chalk.yellow(
+            "g" + req.params.game
+        )}`
     );
     next();
 };
@@ -149,16 +141,12 @@ exports.assignHomeSystem = async (req, res) => {
     const availableStars = game.stars.filter(star => {
         return star.homeSystem && !star.owner;
     });
-    logger.info(
-        `[App] select random star from ${chalk.yellow(
-            availableStars.length
-        )} available stars.`
-    );
+    logger.info(`[App] select random star from ${chalk.yellow(availableStars.length)} available stars.`);
     const homeSystem = seed.assignRandomStar(availableStars);
     logger.info(
-        `[App] Decided on using Star ${chalk.cyan(
-            homeSystem.name
-        )} as home system for player ${chalk.magenta(req._player.name)}.`
+        `[App] Decided on using Star ${chalk.cyan(homeSystem.name)} as home system for player ${chalk.magenta(
+            req._player.name
+        )}.`
     );
     const updatatedStar = await Star.findOneAndUpdate(
         {_id: homeSystem.id},
@@ -167,20 +155,14 @@ exports.assignHomeSystem = async (req, res) => {
     );
     if (updatatedStar) {
         logger.success(
-            `[App] user ${chalk.red(
-                "@" + req.user.username
-            )} enlisted to ${chalk.yellow("g" + req.params.game)}.`
+            `[App] user ${chalk.red("@" + req.user.username)} enlisted to ${chalk.yellow("g" + req.params.game)}.`
         );
-        req.flash(
-            "success",
-            i18n.__("GAMES.ENLIST.SUCCESS"),
-            `g${req.params.game}`
-        );
+        req.flash("success", i18n.__("GAMES.ENLIST.SUCCESS"), `g${req.params.game}`);
     } else {
         logger.debug(
-            `[App] user ${chalk.red(
-                "@" + req.user.username
-            )} failed to enlist to ${chalk.yellow("g" + req.params.game)}.`
+            `[App] user ${chalk.red("@" + req.user.username)} failed to enlist to ${chalk.yellow(
+                "g" + req.params.game
+            )}.`
         );
         req.flash("error", i18n.__("GAMES.ENLIST.ERR.Flash"));
     }
@@ -204,14 +186,9 @@ exports.validateGameSelect = async (req, res, next) => {
     });
     if (!game) {
         logger.debug(
-            `[App] user ${chalk.red(
-                "@" + req.user.username
-            )} failed to select ${chalk.yellow("g" + requestedGame)}`
+            `[App] user ${chalk.red("@" + req.user.username)} failed to select ${chalk.yellow("g" + requestedGame)}`
         );
-        req.flash(
-            "error",
-            i18n.__("GAMES.CHANGE.ERR", `<strong>g${requestedGame}</strong>`)
-        );
+        req.flash("error", i18n.__("GAMES.CHANGE.ERR", `<strong>g${requestedGame}</strong>`));
         return res.redirect("back"); // stop further execution and redirect back.
     }
     req._game = game; // remember for next middleware
@@ -236,23 +213,15 @@ exports.selectGame = async (req, res) => {
     );
     if (!updatedUser) {
         logger.debug(
-            `[App] user ${chalk.red(
-                "@" + req.user.username
-            )} failed to select ${chalk.yellow("g" + requestedGameNumber)}`
+            `[App] user ${chalk.red("@" + req.user.username)} failed to select ${chalk.yellow(
+                "g" + requestedGameNumber
+            )}`
         );
-        req.flash(
-            "error",
-            i18n.__(
-                "GAMES.CHANGE.ERR",
-                `<strong>g${requestedGameNumber}</strong>`
-            )
-        );
+        req.flash("error", i18n.__("GAMES.CHANGE.ERR", `<strong>g${requestedGameNumber}</strong>`));
         return res.redirect("back");
     } else {
         logger.success(
-            `[App] user ${chalk.red(
-                "@" + req.user.username
-            )} selected ${chalk.yellow("g" + requestedGameNumber)}`
+            `[App] user ${chalk.red("@" + req.user.username)} selected ${chalk.yellow("g" + requestedGameNumber)}`
         );
         //req.flash(
         //    "success",
@@ -281,9 +250,7 @@ exports.validateWithdraw = async (req, res, next) => {
     });
     if (!game) {
         logger.debug(
-            `[App] user ${chalk.red(
-                "@" + req.user.username
-            )} failed to withdraw enlistment from ${chalk.yellow(
+            `[App] user ${chalk.red("@" + req.user.username)} failed to withdraw enlistment from ${chalk.yellow(
                 "g" + requestedGameNumber
             )}`
         );
@@ -324,24 +291,18 @@ exports.withdrawEnlistedUser = async (req, res) => {
     }
     if (!removedPlayer) {
         logger.debug(
-            `[App] user ${chalk.red(
-                "@" + req.user.username
-            )} failed to withdraw enlistment from ${chalk.yellow(
+            `[App] user ${chalk.red("@" + req.user.username)} failed to withdraw enlistment from ${chalk.yellow(
                 "g" + req._game.number
             )}`
         );
         req.flash("error", i18n.__("GAMES.WITHDRAW.ERR", req._game.number));
     } else {
         logger.success(
-            `[App] user ${chalk.red(
-                "@" + req.user.username
-            )} withdrew enlistment from ${chalk.yellow("g" + req._game.number)}`
+            `[App] user ${chalk.red("@" + req.user.username)} withdrew enlistment from ${chalk.yellow(
+                "g" + req._game.number
+            )}`
         );
-        req.flash(
-            "success",
-            i18n.__("GAMES.WITHDRAW.SUCCESS", req._game.number),
-            `g${req._game.number}`
-        );
+        req.flash("success", i18n.__("GAMES.WITHDRAW.SUCCESS", req._game.number), `g${req._game.number}`);
     }
     return res.redirect("back");
 };
@@ -356,29 +317,16 @@ exports.verifyGameAuth = async (req, res, next) => {
     const requestedGameNumber = strip(req.params.game);
     const chosenGame = await Game.findOne({number: requestedGameNumber});
     if (!chosenGame) {
-        req.flash(
-            "error",
-            i18n.__("GAME.STATUS.DoesNotExist", requestedGameNumber)
-        );
+        req.flash("error", i18n.__("GAME.STATUS.DoesNotExist", requestedGameNumber));
         return res.redirect("back");
     }
-    if (
-        !userHasPlayerInGame(
-            `${chosenGame._id}`,
-            req.user.players.map(player => player.game.id)
-        )
-    ) {
+    if (!userHasPlayerInGame(`${chosenGame._id}`, req.user.players.map(player => player.game.id))) {
         logger.debug(
             `[App] user ${chalk.red(
                 "@" + req.user.username
-            )} tried to access a resource but has no player in game ${chalk.yellow(
-                "g" + requestedGameNumber
-            )}`
+            )} tried to access a resource but has no player in game ${chalk.yellow("g" + requestedGameNumber)}`
         );
-        req.flash(
-            "error",
-            i18n.__("APP.AUTH.NO_GAME_MEMBER", requestedGameNumber)
-        );
+        req.flash("error", i18n.__("APP.AUTH.NO_GAME_MEMBER", requestedGameNumber));
         return res.redirect("back");
     }
     next(); // not returned by now => proceed to next middleware.

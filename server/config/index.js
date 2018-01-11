@@ -13,10 +13,10 @@
 const fs = require("fs-extra");
 const path = require("path"); // https://www.npmjs.com/package/path
 const pkg = require("../../package.json");
-const RULES_PLAYER = require("./rules/player");
-const RULES_GAMES = require("./rules/games");
-const RULES_STARS = require("./rules/stars");
-const RULES_PLANETS = require("./rules/planets");
+const RULES_PLAYER = require("./game/player");
+const RULES_GAMES = require("./game/games");
+const RULES_STARS = require("./game/stars");
+const RULES_PLANETS = require("./game/planets");
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
