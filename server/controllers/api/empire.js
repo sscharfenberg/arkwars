@@ -40,6 +40,12 @@ exports.getGameData = async (req, res) => {
             name: player.name,
             ticker: player.ticker
         },
+        resources: [
+            {type: "energy", current: player.resources.energy.current, max: player.resources.energy.storage},
+            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.storage},
+            {type: "food", current: player.resources.food.current, max: player.resources.food.storage},
+            {type: "research", current: player.resources.research.current, max: player.resources.research.storage}
+        ],
         stars: []
     };
     player.stars.length &&
@@ -57,6 +63,11 @@ exports.getGameData = async (req, res) => {
                         });
                     }
                 });
+            starPlanets = starPlanets.sort((a, b) => {
+                if (a.orbitalIndex < b.orbitalIndex) return -1;
+                if (a.orbitalIndex > b.orbitalIndex) return 1;
+                return 0;
+            });
             returnData.stars.push({
                 id: star._id,
                 name: star.name,

@@ -16,55 +16,35 @@ const cfg = require("../../../config");
 exports.defaultValidators = req => {
     // empirename
     req.sanitizeBody("empirename").trim();
-    req
-        .checkBody("empirename", i18n.__("GAMES.ENLIST.EMPIRENAME.ERR.Empty"))
-        .notEmpty();
+    req.checkBody("empirename", i18n.__("GAMES.ENLIST.EMPIRENAME.ERR.Empty")).notEmpty();
     req
         .checkBody(
             "empirename",
-            i18n.__(
-                "GAMES.ENLIST.EMPIRENAME.ERR.Length",
-                `${cfg.games.empire.name.bounds[0]} - ${cfg.games.empire.name
-                    .bounds[1]}`
-            )
+            i18n.__("GAMES.ENLIST.EMPIRENAME.ERR.Length", `${cfg.player.name.bounds[0]} - ${cfg.player.name.bounds[1]}`)
         )
         .isLength({
-            min: cfg.games.empire.name.bounds[0],
-            max: cfg.games.empire.name.bounds[1]
+            min: cfg.player.name.bounds[0],
+            max: cfg.player.name.bounds[1]
         });
-    req
-        .checkBody(
-            "empirename",
-            i18n.__("GAMES.ENLIST.EMPIRENAME.ERR.NotAlphaNum")
-        )
-        .matches(/^[a-z0-9ä_\-öüß\x20]+$/i); // a to z, 0 to 9, ä, ö, ü, -, _ and space
+    // a to z, 0 to 9, ä, ö, ü, -, _ and space
+    req.checkBody("empirename", i18n.__("GAMES.ENLIST.EMPIRENAME.ERR.NotAlphaNum")).matches(/^[a-z0-9ä_\-öüß\x20]+$/i);
 
     // ticker
-    req
-        .checkBody(
-            "empireticker",
-            i18n.__("GAMES.ENLIST.EMPIRETICKER.ERR.Empty")
-        )
-        .notEmpty();
+    req.checkBody("empireticker", i18n.__("GAMES.ENLIST.EMPIRETICKER.ERR.Empty")).notEmpty();
     req
         .checkBody(
             "empireticker",
             i18n.__(
                 "GAMES.ENLIST.EMPIRETICKER.ERR.Length",
-                `${cfg.games.empire.ticker.bounds[0]} - ${cfg.games.empire
-                    .ticker.bounds[1]}`
+                `${cfg.player.ticker.bounds[0]} - ${cfg.player.ticker.bounds[1]}`
             )
         )
         .isLength({
-            min: cfg.games.empire.ticker.bounds[0],
-            max: cfg.games.empire.ticker.bounds[1]
+            min: cfg.player.ticker.bounds[0],
+            max: cfg.player.ticker.bounds[1]
         });
-    req
-        .checkBody(
-            "empireticker",
-            i18n.__("GAMES.ENLIST.EMPIRETICKER.ERR.NotAlphaNum")
-        )
-        .matches(/^[a-z0-9äöüß]+$/i); // a to z, 0 to 9, ä, ö, ü
+    // a to z, 0 to 9, ä, ö, ü
+    req.checkBody("empireticker", i18n.__("GAMES.ENLIST.EMPIRETICKER.ERR.NotAlphaNum")).matches(/^[a-z0-9äöüß]+$/i);
 
     return req;
 };

@@ -78,14 +78,38 @@ const appConfig = {
         }
     },
 
+    player: {
+        name: {bounds: [6, 32]}, // [min, max] player/empire name
+        ticker: {bounds: [2, 5]}, // {min, max] player/empire ticker
+        // order is important since array index is used in Mongoose.model("Player")
+        resourceTypes: [
+            {
+                type: "energy",
+                start: 50,
+                storage: {start: 1000, increase: {steps: 5, by: 200}}
+            },
+            {
+                type: "food",
+                start: 50,
+                storage: {start: 500, increase: {steps: 5, by: 100}}
+            },
+            {
+                type: "minerals",
+                start: 50,
+                storage: {start: 1000, increase: {steps: 5, by: 200}}
+            },
+            {
+                type: "research",
+                start: 50,
+                storage: {start: 500, increase: {steps: 5, by: 100}}
+            }
+        ]
+    },
+
     games: {
         empire: {
-            name: {
-                bounds: [6, 32]
-            },
-            ticker: {
-                bounds: [2, 5]
-            }
+            name: {bounds: [6, 32]}, // [min, max]
+            ticker: {bounds: [2, 5]} // [min, max]
         },
         turns: {
             // server tick threshold for game turn processing.
@@ -99,12 +123,12 @@ const appConfig = {
             max: 200
         },
         distance: {
-            default: [3, 5],
-            bounds: [2, 20]
+            default: [3, 5], // [min, max]
+            bounds: [2, 20] // [min, max]
         },
         playerDistance: {
-            default: [6, 12],
-            bounds: [2, 20]
+            default: [6, 12], // [min, max]
+            bounds: [2, 20] // [min, max]
         }
     },
 
@@ -125,7 +149,7 @@ const appConfig = {
             {
                 name: "A",
                 chance: 5,
-                chanceHome: 10,
+                chanceHome: 0,
                 planetsMod: -2
             },
             {
@@ -137,7 +161,7 @@ const appConfig = {
             {
                 name: "G",
                 chance: 20,
-                chanceHome: 30,
+                chanceHome: 40,
                 planetsMod: 2
             },
             {
@@ -165,52 +189,87 @@ const appConfig = {
             bounds: [4, 40] // range for player edited names
         },
         planets: {
-            npc: [3, 10], // range for numplanets in npc systems
-            player: [6, 12] // range for numplanets in player systems
+            npc: [4, 6], // range for numplanets in npc systems
+            player: [6, 9] // range for numplanets in player systems
         }
     },
 
     planets: {
+        // these need to be synced with /client/game/Empire/Planets/Planets.vue
         types: [
             {
                 name: "terrestrial",
                 chance: 20,
-                chanceHome: 50
+                chanceHome: 50,
+                resourceSlots: [
+                    {type: "food", chance: 120, max: 3, potential: [2000, 4000]},
+                    {type: "energy", chance: 80, max: 2, potential: [1000, 2000]}
+                ]
             },
             {
-                name: "gas", // jupiter
+                name: "gas",
                 chance: 17,
-                chanceHome: 10
+                chanceHome: 10,
+                resourceSlots: [
+                    {type: "research", chance: 100, max: 3, potential: [1500, 3000]},
+                    {type: "energy", chance: 80, max: 2, potential: [1000, 2000]}
+                ]
             },
             {
-                name: "ice", //
+                name: "ice",
                 chance: 16,
-                chanceHome: 10
+                chanceHome: 10,
+                resourceSlots: [
+                    {type: "minerals", chance: 60, max: 1, potential: [800, 1600]},
+                    {type: "food", chance: 100, max: 2, potential: [1500, 3000]}
+                ]
             },
             {
                 name: "iron",
                 chance: 20,
-                chanceHome: 10
+                chanceHome: 10,
+                resourceSlots: [
+                    {type: "minerals", chance: 100, max: 3, potential: [1500, 3000]},
+                    {type: "research", chance: 60, max: 1, potential: [800, 1600]}
+                ]
             },
             {
-                name: "desert", // mars
+                name: "desert",
                 chance: 29,
-                chanceHome: 10
+                chanceHome: 10,
+                resourceSlots: [
+                    {type: "energy", chance: 80, max: 2, potential: [1000, 2000]},
+                    {type: "food", chance: 80, max: 2, potential: [1000, 2000]}
+                ]
             },
             {
                 name: "toxic",
                 chance: 5,
-                chanceHome: 5
+                chanceHome: 5,
+                resourceSlots: [
+                    {type: "minerals", chance: 80, max: 2, potential: [1000, 2000]},
+                    {type: "energy", chance: 80, max: 2, potential: [1000, 2000]}
+                ]
             },
             {
-                name: "carbon", // venus recolored
+                name: "carbon",
                 chance: 2,
-                chanceHome: 5
+                chanceHome: 5,
+                resourceSlots: [
+                    {type: "minerals", chance: 80, max: 2, potential: [1000, 2000]},
+                    {type: "research", chance: 120, max: 4, potential: [2000, 4000]}
+                ]
             },
             {
                 name: "tomb",
                 chance: 1,
-                chanceHome: 0
+                chanceHome: 0,
+                resourceSlots: [
+                    {type: "energy", chance: 50, max: 1, potential: [500, 1000]},
+                    {type: "minerals", chance: 50, max: 1, potential: [500, 1000]},
+                    {type: "food", chance: 50, max: 1, potential: [500, 1000]},
+                    {type: "research", chance: 120, max: 3, potential: [2000, 4000]}
+                ]
             }
         ]
     },

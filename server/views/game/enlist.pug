@@ -41,14 +41,14 @@ block content
                         name="empirename",
                         id="empirename",
                         placeholder=(h.__("GAMES.ENLIST.EMPIRENAME.PLACEHOLDER")),
-                        maxlength=(cfg.games.empire.name.bounds[1])
+                        maxlength=(cfg.player.name.bounds[1])
                         required,
                         aria-required="true",
                         value=(data && data.empirename)
                     )
                 if errors && errors.empirename
                     .aw-form__error-message= errors.empirename.msg
-                .aw-form__row-description= h.__("GAMES.ENLIST.EMPIRENAME.DESCRIPTION", `${cfg.games.empire.name.bounds[0]} - ${cfg.games.empire.name.bounds[1]}`)
+                .aw-form__row-description= h.__("GAMES.ENLIST.EMPIRENAME.DESCRIPTION", `${cfg.player.name.bounds[0]} - ${cfg.player.name.bounds[1]}`)
 
             .aw-form__row(class=`${errors && errors.empireticker ? "error" : ""}`)
                 .aw-form-input
@@ -59,14 +59,14 @@ block content
                         name="empireticker",
                         id="empireticker",
                         placeholder=(h.__("GAMES.ENLIST.EMPIRETICKER.PLACEHOLDER")),
-                        maxlength=(cfg.games.empire.ticker.bounds[1]),
+                        maxlength=(cfg.player.ticker.bounds[1]),
                         required,
                         aria-required="true",
                         value=(data && data.empireticker)
                     )
                 if errors && errors.empireticker
                     .aw-form__error-message= errors.empireticker.msg
-                .aw-form__row-description= h.__("GAMES.ENLIST.EMPIRETICKER.DESCRIPTION", `${cfg.games.empire.ticker.bounds[0]} - ${cfg.games.empire.ticker.bounds[1]}`)
+                .aw-form__row-description= h.__("GAMES.ENLIST.EMPIRETICKER.DESCRIPTION", `${cfg.player.ticker.bounds[0]} - ${cfg.player.ticker.bounds[1]}`)
 
             .aw-form__row
                 .aw-form__submit

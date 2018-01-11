@@ -1,5 +1,9 @@
 # Changelog
 
+`11.01.2018`
+- [x] Created the four basic resources - `energy`, `minerals`, `food` and `research`. Added base rules to server config, adjusted Player model and passed the information from the header component to `Resource` components that display what and how much the player has. These are global (player) resources that can be accessed from anywhere (logistics get tedious, no thanks...).
+- [x] Learned that you should not use nested properties in Vuex state - Arrays that contain objects are fine, objects that contain objects are not. 
+
 `10.01.2018`
 - [x] small(ish) finetuning for responsive layout of star.
 - [x] more Vue Components: `Planets` and `Planet`. Empire screen now lists planets below every star, including an image of the planet type, the name of the planet and some mockups (for population, resource extractor slots, pds etc). Apart from the ice planet (which comes from DeviantArt User [opreadorin1](https://opreadorin1.deviantart.com/)), all planets are public domain NASA images of our solar system. 

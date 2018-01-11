@@ -20,22 +20,101 @@ const playerSchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
-            minlength: cfg.games.empire.name.bounds[0],
-            maxlength: cfg.games.empire.name.bounds[1]
+            minlength: cfg.player.name.bounds[0],
+            maxlength: cfg.player.name.bounds[1]
         },
 
         // can users enlist?
         ticker: {
             type: String,
             required: true,
-            minlength: cfg.games.empire.ticker.bounds[0],
-            maxlength: cfg.games.empire.ticker.bounds[1]
+            minlength: cfg.player.ticker.bounds[0],
+            maxlength: cfg.player.ticker.bounds[1]
         },
 
         // date of player creation
         created: {
             type: Date,
             default: moment().toISOString()
+        },
+
+        /*
+         * global player resources. we define default and max values for all of them
+         * so we at least have database errors if something goes wrong.
+         */
+        resources: {
+            energy: {
+                current: {
+                    type: Number,
+                    default: cfg.player.resourceTypes[0].start,
+                    max:
+                        cfg.player.resourceTypes[0].storage.start +
+                        cfg.player.resourceTypes[0].storage.increase.steps *
+                            cfg.player.resourceTypes[0].storage.increase.by
+                },
+                storage: {
+                    type: Number,
+                    default: cfg.player.resourceTypes[0].storage.start,
+                    max:
+                        cfg.player.resourceTypes[0].storage.start +
+                        cfg.player.resourceTypes[0].storage.increase.steps *
+                            cfg.player.resourceTypes[0].storage.increase.by
+                }
+            },
+            minerals: {
+                current: {
+                    type: Number,
+                    default: cfg.player.resourceTypes[1].start,
+                    max:
+                        cfg.player.resourceTypes[1].storage.start +
+                        cfg.player.resourceTypes[1].storage.increase.steps *
+                            cfg.player.resourceTypes[1].storage.increase.by
+                },
+                storage: {
+                    type: Number,
+                    default: cfg.player.resourceTypes[1].storage.start,
+                    max:
+                        cfg.player.resourceTypes[1].storage.start +
+                        cfg.player.resourceTypes[1].storage.increase.steps *
+                            cfg.player.resourceTypes[1].storage.increase.by
+                }
+            },
+            food: {
+                current: {
+                    type: Number,
+                    default: cfg.player.resourceTypes[2].start,
+                    max:
+                        cfg.player.resourceTypes[2].storage.start +
+                        cfg.player.resourceTypes[2].storage.increase.steps *
+                            cfg.player.resourceTypes[2].storage.increase.by
+                },
+                storage: {
+                    type: Number,
+                    default: cfg.player.resourceTypes[2].storage.start,
+                    max:
+                        cfg.player.resourceTypes[2].storage.start +
+                        cfg.player.resourceTypes[2].storage.increase.steps *
+                            cfg.player.resourceTypes[2].storage.increase.by
+                }
+            },
+            research: {
+                current: {
+                    type: Number,
+                    default: cfg.player.resourceTypes[3].start,
+                    max:
+                        cfg.player.resourceTypes[3].storage.start +
+                        cfg.player.resourceTypes[3].storage.increase.steps *
+                            cfg.player.resourceTypes[3].storage.increase.by
+                },
+                storage: {
+                    type: Number,
+                    default: cfg.player.resourceTypes[3].storage.start,
+                    max:
+                        cfg.player.resourceTypes[3].storage.start +
+                        cfg.player.resourceTypes[3].storage.increase.steps *
+                            cfg.player.resourceTypes[3].storage.increase.by
+                }
+            }
         }
     },
     {

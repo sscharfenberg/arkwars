@@ -4,5 +4,18 @@
             "fetching": "Lade Daten",
             "fetch": "Neu Laden"
         }
+    },
+    "resourceTypes": {
+        "label": "Resourcentyp",
+        "minerals": "Mineralien",
+        "energy": "Energie",
+        "food": "Nahrung",
+        "research": "Forschung"
+    },
+    "extractorNames": {
+        "minerals": "Bergbau Station",
+        "energy": "Kraftwerks Station",
+        "food": "Biosphäre",
+        "research": "Forschungs Station"
     }
 }

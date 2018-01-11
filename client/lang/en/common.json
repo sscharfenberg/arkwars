@@ -4,6 +4,18 @@
             "fetching": "Loading",
             "fetch": "Refresh"
         }
+    },
+    "resourceTypes": {
+        "label": "Resource type",
+        "minerals": "Minerals",
+        "energy": "Energy",
+        "food": "Food",
+        "research": "Research"
+    },
+    "extractorNames": {
+        "minerals": "Mining Station",
+        "energy": "Energy Harvester",
+        "food": "Biosphere",
+        "research": "Research Station"
     }
 }
-

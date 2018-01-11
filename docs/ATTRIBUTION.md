@@ -3,11 +3,15 @@
 Vector Icons used throughout the site are taken from Google Material Design Icons:
 https://material.io/icons/
 
-### Fleets Icon
-"Air Force Plane" Icon made by [Freepik](https://www.flaticon.com/free-icon/air-force-plane_84987) is licensed by Creative Commons BY 3.0 | http://creativecommons.org/licenses/by/3.0/
+**Fleets**: "Air Force Plane" Icon made by [Freepik](https://www.flaticon.com/free-icon/air-force-plane_84987), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
-### Research Icon
-"DNA Strand" Icon made by [Freepik](https://www.flaticon.com/free-icon/dna-strand_67903) is licensed by Creative Commons BY 3.0 | http://creativecommons.org/licenses/by/3.0/
+**Research**: "DNA Strand" Icon made by [Freepik](https://www.flaticon.com/free-icon/dna-strand_67903), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
+**Resource: Energy**: Lightning Bolt by Rémy Médard from [the Noun Project](https://thenounproject.com/term/lightning-bolt/21604/), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
+**Resource: Food**: "Turkey" Icon made by [Freepik](https://www.flaticon.com/free-icon/turkey_261130), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
+**Resource: Research**: "Nuclear" by Mike Rowe, AU from [the Noun Project](https://thenounproject.com/term/nuclear/75368/), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
 # Game Header Images 
 are Hubble Images taken from the [Hubblesite](http://hubblesite.org/images/gallery). All Images are credited to STScI and are therefore in the public domain:

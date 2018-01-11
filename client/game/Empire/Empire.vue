@@ -3,7 +3,7 @@
      * Empire (entry) Component
      ******************************************************************************************************************/
     import Header from "Game/common/Header/Header.vue";
-    import StarsList from "./Stars/Stars.vue";
+    import Stars from "./Stars/Stars.vue";
     export default {
         data: function() {
             return {
@@ -12,7 +12,7 @@
         },
         components: {
             "app-header": Header,
-            "stars-list": StarsList
+            "stars": Stars
         }
     };
 </script>
@@ -20,7 +20,8 @@
 <template>
     <div>
         <app-header :areaTitle="$t('title')" area="empire" />
-        <stars-list />
+        <stars />
+        TODO: reports? statistics? show citadel?
     </div>
 </template>
 

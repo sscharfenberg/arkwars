@@ -36,7 +36,8 @@ const store = new Vuex.Store({
         },
         player: state => {
             return state.gameData.player;
-        }
+        },
+        playerResources: state => state.gameData.resources
     },
     mutations,
     actions

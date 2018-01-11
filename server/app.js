@@ -46,7 +46,7 @@ app.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'self'"],
         styleSrc: ["'self'", "data:", "'unsafe-inline'"],
-        imgSrc: ["'self'", `localhost:${devPort}`],
+        imgSrc: ["'self'", "data:", `localhost:${devPort}`],
         scriptSrc: [
             "'self'",
             "'unsafe-eval'", // Vue.js uses new Function(), which is a eval-type function.

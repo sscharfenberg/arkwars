@@ -3,6 +3,7 @@
      * Common Header Component
      ******************************************************************************************************************/
     import FetchGameDataButton from "./FetchGameDataButton.vue";
+    import Resource from "./Resource.vue";
     export default {
         props: {
             areaTitle: {
@@ -15,13 +16,13 @@
             }
         },
         components: {
-            "fetch-button": FetchGameDataButton
+            "fetch-button": FetchGameDataButton,
+            "resource": Resource
         },
         computed: {
-            player: function () {
-                return this.$store.getters.player;
-            }
-        },
+            player () { return this.$store.getters.player; },
+            resources () { return this.$store.getters.playerResources; }
+        }
     };
 </script>
 
@@ -36,15 +37,12 @@
             </small>
         </h1>
         <ul class="resources">
-            <li>Resources Mockup</li>
-            <li>Stars 3 </li>
-            <li>Ships 14</li>
-            <li>Antimatter 43</li>
-            <li>Minerals 43</li>
-            <li>Food 12 (+3)</li>
-            <li>Population 43</li>
-            <li>Credits 490</li>
-            <li>etc</li>
+            <li v-for="resource in resources">
+                <resource
+                    :type="resource.type"
+                    :current="resource.current"
+                    :max="resource.max" />
+            </li>
         </ul>
     </header>
 </template>
@@ -107,18 +105,6 @@
         margin: 0 1.6rem 1.6rem 1.6rem;
 
         list-style: none;
-
-        > li {
-            padding: 0.2rem 0.5rem;
-            border: 1px solid palette("grey", "sunken");
-            margin: 0 0.4rem 0.4rem 0;
-
-            background: rgba(palette("grey", "raven"), 0.6);
-
-            &:last-child {
-                margin-right: 0;
-            }
-        }
     }
 </style>
 

@@ -45,11 +45,4 @@ turnSchema.index({
     slug: "text"
 });
 
-// find planets where the stars _id property === planets star property
-//turnSchema.virtual("planets", {
-//    ref: "Planet", // what model to link?
-//    localField: "_id", // which field on the star?
-//    foreignField: "star" // which field on the planet?
-//});
-
 module.exports = mongoose.model("Turn", turnSchema);
