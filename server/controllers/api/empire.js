@@ -25,7 +25,7 @@ exports.getGameData = async (req, res) => {
     const player = req.user.selectedPlayer;
     const game = player.game;
     const stars = player.stars.map(star => star.id);
-    const planets = await Planet.find({star: {$in: stars}});
+    const planets = await Planet.find({star: {$in: stars}}); // get array of all planets, unsorted.
     const returnData = {
         game: {
             number: game.number,
@@ -59,7 +59,8 @@ exports.getGameData = async (req, res) => {
                         starPlanets.push({
                             id: planet._id,
                             type: planet.type,
-                            orbitalIndex: planet.orbitalIndex
+                            orbitalIndex: planet.orbitalIndex,
+                            resources: planet.resources
                         });
                     }
                 });

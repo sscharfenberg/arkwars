@@ -1,5 +1,10 @@
 # Changelog
 
+`12.01.2018`
+- [x] Refactored mockdata again; mockdata now has "mapData", which exports stars and planets - we need both because of the IDs and planets have IDs for game and star. Previously, I imported stars twice - it was not executed twice thankfully, which would mean the planets don't fit the servers. Now stars are only imported and executed once.
+- [x] Created `seed.randomPlanet` method that is used during game creation via admin screen as well as mockdata.
+- [x] Expanded the Planets model by adding an array of resources the planet has. A planet can have zero or all resource type slots available. Implemented the Mongoose Model and the seeding of the resources to the planet, in the `seed.randomPlanet` method. Expanded gameData api and added the resources to the planet so they end up in the vuex store. Whoop.
+
 `11.01.2018`
 - [x] Created the four basic resources - `energy`, `minerals`, `food` and `research`. Added base rules to server config, adjusted Player model and passed the information from the header component to `Resource` components that display what and how much the player has. These are global (player) resources that can be accessed from anywhere (logistics get tedious, no thanks...).
 - [x] Learned that you should not use nested properties in Vuex state - Arrays that contain objects are fine, objects that contain objects are not.

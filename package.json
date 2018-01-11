@@ -18,6 +18,7 @@
         "npm": ">= 5.6.0"
     },
     "scripts": {
+        "test": "node internals/mockdata/mapData.js",
         "server.start": "node server/monitor-backend.js",
         "server.cron": "node server/monitor-cron.js",
         "app.static.build": "gulp build:static",

@@ -26,9 +26,9 @@ const games = require("../mockdata/games");
 const users = require("../mockdata/users");
 const players = require("../mockdata/players");
 const turns = require("../mockdata/turns");
-const stellar = require("../mockdata/starsAndPlanets");
-const stars = stellar.stars;
-const planets = stellar.planets;
+const map = require("../mockdata/mapData");
+const stars = map.stars;
+const planets = map.planets;
 
 
 /*

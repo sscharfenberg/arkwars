@@ -4,7 +4,6 @@
  *
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
-//const moment = require("moment"); // https://momentjs.com/
 const cfg = require("../config");
 mongoose.Promise = global.Promise;
 
@@ -32,7 +31,20 @@ const planetSchema = new mongoose.Schema({
         type: Number,
         min: 1, // 0 = sun
         max: cfg.stars.planets.player[1] + 4 // +1 because of the sun, +3 because of max planets mod.
-    }
+    },
+
+    /*
+     * nested property "resources" - array of objects
+     */
+    resources: [
+        {
+            resType: String, // type of the resource
+            slots: Number, // the number of available extractor slots
+            extractors: Number, // the number of existing extractor slots
+            value: Number // the current amount of resources remaining
+        }
+    ]
+
 });
 
 module.exports = mongoose.model("Planet", planetSchema);

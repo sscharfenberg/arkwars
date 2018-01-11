@@ -19,7 +19,7 @@ module.exports = [
     },
     {
         _id: "598b652d0404e604046bd35e",
-        number: 4,
+        number: 2,
         active: false,
         canEnlist: true,
         processing: false,
