@@ -4,6 +4,7 @@
      * this component displays a single planet
      ******************************************************************************************************************/
     import {latinToRoman} from "../../handlers/format";
+    import Resources from "./Resources/Resources.vue";
     export default {
         props: {
             id: {
@@ -21,6 +22,9 @@
             starName: {
                 type: String,
                 required: true
+            },
+            resources: {
+                type: Array
             }
         },
         computed: {
@@ -39,12 +43,16 @@
             getPlanetName: function() {
                 return `${this.starName} - ${latinToRoman(this.orbitalIndex)}`;
             }
+        },
+        components: {
+            "resource-types": Resources
         }
     };
 </script>
 
 <template>
     <div class="planet">
+
         <div class="planet__orbit">
             <aside
                 class="planet__visual"
@@ -52,14 +60,22 @@
                 :title="getPlanetTypeToolTip"
                 :aria-label="getPlanetAriaLabel">{{ getPlanetType }}</aside>
         </div>
+
         <div class="planet__data">
             <div class="planet__name"
                  :label="$t('planet.name')"
                  :title="$t('planet.name')">{{getPlanetName}}</div>
-            <div class="planet__population">population</div>
-            <div class="planet__extractors">resource extractor slots</div>
-            <div class="planet__defense">pds</div>
+            <div class="planet__population">
+                population
+            </div>
+            <resource-types v-if="resources.length"
+                :resources="resources"
+                class="planet__resources" />
+            <div class="planet__defense">
+                pds
+            </div>
         </div>
+
     </div>
 </template>
 
@@ -105,7 +121,7 @@
         }
 
         &__population,
-        &__extractors,
+        &__resources,
         &__defense,
         &__name {
             padding: 0.2rem 0.5rem;

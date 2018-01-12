@@ -25,7 +25,8 @@ exports.getGameData = async (req, res) => {
     const player = req.user.selectedPlayer;
     const game = player.game;
     const stars = player.stars.map(star => star.id);
-    const planets = await Planet.find({star: {$in: stars}}); // get array of all planets, unsorted.
+    // get unsorted array of all planets that belong to the player's stars
+    const planets = await Planet.find({star: {$in: stars}}).populate("harvesters");
     const returnData = {
         game: {
             number: game.number,
@@ -56,12 +57,34 @@ exports.getGameData = async (req, res) => {
                     // make sure the planet belongs to this star before adding
                     // again, MongoDB IDs != String
                     if (`${planet.star}` === `${star._id}`) {
-                        starPlanets.push({
+                        let pushPlanet = {
                             id: planet._id,
                             type: planet.type,
                             orbitalIndex: planet.orbitalIndex,
-                            resources: planet.resources
+                            resources: [],
+                            harvesters: []
+                        };
+                        // add harvesters to planet. again, only the fields that we want the client to have.
+                        if (planet.harvesters.length) {
+                            planet.harvesters.forEach( harvester => {
+                                pushPlanet.harvesters.push({
+                                    id: harvester._id,
+                                    planet: harvester.planet,
+                                    resourceType: harvester.resourceType,
+                                    turnsUntilComplete: harvester.turnsUntilComplete,
+                                    isHarvesting: harvester.isHarvesting
+                                });
+                            });
+                        }
+                        // avoid sending the exact resource value to the client.
+                        planet.resources.forEach( planet => {
+                            pushPlanet.resources.push({
+                                id: planet._id,
+                                resourceType: planet.resourceType,
+                                slots: planet.slots
+                            });
                         });
+                        starPlanets.push(pushPlanet);
                     }
                 });
             starPlanets = starPlanets.sort((a, b) => {

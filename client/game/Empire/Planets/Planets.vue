@@ -28,7 +28,8 @@
                 :id="planet.id"
                 :type="planet.type"
                 :orbitalIndex="planet.orbitalIndex"
-                :starName="starName"/>
+                :starName="starName"
+                :resources="planet.resources" />
         </li>
     </ul>
 </template>

@@ -34,17 +34,23 @@ const planetSchema = new mongoose.Schema({
     },
 
     /*
-     * nested property "resources" - array of objects
+     * "resources" is an array of resource-objects
      */
     resources: [
         {
-            resType: String, // type of the resource
+            resourceType: String, // type of the resource
             slots: Number, // the number of available extractor slots
-            extractors: Number, // the number of existing extractor slots
             value: Number // the current amount of resources remaining
         }
     ]
 
+});
+
+// find harvesters where harvester.planet = planet._id
+planetSchema.virtual("harvesters", {
+    ref: "Harvester", // what model to link?
+    localField: "_id", // which field on the Planet?
+    foreignField: "planet" // which field on the Harvester?
 });
 
 module.exports = mongoose.model("Planet", planetSchema);

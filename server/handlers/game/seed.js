@@ -4,6 +4,7 @@
  *
  **********************************************************************************************************************/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
+const mongoose = require("mongoose");
 const logger = require("../../handlers/logger/console");
 const PoissonDiskSampling = require("poisson-disk-sampling"); // https://github.com/kchapelier/poisson-disk-sampling
 const cfg = require("../../config");
@@ -148,7 +149,7 @@ const assignRandomStar = stars => {
  *
  */
 const randomPlanet = (gameId, starId, orbitalIndex, npc) => {
-    // assign random planet type, varies depending on homeSystem or not (npc = truthy)
+    // assign random planet type, varies depending on homeSystem (when npc = falsy) or not (npc = truthy)
     const planetType = randomType(npc ? 1 : 2, cfg.planets.types);
     // get resource rules from config
     const slots = cfg.planets.types.filter(type => type.name === planetType).shift().resourceSlots;
@@ -162,24 +163,24 @@ const randomPlanet = (gameId, starId, orbitalIndex, npc) => {
         const max = slot.max;
         let chance = slot.chance;
         let rolled = Math.random() * 100;
-        let extractorSlots = 0;
+        let slots = 0;
         //console.log(slot.type + ", chance " + chance + ", rolled " + parseInt(rolled, 10) + " max " + slot.max);
-        while (rolled < chance && extractorSlots < max) {
+        while (rolled < chance && slots < max) {
             chance -= rolled;
             rolled = Math.random() * 100;
-            extractorSlots++;
+            slots++;
         }
-        if (extractorSlots) {
+        if (slots) {
             resources.push({
-                resType: slot.type, // type of the resource
-                slots: extractorSlots, // the number of available extractor slots
-                extractors: 0, // the number of existing extractor slots
+                resourceType: slot.type, // type of the resource
+                slots, // the number of available extractor slots
                 // exact value of remaining resources on the planet
                 value: Math.floor(Math.random() * (slot.potential[1] - slot.potential[0]) + slot.potential[0])
             });
         }
     });
     return {
+        _id: mongoose.Types.ObjectId(),
         game: gameId,
         star: starId,
         type: planetType,

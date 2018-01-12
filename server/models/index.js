@@ -8,5 +8,6 @@ require("./Game");
 require("./Player");
 require("./Star");
 require("./Planet");
+require("./Harvester");
 require("./Turn");
 require("./Suspension");

@@ -18,7 +18,6 @@
         "npm": ">= 5.6.0"
     },
     "scripts": {
-        "test": "node internals/mockdata/mapData.js",
         "server.start": "node server/monitor-backend.js",
         "server.cron": "node server/monitor-cron.js",
         "app.static.build": "gulp build:static",
@@ -33,7 +32,8 @@
         "game.icons": "gulp icons:game",
         "files.cleanup": "gulp cleanup",
         "db.prune": "node internals/npm/db.prune.js",
-        "db.seed": "node internals/npm/db.seed.js"
+        "db.seed": "node internals/npm/db.seed.js",
+        "db.reseed": "node internals/npm/db.prune.js && node internals/npm/db.seed.js"
     },
     "dependencies": {
         "body-parser": "^1.18.2",

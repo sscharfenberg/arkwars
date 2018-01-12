@@ -22,6 +22,7 @@ const Star = mongoose.model("Star");
 const Planet = mongoose.model("Planet");
 const Turn = mongoose.model("Turn");
 const Suspension = mongoose.model("Suspension");
+const Harvester = mongoose.model("Harvester");
 const games = require("../mockdata/games");
 const users = require("../mockdata/users");
 const players = require("../mockdata/players");
@@ -29,6 +30,7 @@ const turns = require("../mockdata/turns");
 const map = require("../mockdata/mapData");
 const stars = map.stars;
 const planets = map.planets;
+let playerHomeSystems = [];
 
 
 /*
@@ -49,6 +51,8 @@ const seedDatabase = async () => {
         await Star.insertMany(stars);
         logger.debug(`[node] inserting ${planets.length} planets.`);
         await Planet.insertMany(planets);
+        logger.debug(`[node] inserting ${harvesters.length} harvesters.`);
+        await Harvester.insertMany(harvesters);
         logger.debug("[node] done inserting.");
         logger.success("[node] finished seeding database.");
     } catch (e) {
@@ -81,7 +85,7 @@ games.forEach(game => {
  * assign homeSystems to players. this is normally done during enlisting.
  */
 logger.info(
-    `[node] seeding homesystems for ${chalk.red(players.length)} Players.`
+    `[node] selecting homesystems for ${chalk.red(players.length)} Players.`
 );
 players.forEach(player => {
     // available stars as homesystem have
@@ -92,6 +96,7 @@ players.forEach(player => {
             star.owner === undefined // c) do not have an owner
     );
     const homeSystem = seed.assignRandomStar(gameStars);
+    playerHomeSystems.push(homeSystem);
     logger.info(
         `[node] chosen Star ${chalk.yellow(
             homeSystem.name
@@ -100,19 +105,34 @@ players.forEach(player => {
         )}`
     );
     stars.forEach( function(star) {
-        /* become owner if ...
-         * we don't have the ID of the stars, so we need to match by name and coords
-         */
         if (
-            player.game === star.game && // a) correct gameid
-            star.name === homeSystem.name && // b) name matches chosen name
-            star.coordX === homeSystem.coordX && // c) coordX matches chosen coordX
-            star.coordY === homeSystem.coordY // d) and, just to be extra sure, coordY matches as well.
+            player.game === star.game &&
+            star._id === homeSystem._id
         ) {
             star.owner = player._id;
         }
     });
 });
+
+
+/*
+ * add random harvester for testing purposes
+ */
+let harvesters = [];
+playerHomeSystems.forEach( star => {
+    const starPlanets = planets.filter( planet => planet.star === star._id && planet.resources.length);
+    const randomIndex = Math.floor(Math.random() * starPlanets.length);
+    const randomPlanet = starPlanets[randomIndex];
+    let harvester = {
+        planet: randomPlanet._id,
+        resourceType: randomPlanet.resources[0].resourceType,
+        turnsUntilComplete: 0
+    };
+    logger.info(`[mockdata] created ${chalk.red(harvester.resourceType)} harvester for star ${chalk.yellow(star.name)} - ${randomPlanet.orbitalIndex}`);
+    harvesters.push(harvester);
+});
+
+
 
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
