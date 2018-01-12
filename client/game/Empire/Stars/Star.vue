@@ -73,6 +73,7 @@
                 return this.$store.dispatch("EDIT_STAR_NAME", {id: this.id, editing: false});
             },
             saveStarName() {
+                if (this.starName.length < 4) return;
                 return this.$store.dispatch("SAVE_STAR_NAME", {id: this.id, starName: this.starName});
             }
         }
