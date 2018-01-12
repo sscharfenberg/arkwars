@@ -6,42 +6,36 @@
     import {latinToRoman} from "../../handlers/format";
     import Resources from "./Resources/Resources.vue";
     export default {
+        data: function() {
+            return {
+                planet: this.$store.getters.getPlanetById(this.id)
+            };
+        },
         props: {
             id: {
                 type: String,
                 required: true
             },
-            type: {
-                type: String,
-                required: true
-            },
-            orbitalIndex: {
-                type: Number,
-                required: true
-            },
             starName: {
                 type: String,
                 required: true
-            },
-            resources: {
-                type: Array
             }
         },
         computed: {
             getPlanetVisualClass: function() {
-                return "planet__visual--" + this.type;
+                return "planet__visual--" + this.planet.type;
             },
             getPlanetTypeToolTip: function() {
-                return `${this.$t("planet.typeLabel")}: ${this.$t("planet.types." + this.type)}`;
+                return `${this.$t("planet.typeLabel")}: ${this.$t("planet.types." + this.planet.type)}`;
             },
             getPlanetAriaLabel: function() {
                 return this.$t("planet.typeLabel");
             },
             getPlanetType: function() {
-                return this.$t("planet.types." + this.type);
+                return this.$t("planet.types." + this.planet.type);
             },
             getPlanetName: function() {
-                return `${this.starName} - ${latinToRoman(this.orbitalIndex)}`;
+                return `${this.starName} - ${latinToRoman(this.planet.orbitalIndex)}`;
             }
         },
         components: {
@@ -68,8 +62,8 @@
             <div class="planet__population">
                 population
             </div>
-            <resource-types v-if="resources.length"
-                :resources="resources"
+            <resource-types v-if="planet.resources.length"
+                :resources="planet.resources"
                 class="planet__resources" />
             <div class="planet__defense">
                 pds

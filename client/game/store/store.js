@@ -22,22 +22,20 @@ const store = new Vuex.Store({
         editingStarName: []
     },
     getters: {
-        fetchingGameDataFromApi: state => {
-            return state.fetchingGameDataFromApi;
+        fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
+        stars: state => state.gameData.stars || [],
+        savingStarNameIds: state => state.savingStarName,
+        editingStarNameIds: state => state.editingStarName,
+        player: state => state.gameData.player,
+        planets: state => {
+            let planets = [];
+            state.gameData.stars.forEach( star => {
+                planets = planets.concat(star.planets);
+            });
+            return planets;
         },
-        stars: state => {
-            return state.gameData.stars || [];
-        },
-        savingStarNameIds: state => {
-            return state.savingStarName;
-        },
-        editingStarNameIds: state => {
-            return state.editingStarName;
-        },
-        player: state => {
-            return state.gameData.player;
-        },
-        playerResources: state => state.gameData.resources
+        playerResources: state => state.gameData.resources,
+        getPlanetById: (state, getters) => id => getters.planets.find(planet => planet.id === id)
     },
     mutations,
     actions

@@ -26,10 +26,7 @@
         <li v-for="planet in planets">
             <planet
                 :id="planet.id"
-                :type="planet.type"
-                :orbitalIndex="planet.orbitalIndex"
-                :starName="starName"
-                :resources="planet.resources" />
+                :starName="starName" />
         </li>
     </ul>
 </template>
