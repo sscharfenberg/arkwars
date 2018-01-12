@@ -4,6 +4,9 @@
 - [x] Refactored mockdata again; mockdata now has "mapData", which exports stars and planets - we need both because of the IDs and planets have IDs for game and star. Previously, I imported stars twice - it was not executed twice thankfully, which would mean the planets don't fit the servers. Now stars are only imported and executed once.
 - [x] Created `seed.randomPlanet` method that is used during game creation via admin screen as well as mockdata.
 - [x] Expanded the Planets model by adding an array of resources the planet has. A planet can have zero or all resource type slots available. Implemented the Mongoose Model and the seeding of the resources to the planet, in the `seed.randomPlanet` method. Expanded gameData api and added the resources to the planet so they end up in the vuex store. Whoop.
+- [x] Added new Mongoose model, `Harvesters` - these are resource extractors installed on a planet. Implemented as usual with ref to Planets, and a virtual field on the Planet. In the empire/api, the data gets shuffled around a bit so Vue can access it optimally.
+- [x] For Planets all resource slots are now shown. They appear as either a full opacity button (if harvester installed) or as a low-opacity icon (if the slot is empty). Info for now as tooltip / aria-label, will become popover / dialog modals sometime soon.
+- [x] `db.reseed` is amazingly useful ^.^
 
 `11.01.2018`
 - [x] Created the four basic resources - `energy`, `minerals`, `food` and `research`. Added base rules to server config, adjusted Player model and passed the information from the header component to `Resource` components that display what and how much the player has. These are global (player) resources that can be accessed from anywhere (logistics get tedious, no thanks...).

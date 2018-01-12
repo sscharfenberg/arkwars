@@ -24,9 +24,8 @@
 <template>
     <ul class="planets">
         <li v-for="planet in planets">
-            <planet
-                :id="planet.id"
-                :starName="starName" />
+            <planet :id="planet.id"
+                    :starName="starName" />
         </li>
     </ul>
 </template>

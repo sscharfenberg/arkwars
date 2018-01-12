@@ -32,6 +32,16 @@
             "carbon": "Carbon",
             "tomb": "Tomb"
         },
-        "name": "Planet name"
+        "name": "Planet name",
+        "harvesters": {
+            "names": {
+                "minerals": "Mining Station",
+                "energy": "Energy Harvester",
+                "food": "Biosphere",
+                "research": "Research Station"
+            },
+            "untilComplete": "{turns} turns until completion",
+            "install": "Install harvester"
+        }
     }
 }

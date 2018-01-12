@@ -11,11 +11,5 @@
         "energy": "Energy",
         "food": "Food",
         "research": "Research"
-    },
-    "extractorNames": {
-        "minerals": "Mining Station",
-        "energy": "Energy Harvester",
-        "food": "Biosphere",
-        "research": "Research Station"
     }
 }

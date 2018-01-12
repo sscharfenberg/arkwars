@@ -57,36 +57,42 @@ exports.getGameData = async (req, res) => {
                     // make sure the planet belongs to this star before adding
                     // again, MongoDB IDs != String
                     if (`${planet.star}` === `${star._id}`) {
-                        let pushPlanet = {
+                        let apiPlanet = {
                             id: planet._id,
                             type: planet.type,
                             orbitalIndex: planet.orbitalIndex,
-                            resources: [],
-                            harvesters: []
+                            resourceSlots: []
                         };
-                        // add harvesters to planet. again, only the fields that we want the client to have.
+                        // avoid sending the exact resource value to the client.
+                        planet.resources.forEach(res => {
+                            apiPlanet.resourceSlots.push({
+                                id: res.id,
+                                resourceType: res.resourceType,
+                                slots: res.slots,
+                                harvesters: []
+                            });
+                        });
+                        // add harvesters to planet. we refactor the data here since this structure is better
+                        // for the client.
+                        // again, only send the fields that we want the client to have.
                         if (planet.harvesters.length) {
-                            planet.harvesters.forEach( harvester => {
-                                pushPlanet.harvesters.push({
-                                    id: harvester._id,
-                                    planet: harvester.planet,
-                                    resourceType: harvester.resourceType,
-                                    turnsUntilComplete: harvester.turnsUntilComplete,
-                                    isHarvesting: harvester.isHarvesting
+                            planet.harvesters.forEach(harvester => {
+                                apiPlanet.resourceSlots.forEach(slot => {
+                                    if (slot.resourceType === harvester.resourceType) {
+                                        slot.harvesters.push({
+                                            id: harvester.id,
+                                            turnsUntilComplete: harvester.turnsUntilComplete,
+                                            resourceType: harvester.resourceType,
+                                            isHarvesting: harvester.isHarvesting
+                                        });
+                                    }
                                 });
                             });
                         }
-                        // avoid sending the exact resource value to the client.
-                        planet.resources.forEach( planet => {
-                            pushPlanet.resources.push({
-                                id: planet._id,
-                                resourceType: planet.resourceType,
-                                slots: planet.slots
-                            });
-                        });
-                        starPlanets.push(pushPlanet);
+                        starPlanets.push(apiPlanet);
                     }
                 });
+            // sort them by orbitalIndex
             starPlanets = starPlanets.sort((a, b) => {
                 if (a.orbitalIndex < b.orbitalIndex) return -1;
                 if (a.orbitalIndex > b.orbitalIndex) return 1;
@@ -119,9 +125,9 @@ exports.getGameData = async (req, res) => {
 exports.saveStarName = async (req, res) => {
     const playerStars = req.user.selectedPlayer.stars.map(star => star.id);
     logger.info(
-        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} requesting name change of star ${chalk.yellow(
-            req.body.id
-        )} to ${chalk.cyan(req.body.name)}`
+        `[App] Player ${chalk.red(
+            "[" + req.user.selectedPlayer.ticker + "]"
+        )} requesting name change of star ${chalk.yellow(req.body.id)} to ${chalk.cyan(req.body.name)}`
     );
     // don't trust the client.
     if (!playerStars.includes(req.body.id)) {
@@ -138,7 +144,9 @@ exports.saveStarName = async (req, res) => {
         {new: true, runValidators: true, context: "query"}
     );
     if (updatedStar) {
-        logger.success(`[App] name of star ${chalk.yellow(req.body.id)} was changed to ${chalk.cyan(updatedStar.name)}.`);
+        logger.success(
+            `[App] name of star ${chalk.yellow(req.body.id)} was changed to ${chalk.cyan(updatedStar.name)}.`
+        );
         return res.status(200).json({data: {name: updatedStar.name}});
     } else {
         logger.success(`[App] error saving name.`);

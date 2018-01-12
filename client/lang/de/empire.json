@@ -32,6 +32,16 @@
             "carbon": "Karbon",
             "tomb": "Grabwelt"
         },
-        "name": "Planeten Name"
+        "name": "Planeten Name",
+        "harvesters": {
+            "names": {
+                "minerals": "Bergbaustation",
+                "energy": "Kraftwerk",
+                "food": "Biosphäre",
+                "research": "Forschungsstation"
+            },
+            "untilComplete": "{turns} Runden bis zur Fertigstellung",
+            "install": "Ernter installieren"
+        }
     }
 }

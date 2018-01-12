@@ -11,11 +11,5 @@
         "energy": "Energie",
         "food": "Nahrung",
         "research": "Forschung"
-    },
-    "extractorNames": {
-        "minerals": "Bergbau Station",
-        "energy": "Kraftwerks Station",
-        "food": "Biosphäre",
-        "research": "Forschungs Station"
     }
 }

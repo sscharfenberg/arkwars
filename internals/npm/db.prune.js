@@ -21,6 +21,7 @@ const Star = mongoose.model("Star");
 const Planet = mongoose.model("Planet");
 const Turn = mongoose.model("Turn");
 const Suspension = mongoose.model("Suspension");
+const Harvester = mongoose.model("Harvester");
 
 /*
  * prune database and throw everything away.
@@ -41,6 +42,8 @@ const pruneDatabase = async () => {
     logger.debug("[node] turns removed.");
     await Suspension.remove();
     logger.debug("[node] suspensions removed.");
+    await Harvester.remove();
+    logger.debug("[node] harvesters removed.");
     logger.success("[node] collections deleted.");
     process.exit(0);
 };

@@ -36,10 +36,18 @@
             },
             getPlanetName: function() {
                 return `${this.starName} - ${latinToRoman(this.planet.orbitalIndex)}`;
-            }
+            },
+            //getResources () {
+            //    if (!this.planet.resources) return [];
+            //    if (!this.planet.harvesters.length) return this.planet.resources;
+            //    this.planet.harvesters.forEach( harvester => {
+            //        let res = this.planet.resources.find( resource => resource.resourceType === harvester.resourceType);
+            //        console.log(harvester.resourceType, res);
+            //    });
+            //}
         },
         components: {
-            "resource-types": Resources
+            "resources": Resources
         }
     };
 </script>
@@ -48,11 +56,10 @@
     <div class="planet">
 
         <div class="planet__orbit">
-            <aside
-                class="planet__visual"
-                v-bind:class="getPlanetVisualClass"
-                :title="getPlanetTypeToolTip"
-                :aria-label="getPlanetAriaLabel">{{ getPlanetType }}</aside>
+            <aside class="planet__visual"
+                   v-bind:class="getPlanetVisualClass"
+                   :title="getPlanetTypeToolTip"
+                   :aria-label="getPlanetAriaLabel">{{ getPlanetType }}</aside>
         </div>
 
         <div class="planet__data">
@@ -62,9 +69,8 @@
             <div class="planet__population">
                 population
             </div>
-            <resource-types v-if="planet.resources.length"
-                :resources="planet.resources"
-                class="planet__resources" />
+            <resources v-if="planet.resourceSlots.length"
+                       :resources="planet.resourceSlots" />
             <div class="planet__defense">
                 pds
             </div>
@@ -115,14 +121,18 @@
         }
 
         &__population,
-        &__resources,
         &__defense,
         &__name {
-            padding: 0.2rem 0.5rem;
+            height: 2.4rem;
+            padding: 0.5rem 1rem;
             border: 1px solid palette("grey", "abbey");
-            margin: 0 0.4rem 0.4rem 0;
+            margin: 0 0.8rem 0.8rem 0;
 
             background: rgba(palette("grey", "mystic"), 0.05);
+        }
+
+        &__name {
+            color: palette("text", "lighter");
         }
     }
 </style>
