@@ -77,10 +77,11 @@ const getMapPreview = game => {
     }
     // prepare the ascii map as preview. 0 = empty, 1 = npc, 2 = player
     game.stars && game.stars.forEach(star => {
-        points[star.coordX][star.coordY] = star.homeSystem ? 2 : 1; // set marker for star
+        points[star.coordY][star.coordX] = star.homeSystem ? 2 : 1; // set marker for star
         if (star.homeSystem) numPlayerSys++;
         else numNpcSys++;
     });
+    console.log(points);
     return {
         points,
         numNpcSys,
