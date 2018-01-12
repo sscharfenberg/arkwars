@@ -28,15 +28,9 @@
             }
         },
         computed: {
-            isDisabled() {
-                return this.disable;
-            },
-            typeModifier() {
-                return this.iconName && !this.textString ? "btn--icon" : "btn--text";
-            },
-            getLabel() {
-                return this.label || this.textString || "";
-            },
+            isDisabled() { return this.disable; },
+            typeModifier() { return this.iconName && !this.textString ? "btn--icon" : "btn--text"; },
+            getLabel() { return this.label || this.textString || ""; },
             getSizeClass() {
                 switch(this.scale) {
                     case 0: return "tiny";

@@ -34,16 +34,10 @@
             };
         },
         computed: {
-            spinnerSize() {
-                return this.size + this.sizeUnits;
-            },
-            spinnerDepth() {
-                return this.depth + this.sizeUnits;
-            },
-            spinnerSpeed() {
-                return this.speed + this.timeUnits;
-            },
-            spinnerStyle() {
+            spinnerSize () { return this.size + this.sizeUnits; },
+            spinnerDepth () { return this.depth + this.sizeUnits; },
+            spinnerSpeed () { return this.speed + this.timeUnits; },
+            spinnerStyle () {
                 return {
                     width: this.spinnerSize,
                     height: this.spinnerSize,
@@ -56,8 +50,7 @@
 </script>
 
 <template>
-    <div
-        class="spinner"
+    <div class="spinner"
         v-show="status"
         :style="spinnerStyle"></div>
 </template>

@@ -19,8 +19,7 @@
 <template>
     <ul v-if="stars.length > 0">
         <li v-for="star in stars">
-            <star
-                :id="star.id"
+            <star :id="star.id"
                 :name="star.name"
                 :coord-x="star.coordX"
                 :coord-y="star.coordY"

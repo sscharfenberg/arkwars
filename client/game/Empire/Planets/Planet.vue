@@ -22,29 +22,11 @@
             }
         },
         computed: {
-            getPlanetVisualClass: function() {
-                return "planet__visual--" + this.planet.type;
-            },
-            getPlanetTypeToolTip: function() {
-                return `${this.$t("planet.typeLabel")}: ${this.$t("planet.types." + this.planet.type)}`;
-            },
-            getPlanetAriaLabel: function() {
-                return this.$t("planet.typeLabel");
-            },
-            getPlanetType: function() {
-                return this.$t("planet.types." + this.planet.type);
-            },
-            getPlanetName: function() {
-                return `${this.starName} - ${latinToRoman(this.planet.orbitalIndex)}`;
-            },
-            //getResources () {
-            //    if (!this.planet.resources) return [];
-            //    if (!this.planet.harvesters.length) return this.planet.resources;
-            //    this.planet.harvesters.forEach( harvester => {
-            //        let res = this.planet.resources.find( resource => resource.resourceType === harvester.resourceType);
-            //        console.log(harvester.resourceType, res);
-            //    });
-            //}
+            getPlanetVisualClass () { return "planet__visual--" + this.planet.type; },
+            getPlanetTypeToolTip () { return `${this.$t("planet.typeLabel")}: ${this.$t("planet.types." + this.planet.type)}`; },
+            getPlanetAriaLabel () { return this.$t("planet.typeLabel"); },
+            getPlanetType () { return this.$t("planet.types." + this.planet.type); },
+            getPlanetName () { return `${this.starName} - ${latinToRoman(this.planet.orbitalIndex)}`; }
         },
         components: {
             "resources": Resources
@@ -70,7 +52,8 @@
                 population
             </div>
             <resources v-if="planet.resourceSlots.length"
-                       :resources="planet.resourceSlots" />
+                       :resources="planet.resourceSlots"
+                       :planetid="planet.id" />
             <div class="planet__defense">
                 pds
             </div>

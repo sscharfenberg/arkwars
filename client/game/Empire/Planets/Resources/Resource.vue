@@ -21,6 +21,10 @@
             harvesters: {
                 type: Array,
                 required: true
+            },
+            planetid: {
+                type: String,
+                required: true
             }
         },
         components: {
@@ -38,7 +42,7 @@
             },
             buildingHarvesterClass (harvester) { return harvester.turnsUntilComplete > 0 ? "harvester__building" : ""; },
             installClick () {
-                confirm("[todo] install harvester for ???");
+                confirm(`[todo] install ${this.resourceType} harvester for planet ${this.planetid}`);
             }
         }
 

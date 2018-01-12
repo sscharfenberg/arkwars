@@ -3,13 +3,13 @@
 Vector Icons used throughout the site are taken from Google Material Design Icons:
 https://material.io/icons/
 
-**Fleets**: "Air Force Plane" Icon made by [Freepik](https://www.flaticon.com/free-icon/air-force-plane_84987), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Fleets**: "Air Force Plane" Icon made by [Freepik](http://www.freepik.com) from [flaticon.com](https://www.flaticon.com/free-icon/air-force-plane_84987), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
-**Research**: "DNA Strand" Icon made by [Freepik](https://www.flaticon.com/free-icon/dna-strand_67903), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Research**: "DNA Strand" Icon made by [Freepik](http://www.freepik.com) from [flaticon.com](https://www.flaticon.com/free-icon/dna-strand_67903), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
-**Resource: Energy**: Lightning Bolt by Rémy Médard from [the Noun Project](https://thenounproject.com/term/lightning-bolt/21604/), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Resource: Energy**: Lightning Bolt by Rémy Médard from [the Noun Project](https://thenounproject.com/term/lightning-bolt/21604/) licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
-**Resource: Food**: "Turkey" Icon made by [Freepik](https://www.flaticon.com/free-icon/turkey_261130), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Resource: Food**: "Corn" Icon made by [Flaticon](https://www.flaticon.com/) from [shareicon.net](https://www.shareicon.net/vegan-corn-healthy-food-food-and-restaurant-food-organic-diet-vegetarian-cereal-851723), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
 **Resource: Research**: "Nuclear" by Mike Rowe, AU from [the Noun Project](https://thenounproject.com/term/nuclear/75368/), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 

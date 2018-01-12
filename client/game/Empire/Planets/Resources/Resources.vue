@@ -7,7 +7,12 @@
     export default {
         props: {
             resources: {
-                type: Array
+                type: Array,
+                required: true
+            },
+            planetid: {
+                type: String,
+                required: true
             }
         },
         components: {
@@ -17,12 +22,13 @@
 </script>
 
 <template>
-    <ul v-if="resources.length" class="resources">
+    <ul class="resources">
         <li v-for="resource in resources">
             <resource :id="resource.id"
                       :resourceType="resource.resourceType"
                       :slots="resource.slots"
-                      :harvesters="resource.harvesters" />
+                      :harvesters="resource.harvesters"
+                      :planetid="planetid"/>
         </li>
     </ul>
 </template>

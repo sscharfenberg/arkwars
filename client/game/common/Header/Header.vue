@@ -38,10 +38,9 @@
         </h1>
         <ul class="resources">
             <li v-for="resource in resources">
-                <resource
-                    :type="resource.type"
-                    :current="resource.current"
-                    :max="resource.max" />
+                <resource :type="resource.type"
+                          :current="resource.current"
+                          :max="resource.max" />
             </li>
         </ul>
     </header>

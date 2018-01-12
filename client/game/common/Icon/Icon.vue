@@ -15,10 +15,8 @@
             }
         },
         computed: {
-            iconPath() {
-                return `/public/assets/images/icons-game.svg#${this.name}`;
-            },
-            sizeClass() {
+            iconPath () { return `/public/assets/images/icons-game.svg#${this.name}`; },
+            sizeClass () {
                 switch(this.size) {
                     case 0: return "tiny";
                     case 1: return "small";

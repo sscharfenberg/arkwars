@@ -10,21 +10,16 @@
             "spinner": Spinner
         },
         computed: {
-            fetching: function () {
-                return this.$store.getters.fetchingGameDataFromApi;
-            }
+            fetching () { return this.$store.getters.fetchingGameDataFromApi; }
         },
         methods: {
-            fetchGameData: function() {
-                return this.$store.dispatch("FETCH_GAMEDATA_FROM_API");
-            }
+            fetchGameData () { return this.$store.dispatch("FETCH_GAMEDATA_FROM_API"); }
         }
     };
 </script>
 
 <template>
-    <button
-        @click="fetchGameData"
+    <button @click="fetchGameData"
         :disabled="fetching"
         :aria-disabled="fetching"
         :aria-expanded="fetching"

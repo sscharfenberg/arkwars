@@ -49,18 +49,10 @@
             }
         },
         computed: {
-            spectralClassName: function () {
-                return `star__spectral--${this.spectral}`;
-            },
-            spectralTypeString: function() {
-                return this.$t("star.spectralType") + ": " + this.spectral;
-            },
-            isStarNameSaving: function () {
-                return this.$store.getters.savingStarNameIds.includes(this.id);
-            },
-            isStarNameEditing: function () {
-                return this.$store.getters.editingStarNameIds.includes(this.id);
-            }
+            spectralClassName () { return `star__spectral--${this.spectral}`; },
+            spectralTypeString () { return this.$t("star.spectralType") + ": " + this.spectral; },
+            isStarNameSaving () { return this.$store.getters.savingStarNameIds.includes(this.id); },
+            isStarNameEditing () { return this.$store.getters.editingStarNameIds.includes(this.id); }
         },
         components: {
             "icon": Icon,
