@@ -120,16 +120,20 @@ players.forEach(player => {
  */
 let harvesters = [];
 playerHomeSystems.forEach( star => {
-    const starPlanets = planets.filter( planet => planet.star === star._id && planet.resources.length);
-    const randomIndex = Math.floor(Math.random() * starPlanets.length);
-    const randomPlanet = starPlanets[randomIndex];
-    let harvester = {
-        planet: randomPlanet._id,
-        resourceType: randomPlanet.resources[0].resourceType,
-        turnsUntilComplete: 0
-    };
-    logger.info(`[mockdata] created ${chalk.red(harvester.resourceType)} harvester for star ${chalk.yellow(star.name)} - ${randomPlanet.orbitalIndex}`);
-    harvesters.push(harvester);
+    let starPlanets = planets.filter( planet => planet.star === star._id && planet.resources.length);
+    const numHarvesters = starPlanets.length;
+    for (let i = 0; i < numHarvesters; i++ ) {
+        const randomIndex = Math.floor(Math.random() * starPlanets.length);
+        const randomPlanet = starPlanets[randomIndex];
+        let harvester = {
+            planet: randomPlanet._id,
+            resourceType: randomPlanet.resources[0].resourceType,
+            turnsUntilComplete: 0
+        };
+        logger.info(`[mockdata] created ${chalk.red(harvester.resourceType)} harvester for star ${chalk.yellow(star.name)} - ${randomPlanet.orbitalIndex}`);
+        harvesters.push(harvester);
+        starPlanets.splice(randomIndex, 1);
+    }
 });
 
 
