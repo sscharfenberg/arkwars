@@ -5,7 +5,7 @@
 Added player actions to resource slots. Empty slots are now a button; @click opens a modal that shows the costs for the harvester and asks if it should be installed. On confirmation, the server inserts a new harvester into the database.
 For this, several additions / changes had to be implemented:
 - [x] Rules and texts for harvesters, including client rules where the client imports a server file so the client knows costs etc as well.
-- [x] new api endpoint, `/api/game/empire/harvester/install` with two new middlewares - one for validating, one for actually installing the harvester. Actually paying with resources is still missing.
+- [x] new api endpoint, `/api/game/empire/harvester/install` with two new middlewares - one for validating, one for actually installing the harvester. The server subtracts the resources, the client does the same (immediately visible).
 - [x] New dependency, `vue-js-modal`.
 - [x] Additions to store, actions and mutations for state handling.
 - [x] Added new Vue Components: `Costs` (displays costs in resources/turns), `InstallModal` which uses `vue-js-modal` to display a modal confirm window.

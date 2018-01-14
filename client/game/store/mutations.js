@@ -78,12 +78,12 @@ const MUTATIONS = {
 
     /*
      * update game data and add new harvester to planet
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
      */
     ADD_HARVESTER: (state, payload) => {
         let allPlanets = [];
-        console.log("mutation: ", payload);
         state.gameData.stars.forEach(star => {
-            console.log(star.planets);
             allPlanets = allPlanets.concat(star.planets);
         });
         const planet = allPlanets.find(planet => planet.id === payload.planet);
@@ -105,12 +105,25 @@ const MUTATIONS = {
     SAVING_INSTALL_HARVESTER: (state, payload) => {
         if (payload.saving) {
             // add slot to array
-            console.log("mutating " + payload.resourceId);
             state.installingResourceTypes.push(payload.resourceId);
         } else {
             // remove ID from array
             state.installingResourceTypes.splice(state.installingResourceTypes.indexOf(payload.resourceId), 1);
         }
+    },
+
+    /*
+     * pay harvester by changing player resources.
+     * this is clientside, but it is enforeced by the server.
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
+     */
+    PAY_HARVESTER: (state, payload) => {
+        console.log("pay for harvester ", costs);
+        const costs = cfg.rules.harvesters.build.find(harvester => harvester.type === payload.harvesterType).costs;
+        costs.forEach( slot => {
+            state.gameData.resources.find(resource => resource.type === slot.resourceType).current -= slot.amount;
+        });
     }
 };
 

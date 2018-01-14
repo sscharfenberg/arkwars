@@ -9,6 +9,7 @@ const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const Planet = mongoose.model("Planet");
+const Player = mongoose.model("Player");
 const Star = mongoose.model("Star");
 const Harvester = mongoose.model("Harvester");
 const logger = require("../../handlers/logger/console");
@@ -206,20 +207,42 @@ exports.installHarvester = async (req, res) => {
     const harvesterType = strip(req.body.harvesterType);
     const planetid = strip(req.body.planet);
     const turns = cfg.harvesters.build.filter(harvester => harvester.type === harvesterType).shift().duration;
+    // create new harvester
     const harvester = new Harvester({
         planet: planetid,
         resourceType: harvesterType,
         turnsUntilComplete: turns
     });
-    await harvester.save();
-    // TODO: subtract costs!!!
-    logger.success(
-        `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" +
-            req.user.username} installed a ${chalk.yellow(harvesterType)} harvester on Planet ${chalk.cyan("#" + planetid)}`
+    // get the new values for resources
+    const buildCosts = cfg.harvesters.build.find(harvester => harvester.type === harvesterType).costs;
+    let set = {};
+    buildCosts.forEach(resource => {
+        set["resources." + resource.resourceType + ".current"] =
+            req.user.selectedPlayer.resources[resource.resourceType].current - resource.amount;
+    });
+    const harvesterPromise = harvester.save();
+    const playerPromise = Player.findOneAndUpdate(
+        {_id: req.user.selectedPlayer._id},
+        {$set: set},
+        {new: true, runValidators: true, context: "query"}
     );
-    setTimeout(function() {
-        return res.status(200).json({
-            harvester: {id: harvester._id, turnsUntilComplete: turns}
-        });
-    }, 4000);
+    const [newHarvester, updatedPlayer] = await Promise.all([harvesterPromise, playerPromise]);
+
+    if (!updatedPlayer) {
+        logger.error(`[App] error saving build costs for harvester.`);
+    }
+    if (!newHarvester) {
+        logger.error(`[App] error saving new harvester to db.`);
+    }
+    updatedPlayer &&
+        newHarvester &&
+        logger.success(
+            `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" +
+                req.user.username} installed a ${chalk.yellow(harvesterType)} harvester on Planet ${chalk.cyan(
+                "#" + planetid
+            )}`
+        );
+    return res.status(200).json({
+        harvester: {id: harvester._id, turnsUntilComplete: turns}
+    });
 };

@@ -91,10 +91,8 @@ const ACTIONS = {
                 } else if (response.data.error) {
                     console.error(response.data.error);
                 }
-                ctx.commit("SAVING_INSTALL_HARVESTER", {
-                    resourceId: payload.resourceId,
-                    saving: false
-                });
+                ctx.commit("SAVING_INSTALL_HARVESTER", {resourceId: payload.resourceId, saving: false});
+                ctx.commit("PAY_HARVESTER", {harvesterType: payload.harvesterType});
             })
             .catch(error => {
                 console.error(error);
