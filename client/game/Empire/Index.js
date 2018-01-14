@@ -6,6 +6,7 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
 import Vuelidate from "vuelidate";
+import VModal from "vue-js-modal";
 import store from "../store/store";
 import Empire from "./Empire.vue";
 import {getAreaMessages} from "../handlers/messages";
@@ -15,6 +16,7 @@ if (document.getElementById("gameRoot")) {
     const locale = getLocale();
     Vue.use(VueI18n);
     Vue.use(Vuelidate);
+    Vue.use(VModal, { dialog: true });
     getAreaMessages(locale, getAreaSlug(), getMessagesVersion(), messages => {
         let i18nConfig = {
             locale: locale,

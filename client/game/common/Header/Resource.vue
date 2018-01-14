@@ -25,7 +25,7 @@
         computed: {
             getResourceBarWidth () { return `${100 - (this.current / this.max) * 100}%`; },
             getResourceTypeIcon () { return "res-" + this.type; },
-            getProgressBarPct () { return this.current / this.max * 100; },
+            getProgressBarPct () { return Math.round(this.current / this.max * 100); },
             getFullTypeLabel () {
                 return `${this.$t("common.resourceTypes.label")}: ${this.$t("common.resourceTypes." + this.type)}`;
             }

@@ -170,7 +170,8 @@ const webpackConfig = {
         alias: {
             vue$: "vue/dist/vue.esm.js",
             Theme: path.join(cfg.projectRoot, "client", "theme"),
-            Game: path.join(cfg.projectRoot, "client", "game")
+            Game: path.join(cfg.projectRoot, "client", "game"),
+            Config: path.join(cfg.projectRoot, "client", "config")
         },
         // symbolic links. disable if needed
         // https://webpack.js.org/configuration/resolve/#resolve-symlinks

@@ -3,12 +3,17 @@
  *  Client Config
  *
  **********************************************************************************************************************/
+const serverRules = {
+    harvesters: require("../../server/config/game/harvesters")
+};
 
 const config = {
     DEBUG: true,
-    LOCALSTORAGE_KEY: "aw-app",
     LOCALES: {
         SUPPORT: ["en", "de"]
+    },
+    rules: {
+        harvesters: serverRules.harvesters
     }
 };
 

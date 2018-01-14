@@ -19,23 +19,26 @@ const store = new Vuex.Store({
         gameData: {},
         fetchingGameDataFromApi: false,
         savingStarName: [],
-        editingStarName: []
+        editingStarName: [],
+        installingResourceTypes: []
     },
     getters: {
         fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
         stars: state => state.gameData.stars || [],
         savingStarNameIds: state => state.savingStarName,
         editingStarNameIds: state => state.editingStarName,
-        player: state => state.gameData.player,
+        installingResourceTypes: state => state.installingResourceTypes,
+        player: state => state.gameData.player || {},
         planets: state => {
             let planets = [];
+            if (!state.gameData.stars) return planets;
             state.gameData.stars.forEach( star => {
                 planets = planets.concat(star.planets);
             });
             return planets;
         },
-        playerResources: state => state.gameData.resources,
-        getPlanetById: (state, getters) => id => getters.planets.find(planet => planet.id === id)
+        playerResources: state => state.gameData.resources || [],
+        getPlanetById: (state, getters) => id => getters.planets.find(planet => planet.id === id) || {}
     },
     mutations,
     actions

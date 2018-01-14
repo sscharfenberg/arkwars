@@ -17,6 +17,7 @@ const RULES_PLAYER = require("./game/player");
 const RULES_GAMES = require("./game/games");
 const RULES_STARS = require("./game/stars");
 const RULES_PLANETS = require("./game/planets");
+const RULES_HARVESTERS = require("./game/harvesters");
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -89,6 +90,8 @@ const appConfig = {
     stars: RULES_STARS,
 
     planets: RULES_PLANETS,
+
+    harvesters: RULES_HARVESTERS,
 
     defaultPagination: {
         admin: {

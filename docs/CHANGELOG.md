@@ -1,5 +1,16 @@
 # Changelog
 
+`14.01.2018`
+
+Added player actions to resource slots. Empty slots are now a button; @click opens a modal that shows the costs for the harvester and asks if it should be installed. On confirmation, the server inserts a new harvester into the database.
+For this, several additions / changes had to be implemented:
+- [x] Rules and texts for harvesters, including client rules where the client imports a server file so the client knows costs etc as well.
+- [x] new api endpoint, `/api/game/empire/harvester/install` with two new middlewares - one for validating, one for actually installing the harvester. Actually paying with resources is still missing.
+- [x] New dependency, `vue-js-modal`.
+- [x] Additions to store, actions and mutations for state handling.
+- [x] Added new Vue Components: `Costs` (displays costs in resources/turns), `InstallModal` which uses `vue-js-modal` to display a modal confirm window.
+- [x] quite extensive changes to `ResourceTypes`
+
 `12.01.2018`
 - [x] Refactored mockdata again; mockdata now has "mapData", which exports stars and planets - we need both because of the IDs and planets have IDs for game and star. Previously, I imported stars twice - it was not executed twice thankfully, which would mean the planets don't fit the servers. Now stars are only imported and executed once.
 - [x] Created `seed.randomPlanet` method that is used during game creation via admin screen as well as mockdata.

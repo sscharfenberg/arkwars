@@ -10,6 +10,7 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const Planet = mongoose.model("Planet");
 const Star = mongoose.model("Star");
+const Harvester = mongoose.model("Harvester");
 const logger = require("../../handlers/logger/console");
 const cfg = require("../../config");
 
@@ -152,4 +153,73 @@ exports.saveStarName = async (req, res) => {
         logger.success(`[App] error saving name.`);
         return res.status(500).json({message: "error while saving to database."});
     }
+};
+
+/*
+ * check if XHR POST install harvester is valid ========================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.checkInstallHarvester = async (req, res, next) => {
+    const harvesterType = strip(req.body.harvesterType);
+    const planetId = strip(req.body.planet);
+    logger.info(
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} installing ${chalk.yellow(
+            harvesterType
+        )} harvester on planet ${chalk.cyan("#" + planetId)}`
+    );
+    // 1. check if the planet belongs to one of the player stars
+    const playerStars = req.user.selectedPlayer.stars.map(star => star._id);
+    const planet = await Planet.findOne({star: {$in: playerStars}, _id: planetId}).populate("harvesters");
+    if (!planet) {
+        logger.error(`[App] user ${req.user.username} is not owner of the planet.`);
+        return res.status(403).json({error: "you are not allowed to install a harvester on this planet."});
+    }
+    // 2. verify that the player has sufficient resources to pay the build cost
+    const buildCosts = cfg.harvesters.build.filter(harvester => harvester.type === harvesterType).shift().costs;
+    buildCosts.forEach(slot => {
+        const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
+        if (slot.amount > stockpile) {
+            logger.error(`[App] user ${req.user.username} has insufficient funds to install harvester.`);
+            return res.status(402).json({error: "insufficient funds to install harvester."});
+        }
+    });
+    // 3. verify that the planet has slots available for the resource type
+    const numSlots = planet.resources.find(slot => slot.resourceType === harvesterType).slots;
+    const installed = planet.harvesters.filter(harvester => harvester.resourceType === harvesterType).length;
+    if (installed >= numSlots) {
+        const msg = `no ${harvesterType} slots available on planet (slots: ${numSlots}, installed: ${installed}).`;
+        logger.error(`[App] ${msg}`);
+        return res.status(403).json({error: msg});
+    }
+    // no error so far => proceed.
+    return next();
+};
+
+/*
+ * do install harvester ================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.installHarvester = async (req, res) => {
+    const harvesterType = strip(req.body.harvesterType);
+    const planetid = strip(req.body.planet);
+    const turns = cfg.harvesters.build.filter(harvester => harvester.type === harvesterType).shift().duration;
+    const harvester = new Harvester({
+        planet: planetid,
+        resourceType: harvesterType,
+        turnsUntilComplete: turns
+    });
+    await harvester.save();
+    // TODO: subtract costs!!!
+    logger.success(
+        `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" +
+            req.user.username} installed a ${chalk.yellow(harvesterType)} harvester on Planet ${chalk.cyan("#" + planetid)}`
+    );
+    setTimeout(function() {
+        return res.status(200).json({
+            harvester: {id: harvester._id, turnsUntilComplete: turns}
+        });
+    }, 4000);
 };

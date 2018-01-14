@@ -67,6 +67,7 @@
     .btn {
         display: flex;
         align-items: center;
+        justify-content: center;
 
         height: $btnBaseHeight;
         border: 1px solid palette("grey", "asher");
@@ -111,7 +112,18 @@
 
         &.tiny { height: 2.6rem; }
         &.small { height: 3rem; }
-        &.large { height: 4.2rem; }
+
+        &.large {
+            height: 4.2rem;
+
+            font-size: 2rem;
+        }
+
+        &--text {
+            > svg {
+                margin-right: 0.5rem;
+            }
+        }
     }
 </style>
 

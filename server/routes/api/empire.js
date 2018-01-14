@@ -14,7 +14,15 @@ const jsonParser = require("body-parser").json();
 // get empire game data for player
 router.get("/data", catchErrors(apiController.getGameData));
 
-// get empire game data for player
+// set star name request
 router.post("/star/name", jsonParser, catchErrors(apiController.saveStarName));
+
+// install harvester request
+router.post(
+    "/harvester/install",
+    jsonParser,
+    catchErrors(apiController.checkInstallHarvester), // check for auth, funds, slots
+    catchErrors(apiController.installHarvester) // do db updates
+);
 
 module.exports = router;

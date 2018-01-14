@@ -9,7 +9,6 @@ import Vue from "vue";
 import cfg from "../../config";
 
 const MUTATIONS = {
-
     /* =================================================================================================================
      * COMMON MUTATIONS ================================================================================================
      * ============================================================================================================== */
@@ -32,7 +31,6 @@ const MUTATIONS = {
     FETCHING_GAME_DATA_FROM_API: (state, payload) => {
         state.fetchingGameDataFromApi = payload;
     },
-
 
     /* =================================================================================================================
      * EMPIRE MUTATIONS ================================================================================================
@@ -70,14 +68,50 @@ const MUTATIONS = {
      * @param {Object} payload - {id:Mongoose.ObjectId, name:String}
      */
     SET_STAR_NAME: (state, payload) => {
-        state.gameData.stars.forEach( (star, index) => {
-            if ( star.id === payload.id ) {
+        state.gameData.stars.forEach((star, index) => {
+            if (star.id === payload.id) {
                 star.name = payload.name;
                 Vue.set(state.gameData.stars, index, star);
             }
         });
-    }
+    },
 
+    /*
+     * update game data and add new harvester to planet
+     */
+    ADD_HARVESTER: (state, payload) => {
+        let allPlanets = [];
+        console.log("mutation: ", payload);
+        state.gameData.stars.forEach(star => {
+            console.log(star.planets);
+            allPlanets = allPlanets.concat(star.planets);
+        });
+        const planet = allPlanets.find(planet => planet.id === payload.planet);
+        const slot = planet.resourceSlots.find(slot => slot.resourceType === payload.harvesterType);
+        const harvesters = slot.harvesters;
+        harvesters.push({
+            id: payload.id,
+            isHarvesting: payload.isHarvesting,
+            resourceType: payload.harvesterType,
+            turnsUntilComplete: payload.turnsUntilComplete
+        });
+    },
+
+    /*
+     * SET/UNSET "Saving Install Harvester" for a specific planet
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
+     */
+    SAVING_INSTALL_HARVESTER: (state, payload) => {
+        if (payload.saving) {
+            // add slot to array
+            console.log("mutating " + payload.resourceId);
+            state.installingResourceTypes.push(payload.resourceId);
+        } else {
+            // remove ID from array
+            state.installingResourceTypes.splice(state.installingResourceTypes.indexOf(payload.resourceId), 1);
+        }
+    }
 };
 
 export default MUTATIONS;

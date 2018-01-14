@@ -53,7 +53,8 @@
             </div>
             <resources v-if="planet.resourceSlots.length"
                        :resources="planet.resourceSlots"
-                       :planetid="planet.id" />
+                       :planetid="planet.id"
+                       :planetName="getPlanetName" />
             <div class="planet__defense">
                 pds
             </div>

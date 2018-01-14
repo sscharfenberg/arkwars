@@ -41,7 +41,11 @@
                 "research": "Forschungsstation"
             },
             "untilComplete": "{turns} Runden bis zur Fertigstellung",
-            "install": "Ernter installieren"
+            "install": "Ernter installieren",
+            "installModal": {
+                "title": "Ernter installieren",
+                "question": "{typ} auf Planet {planet} installieren?"
+            }
         }
     }
 }

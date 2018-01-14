@@ -41,7 +41,11 @@
                 "research": "Research Station"
             },
             "untilComplete": "{turns} turns until completion",
-            "install": "Install harvester"
+            "install": "Install harvester",
+            "installModal": {
+                "title": "Install Harvester",
+                "question": "Install {typ} on planet {planet}?"
+            }
         }
     }
 }

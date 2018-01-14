@@ -121,14 +121,14 @@ players.forEach(player => {
 let harvesters = [];
 playerHomeSystems.forEach( star => {
     let starPlanets = planets.filter( planet => planet.star === star._id && planet.resources.length);
-    const numHarvesters = starPlanets.length;
+    const numHarvesters = Math.floor(starPlanets.length / 2);
     for (let i = 0; i < numHarvesters; i++ ) {
         const randomIndex = Math.floor(Math.random() * starPlanets.length);
         const randomPlanet = starPlanets[randomIndex];
         let harvester = {
             planet: randomPlanet._id,
             resourceType: randomPlanet.resources[0].resourceType,
-            turnsUntilComplete: 0
+            turnsUntilComplete: Math.random() > 0.4 ? 0 : Math.floor(Math.random() * 6)
         };
         logger.info(`[mockdata] created ${chalk.red(harvester.resourceType)} harvester for star ${chalk.yellow(star.name)} - ${randomPlanet.orbitalIndex}`);
         harvesters.push(harvester);

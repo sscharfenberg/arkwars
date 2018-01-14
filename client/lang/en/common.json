@@ -7,9 +7,21 @@
     },
     "resourceTypes": {
         "label": "Resource type",
-        "minerals": "Minerals",
-        "energy": "Energy",
-        "food": "Food",
-        "research": "Research"
+        "minerals": "minerals",
+        "energy": "energy",
+        "food": "food",
+        "research": "research",
+        "turns": "turns"
+    },
+    "costs": {
+        "label": "Costs",
+        "ariaLabel": "Costs in {type}"
+    },
+    "buttons": {
+        "cancel": "Cancel",
+        "install": "Install",
+        "ok": "Ok",
+        "confirm": "Confirm",
+        "proceed": "Proceed"
     }
 }

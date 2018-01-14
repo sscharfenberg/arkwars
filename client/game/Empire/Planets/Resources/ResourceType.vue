@@ -4,6 +4,7 @@
      * this component shows extractors (with status!) and available slots of a single type (ie, "energy")
      ******************************************************************************************************************/
     import Icon from "Game/common/Icon/Icon.vue";
+    import InstallModal from "./InstallModal.vue";
     export default {
         props: {
             id: {
@@ -25,13 +26,19 @@
             planetid: {
                 type: String,
                 required: true
+            },
+            planetName: {
+                type: String,
+                required: true
             }
         },
         components: {
-            "icon": Icon
+            "icon": Icon,
+            "install-modal": InstallModal
         },
         computed: {
-            getIconName () { return "res-" + this.resourceType; }
+            getIconName () { return "res-" + this.resourceType; },
+            installSaving () { return this.$store.getters.installingResourceTypes.includes(this.id); }
         },
         methods: {
             harvesterLabel (harvester) {
@@ -41,8 +48,8 @@
                 return label;
             },
             buildingHarvesterClass (harvester) { return harvester.turnsUntilComplete > 0 ? "harvester__building" : ""; },
-            installClick () {
-                confirm(`[todo] install ${this.resourceType} harvester for planet ${this.planetid}`);
+            installModal (index) {
+                return this.$modal.show(`installharvester-${this.id}-${this.resourceType}-${index}`);
             }
         }
 
@@ -58,26 +65,34 @@
             :title="harvesterLabel(harvester)"
             :aria-label="harvesterLabel(harvester)">
             <icon :name="getIconName" />
-            <div v-for="n in harvester.turnsUntilComplete"
-                 class="harvester__build-turn"
-                 role="presentation"
-                 aria-hidden="true"
-                 :key="n"></div>
+            <div v-if="harvester.turnsUntilComplete"
+                 class="harvester__build-turns">
+                <div v-for="n in harvester.turnsUntilComplete"
+                     class="harvester__build-turn"
+                     role="presentation"
+                     aria-hidden="true"
+                     :key="n"></div>
+            </div>
         </li>
         <li class="installable">
-            <button v-for="n in (slots - harvesters.length)"
-                    class="available"
-                    :key="n"
-                    :title="$t('planet.harvesters.install')"
-                    :aria-label="$t('planet.harvesters.install')"
-                    @click="installClick">
-                <icon :name="getIconName" />
-            </button>
+            <div v-for="n in (slots - harvesters.length)" :key="n">
+                <button class="available"
+                        :title="$t('planet.harvesters.install')"
+                        :aria-label="$t('planet.harvesters.install')"
+                        @click="installModal(n)"
+                        :disabled="installSaving">
+                    <icon :name="getIconName" />
+                </button>
+                <install-modal :resourceId="id"
+                               :index="n"
+                               :resourceType="resourceType"
+                               :planetName="planetName"
+                               :planetid="planetid" />
+            </div>
 
         </li>
     </ul>
 </template>
-
 
 <style lang="scss" scoped>
     .slots {
@@ -105,21 +120,27 @@
 
     .harvester {
         &__building {
+            opacity: 0.7;
+
             width: auto;
+        }
+
+        &__build-turns {
+            display: flex;
+            flex-wrap: wrap;
+
+            max-width: 3.2rem;
+            margin: 4px 0 0 10px;
         }
 
         &__build-turn {
             width: 4px;
             height: 4px;
-            margin-left: 4px;
+            margin: 0 4px 4px 0;
 
             background: linear-gradient(to bottom, palette("state", "warning") 0%, palette("state", "error") 100%);
 
             border-radius: 50%;
-
-            &:first-of-type {
-                margin-left: 10px;
-            }
         }
     }
 
@@ -139,8 +160,8 @@
             background-color map-get($animation-speeds, "fast") linear,
             border-color map-get($animation-speeds, "fast") linear;
 
-        &:hover,
-        &:focus {
+        &:hover:not([disabled]),
+        &:focus:not([disabled]) {
             opacity: 0.8;
 
             background: palette("grey", "bunker");
@@ -148,10 +169,16 @@
             border-color: palette("grey", "asher");
         }
 
-        &:active {
+        &:active:not([disabled]) {
             background: palette("grey", "ebony");
             color: palette("grey", "white");
+        }
+
+        &[disabled] {
+            background-color: palette("grey", "ebony");
+            cursor: not-allowed;
         }
     }
 
 </style>
+
