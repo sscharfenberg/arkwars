@@ -164,27 +164,45 @@ body(data-user=(user ? 1 : 0))
                 //- game links
                 if user && user.players && user.players.length && user.selectedPlayer
                     li.aw-drawer__list-item
-                        a.aw-drawer__link.aw-drawer__link--active(href="/game/1/empire")
+                        a.aw-drawer__link(
+                            href="/game/1/empire",
+                            class=(currentPath.split("/").pop() === "empire" ? "aw-drawer__link--active" : "")
+                        )
                             != h.icon("empire", ["small"])
                             != h.__("GAME.EMPIRE.LABEL")
                     li.aw-drawer__list-item
-                        a.aw-drawer__link(href="/game/1/fleets")
+                        a.aw-drawer__link(
+                            href="/game/1/fleets",
+                            class=(currentPath.split("/").pop() === "fleets" ? "aw-drawer__link--active" : "")
+                        )
                             != h.icon("fleet", ["small"])
                             != h.__("GAME.FLEETS.LABEL")
                     li.aw-drawer__list-item
-                        a.aw-drawer__link(href="/game/1/shipyards")
+                        a.aw-drawer__link(
+                            href="/game/1/shipyards",
+                            class=(currentPath.split("/").pop() === "shipyards" ? "aw-drawer__link--active" : "")
+                        )
                             != h.icon("build", ["small"])
                             != h.__("GAME.SHIPYARDS.LABEL")
                     li.aw-drawer__list-item
-                        a.aw-drawer__link(href="/game/1/research")
+                        a.aw-drawer__link(
+                            href="/game/1/research",
+                            class=(currentPath.split("/").pop() === "research" ? "aw-drawer__link--active" : "")
+                        )
                             != h.icon("research", ["small"])
                             != h.__("GAME.RESEARCH.LABEL")
                     li.aw-drawer__list-item
-                        a.aw-drawer__link(href="/game/1/starchart")
+                        a.aw-drawer__link(
+                            href="/game/1/starchart",
+                            class=(currentPath.split("/").pop() === "starchart" ? "aw-drawer__link--active" : "")
+                        )
                             != h.icon("starchart", ["small"])
                             != h.__("GAME.STARCHART.LABEL")
                     li.aw-drawer__list-item
-                        a.aw-drawer__link(href="/game/1/galnet")
+                        a.aw-drawer__link(
+                            href="/game/1/galnet",
+                            class=(currentPath.split("/").pop() === "galnet" ? "aw-drawer__link--active" : "")
+                        )
                             != h.icon("galnet", ["small"])
                             != h.__("GAME.GALNET.LABEL")
 
