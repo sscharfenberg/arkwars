@@ -49,13 +49,16 @@ exports.getGameData = async (req, res) => {
             {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
             {type: "research", current: player.resources.research.current, max: player.resources.research.max}
         ],
-        stars: []
+        stars: [],
+        harvesters: []
     };
     player.stars.length &&
         player.stars.forEach(star => {
+
             let starPlanets = [];
             planets.length &&
                 planets.forEach(planet => {
+
                     // make sure the planet belongs to this star before adding
                     // again, MongoDB IDs != String
                     if (`${planet.star}` === `${star._id}`) {
@@ -74,6 +77,7 @@ exports.getGameData = async (req, res) => {
                                 harvesters: []
                             });
                         });
+
                         // add harvesters to planet. we refactor the data here since this structure is better
                         // for the client.
                         // again, only send the fields that we want the client to have.
@@ -81,12 +85,13 @@ exports.getGameData = async (req, res) => {
                             planet.harvesters.forEach(harvester => {
                                 apiPlanet.resourceSlots.forEach(slot => {
                                     if (slot.resourceType === harvester.resourceType) {
-                                        slot.harvesters.push({
+                                        slot.harvesters.push(harvester.id); // ID into planet.resources.harvesters array
+                                        returnData.harvesters.push({ // harvester data into harvesters array
                                             id: harvester.id,
                                             turnsUntilComplete: harvester.turnsUntilComplete,
                                             resourceType: harvester.resourceType,
                                             isHarvesting: harvester.isHarvesting
-                                        });
+                                        })
                                     }
                                 });
                             });
@@ -94,6 +99,7 @@ exports.getGameData = async (req, res) => {
                         starPlanets.push(apiPlanet);
                     }
                 });
+
             // sort them by orbitalIndex
             starPlanets = starPlanets.sort((a, b) => {
                 if (a.orbitalIndex < b.orbitalIndex) return -1;
@@ -210,6 +216,7 @@ exports.installHarvester = async (req, res) => {
     // create new harvester
     const harvester = new Harvester({
         planet: planetid,
+        game: req.user.selectedPlayer.game._id,
         resourceType: harvesterType,
         turnsUntilComplete: turns
     });

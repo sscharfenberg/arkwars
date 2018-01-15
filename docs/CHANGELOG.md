@@ -1,5 +1,9 @@
 # Changelog
 
+`15.01.2018`
+- [x] first simple steps for cron turn handling, added a (synchronuous!) turn processing structure and started with the handling of harvesters in built.
+- [x] with harvesters actually getting built, I discovered that using the refresh button correctly updates gameData, but the "pips" indicating how many turns to build did not update. Solved this by a lot of refactoring; `Harvester` is a Component now and used from `ResourceType`. It is passed the id of the harvester as prop and gets the data from the store by Id.
+
 `14.01.2018`
 
 Added player actions to resource slots. Empty slots are now a button; @click opens a modal that shows the costs for the harvester and asks if it should be installed. On confirmation, the server inserts a new harvester into the database.

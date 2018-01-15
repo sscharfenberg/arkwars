@@ -89,7 +89,8 @@ const MUTATIONS = {
         const planet = allPlanets.find(planet => planet.id === payload.planet);
         const slot = planet.resourceSlots.find(slot => slot.resourceType === payload.harvesterType);
         const harvesters = slot.harvesters;
-        harvesters.push({
+        harvesters.push(payload.id);
+        state.gameData.harvesters.push({
             id: payload.id,
             isHarvesting: payload.isHarvesting,
             resourceType: payload.harvesterType,
@@ -119,8 +120,8 @@ const MUTATIONS = {
      * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
      */
     PAY_HARVESTER: (state, payload) => {
-        console.log("pay for harvester ", costs);
         const costs = cfg.rules.harvesters.build.find(harvester => harvester.type === payload.harvesterType).costs;
+        console.log("pay for harvester ", costs);
         costs.forEach( slot => {
             state.gameData.resources.find(resource => resource.type === slot.resourceType).current -= slot.amount;
         });

@@ -8,10 +8,10 @@ module.exports = [
         canEnlist: false,
         processing: false,
         turn: 22,
-        turnDuration: 10,
+        turnDuration: 1,
         dimensions: 10,
         turnDue: moment()
-            .add(10, "minutes")
+            .add(1, "minutes")
             .toISOString(),
         startDate: moment()
             .subtract(1, "days")

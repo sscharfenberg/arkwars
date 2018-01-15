@@ -7,10 +7,43 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../handlers/logger/console");
-require("../models/Game");
-require("../models/Turn");
+require("../models/");
 const Game = mongoose.model("Game");
+const Harvester = mongoose.model("Harvester");
 const Turn = mongoose.model("Turn");
+
+/*
+ * build process for harvesters
+ * @param {object} game - Game model object from mongo
+ */
+const harvesterBuildProcess = async game => {
+    try {
+        const processedHarvesters = await Harvester.updateMany(
+            {turnsUntilComplete:{$ne: 0}, game: game._id},
+            {$inc: {turnsUntilComplete: -1}},
+            {new: true, runValidators: true, context: "query"}
+        );
+        logger.info(`processed ${chalk.red(processedHarvesters.nModified)} harvesters in build.`);
+        return processedHarvesters.nModified || 0;
+    } catch(e) {
+        logger.error(e);
+        return 0;
+    }
+};
+
+/*
+ * turn processing order
+ * @param {object} game - Game model object from mongo
+ */
+const turnProcessingOrder = async game => {
+    logger.debug(`start turn processing for game ${chalk.red("g" + game.number)} turn ${chalk.yellow(game.turn)}`);
+    try {
+        const processedHarvestersBuilding = await harvesterBuildProcess(game);
+    } catch(e) {
+        logger.error(e);
+    }
+    return game;
+};
 
 /*
  * process game data for a turn
@@ -29,12 +62,16 @@ const processGameTurn = async game => {
         dateProcessed: moment().toISOString()
     };
     logger.info(
-        `processing ${chalk.red(
-            "g" + game.number
-        )} game data for turn ${chalk.cyan(turn.number)}`
+        `processing ${chalk.red("g" + game.number)} game data for turn ${chalk.cyan(turn.number)}`
     );
 
     // TODO: process game data for realz.
+    try {
+        game = await turnProcessingOrder(game);
+    } catch(e) {
+        logger.error(e);
+    }
+
     // MOCKUP!!!
     turn.log = JSON.stringify({
         fleetsmoved: [4, 6],

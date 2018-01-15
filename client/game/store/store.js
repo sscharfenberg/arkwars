@@ -38,7 +38,8 @@ const store = new Vuex.Store({
             return planets;
         },
         playerResources: state => state.gameData.resources || [],
-        getPlanetById: (state, getters) => id => getters.planets.find(planet => planet.id === id) || {}
+        getPlanetById: (state, getters) => id => getters.planets.find(planet => planet.id === id) || {},
+        harvesterById: state => id => state.gameData.harvesters.find( harvester => harvester.id === id) || {}
     },
     mutations,
     actions

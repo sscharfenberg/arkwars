@@ -1,9 +1,11 @@
 <script>
     /*******************************************************************************************************************
      * Resource Type
-     * this component shows extractors (with status!) and available slots of a single type (ie, "energy")
+     * this component shows harvesters (with status!) and available slots
+     * for a single resource type (ie, "energy")
      ******************************************************************************************************************/
     import Icon from "Game/common/Icon/Icon.vue";
+    import Harvester from "./Harvester.vue";
     import InstallModal from "./InstallModal.vue";
     export default {
         props: {
@@ -34,20 +36,15 @@
         },
         components: {
             "icon": Icon,
-            "install-modal": InstallModal
+            "install-modal": InstallModal,
+            "harvester": Harvester
         },
         computed: {
             getIconName () { return "res-" + this.resourceType; },
-            installSaving () { return this.$store.getters.installingResourceTypes.includes(this.id); }
+            installSaving () { return this.$store.getters.installingResourceTypes.includes(this.id); },
+            numEmptySlots () { return this.slots - this.harvesters.length; }
         },
         methods: {
-            harvesterLabel (harvester) {
-                let turns = harvester.turnsUntilComplete;
-                let label = this.$t("planet.harvesters.names." + this.resourceType);
-                label += turns ? " - " + this.$t("planet.harvesters.untilComplete", {turns}) : "";
-                return label;
-            },
-            buildingHarvesterClass (harvester) { return harvester.turnsUntilComplete > 0 ? "harvester__building" : ""; },
             installModal (index) {
                 return this.$modal.show(`installharvester-${this.id}-${this.resourceType}-${index}`);
             }
@@ -58,24 +55,13 @@
 
 <template>
     <ul class="slots">
-        <li v-if="harvesters.length"
-            v-for="harvester in harvesters"
-            class="harvester"
-            :class="buildingHarvesterClass(harvester)"
-            :title="harvesterLabel(harvester)"
-            :aria-label="harvesterLabel(harvester)">
-            <icon :name="getIconName" />
-            <div v-if="harvester.turnsUntilComplete"
-                 class="harvester__build-turns">
-                <div v-for="n in harvester.turnsUntilComplete"
-                     class="harvester__build-turn"
-                     role="presentation"
-                     aria-hidden="true"
-                     :key="n"></div>
-            </div>
-        </li>
-        <li class="installable">
-            <div v-for="n in (slots - harvesters.length)" :key="n">
+        <harvester v-if="harvesters"
+            v-for="harvesterId in harvesters"
+            :id="harvesterId"
+            :key="harvesterId" />
+
+        <li class="installable" v-if="numEmptySlots">
+            <div v-for="n in numEmptySlots" :key="n">
                 <button class="available"
                         :title="$t('planet.harvesters.install')"
                         :aria-label="$t('planet.harvesters.install')"
@@ -104,11 +90,16 @@
         list-style: none;
     }
 
-    .harvester,
+    .installable {
+        display: flex;
+    }
+
     .available {
         display: flex;
         align-items: center;
+        opacity: 0.3;
 
+        box-sizing: content-box;
         width: 2.4rem;
         height: 2.4rem;
         padding: 0.5rem 1rem;
@@ -116,42 +107,6 @@
         margin: 0 0.4rem 0.4rem 0;
 
         background: rgba(palette("grey", "mystic"), 0.05);
-    }
-
-    .harvester {
-        &__building {
-            opacity: 0.7;
-
-            width: auto;
-        }
-
-        &__build-turns {
-            display: flex;
-            flex-wrap: wrap;
-
-            max-width: 3.2rem;
-            margin: 4px 0 0 10px;
-        }
-
-        &__build-turn {
-            width: 4px;
-            height: 4px;
-            margin: 0 4px 4px 0;
-
-            background: linear-gradient(to bottom, palette("state", "warning") 0%, palette("state", "error") 100%);
-
-            border-radius: 50%;
-        }
-    }
-
-    .installable {
-        display: flex;
-    }
-
-    .available {
-        opacity: 0.3;
-
-        box-sizing: content-box;
 
         cursor: pointer;
 

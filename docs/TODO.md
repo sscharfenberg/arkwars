@@ -11,5 +11,5 @@
 - [ ] game not active: make all features available, but tell Vue that the game is not active. meh.
 
 ## Frontend
-- [ ] scaffold game screens
+- [ ] vuex store needs to be divided into "common" and "area" parts, so all areas can use it.
 

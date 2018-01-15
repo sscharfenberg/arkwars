@@ -16,13 +16,19 @@ const harvesterSchema = new mongoose.Schema({
         ref: "Planet"
     },
 
-    // reference to star id
+    // reference to game id
+    game: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Game"
+    },
+
+    // type of resource that is harvested
     resourceType: {
         type: String,
         enum: cfg.player.resourceTypes.map(resource => resource.type)
     },
 
-    // number of turns until the extractor has finished building
+    // number of turns until the harvester has finished building
     turnsUntilComplete: {
         type: Number
     }

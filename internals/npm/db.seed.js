@@ -127,6 +127,7 @@ playerHomeSystems.forEach( star => {
         const randomPlanet = starPlanets[randomIndex];
         let harvester = {
             planet: randomPlanet._id,
+            game: randomPlanet.game,
             resourceType: randomPlanet.resources[0].resourceType,
             turnsUntilComplete: Math.random() > 0.4 ? 0 : Math.floor(Math.random() * 6)
         };

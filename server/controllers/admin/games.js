@@ -81,7 +81,6 @@ const getMapPreview = game => {
         if (star.homeSystem) numPlayerSys++;
         else numNpcSys++;
     });
-    console.log(points);
     return {
         points,
         numNpcSys,
