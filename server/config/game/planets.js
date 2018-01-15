@@ -1,15 +1,18 @@
 /***********************************************************************************************************************
  *
  * PLANET RULES
+ * chance and chanceHome are added each and a random number between min and max is chosen.
+ * they do not necessarily add up to 100.
+ * the resourceSlot chances, however, are percentage chances. they are also cumulative:
+ * if a 30 is rolled and the chance was 70, there is a new chance with 40% - up to max prop
  *
  **********************************************************************************************************************/
 const RULES =  {
-    // these need to be synced with /client/game/Empire/Planets/Planets.vue
     types: [
         {
             name: "terrestrial",
             chance: 20,
-            chanceHome: 40,
+            chanceHome: 37,
             resourceSlots: [
                 {type: "food", chance: 70, max: 3, potential: [3000, 6000]},
                 {type: "energy", chance: 50, max: 2, potential: [2000, 3000]}
@@ -18,7 +21,7 @@ const RULES =  {
         {
             name: "gas",
             chance: 17,
-            chanceHome: 10,
+            chanceHome: 13,
             resourceSlots: [
                 {type: "research", chance: 70, max: 3, potential: [3000, 6000]},
                 {type: "energy", chance: 50, max: 2, potential: [2000, 3000]}
@@ -46,7 +49,7 @@ const RULES =  {
         },
         {
             name: "desert",
-            chance: 29,
+            chance: 19,
             chanceHome: 10,
             resourceSlots: [
                 {type: "energy", chance: 50, max: 2, potential: [2000, 3000]},
@@ -56,8 +59,8 @@ const RULES =  {
         },
         {
             name: "toxic",
-            chance: 5,
-            chanceHome: 10,
+            chance: 10,
+            chanceHome: 13,
             resourceSlots: [
                 {type: "minerals", chance: 50, max: 2, potential: [2000, 3000]},
                 {type: "energy", chance: 50, max: 2, potential: [2000, 3000]},
@@ -66,8 +69,8 @@ const RULES =  {
         },
         {
             name: "carbon",
-            chance: 2,
-            chanceHome: 10,
+            chance: 7,
+            chanceHome: 7,
             resourceSlots: [
                 {type: "minerals", chance: 50, max: 2, potential: [2000, 3000]},
                 {type: "research", chance: 70, max: 3, potential: [3000, 6000]}

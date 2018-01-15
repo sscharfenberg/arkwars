@@ -5,7 +5,6 @@
  **********************************************************************************************************************/
 import Vue from "vue";
 import Vuex from "vuex";
-import {getGameId, getPlayerId, getMessagesVersion} from "../handlers/gameConstants";
 import actions from "./actions";
 import mutations from "./mutations";
 
@@ -13,33 +12,33 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        gameId: getGameId(),
-        playerId: getPlayerId(),
-        serverTextsVersion: getMessagesVersion(),
-        gameData: {},
+        // game state
+        game: {},
+        stars: [],
+        planets: [],
+        player: {},
+        resources: [],
+        harvesters: [],
+        // App state
         fetchingGameDataFromApi: false,
+        // UI state
         savingStarName: [],
         editingStarName: [],
         installingResourceTypes: []
     },
     getters: {
+        // App state
         fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
-        stars: state => state.gameData.stars || [],
+        // UI state
         savingStarNameIds: state => state.savingStarName,
         editingStarNameIds: state => state.editingStarName,
         installingResourceTypes: state => state.installingResourceTypes,
-        player: state => state.gameData.player || {},
-        planets: state => {
-            let planets = [];
-            if (!state.gameData.stars) return planets;
-            state.gameData.stars.forEach( star => {
-                planets = planets.concat(star.planets);
-            });
-            return planets;
-        },
-        playerResources: state => state.gameData.resources || [],
-        getPlanetById: (state, getters) => id => getters.planets.find(planet => planet.id === id) || {},
-        harvesterById: state => id => state.gameData.harvesters.find( harvester => harvester.id === id) || {}
+        // game state
+        stars: state => state.stars,
+        player: state => state.player,
+        playerResources: state => state.resources,
+        getPlanetById: state => id => state.planets.find(planet => planet.id === id) || {},
+        harvesterById: state => id => state.harvesters.find( harvester => harvester.id === id) || {}
     },
     mutations,
     actions

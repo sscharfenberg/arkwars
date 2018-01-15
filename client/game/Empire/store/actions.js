@@ -6,12 +6,9 @@
  *
  **********************************************************************************************************************/
 import axios from "axios";
-import cfg from "../../config";
+import cfg from "../../../config";
 
 const ACTIONS = {
-    /* =================================================================================================================
-     * COMMON ACTIONS===================================================================================================
-     * ============================================================================================================== */
 
     /*
      * fetch game data from api via XHR
@@ -32,10 +29,6 @@ const ACTIONS = {
                 ctx.commit("FETCHING_GAME_DATA_FROM_API", false);
             });
     },
-
-    /* =================================================================================================================
-     * EMPIRE ACTIONS ==================================================================================================
-     * ============================================================================================================== */
 
     /*
      * toggle editing star name
@@ -83,8 +76,8 @@ const ACTIONS = {
                     ctx.commit("ADD_HARVESTER", {
                         harvesterType: payload.harvesterType,
                         planet: payload.planet,
-                        id: response.data.harvester.id,
-                        turnsUntilComplete: response.data.harvester.turnsUntilComplete,
+                        id: response.data.id,
+                        turnsUntilComplete: response.data.turnsUntilComplete,
                         isHarvesting: false
                     });
 

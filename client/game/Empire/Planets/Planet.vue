@@ -6,11 +6,6 @@
     import {latinToRoman} from "../../handlers/format";
     import Resources from "./Resources/Resources.vue";
     export default {
-        data: function() {
-            return {
-                planet: this.$store.getters.getPlanetById(this.id)
-            };
-        },
         props: {
             id: {
                 type: String,
@@ -22,11 +17,21 @@
             }
         },
         computed: {
-            getPlanetVisualClass () { return "planet__visual--" + this.planet.type; },
-            getPlanetTypeToolTip () { return `${this.$t("planet.typeLabel")}: ${this.$t("planet.types." + this.planet.type)}`; },
+            getPlanetVisualClass () { return "planet__visual--" + this.$store.getters.getPlanetById(this.id).type; },
+            getPlanetTypeToolTip () {
+                return this.$t("planet.typeLabel") +
+                    ": " +
+                    this.$t("planet.types." +
+                    this.$store.getters.getPlanetById(this.id).type);
+            },
             getPlanetAriaLabel () { return this.$t("planet.typeLabel"); },
-            getPlanetType () { return this.$t("planet.types." + this.planet.type); },
-            getPlanetName () { return `${this.starName} - ${latinToRoman(this.planet.orbitalIndex)}`; }
+            getPlanetType () { return this.$t("planet.types." + this.$store.getters.getPlanetById(this.id).type); },
+            getPlanetName () {
+                return `${this.starName} - ${latinToRoman(this.$store.getters.getPlanetById(this.id).orbitalIndex)}`;
+            }
+        },
+        methods: {
+            resourceSlots () { return this.$store.getters.getPlanetById(this.id).resourceSlots; }
         },
         components: {
             "resources": Resources
@@ -51,9 +56,9 @@
             <div class="planet__population">
                 population
             </div>
-            <resources v-if="planet.resourceSlots.length"
-                       :resources="planet.resourceSlots"
-                       :planetid="planet.id"
+            <resources v-if="resourceSlots().length"
+                       :resources="resourceSlots()"
+                       :planetid="this.id"
                        :planetName="getPlanetName" />
             <div class="planet__defense">
                 pds

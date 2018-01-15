@@ -28,9 +28,12 @@ exports.getGameData = async (req, res) => {
     const game = player.game;
     const stars = player.stars.map(star => star.id);
     // get unsorted array of all planets that belong to the player's stars
-    const planets = await Planet.find({star: {$in: stars}}).populate("harvesters");
+    let planets = await Planet.find({star: {$in: stars}}).populate("harvesters");
+
+    // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const returnData = {
         game: {
+            // only selected game props
             number: game.number,
             active: game.active,
             dimensions: game.dimensions,
@@ -40,81 +43,66 @@ exports.getGameData = async (req, res) => {
             processing: game.processing
         },
         player: {
+            // again, only selected props
             name: player.name,
             ticker: player.ticker
         },
         resources: [
+            // props from player
             {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
             {type: "food", current: player.resources.food.current, max: player.resources.food.max},
             {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
             {type: "research", current: player.resources.research.current, max: player.resources.research.max}
         ],
-        stars: [],
-        harvesters: []
-    };
-    player.stars.length &&
-        player.stars.forEach(star => {
-
-            let starPlanets = [];
-            planets.length &&
-                planets.forEach(planet => {
-
-                    // make sure the planet belongs to this star before adding
-                    // again, MongoDB IDs != String
-                    if (`${planet.star}` === `${star._id}`) {
-                        let apiPlanet = {
-                            id: planet._id,
-                            type: planet.type,
-                            orbitalIndex: planet.orbitalIndex,
-                            resourceSlots: []
-                        };
-                        // avoid sending the exact resource value to the client.
-                        planet.resources.forEach(res => {
-                            apiPlanet.resourceSlots.push({
-                                id: res.id,
-                                resourceType: res.resourceType,
-                                slots: res.slots,
-                                harvesters: []
-                            });
-                        });
-
-                        // add harvesters to planet. we refactor the data here since this structure is better
-                        // for the client.
-                        // again, only send the fields that we want the client to have.
-                        if (planet.harvesters.length) {
-                            planet.harvesters.forEach(harvester => {
-                                apiPlanet.resourceSlots.forEach(slot => {
-                                    if (slot.resourceType === harvester.resourceType) {
-                                        slot.harvesters.push(harvester.id); // ID into planet.resources.harvesters array
-                                        returnData.harvesters.push({ // harvester data into harvesters array
-                                            id: harvester.id,
-                                            turnsUntilComplete: harvester.turnsUntilComplete,
-                                            resourceType: harvester.resourceType,
-                                            isHarvesting: harvester.isHarvesting
-                                        })
-                                    }
-                                });
-                            });
-                        }
-                        starPlanets.push(apiPlanet);
-                    }
-                });
-
-            // sort them by orbitalIndex
-            starPlanets = starPlanets.sort((a, b) => {
-                if (a.orbitalIndex < b.orbitalIndex) return -1;
-                if (a.orbitalIndex > b.orbitalIndex) return 1;
-                return 0;
-            });
-            returnData.stars.push({
+        // avoid specific properties on the star and add an array of planetids
+        stars: player.stars.map(star => {
+            return {
                 id: star._id,
                 name: star.name,
                 spectral: star.spectral,
                 coordX: star.coordX,
                 coordY: star.coordY,
-                planets: starPlanets
-            });
-        });
+                planets: planets.filter(planet => `${planet.star}` === `${star._id}`).map(planet => planet.id)
+            };
+        }),
+        harvesters: [],
+        planets: []
+    };
+
+    // add mapped planets
+    returnData.planets = planets.map(planet => {
+        return {
+            id: planet._id,
+            type: planet.type,
+            orbitalIndex: planet.orbitalIndex,
+            resourceSlots: planet.resources.map(slot => {
+                // harvester data into returnData.harvesters array
+                returnData.harvesters = planet.harvesters
+                    // only harvesters with the correct type
+                    .filter(harvester => harvester.resourceType === slot.resourceType)
+                    // map to new object with specific order
+                    .map(harvester => {
+                        return {
+                            id: harvester._id,
+                            resourceType: harvester.resourceType,
+                            turnsUntilComplete: harvester.turnsUntilComplete,
+                            isHarvesting: harvester.isHarvesting
+                        };
+                    })
+                    // and add to returnData
+                    .concat(returnData.harvesters);
+                return {
+                    resourceType: slot.resourceType,
+                    slots: slot.slots,
+                    id: slot._id,
+                    // harvester ids are added into array here
+                    harvesters: planet.harvesters
+                        .filter(harvester => harvester.resourceType === slot.resourceType)
+                        .map(harvester => harvester._id)
+                };
+            })
+        };
+    });
 
     logger.info(
         `[App] User ${chalk.red("@" + req.user.username)} requested game data for ${chalk.yellow(
@@ -249,7 +237,6 @@ exports.installHarvester = async (req, res) => {
                 "#" + planetid
             )}`
         );
-    return res.status(200).json({
-        harvester: {id: harvester._id, turnsUntilComplete: turns}
-    });
+
+    return res.status(200).json({id: newHarvester._id, turnsUntilComplete: turns});
 };

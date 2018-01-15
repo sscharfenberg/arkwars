@@ -1,18 +1,14 @@
 /***********************************************************************************************************************
  *
- * VUEX MUTATIONS
+ * VUEX STATE MUTATIONS
  *
- * SYNC
+ * SYNC!!!
  *
  **********************************************************************************************************************/
 import Vue from "vue";
-import cfg from "../../config";
+import cfg from "../../../config";
 
 const MUTATIONS = {
-    /* =================================================================================================================
-     * COMMON MUTATIONS ================================================================================================
-     * ============================================================================================================== */
-
     /*
      * SET gameData
      * @param {Object} state - Vuex $store.state
@@ -20,7 +16,12 @@ const MUTATIONS = {
      */
     SET_GAME_DATA: (state, payload) => {
         cfg.DEBUG && console.log("committing game data to store", payload);
-        state.gameData = payload;
+        state.game = payload.game;
+        state.stars = payload.stars;
+        state.planets = payload.planets;
+        state.player = payload.player;
+        state.resources = payload.resources;
+        state.harvesters = payload.harvesters;
     },
 
     /*
@@ -32,14 +33,12 @@ const MUTATIONS = {
         state.fetchingGameDataFromApi = payload;
     },
 
-    /* =================================================================================================================
-     * EMPIRE MUTATIONS ================================================================================================
-     * ============================================================================================================== */
-
     /*
      * SET/UNSET "Editing star name" for a specific star
      * @param {Object} state - Vuex $store.state
-     * @param {Object} payload - {id:Mongoose.ObjectId, editing:Boolean}
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Booleaen} payload.editing
      */
     EDITING_STAR_NAME: (state, payload) => {
         if (payload.editing) {
@@ -52,7 +51,9 @@ const MUTATIONS = {
     /*
      * SET/UNSET "Saving star name" for a specific star
      * @param {Object} state - Vuex $store.state
-     * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Booleaen} payload.saving
      */
     SAVING_STAR_NAME: (state, payload) => {
         if (payload.saving) {
@@ -65,13 +66,15 @@ const MUTATIONS = {
     /*
      * update game data and set star name for a specific star
      * @param {Object} state - Vuex $store.state
-     * @param {Object} payload - {id:Mongoose.ObjectId, name:String}
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId] payload.id
+     * @param {String} payload.name
      */
     SET_STAR_NAME: (state, payload) => {
-        state.gameData.stars.forEach((star, index) => {
+        state.stars.forEach((star, index) => {
             if (star.id === payload.id) {
                 star.name = payload.name;
-                Vue.set(state.gameData.stars, index, star);
+                Vue.set(state.stars, index, star);
             }
         });
     },
@@ -79,18 +82,19 @@ const MUTATIONS = {
     /*
      * update game data and add new harvester to planet
      * @param {Object} state - Vuex $store.state
-     * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
+     * @param {Object} payload
+     * @param {String} payload.harvesterType
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Number} payload.turnsUntilComplete
+     * @param {Boolean} payloiad.isHarvesting
      */
     ADD_HARVESTER: (state, payload) => {
-        let allPlanets = [];
-        state.gameData.stars.forEach(star => {
-            allPlanets = allPlanets.concat(star.planets);
-        });
-        const planet = allPlanets.find(planet => planet.id === payload.planet);
-        const slot = planet.resourceSlots.find(slot => slot.resourceType === payload.harvesterType);
-        const harvesters = slot.harvesters;
-        harvesters.push(payload.id);
-        state.gameData.harvesters.push({
+        state.planets
+            .find(planet => planet.id === payload.planet) // planet has correct id
+            .resourceSlots.find(slot => slot.resourceType === payload.harvesterType) // resourceSlot has correct type
+            .harvesters.push(payload.id);
+        state.harvesters.push({
             id: payload.id,
             isHarvesting: payload.isHarvesting,
             resourceType: payload.harvesterType,
@@ -101,7 +105,9 @@ const MUTATIONS = {
     /*
      * SET/UNSET "Saving Install Harvester" for a specific planet
      * @param {Object} state - Vuex $store.state
-     * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.resourceId
+     * @param {Booleaen} payload.saving
      */
     SAVING_INSTALL_HARVESTER: (state, payload) => {
         if (payload.saving) {
@@ -117,13 +123,14 @@ const MUTATIONS = {
      * pay harvester by changing player resources.
      * this is clientside, but it is enforeced by the server.
      * @param {Object} state - Vuex $store.state
-     * @param {Object} payload - {id:Mongoose.ObjectId, saving:Boolean}
+     * @param {Object} payload
+     * @param {String} payload.harvesterType
      */
     PAY_HARVESTER: (state, payload) => {
         const costs = cfg.rules.harvesters.build.find(harvester => harvester.type === payload.harvesterType).costs;
         console.log("pay for harvester ", costs);
-        costs.forEach( slot => {
-            state.gameData.resources.find(resource => resource.type === slot.resourceType).current -= slot.amount;
+        costs.forEach(slot => {
+            state.resources.find(resource => resource.type === slot.resourceType).current -= slot.amount;
         });
     }
 };

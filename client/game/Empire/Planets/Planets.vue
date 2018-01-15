@@ -6,7 +6,7 @@
     import Planet from "./Planet.vue";
     export default {
         props: {
-            planets: {
+            planets: { // this array contains IDs of the planets
                 type: Array,
                 required: true
             },
@@ -24,7 +24,7 @@
 <template>
     <ul class="planets">
         <li v-for="planet in planets">
-            <planet :id="planet.id"
+            <planet :id="planet"
                     :starName="starName" />
         </li>
     </ul>
