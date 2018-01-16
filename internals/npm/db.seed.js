@@ -116,7 +116,7 @@ players.forEach(player => {
 
 
 /*
- * add random harvester for testing purposes
+ * add random harvesters for testing purposes
  */
 let harvesters = [];
 playerHomeSystems.forEach( star => {
@@ -128,6 +128,7 @@ playerHomeSystems.forEach( star => {
         let harvester = {
             planet: randomPlanet._id,
             game: randomPlanet.game,
+            owner: star.owner,
             resourceType: randomPlanet.resources[0].resourceType,
             turnsUntilComplete: Math.random() > 0.4 ? 0 : Math.floor(Math.random() * 6)
         };

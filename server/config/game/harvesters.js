@@ -5,38 +5,42 @@
  *
  **********************************************************************************************************************/
 const RULES =  {
-    "build": [
+    build: [
         {
-            "type": "energy",
-            "costs": [
+            type: "energy",
+            costs: [
                 {resourceType: "energy", amount: 50},
                 {resourceType: "minerals", amount: 100}
             ],
-            "duration": 6
+            duration: 6,
+            baseProduction: 20
         },
         {
-            "type": "food",
-            "costs": [
+            type: "food",
+            costs: [
                 {resourceType: "energy", amount: 100},
                 {resourceType: "minerals", amount: 100}
             ],
-            "duration": 4
+            duration: 4,
+            baseProduction: 10
         },
         {
-            "type": "minerals",
-            "costs": [
+            type: "minerals",
+            costs: [
                 {resourceType: "energy", amount: 100},
                 {resourceType: "minerals", amount: 50}
             ],
-            "duration": 6
+            duration: 6,
+            baseProduction: 20
         },
         {
-            "type": "research",
-            "costs": [
+            type: "research",
+            costs: [
                 {resourceType: "energy", amount: 100},
                 {resourceType: "minerals", amount: 100}
             ],
-            "duration": 8
+            duration: 8,
+            baseProduction: 10
         }
     ]
 };

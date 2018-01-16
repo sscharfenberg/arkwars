@@ -22,6 +22,12 @@ const harvesterSchema = new mongoose.Schema({
         ref: "Game"
     },
 
+    // reference to player id
+    owner: {
+        type: mongoose.Schema.ObjectId,
+        ref: "player"
+    },
+
     // type of resource that is harvested
     resourceType: {
         type: String,

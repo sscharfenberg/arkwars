@@ -205,6 +205,7 @@ exports.installHarvester = async (req, res) => {
     const harvester = new Harvester({
         planet: planetid,
         game: req.user.selectedPlayer.game._id,
+        owner: req.user.selectedPlayer._id,
         resourceType: harvesterType,
         turnsUntilComplete: turns
     });

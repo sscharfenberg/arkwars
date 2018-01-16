@@ -116,6 +116,7 @@ const playerSchema = new mongoose.Schema(
                 }
             }
         }
+        // end resources
     },
     {
         toJSON: {virtuals: true},
@@ -134,6 +135,13 @@ playerSchema.virtual("stars", {
     ref: "Star", // what model to link?
     localField: "_id", // which field on the Player?
     foreignField: "owner" // which field on the Star?
+});
+
+// find harvesters that are owned by this player
+playerSchema.virtual("harvesters", {
+    ref: "Harvester", // what model to link?
+    localField: "_id", // which field on the Player?
+    foreignField: "owner" // which field on the Harvester?
 });
 
 // auto populate games
