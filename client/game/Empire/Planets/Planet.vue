@@ -4,7 +4,9 @@
      * this component displays a single planet
      ******************************************************************************************************************/
     import {latinToRoman} from "../../handlers/format";
+    import Icon from "Game/common/Icon/Icon.vue";
     import Resources from "./Resources/Resources.vue";
+    import Pdus from "./Pdus/Pdus.vue";
     export default {
         props: {
             id: {
@@ -34,7 +36,9 @@
             resourceSlots () { return this.$store.getters.getPlanetById(this.id).resourceSlots; }
         },
         components: {
-            "resources": Resources
+            "resources": Resources,
+            "icon": Icon,
+            "pdus": Pdus
         }
     };
 </script>
@@ -60,9 +64,7 @@
                        :resources="resourceSlots()"
                        :planetid="this.id"
                        :planetName="getPlanetName" />
-            <div class="planet__defense">
-                pds
-            </div>
+            <pdus :planetId="id" />
         </div>
 
     </div>
@@ -110,9 +112,8 @@
         }
 
         &__population,
-        &__defense,
         &__name {
-            height: 2.4rem;
+            height: 2.6rem;
             padding: 0.5rem 1rem;
             border: 1px solid palette("grey", "abbey");
             margin: 0 0.8rem 0.8rem 0;

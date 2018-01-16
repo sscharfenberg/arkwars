@@ -28,7 +28,7 @@ exports.getGameData = async (req, res) => {
     const game = player.game;
     const stars = player.stars.map(star => star.id);
     // get unsorted array of all planets that belong to the player's stars
-    let planets = await Planet.find({star: {$in: stars}}).populate("harvesters");
+    let planets = await Planet.find({star: {$in: stars}}).populate("harvesters pdus");
 
     // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const returnData = {
@@ -66,11 +66,23 @@ exports.getGameData = async (req, res) => {
             };
         }),
         harvesters: [],
-        planets: []
+        planets: [],
+        pdus: []
     };
 
     // add mapped planets
     returnData.planets = planets.map(planet => {
+        // add PDU data to pdus array
+        returnData.pdus = planet.pdus.map(pdu => {
+            return {
+                id: pdu._id,
+                planet: pdu.planet,
+                pduType: pdu.pduType,
+                turnsUntilComplete: pdu.turnsUntilComplete,
+                isActive: pdu.isActive
+            };
+        }).concat(returnData.pdus);
+        // prepare planet
         return {
             id: planet._id,
             type: planet.type,

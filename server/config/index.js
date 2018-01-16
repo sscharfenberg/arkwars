@@ -13,11 +13,6 @@
 const fs = require("fs-extra");
 const path = require("path"); // https://www.npmjs.com/package/path
 const pkg = require("../../package.json");
-const RULES_PLAYER = require("./game/player");
-const RULES_GAMES = require("./game/games");
-const RULES_STARS = require("./game/stars");
-const RULES_PLANETS = require("./game/planets");
-const RULES_HARVESTERS = require("./game/harvesters");
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -83,15 +78,17 @@ const appConfig = {
         }
     },
 
-    player: RULES_PLAYER,
+    player: require("./game/player"),
 
-    games: RULES_GAMES,
+    games: require("./game/games"),
 
-    stars: RULES_STARS,
+    stars: require("./game/stars"),
 
-    planets: RULES_PLANETS,
+    planets: require("./game/planets"),
 
-    harvesters: RULES_HARVESTERS,
+    harvesters: require("./game/harvesters"),
+
+    pdus: require("./game/pdus"),
 
     defaultPagination: {
         admin: {

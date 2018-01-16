@@ -22,6 +22,7 @@ const MUTATIONS = {
         state.player = payload.player;
         state.resources = payload.resources;
         state.harvesters = payload.harvesters;
+        state.pdus = payload.pdus;
     },
 
     /*

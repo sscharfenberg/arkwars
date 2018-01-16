@@ -7,7 +7,6 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../handlers/logger/console");
-const costs = require("../handlers/game/costs");
 require("../models/");
 const Game = mongoose.model("Game");
 const Planet = mongoose.model("Planet");

@@ -22,6 +22,7 @@ const Planet = mongoose.model("Planet");
 const Turn = mongoose.model("Turn");
 const Suspension = mongoose.model("Suspension");
 const Harvester = mongoose.model("Harvester");
+const Pdu = mongoose.model("Pdu");
 
 /*
  * prune database and throw everything away.
@@ -44,6 +45,8 @@ const pruneDatabase = async () => {
     logger.debug("[node] suspensions removed.");
     await Harvester.remove();
     logger.debug("[node] harvesters removed.");
+    await Pdu.remove();
+    logger.debug("[node] pdus removed.");
     logger.success("[node] collections deleted.");
     process.exit(0);
 };

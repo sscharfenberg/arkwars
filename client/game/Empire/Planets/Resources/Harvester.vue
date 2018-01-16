@@ -67,13 +67,17 @@
 
             box-sizing: content-box;
             width: 2.4rem;
-            height: 2.4rem;
+            height: 2.6rem;
             padding: 0.5rem 1rem;
             border: 1px solid palette("state", "online");
             margin: 0 0.4rem 0.4rem 0;
 
             background: rgba(palette("grey", "mystic"), 0.05);
             cursor: pointer;
+
+            transition:
+                background-color map-get($animation-speeds, "fast") linear,
+                border-color map-get($animation-speeds, "fast") linear;
 
             &:hover:not([disabled]),
             &:focus:not([disabled]) {

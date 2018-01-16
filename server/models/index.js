@@ -9,5 +9,6 @@ require("./Player");
 require("./Star");
 require("./Planet");
 require("./Harvester");
+require("./Pdu");
 require("./Turn");
 require("./Suspension");

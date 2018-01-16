@@ -11,7 +11,9 @@ https://material.io/icons/
 
 **Resource: Food**: "Corn" Icon made by [Flaticon](https://www.flaticon.com/) from [shareicon.net](https://www.shareicon.net/vegan-corn-healthy-food-food-and-restaurant-food-organic-diet-vegetarian-cereal-851723), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
-**Resource: Research**: "Nuclear" by Mike Rowe, AU from [the Noun Project](https://thenounproject.com/term/nuclear/75368/), licensed via [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Resource: Research**: "Nuclear" by Mike Rowe, AU from [the Noun Project](https://thenounproject.com/term/nuclear/75368/), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
+**PDU**: "Missile Launcher" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
 # Game Header Images 
 are Hubble Images taken from the [Hubblesite](http://hubblesite.org/images/gallery). All Images are credited to STScI and are therefore in the public domain:

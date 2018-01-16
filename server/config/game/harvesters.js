@@ -12,7 +12,7 @@ const RULES =  {
                 {resourceType: "energy", amount: 50},
                 {resourceType: "minerals", amount: 100}
             ],
-            duration: 6,
+            duration: 8,
             baseProduction: 20
         },
         {
@@ -21,7 +21,7 @@ const RULES =  {
                 {resourceType: "energy", amount: 100},
                 {resourceType: "minerals", amount: 100}
             ],
-            duration: 4,
+            duration: 6,
             baseProduction: 10
         },
         {
@@ -30,7 +30,7 @@ const RULES =  {
                 {resourceType: "energy", amount: 100},
                 {resourceType: "minerals", amount: 50}
             ],
-            duration: 6,
+            duration: 8,
             baseProduction: 20
         },
         {
@@ -39,7 +39,7 @@ const RULES =  {
                 {resourceType: "energy", amount: 100},
                 {resourceType: "minerals", amount: 100}
             ],
-            duration: 8,
+            duration: 12,
             baseProduction: 10
         }
     ]

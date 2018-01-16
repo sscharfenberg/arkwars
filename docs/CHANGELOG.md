@@ -4,6 +4,7 @@
 - [x] added harvester production to turn processing. harvesters now actually produce resources (still unmodified by techlevel since that doesn't exist yet). Need to test this though, since we have to do one update per player - so, if there are 200 players, we need to execute 200 MongoDB `findOneAndUpdate`'s. Updating multiple records with different values is a hotly requested feature though, so we'll see.
 - [x] refactored planet.resources[].value - it is now a straight modifier to resource production. Changed turn processing so the modifier gets accounted for.
 - [x] Added `InfoModal` Component, that shows information about a harvester - either the turns remaining or the amount produced. Again, this is unmodified by techlevel.
+- [x] Started work on PDUs - added Mongoose model, rules and random mockdata seeding.
 
 `15.01.2018`
 - [x] first simple steps for cron turn handling, added a (synchronuous!) turn processing structure and started with the handling of harvesters in built.

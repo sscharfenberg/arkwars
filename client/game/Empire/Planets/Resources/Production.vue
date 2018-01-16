@@ -1,4 +1,8 @@
 <script>
+    /*******************************************************************************************************************
+     * Production
+     * this component shows the production values of a harvester
+     ******************************************************************************************************************/
     import Icon from "Game/common/Icon/Icon.vue";
     import cfg from "Config";
     export default {

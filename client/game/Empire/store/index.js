@@ -19,6 +19,7 @@ const store = new Vuex.Store({
         player: {},
         resources: [],
         harvesters: [],
+        pdus: [],
         // App state
         fetchingGameDataFromApi: false,
         // UI state
@@ -38,7 +39,8 @@ const store = new Vuex.Store({
         player: state => state.player,
         playerResources: state => state.resources,
         getPlanetById: state => id => state.planets.find(planet => planet.id === id) || {},
-        harvesterById: state => id => state.harvesters.find( harvester => harvester.id === id) || {}
+        harvesterById: state => id => state.harvesters.find( harvester => harvester.id === id) || {},
+        pdusByPlanetId: state => id => state.pdus.filter(pdu => pdu.planet === id) || []
     },
     mutations,
     actions

@@ -40,7 +40,7 @@ const planetSchema = new mongoose.Schema({
         {
             resourceType: String, // type of the resource
             slots: Number, // the number of available extractor slots
-            value: Number // the current amount of resources remaining
+            value: Number // the grade of the resources - a modifier for production
         }
     ]
 
@@ -52,5 +52,13 @@ planetSchema.virtual("harvesters", {
     localField: "_id", // which field on the Planet?
     foreignField: "planet" // which field on the Harvester?
 });
+
+// find Pdus where pdu.planet = planet._id
+planetSchema.virtual("pdus", {
+    ref: "Pdu", // what model to link?
+    localField: "_id", // which field on the Planet?
+    foreignField: "planet" // which field on the Pdu?
+});
+
 
 module.exports = mongoose.model("Planet", planetSchema);

@@ -23,6 +23,7 @@ const Planet = mongoose.model("Planet");
 const Turn = mongoose.model("Turn");
 const Suspension = mongoose.model("Suspension");
 const Harvester = mongoose.model("Harvester");
+const Pdu = mongoose.model("Pdu");
 const games = require("../mockdata/games");
 const users = require("../mockdata/users");
 const players = require("../mockdata/players");
@@ -53,6 +54,8 @@ const seedDatabase = async () => {
         await Planet.insertMany(planets);
         logger.debug(`[node] inserting ${harvesters.length} harvesters.`);
         await Harvester.insertMany(harvesters);
+        logger.debug(`[node] inserting ${pdus.length} pdus.`);
+        await Pdu.insertMany(pdus);
         logger.debug("[node] done inserting.");
         logger.success("[node] finished seeding database.");
     } catch (e) {
@@ -119,6 +122,7 @@ players.forEach(player => {
  * add random harvesters for testing purposes
  */
 let harvesters = [];
+let pdus = [];
 playerHomeSystems.forEach( star => {
     let starPlanets = planets.filter( planet => planet.star === star._id && planet.resources.length);
     const numHarvesters = Math.floor(starPlanets.length / 2);
@@ -133,12 +137,24 @@ playerHomeSystems.forEach( star => {
             turnsUntilComplete: Math.random() > 0.4 ? 0 : Math.floor(Math.random() * 6)
         };
         logger.info(`[mockdata] created ${chalk.red(harvester.resourceType)} harvester for star ${chalk.yellow(star.name)} - ${randomPlanet.orbitalIndex}`);
+        // add PDUs
+        const numPdus = Math.floor(Math.random() * 6 + 1);
+        for (let j = 0; j < numPdus; j++) {
+            let pdu = {
+                game: randomPlanet.game,
+                planet: randomPlanet._id,
+                owner: star.owner,
+                pduType: "laser", // tmp
+                turnsUntilComplete: Math.random() > 0.4 ? 0 : Math.floor(Math.random() * 10 + 1)
+            };
+            pdus.push(pdu);
+        }
         harvesters.push(harvester);
         starPlanets.splice(randomIndex, 1);
     }
 });
 
-
+logger.info(`[mockdata] prepared ${chalk.yellow(pdus.length)} random PDUs.`);
 
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
