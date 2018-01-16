@@ -4,6 +4,7 @@
      * this component shows extractors (with status!) and available slots of a single type (ie, "energy")
      ******************************************************************************************************************/
     import Icon from "Game/common/Icon/Icon.vue";
+    import InfoModal from "./InfoModal.vue";
     export default {
         props: {
             id: {
@@ -12,12 +13,13 @@
             }
         },
         components: {
-            "icon": Icon
+            "icon": Icon,
+            "info-modal": InfoModal
         },
         computed: {
             iconName () { return "res-" + this.$store.getters.harvesterById(this.id).resourceType; },
             buildingHarvesterClass () {
-                return this.$store.getters.harvesterById(this.id).turnsUntilComplete > 0 ? "harvester__building" : "";
+                return this.$store.getters.harvesterById(this.id).turnsUntilComplete > 0 ? "harvester--building" : "";
             },
             turnsUntilComplete () { return this.$store.getters.harvesterById(this.id).turnsUntilComplete; },
             harvesterLabel () {
@@ -25,46 +27,78 @@
                 let label = this.$t("planet.harvesters.names." + this.$store.getters.harvesterById(this.id).resourceType);
                 label += turns ? " - " + this.$t("planet.harvesters.untilComplete", {turns}) : "";
                 return label;
-            }
+            },
+            resGrade () { return this.$store.getters.harvesterById(this.id).resGrade; }
         },
-        methods: {}
+        methods: {
+            showInfoModal (harvester) {
+                return this.$modal.show(`harvester-info-${harvester}`);
+            }
+        }
     };
 </script>
 
 <template>
-    <li class="harvester"
-        :class="buildingHarvesterClass"
-        :title="harvesterLabel"
-        :aria-label="harvesterLabel">
-        <icon :name="iconName" />
-        <div v-if="turnsUntilComplete"
-             class="harvester__build-turns">
-            <div v-for="n in turnsUntilComplete"
-                 class="harvester__build-turn"
-                 role="presentation"
-                 aria-hidden="true"
-                 :key="n"></div>
-        </div>
+    <li class="harvester">
+        <button class="harvester__button"
+                :class="buildingHarvesterClass"
+                :title="harvesterLabel"
+                :aria-label="harvesterLabel"
+                @click="showInfoModal(id)">
+            <icon :name="iconName" />
+            <div v-if="turnsUntilComplete"
+                 class="harvester__build-turns">
+                <div v-for="n in turnsUntilComplete"
+                     class="harvester__build-turn"
+                     role="presentation"
+                     aria-hidden="true"
+                     :key="n"></div>
+            </div>
+        </button>
+        <info-modal :harvesterId="id" />
     </li>
 </template>
 
 <style lang="scss" scoped>
     .harvester {
-        display: flex;
-        align-items: center;
+        &__button {
+            display: flex;
+            align-items: center;
 
-        width: 2.4rem;
-        height: 2.4rem;
-        padding: 0.5rem 1rem;
-        border: 1px solid palette("grey", "abbey");
-        margin: 0 0.4rem 0.4rem 0;
+            box-sizing: content-box;
+            width: 2.4rem;
+            height: 2.4rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid palette("state", "online");
+            margin: 0 0.4rem 0.4rem 0;
 
-        background: rgba(palette("grey", "mystic"), 0.05);
+            background: rgba(palette("grey", "mystic"), 0.05);
+            cursor: pointer;
 
-        &__building {
+            &:hover:not([disabled]),
+            &:focus:not([disabled]) {
+                background: palette("grey", "bunker");
+                outline: 0;
+                border-color: palette("grey", "asher");
+            }
+
+            &:active:not([disabled]) {
+                background: palette("grey", "ebony");
+                color: palette("grey", "white");
+            }
+
+            &[disabled] {
+                background-color: palette("grey", "ebony");
+                cursor: not-allowed;
+            }
+        }
+
+        &--building {
             opacity: 0.7;
 
             width: auto;
+
+            border-color: palette("state", "building");
         }
 
         &__build-turns {

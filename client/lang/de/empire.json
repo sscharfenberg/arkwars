@@ -40,12 +40,19 @@
                 "food": "Biosphäre",
                 "research": "Forschungsstation"
             },
-            "untilComplete": "{turns} Runden bis zur Fertigstellung",
+            "untilComplete": "{turns} Runde(n) bis zur Fertigstellung",
             "install": "Ernter installieren",
             "installModal": {
                 "title": "Ernter installieren",
                 "question": "{typ} auf Planet {planet} installieren?"
+            },
+            "production": {
+                "title": "Produktion",
+                "base": "Grundwert {type}",
+                "resGrade": "{type}-Resourcen Abbaubarkeit",
+                "finalProd": "Effektive Produktion"
             }
+
         }
     }
 }

@@ -175,7 +175,7 @@ const randomPlanet = (gameId, starId, orbitalIndex, npc) => {
                 resourceType: slot.type, // type of the resource
                 slots, // the number of available extractor slots
                 // exact value of remaining resources on the planet
-                value: Math.floor(Math.random() * (slot.potential[1] - slot.potential[0]) + slot.potential[0])
+                value: parseFloat(Math.random() * (slot.potential[1] - slot.potential[0]) + slot.potential[0]).toFixed(2)
             });
         }
     });

@@ -86,10 +86,10 @@ exports.getGameData = async (req, res) => {
                             id: harvester._id,
                             resourceType: harvester.resourceType,
                             turnsUntilComplete: harvester.turnsUntilComplete,
-                            isHarvesting: harvester.isHarvesting
+                            isHarvesting: harvester.isHarvesting,
+                            resGrade: slot.value
                         };
                     })
-                    // and add to returnData
                     .concat(returnData.harvesters);
                 return {
                     resourceType: slot.resourceType,

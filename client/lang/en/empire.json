@@ -40,11 +40,17 @@
                 "food": "Biosphere",
                 "research": "Research Station"
             },
-            "untilComplete": "{turns} turns until completion",
+            "untilComplete": "{turns} turn(s) until completion",
             "install": "Install harvester",
             "installModal": {
                 "title": "Install Harvester",
                 "question": "Install {typ} on planet {planet}?"
+            },
+            "production": {
+                "title": "Produktion",
+                "base": "Grundwert {type}",
+                "resGrade": "{type}-Resourcen Abbaubarkeit",
+                "finalProd": "Effektive Produktion"
             }
         }
     }

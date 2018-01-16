@@ -97,7 +97,6 @@
     .available {
         display: flex;
         align-items: center;
-        opacity: 0.3;
 
         box-sizing: content-box;
         width: 2.4rem;
@@ -106,7 +105,7 @@
         border: 1px solid palette("grey", "abbey");
         margin: 0 0.4rem 0.4rem 0;
 
-        background: rgba(palette("grey", "mystic"), 0.05);
+        background: transparent;
 
         cursor: pointer;
 
@@ -115,18 +114,30 @@
             background-color map-get($animation-speeds, "fast") linear,
             border-color map-get($animation-speeds, "fast") linear;
 
+        > svg {
+            opacity: 0.3;
+        }
+
         &:hover:not([disabled]),
         &:focus:not([disabled]) {
             opacity: 0.8;
 
-            background: palette("grey", "bunker");
+            background: rgba(palette("grey", "mystic"), 0.05);
             outline: 0;
-            border-color: palette("grey", "asher");
+            border-color: palette("grey", "charcoal");
+
+            > svg {
+                opacity: 1;
+            }
         }
 
         &:active:not([disabled]) {
             background: palette("grey", "ebony");
             color: palette("grey", "white");
+
+            > svg {
+                opacity: 1;
+            }
         }
 
         &[disabled] {

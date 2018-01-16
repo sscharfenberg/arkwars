@@ -17,7 +17,7 @@ if (document.getElementById("gameRoot")) {
     const locale = getLocale();
     Vue.use(VueI18n);
     Vue.use(Vuelidate);
-    Vue.use(VModal, { dialog: true });
+    Vue.use(VModal);
     cfg.DEBUG && console.log(`bootstrapping VueJS, locale ${locale}.`);
     getAreaMessages(locale, getAreaSlug(), getMessagesVersion(), messages => {
         let i18nConfig = {
@@ -34,6 +34,9 @@ if (document.getElementById("gameRoot")) {
             components: {Empire},
             beforeCreate: function() {
                 return this.$store.dispatch("FETCH_GAMEDATA_FROM_API");
+            },
+            mounted: function() {
+                cfg.DEBUG && console.log("VueJS app mounted.");
             }
         });
     });

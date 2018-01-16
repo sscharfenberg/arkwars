@@ -69,7 +69,6 @@
             installCancel () {
                 this.$modal.hide(`installharvester-${this.resourceId}-${this.resourceType}-${this.index}`);
             }
-
         }
     };
 </script>
@@ -77,28 +76,45 @@
 <template>
     <modal :name="`installharvester-${resourceId}-${resourceType}-${index}`"
            :adaptive="true"
+           class="install-modal"
+           classes="install-modal__box"
            :width="320"
            height="auto">
-        <header class="install__header">{{ $t("planet.harvesters.installModal.title") }}</header>
-        <div class="install__content">
-            {{ installModalQuestion }}
-        </div>
-        <div class="install__costs">
-            <costs :costs="installCosts" />
-        </div>
-        <div class="install__actions">
-            <m-button :onClick="installCancel"
-                      :textString="$t('common.buttons.cancel')"
-                      iconName="cancel" />
-            <m-button :onClick="installConfirm"
-                      :textString="$t('common.buttons.install')"
-                      iconName="done"
-                      :disable="!sufficientFunds" />
+        <div class="modal__box">
+            <header class="install__header">{{ $t("planet.harvesters.installModal.title") }}</header>
+            <div class="install__content">
+                {{ installModalQuestion }}
+            </div>
+            <div class="install__costs">
+                <costs :costs="installCosts" />
+            </div>
+            <div class="install__actions">
+                <m-button :onClick="installCancel"
+                          :textString="$t('common.buttons.cancel')"
+                          iconName="cancel" />
+                <m-button :onClick="installConfirm"
+                          :textString="$t('common.buttons.install')"
+                          iconName="done"
+                          :disable="!sufficientFunds" />
+            </div>
         </div>
     </modal>
 </template>
 
 <style lang="scss" scoped>
+    .install-modal {
+        background: rgba(palette("grey", "black"), 0.5);
+    }
+
+    .modal__box {
+        border: 3px solid palette("grey", "charcoal");
+
+        background: palette("grey", "sunken");
+        color: palette("text");
+        border-radius: 0;
+        box-shadow: 0 0 60px rgba(palette("grey", "mystic"), 0.15);
+    }
+
     .install {
         &__header {
             padding: 1rem;

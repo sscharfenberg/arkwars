@@ -2,13 +2,14 @@
 
 `16.01.2018`
 - [x] added harvester production to turn processing. harvesters now actually produce resources (still unmodified by techlevel since that doesn't exist yet). Need to test this though, since we have to do one update per player - so, if there are 200 players, we need to execute 200 MongoDB `findOneAndUpdate`'s. Updating multiple records with different values is a hotly requested feature though, so we'll see.
+- [x] refactored planet.resources[].value - it is now a straight modifier to resource production. Changed turn processing so the modifier gets accounted for.
+- [x] Added `InfoModal` Component, that shows information about a harvester - either the turns remaining or the amount produced. Again, this is unmodified by techlevel.
 
 `15.01.2018`
 - [x] first simple steps for cron turn handling, added a (synchronuous!) turn processing structure and started with the handling of harvesters in built.
 - [x] with harvesters actually getting built, I discovered that using the refresh button correctly updates gameData, but the "pips" indicating how many turns to build did not update. Solved this by a lot of refactoring; `Harvester` is a Component now and used from `ResourceType`. It is passed the id of the harvester as prop and gets the data from the store by Id.
 - [x] fixed a ug where db.seed switched player/npc type chances for planets. now we should not see tomb planets in player homesystems anymore.
 - [x] refactored the api, so the data returned is a bit friendlier for Vuex (no deeply nested structures anymore). Gave up on making the Vuex store game-wide, it will be area-specific.
-
 
 `14.01.2018`
 

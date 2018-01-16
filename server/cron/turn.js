@@ -7,13 +7,17 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../handlers/logger/console");
+const costs = require("../handlers/game/costs");
 require("../models/");
 const Game = mongoose.model("Game");
-//const Planet = mongoose.model("Planet");
+const Planet = mongoose.model("Planet");
 const Player = mongoose.model("Player");
 const Harvester = mongoose.model("Harvester");
 const Turn = mongoose.model("Turn");
 const cfg = require("../config");
+
+
+
 
 /*
  * build process for harvesters
@@ -36,11 +40,15 @@ const harvesterBuildProcess = async (game, log) => {
 /*
  * harvesters producing actual resorces.
  * @param {object} game - Game model object from mongo
+ * @param {object} log - the log existing before this.
  * @returns {object} log
  */
 const playerHarvesterProduction = async (game, log) => {
     logger.info(`start processing harvester production.`);
-    const players = await Player.find({game: game._id}).populate("harvesters");
+    const playerProimise = Player.find({game: game._id}).populate("harvesters");
+    const planetPromise = Planet.find({game: game._id});
+    const[players, planets] = await Promise.all([playerProimise, planetPromise]);
+    let producingHarvesters = 0;
     let changedPlayerResources = players.map(player => {
         return {
             player: player._id,
@@ -51,15 +59,26 @@ const playerHarvesterProduction = async (game, log) => {
     players.forEach(player => {
         // filter the harvesters by the ones that are actually harvesting
         player.harvesters.filter(harvester => harvester.isHarvesting).forEach(harvester => {
-            let cost = cfg.harvesters.build.find(hT => hT.type === harvester.resourceType).baseProduction;
+            // base production value
+            const harvesterRules = cfg.harvesters.build.find(hT => hT.type === harvester.resourceType);
+            let baseProduction = harvesterRules.baseProduction;
+            // modified by planet resource value
+            let modifierResValue = planets
+                .find(planet => `${planet._id}` === `${harvester.planet}`).resources
+                .find( res => res.resourceType === harvester.resourceType).value;
             // TODO: add tech level modification
             changedPlayerResources.find(cp => cp.player === player._id).resources[
                 harvester.resourceType
-            ].current += cost;
+            ].current += Math.floor(baseProduction * modifierResValue);
+            producingHarvesters++;
         });
     });
     changedPlayerResources = enforceStockPileMax(changedPlayerResources);
+    logger.info(`processed ${chalk.cyan(producingHarvesters)} producting harvesters.`);
     // we have the new values, now updated db.
+    /*
+     * TODO: this will probably not work for 50+ players. find a better way to do this.
+     */
     let updatePromises = [];
     changedPlayerResources.forEach(slot => {
         updatePromises.push(
@@ -82,7 +101,7 @@ const playerHarvesterProduction = async (game, log) => {
     await Promise.all(updatePromises);
     logger.info(`${chalk.yellow(updatePromises.length)} user update promises finished.`);
     return {
-        harvesterProduction: changedPlayerResources,
+        harvesterProdResChanges: changedPlayerResources,
         ...log
     };
 };
@@ -122,15 +141,15 @@ const enforceStockPileMax = changedPlayerResources => {
 const turnProcessingOrder = async game => {
     logger.debug(`start turn processing for game ${chalk.red("g" + game.number)} turn ${chalk.yellow(game.turn)}`);
     let log = {};
-    // harvesters in production ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    try {
-        log = await harvesterBuildProcess(game, log);
-    } catch (e) {
-        logger.error(e);
-    }
     // harvesters that are actually harvesting ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     try {
         log = await playerHarvesterProduction(game, log);
+    } catch (e) {
+        logger.error(e);
+    }
+    // harvesters in production ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    try {
+        log = await harvesterBuildProcess(game, log);
     } catch (e) {
         logger.error(e);
     }
