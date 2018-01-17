@@ -1,5 +1,11 @@
 # Changelog
 
+`17.01.2018`
+- [x] Resource grade is now shown before install. It doesn't really make sense to hide this information from the player in the first place.
+- [x] worked an PDUs - icon in planet list now shows the number of active PDUs, click on the button opens the `DefenseDetails` Modal.
+- [x] `DefenseDetails` now shows the number of active PDUS, a list of PDUs in build, and a form to build more PDUs (`Construction`).
+- [x] For this, we needed weapon/PDU types and appropriate icons. Apart from "Missile", these are placeholders - not really happy with them.
+
 `16.01.2018`
 - [x] added harvester production to turn processing. harvesters now actually produce resources (still unmodified by techlevel since that doesn't exist yet). Need to test this though, since we have to do one update per player - so, if there are 200 players, we need to execute 200 MongoDB `findOneAndUpdate`'s. Updating multiple records with different values is a hotly requested feature though, so we'll see.
 - [x] refactored planet.resources[].value - it is now a straight modifier to resource production. Changed turn processing so the modifier gets accounted for.

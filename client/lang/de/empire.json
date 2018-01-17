@@ -40,6 +40,7 @@
                 "food": "Biosphäre",
                 "research": "Forschungsstation"
             },
+            "building": "Im Bau",
             "untilComplete": "{turns} Runde(n) bis zur Fertigstellung",
             "install": "Ernter installieren",
             "installModal": {
@@ -49,10 +50,24 @@
             "production": {
                 "title": "Produktion",
                 "base": "Grundwert {type}",
-                "resGrade": "{type}-Resourcen Abbaubarkeit",
+                "resGrade": "Resourcen Wirkungsgrad für {type}",
                 "finalProd": "Effektive Produktion"
             }
-
+        },
+        "pdus": {
+            "active": {
+                "title": "Aktive PDUs",
+                "label": "{num} aktive {type} PDUs bereit"
+            },
+            "building": {
+                "title": "PDUs im Bau",
+                "label": "{type} PDU im Bau. {turns} Runde(n) bis zur Fertigstellung."
+            },
+            "build": {
+                "title": "PDUs bauen",
+                "save": "Bauen",
+                "explanation": "Grundschaden {dmg}, Orbitale Reichweite {range}."
+            }
         }
     }
 }

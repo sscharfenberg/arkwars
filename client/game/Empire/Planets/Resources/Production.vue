@@ -21,7 +21,6 @@
                 return Math.floor(this.harvester.resGrade * this.baseProductionValue);
             },
             baseProductionValue () {
-                console.log(cfg);
                 return cfg.rules.harvesters.build
                     .find( harvester => harvester.type === this.harvester.resourceType).baseProduction;
             },
@@ -53,8 +52,8 @@
                 <th>{{baseProductionLabel}}</th>
                 <td>
                     <div class="value-base">
-                        {{baseProductionValue}}
                         <icon :name="`res-${harvester.resourceType}`" />
+                        {{baseProductionValue}}
                     </div>
                 </td>
             </tr>
@@ -70,8 +69,8 @@
                 <th>{{$t("planet.harvesters.production.finalProd")}}</th>
                 <td>
                     <div class="value-base">
-                        {{finalProduction}}
                         <icon :name="`res-${harvester.resourceType}`" />
+                        {{finalProduction}}
                     </div>
                 </td>
             </tr>
@@ -125,7 +124,7 @@
             height: 2.4rem;
 
             > svg {
-                margin-left: 0.5rem;
+                margin-right: 0.5rem;
             }
         }
     }

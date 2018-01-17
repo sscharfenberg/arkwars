@@ -138,14 +138,20 @@ playerHomeSystems.forEach( star => {
         };
         logger.info(`[mockdata] created ${chalk.red(harvester.resourceType)} harvester for star ${chalk.yellow(star.name)} - ${randomPlanet.orbitalIndex}`);
         // add PDUs
-        const numPdus = Math.floor(Math.random() * 6 + 1);
+        const numPdus = Math.floor(Math.random() * 16);
         for (let j = 0; j < numPdus; j++) {
+            let randomType = "";
+            let rolled = Math.random();
+            if (rolled < 0.25) randomType="laser";
+            else if (rolled < 0.50) randomType="plasma";
+            else if (rolled < 0.75) randomType="railgun";
+            else randomType="missile";
             let pdu = {
                 game: randomPlanet.game,
                 planet: randomPlanet._id,
                 owner: star.owner,
-                pduType: "laser", // tmp
-                turnsUntilComplete: Math.random() > 0.4 ? 0 : Math.floor(Math.random() * 10 + 1)
+                pduType: randomType, // tmp
+                turnsUntilComplete: Math.random() > 0.7 ? 0 : Math.floor(Math.random() * 10 + 1)
             };
             pdus.push(pdu);
         }

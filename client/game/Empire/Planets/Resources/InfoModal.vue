@@ -30,15 +30,16 @@
            :adaptive="true"
            class="info-modal"
            classes="info-modal-box"
-           :width="320"
-           height="auto">
+           :width="354"
+           height="auto"
+           :scrollable="true">
         <div class="info__box">
             <header class="info__header">
                 {{ $t("planet.harvesters.names." + this.harvester.resourceType) }}
             </header>
             <ul class="info__building" v-if="!harvester.isHarvesting">
                 <li class="info__building-label">
-                    Im Bau
+                    {{$t("planet.harvesters.building")}}
                     <div v-for="n in harvester.turnsUntilComplete"
                          class="info__build-turn"
                          role="presentation"
@@ -58,6 +59,7 @@
                           iconName="done" />
             </div>
         </div>
+        <m-button class="close-modal" :onClick="closeModal" iconName="cancel" />
     </modal>
 </template>
 
@@ -69,12 +71,16 @@
     }
 
     .info__box {
+        position: relative;
+
+        overflow: visible;
         border: 3px solid palette("grey", "charcoal");
+        margin: 17px;
 
         background: palette("grey", "sunken");
         color: palette("text");
         border-radius: 0;
-        box-shadow: 0 0 60px rgba(palette("grey", "mystic"), 0.15);
+        box-shadow: 0 0 20px rgba(palette("grey", "mystic"), 0.15);
     }
 
     .info {
@@ -151,5 +157,11 @@
                 margin-left: 1rem;
             }
         }
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 </style>

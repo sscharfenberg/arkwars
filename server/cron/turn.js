@@ -73,7 +73,7 @@ const playerHarvesterProduction = async (game, log) => {
         });
     });
     changedPlayerResources = enforceStockPileMax(changedPlayerResources);
-    logger.info(`processed ${chalk.cyan(producingHarvesters)} producting harvesters.`);
+    logger.info(`processed ${chalk.cyan(producingHarvesters)} producing harvesters.`);
     // we have the new values, now updated db.
     /*
      * TODO: this will probably not work for 50+ players. find a better way to do this.

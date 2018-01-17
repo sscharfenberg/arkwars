@@ -28,7 +28,7 @@ const RULES =  [
         baseHp: 50
     },
     {
-        type: "gauss",
+        type: "railgun",
         orbitRange: 1,
         baseDamage: 12,
         costs: [

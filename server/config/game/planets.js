@@ -15,7 +15,7 @@ const RULES =  {
             chance: 20,
             chanceHome: 37,
             resourceSlots: [
-                {type: "food", chance: 70, max: 3, potential: [1, 2]},
+                {type: "food", chance: 70, max: 3, potential: [1, 1.5]},
                 {type: "energy", chance: 50, max: 2, potential: [0.7, 1.3]}
             ]
         },
@@ -24,7 +24,7 @@ const RULES =  {
             chance: 17,
             chanceHome: 13,
             resourceSlots: [
-                {type: "research", chance: 70, max: 3, potential: [1, 2]},
+                {type: "research", chance: 70, max: 3, potential: [1, 1.5]},
                 {type: "energy", chance: 50, max: 2, potential: [0.7, 1.3]}
             ]
         },
@@ -34,7 +34,7 @@ const RULES =  {
             chanceHome: 10,
             resourceSlots: [
                 {type: "minerals", chance: 30, max: 1, potential: [0.6, 1.2]},
-                {type: "food", chance: 70, max: 2, potential: [1, 2]},
+                {type: "food", chance: 70, max: 2, potential: [1, 1.5]},
                 {type: "research", chance: 15, max: 1, potential: [0.5, 1]}
             ]
         },
@@ -43,7 +43,7 @@ const RULES =  {
             chance: 20,
             chanceHome: 10,
             resourceSlots: [
-                {type: "minerals", chance: 70, max: 3, potential: [1, 2]},
+                {type: "minerals", chance: 70, max: 3, potential: [1, 1.5]},
                 {type: "research", chance: 30, max: 1, potential: [0.6, 1.2]},
                 {type: "food", chance: 15, max: 1, potential: [0.5, 1]}
             ]
@@ -74,7 +74,7 @@ const RULES =  {
             chanceHome: 7,
             resourceSlots: [
                 {type: "minerals", chance: 50, max: 2, potential: [0.7, 1.3]},
-                {type: "research", chance: 70, max: 3, potential: [1, 2]}
+                {type: "research", chance: 70, max: 3, potential: [1, 1.5]}
             ]
         },
         {

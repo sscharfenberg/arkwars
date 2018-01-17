@@ -4,7 +4,8 @@
  *
  **********************************************************************************************************************/
 const serverRules = {
-    harvesters: require("../../server/config/game/harvesters")
+    harvesters: require("../../server/config/game/harvesters"),
+    pdus:  require("../../server/config/game/pdus")
 };
 
 const config = {
@@ -13,7 +14,8 @@ const config = {
         SUPPORT: ["en", "de"]
     },
     rules: {
-        harvesters: serverRules.harvesters
+        harvesters: serverRules.harvesters,
+        pdus: serverRules.pdus
     }
 };
 

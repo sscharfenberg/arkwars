@@ -40,6 +40,7 @@
                 "food": "Biosphere",
                 "research": "Research Station"
             },
+            "building": "Building",
             "untilComplete": "{turns} turn(s) until completion",
             "install": "Install harvester",
             "installModal": {
@@ -47,10 +48,25 @@
                 "question": "Install {typ} on planet {planet}?"
             },
             "production": {
-                "title": "Produktion",
-                "base": "Grundwert {type}",
-                "resGrade": "{type}-Resourcen Abbaubarkeit",
-                "finalProd": "Effektive Produktion"
+                "title": "Production",
+                "base": "Base production for {type}",
+                "resGrade": "Resource grade for {type}",
+                "finalProd": "Effective production"
+            }
+        },
+        "pdus": {
+            "active": {
+                "title": "Active PDUs",
+                "label": "{num} active {type} PDUs ready"
+            },
+            "building": {
+                "title": "PDUs under construction",
+                "label": "{type} PDU under construction. {turns} turn(s) until completion."
+            },
+            "build": {
+                "title": "Build PDUs",
+                "save": "Build",
+                "explanation": "Base damage {dmg}, orbit range {range}."
             }
         }
     }

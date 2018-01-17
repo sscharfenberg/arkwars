@@ -23,5 +23,17 @@
         "ok": "Ok",
         "confirm": "Confirm",
         "proceed": "Proceed"
+    },
+    "pdu": {
+        "nameShort": "PDU",
+        "namesShort": "PDUs",
+        "nameLong": "Planetary Defense",
+        "namesLong": "Planetary Defense Units",
+        "types": {
+            "laser": "Laser",
+            "plasma": "Plasma",
+            "railgun": "Railgun",
+            "missile": "Missile"
+        }
     }
 }

@@ -107,6 +107,7 @@ exports.getGameData = async (req, res) => {
                     resourceType: slot.resourceType,
                     slots: slot.slots,
                     id: slot._id,
+                    resGrade: slot.value,
                     // harvester ids are added into array here
                     harvesters: planet.harvesters
                         .filter(harvester => harvester.resourceType === slot.resourceType)

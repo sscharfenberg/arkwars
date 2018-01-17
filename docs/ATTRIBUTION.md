@@ -13,7 +13,11 @@ https://material.io/icons/
 
 **Resource: Research**: "Nuclear" by Mike Rowe, AU from [the Noun Project](https://thenounproject.com/term/nuclear/75368/), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
-**PDU**: "Missile Launcher" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Weapontype: Missiles**: "Missile Launcher" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/delapouite/originals/missile-launcher.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
+**Weapontype: Laser**: "Missile Launcher" by [Lorc](http://lorcblog.blogspot.com/) from [game-icons.net](http://game-icons.net/lorc/originals/ringed-beam.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
+**PDU**: "Defense Satellite" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/delapouite/originals/defense-satellite.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
 # Game Header Images 
 are Hubble Images taken from the [Hubblesite](http://hubblesite.org/images/gallery). All Images are credited to STScI and are therefore in the public domain:

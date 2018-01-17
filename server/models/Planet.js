@@ -42,7 +42,12 @@ const planetSchema = new mongoose.Schema({
             slots: Number, // the number of available extractor slots
             value: Number // the grade of the resources - a modifier for production
         }
-    ]
+    ],
+
+    // real population value => float
+    population: {
+        type: Number
+    }
 
 });
 
@@ -58,6 +63,14 @@ planetSchema.virtual("pdus", {
     ref: "Pdu", // what model to link?
     localField: "_id", // which field on the Planet?
     foreignField: "planet" // which field on the Pdu?
+});
+
+/*
+ * virtual function to find out if the harvester is actually producing resources
+ * @returns {Boolean}
+ */
+planetSchema.virtual("effectivePop").get(function() {
+    return Math.floor(this.population);
 });
 
 

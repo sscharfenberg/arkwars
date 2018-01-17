@@ -6,7 +6,7 @@
     import {latinToRoman} from "../../handlers/format";
     import Icon from "Game/common/Icon/Icon.vue";
     import Resources from "./Resources/Resources.vue";
-    import Pdus from "./Pdus/Pdus.vue";
+    import Defense from "./Defense/Defense.vue";
     export default {
         props: {
             id: {
@@ -38,7 +38,7 @@
         components: {
             "resources": Resources,
             "icon": Icon,
-            "pdus": Pdus
+            "defense": Defense
         }
     };
 </script>
@@ -64,7 +64,7 @@
                        :resources="resourceSlots()"
                        :planetid="this.id"
                        :planetName="getPlanetName" />
-            <pdus :planetId="id" />
+            <defense :planetId="id" />
         </div>
 
     </div>

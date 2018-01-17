@@ -58,6 +58,19 @@
                     if ( cost.amount > stockpile ) canInstall = false;
                 });
                 return canInstall;
+            },
+            resGrade () {
+                const planetResources = this.$store.getters.getPlanetById(this.planetid).resourceSlots;
+                return planetResources.find(res => res.resourceType === this.resourceType).resGrade;
+            },
+            resGradeClass () {
+                if (this.resGrade > 1.2) return "high";
+                if (this.resGrade < 0.8) return "low";
+                return "";
+            },
+            resGradeLabel () {
+                const resourceName = this.$t("common.resourceTypes." + this.resourceType );
+                return this.$t("planet.harvesters.production.resGrade", {type: resourceName});
             }
         },
         methods: {
@@ -78,14 +91,19 @@
            :adaptive="true"
            class="install-modal"
            classes="install-modal__box"
-           :width="320"
-           height="auto">
+           :width="354"
+           height="auto"
+           :scrollable="true">
         <div class="modal__box">
             <header class="install__header">{{ $t("planet.harvesters.installModal.title") }}</header>
             <div class="install__content">
                 {{ installModalQuestion }}
             </div>
             <div class="install__costs">
+                <ul class="grade">
+                    <li class="label">{{resGradeLabel}}</li>
+                    <li class="value" :class="resGradeClass">{{resGrade}}</li>
+                </ul>
                 <costs :costs="installCosts" />
             </div>
             <div class="install__actions">
@@ -98,6 +116,7 @@
                           :disable="!sufficientFunds" />
             </div>
         </div>
+        <m-button class="close-modal" :onClick="installCancel" iconName="cancel" />
     </modal>
 </template>
 
@@ -107,12 +126,16 @@
     }
 
     .modal__box {
+        position: relative;
+
+        overflow: visible;
         border: 3px solid palette("grey", "charcoal");
+        margin: 17px;
 
         background: palette("grey", "sunken");
         color: palette("text");
         border-radius: 0;
-        box-shadow: 0 0 60px rgba(palette("grey", "mystic"), 0.15);
+        box-shadow: 0 0 20px rgba(palette("grey", "mystic"), 0.15);
     }
 
     .install {
@@ -151,5 +174,56 @@
                 }
             }
         }
+    }
+
+    .grade {
+        display: flex;
+        justify-content: stretch;
+
+        padding: 0;
+        margin: 0 0 1rem 0;
+
+        list-style: none;
+
+        > li {
+            padding: 0.5rem 1rem;
+            margin: 0 2px 2px 0;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        .label {
+            border: 1px solid palette("grey", "abbey");
+            flex: 0 0 60%;
+
+            background: palette("grey", "deep");
+        }
+
+        .value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid palette("grey", "abbey");
+            flex-grow: 1;
+
+            background: palette("grey", "deep");
+
+            &.high {
+                border-color: palette("state", "online");
+            }
+
+            &.low {
+                border-color: palette("state", "building");
+            }
+        }
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 </style>
