@@ -6,6 +6,7 @@
 - [x] Max PDU value is now enforced (tmp: 10), but it is still not clear how this value will be determined - techlevel, population, planet type?
 - [x] api endpoint implemented, server now verifies the request is valid, then creates new PDUs and subtracts build costs. New PDU ids are sent to the client, who updates the state.
 - [x] pdu build costs are now dynamic, depending on the amount selected. Surprisingly simple - this reactive stuff is pretty nice.
+- [x] inlined the svg spritesheet instead of external reference. saves some headaches, and since the html is gzipped the perf cost isn't too bad.
 
 `17.01.2018`
 - [x] Resource grade is now shown before install. It doesn't really make sense to hide this information from the player in the first place.

@@ -53,11 +53,6 @@
             <div class="info__prod" v-if="harvester.isHarvesting">
                 <production :harvesterId="harvesterId" />
             </div>
-            <div class="info__actions">
-                <m-button :onClick="closeModal"
-                          :textString="$t('common.buttons.ok')"
-                          iconName="done" />
-            </div>
         </div>
         <m-button class="close-modal" :onClick="closeModal" iconName="cancel" />
     </modal>

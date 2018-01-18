@@ -23,7 +23,8 @@
                     missile: false
                 },
                 // static tmp value until I know how to determin max pdus (planet type? population? techlevel?)
-                maxPdus: 10
+                maxPdus: 10,
+                playerResources: this.$store.getters.playerResources
             };
         },
         props: {
@@ -39,18 +40,13 @@
         },
         computed: {
             pdus () { return this.$store.getters.pdusByPlanetId(this.planetId); },
-            totalAmount () {
-                const amount = this.buildAmount;
-                return amount.laser + amount.plasma + amount.railgun + amount.missile;
-            },
-            disableAdd () { return this.totalAmount + this.pdus.length >= this.maxPdus; },
             isPlanetConstructing () { return this.$store.getters.savingBuildPduPlanetIds.includes(this.planetId); }
         },
         methods: {
             changeBuildAmount (type, value) {
-                if (this.totalAmount >= this.maxPdus) return;
+                if (this.buildAmount[type] + value + this.pdus > this.maxPdus) return;
                 this.buildAmount[type] += value;
-                if (this.buildAmount[type] < 0) this.buildAmount[type] = 0;
+                if (this.buildAmount[type] < 1) this.buildAmount[type] = 1;
             },
             textHint (type) {
                 const rules = cfg.rules.pdus.find(pdu => pdu.type === type);
@@ -74,9 +70,23 @@
                 });
                 return buildCost;
             },
+            disableAdd (type) { return this.buildAmount[type] + this.pdus.length >= this.maxPdus; },
             doRequestConstruction (type) {
                 this.$store.dispatch("BUILD_PDUS", {planet: this.planetId, type, amount: this.buildAmount[type]});
                 return this.buildAmount[type] = 1;
+            },
+            disableSave (type) {
+                console.log("check disable save for type " + type);
+                if (this.buildAmount[type] === 0) return true;
+                if (this.isPlanetConstructing) return true;
+                if (this.buildAmount[type] + this.pdus.length > this.maxPdus) return true;
+                let canInstall = true;
+                const costs = cfg.rules.pdus.find(slot => slot.type === type).costs;
+                costs.forEach( cost => {
+                    const stockpile = this.playerResources.find(stock => stock.type === cost.resourceType).current;
+                    if (Math.floor(cost.amount * this.buildAmount[type]) > stockpile) canInstall = false;
+                });
+                return !canInstall;
             }
         }
     };
@@ -102,19 +112,19 @@
             <icon class="build__type-icon" :name="`wpn-${type}`" />
             <button class="build__modify"
                     @click="changeBuildAmount(type, -1)"
-                    :disabled="buildAmount[type] === 0">
+                    :disabled="buildAmount[type] === 1">
                 <icon name="remove" :size="1" />
             </button>
             <div class="build__type-num">{{buildAmount[type]}}</div>
             <button class="build__modify"
                     @click="changeBuildAmount(type, 1)"
-                    :disabled="disableAdd">
+                    :disabled="disableAdd(type)">
                 <icon name="add" :size="1" />
             </button>
             <spinner class="build__spinner" v-if="isPlanetConstructing" />
             <button class="build__save"
                     @click="doRequestConstruction(type)"
-                    :disabled="buildAmount[type] === 0 || isPlanetConstructing || pdus.length >= maxPdus">
+                    :disabled="disableSave(type)">
                 <icon name="done" :size="1" />
                 {{$t("planet.pdus.build.save")}}
             </button>

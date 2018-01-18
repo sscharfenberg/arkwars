@@ -286,7 +286,7 @@ exports.checkBuildPdu = async (req, res, next) => {
     let fundsError = false;
     cfg.pdus.find(pdu => pdu.type === pduType).costs.forEach(slot => {
         const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
-        if (slot.total * amount > stockpile) fundsError = true;
+        if (Math.floor(slot.amount * amount) > stockpile) fundsError = true;
     });
     if (fundsError) {
         logger.error(`[App] user ${req.user.username} has insufficient funds to install harvester.`);
@@ -306,7 +306,11 @@ exports.checkBuildPdu = async (req, res, next) => {
     return next();
 };
 
-
+/*
+ * do build PDU ========================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
 exports.buildPdu = async (req, res) => {
     const pduType = strip(req.body.type);
     const planetId = strip(req.body.planet);
@@ -323,7 +327,6 @@ exports.buildPdu = async (req, res) => {
             turnsUntilComplete: turns
         });
     });
-
 
     // 2) Subtract build costs from player resources
     let set = {};
