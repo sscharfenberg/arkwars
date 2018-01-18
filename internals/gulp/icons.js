@@ -72,11 +72,12 @@ gulp.task("game:icons", () => {
             })
         )
         .pipe(flatten())
+        .pipe(rename({prefix: "g-"}))
         .pipe(
             imagemin([
                 imagemin.svgo({
                     plugins: [
-                        {removeTitle: true}
+                        {removeTitle: false}
                     ]
                 })
             ])

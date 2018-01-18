@@ -110,8 +110,17 @@ const ACTIONS = {
         axios
             .post("/api/game/empire/pdu/build", payload)
             .then(response => {
-                console.log(response);
+                if (response.status === 200 && response.data) {
+                    cfg.DEBUG && console.log("recieved new PDUs from server ", response.data);
+                    ctx.commit("ADD_PDUS", {
+                        planetId: payload.planet,
+                        pduIds: response.data.pduIds,
+                        turnsUntilComplete: response.data.turnsUntilComplete,
+                        pduType: response.data.pduType
+                    });
+                }
                 ctx.commit("SAVING_BUILD_PDU_PLANET", {planet: payload.planet, saving: false});
+                ctx.commit("PAY_PDUS", {pduType: payload.type, amount: payload.amount});
             })
             .catch(error => {
                 console.error(error);

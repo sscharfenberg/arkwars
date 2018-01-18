@@ -7,6 +7,7 @@
     import Icon from "Game/common/Icon/Icon.vue";
     import Construction from "./Construction.vue";
     import cfg from "Config";
+    import {latinToRoman} from "../../../handlers/format";
     export default {
         data: function() {
             return {
@@ -17,6 +18,10 @@
             planetId: {
                 type: String,
                 required: true
+            },
+            starName: {
+                type: String,
+                required: true,
             }
         },
         components: {
@@ -27,7 +32,17 @@
         computed: {
             pdus () { return this.$store.getters.pdusByPlanetId(this.planetId); },
             activePdus () { return this.$store.getters.pdusByPlanetId(this.planetId).filter(pdu => pdu.isActive); },
-            buildingPdus () { return this.$store.getters.pdusByPlanetId(this.planetId).filter(pdu => !pdu.isActive); }
+            buildingPdus () { return this.$store.getters.pdusByPlanetId(this.planetId).filter(pdu => !pdu.isActive); },
+            planetName () {
+                return `${this.starName} - ${latinToRoman(this.$store.getters.planetById(this.planetId).orbitalIndex)}`;
+            },
+            planetType () { return this.$store.getters.planetById(this.planetId).type; },
+            getPlanetTypeToolTip () {
+                return this.$t("planet.typeLabel") + ": " + this.$t("planet.types." +
+                    this.$store.getters.planetById(this.planetId).type);
+            },
+            getPlanetAriaLabel () { return this.$t("planet.typeLabel"); }
+
         },
         methods: {
             activeTypes (type) {
@@ -57,7 +72,14 @@
            height="auto">
         <div class="def__box">
             <header class="def__header">
-                {{ $t("common.pdu.nameShort") }} - {{ $t("common.pdu.namesLong") }}
+                <div class="def__header-planet">
+                    <aside class="def__planet"
+                           v-bind:class="planetType"
+                           :title="getPlanetTypeToolTip"
+                           :aria-label="getPlanetAriaLabel">{{ planetType }}</aside>
+                    <div class="def__header-planet-name">{{ planetName }}</div>
+                </div>
+                {{ $t("common.pdu.nameLong") }}
             </header>
             <ul class="active"
                 v-if="activePdus.length">
@@ -117,6 +139,30 @@
             color: palette("brand", "viking");
 
             font-size: 1.8rem;
+        }
+
+        &__header-planet {
+            display: flex;
+            align-items: center;
+        }
+
+        &__planet {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+
+            background: transparent url("../planets.png") 0 0 no-repeat;
+
+            text-indent: -1000em;
+
+            // these need to be synced with /server/config/index.js
+            &.gas { background-position: 0 -48px; }
+            &.ice { background-position: 0 -96px; }
+            &.iron { background-position: 0 -144px; }
+            &.desert { background-position: 0 -192px; }
+            &.toxic { background-position: 0 -240px; }
+            &.carbon { background-position: 0 -288px; }
+            &.tomb { background-position: 0 -336px; }
         }
 
         .active,

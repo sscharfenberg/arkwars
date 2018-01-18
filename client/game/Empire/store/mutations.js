@@ -149,6 +149,45 @@ const MUTATIONS = {
             // remove ID from array
             state.savingBuildPduPlanets.splice(state.savingBuildPduPlanets.indexOf(payload.planet), 1);
         }
+    },
+
+    /*
+     * add new PDUs from server to state
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.planetId
+     * @param {Array} payload.pduIds
+     * @param {Number} payload.turnsUntilComplete
+     * @param {String} payload.pduType
+     */
+    ADD_PDUS: (state, payload) => {
+        let pdus = payload.pduIds.map(pduId => {
+            return {
+                id: pduId,
+                isActive: payload.turnsUntilComplete === 0,
+                planet: payload.planetId,
+                turnsUntilComplete: payload.turnsUntilComplete,
+                pduType: payload.pduType
+            };
+        });
+        state.pdus = state.pdus.concat(pdus);
+    },
+
+    /*
+     * pay for PDUs by changing player resources.
+     * this is clientside, but it is enforeced by the server.
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {String} payload.pduType
+     * @param {Number} payload.amount
+     */
+    PAY_PDUS: (state, payload) => {
+        const costs = cfg.rules.pdus.find(pdu => pdu.type === payload.pduType).costs;
+        costs.forEach(slot => {
+            state.resources.find(resource => resource.type === slot.resourceType).current -= Math.floor(
+                slot.amount * payload.amount
+            );
+        });
     }
 };
 

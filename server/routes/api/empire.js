@@ -25,4 +25,12 @@ router.post(
     catchErrors(apiController.installHarvester) // do db updates
 );
 
+// build PDUs request
+router.post(
+    "/pdu/build",
+    jsonParser,
+    catchErrors(apiController.checkBuildPdu), // check for auth, funds, maxPdu
+    catchErrors(apiController.buildPdu) // do db updates
+);
+
 module.exports = router;

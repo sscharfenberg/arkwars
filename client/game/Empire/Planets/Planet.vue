@@ -19,21 +19,21 @@
             }
         },
         computed: {
-            getPlanetVisualClass () { return "planet__visual--" + this.$store.getters.getPlanetById(this.id).type; },
+            getPlanetVisualClass () { return "planet__visual--" + this.$store.getters.planetById(this.id).type; },
             getPlanetTypeToolTip () {
                 return this.$t("planet.typeLabel") +
                     ": " +
                     this.$t("planet.types." +
-                    this.$store.getters.getPlanetById(this.id).type);
+                    this.$store.getters.planetById(this.id).type);
             },
             getPlanetAriaLabel () { return this.$t("planet.typeLabel"); },
-            getPlanetType () { return this.$t("planet.types." + this.$store.getters.getPlanetById(this.id).type); },
+            getPlanetType () { return this.$t("planet.types." + this.$store.getters.planetById(this.id).type); },
             getPlanetName () {
-                return `${this.starName} - ${latinToRoman(this.$store.getters.getPlanetById(this.id).orbitalIndex)}`;
+                return `${this.starName} - ${latinToRoman(this.$store.getters.planetById(this.id).orbitalIndex)}`;
             }
         },
         methods: {
-            resourceSlots () { return this.$store.getters.getPlanetById(this.id).resourceSlots; }
+            resourceSlots () { return this.$store.getters.planetById(this.id).resourceSlots; }
         },
         components: {
             "resources": Resources,
@@ -64,7 +64,8 @@
                        :resources="resourceSlots()"
                        :planetid="this.id"
                        :planetName="getPlanetName" />
-            <defense :planetId="id" />
+            <defense :planetId="id"
+                     :starName="starName" />
         </div>
 
     </div>

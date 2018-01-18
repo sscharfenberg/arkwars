@@ -11,10 +11,10 @@
             return {
                 types: cfg.rules.pdus.map(pdu => pdu.type),
                 buildAmount: {
-                    laser: 0,
-                    plasma: 0,
-                    railgun: 0,
-                    missile: 0
+                    laser: 1,
+                    plasma: 1,
+                    railgun: 1,
+                    missile: 1
                 },
                 showFormRow: {
                     laser: false,
@@ -58,17 +58,25 @@
             },
             activeClass (type) { return this.showFormRow[type] ? "active" : ""; },
             toggleFormRow (type) { return this.showFormRow[type] = !this.showFormRow[type]; },
-            installCosts (type) {
+            installCosts (type, amount) {
                 const rules = cfg.rules.pdus.find(slot => slot.type === type);
-                let returnObj = [{
+                let buildCost = [];
+                amount = amount < 1 ? 1 : amount;
+                rules.costs.forEach( slot => {
+                    buildCost.push({
+                        resourceType: slot.resourceType,
+                        amount: Math.floor(slot.amount * amount)
+                    });
+                });
+                buildCost.push({
                     resourceType: "turns",
                     amount: rules.buildDuration
-                }];
-                returnObj = rules.costs.concat(returnObj);
-                return returnObj;
+                });
+                return buildCost;
             },
             doRequestConstruction (type) {
-                return this.$store.dispatch("BUILD_PDUS", {planet: this.planetId, type, amount: this.buildAmount[type]});
+                this.$store.dispatch("BUILD_PDUS", {planet: this.planetId, type, amount: this.buildAmount[type]});
+                return this.buildAmount[type] = 1;
             }
         }
     };
@@ -106,12 +114,12 @@
             <spinner class="build__spinner" v-if="isPlanetConstructing" />
             <button class="build__save"
                     @click="doRequestConstruction(type)"
-                    :disabled="buildAmount[type] === 0 || isPlanetConstructing">
+                    :disabled="buildAmount[type] === 0 || isPlanetConstructing || pdus.length >= maxPdus">
                 <icon name="done" :size="1" />
                 {{$t("planet.pdus.build.save")}}
             </button>
             <div class="hint">{{textHint(type)}}</div>
-            <costs :costs="installCosts(type)" />
+            <costs :costs="installCosts(type, buildAmount[type])" />
         </div>
     </div>
 
@@ -136,6 +144,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                opacity: 0.5;
 
                 box-sizing: content-box;
                 width: calc(100% - 1.2rem);
@@ -149,8 +158,15 @@
                 cursor: pointer;
 
                 &:hover,
-                &:focus,
+                &:focus {
+                    opacity: 1;
+
+                    outline: 0;
+                }
+
                 &.active {
+                    opacity: 1;
+
                     background: palette("grey", "bunker");
                     color: palette("brand", "viking");
                     outline: 0;

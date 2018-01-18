@@ -10,6 +10,10 @@
             planetId: {
                 type: String,
                 required: true
+            },
+            starName: {
+                type: String,
+                required: true,
             }
         },
         components: {
@@ -38,7 +42,8 @@
                      v-for="pdu in activePdus" :key="pdu.id"></div>
             </div>
         </button>
-        <defense-details :planetId="planetId" />
+        <defense-details :planetId="planetId"
+                         :starName="starName" />
     </div>
 </template>
 

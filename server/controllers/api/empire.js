@@ -12,6 +12,7 @@ const Planet = mongoose.model("Planet");
 const Player = mongoose.model("Player");
 const Star = mongoose.model("Star");
 const Harvester = mongoose.model("Harvester");
+const Pdu = mongoose.model("Pdu");
 const logger = require("../../handlers/logger/console");
 const cfg = require("../../config");
 
@@ -73,15 +74,17 @@ exports.getGameData = async (req, res) => {
     // add mapped planets
     returnData.planets = planets.map(planet => {
         // add PDU data to pdus array
-        returnData.pdus = planet.pdus.map(pdu => {
-            return {
-                id: pdu._id,
-                planet: pdu.planet,
-                pduType: pdu.pduType,
-                turnsUntilComplete: pdu.turnsUntilComplete,
-                isActive: pdu.isActive
-            };
-        }).concat(returnData.pdus);
+        returnData.pdus = planet.pdus
+            .map(pdu => {
+                return {
+                    id: pdu._id,
+                    planet: pdu.planet,
+                    pduType: pdu.pduType,
+                    turnsUntilComplete: pdu.turnsUntilComplete,
+                    isActive: pdu.isActive
+                };
+            })
+            .concat(returnData.pdus);
         // prepare planet
         return {
             id: planet._id,
@@ -185,14 +188,16 @@ exports.checkInstallHarvester = async (req, res, next) => {
         return res.status(403).json({error: "you are not allowed to install a harvester on this planet."});
     }
     // 2. verify that the player has sufficient resources to pay the build cost
+    let fundsError = false;
     const buildCosts = cfg.harvesters.build.filter(harvester => harvester.type === harvesterType).shift().costs;
     buildCosts.forEach(slot => {
         const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
-        if (slot.amount > stockpile) {
-            logger.error(`[App] user ${req.user.username} has insufficient funds to install harvester.`);
-            return res.status(402).json({error: "insufficient funds to install harvester."});
-        }
+        if (slot.amount > stockpile) fundsError = true;
     });
+    if (fundsError) {
+        logger.error(`[App] user ${req.user.username} has insufficient funds to install harvester.`);
+        return res.status(402).json({error: "insufficient funds to install harvester."});
+    }
     // 3. verify that the planet has slots available for the resource type
     const numSlots = planet.resources.find(slot => slot.resourceType === harvesterType).slots;
     const installed = planet.harvesters.filter(harvester => harvester.resourceType === harvesterType).length;
@@ -253,4 +258,108 @@ exports.installHarvester = async (req, res) => {
         );
 
     return res.status(200).json({id: newHarvester._id, turnsUntilComplete: turns});
+};
+
+/*
+ * check if XHR POST build PDUs is valid ===============================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.checkBuildPdu = async (req, res, next) => {
+    const pduType = strip(req.body.type);
+    const planetId = strip(req.body.planet);
+    const amount = strip(req.body.amount);
+    logger.info(
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} constructing ${chalk.red(
+            amount
+        )} ${chalk.yellow(pduType)} PDUs on planet ${chalk.cyan("#" + planetId)}`
+    );
+    // 1. check if the planet belongs to one of the player stars
+    const playerStars = req.user.selectedPlayer.stars.map(star => star._id);
+    const planet = await Planet.findOne({star: {$in: playerStars}, _id: planetId}).populate("pdus");
+    if (!planet) {
+        logger.error(`[App] user ${req.user.username} is not owner of the planet.`);
+        return res.status(403).json({error: "you are not allowed to build PDUs on this planet."});
+    }
+    // 2. verify that the player has sufficient resources to pay the build cost
+    let fundsError = false;
+    cfg.pdus.find(pdu => pdu.type === pduType).costs.forEach(slot => {
+        const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
+        if (slot.total * amount > stockpile) fundsError = true;
+    });
+    if (fundsError) {
+        logger.error(`[App] user ${req.user.username} has insufficient funds to install harvester.`);
+        return res.status(402).json({error: "insufficient funds to build PDUs."});
+    }
+    // 3. verify that the number of new PDUs does not go above maxPDUs
+    // maxPDU is not yet implemented since I'm not sure if this should depend on techlevel, planet type or population.
+    const planetMaxPdus = 10; // mockup, same as in client/game/Empire/Planets/Defense/Construction.vue
+    const installedPdus = planet.pdus.length;
+    if (installedPdus + amount > planetMaxPdus) {
+        const msg = `no ${amount} PDU slots available on planet (max: ${planetMaxPdus}, installed: ${installedPdus}).`;
+        logger.error(`[App] ${msg}`);
+        return res.status(403).json({error: msg});
+    }
+
+    // no errors => proceed.
+    return next();
+};
+
+
+exports.buildPdu = async (req, res) => {
+    const pduType = strip(req.body.type);
+    const planetId = strip(req.body.planet);
+    const amount = strip(req.body.amount);
+    const turns = cfg.pdus.find(pdu => pdu.type === pduType).buildDuration;
+
+    // 1) prepare new PDUs
+    let pdus = Array.from({length: amount}).map( () => {
+        return new Pdu({
+            planet: planetId,
+            game: req.user.selectedPlayer.game._id,
+            owner: req.user.selectedPlayer._id,
+            pduType,
+            turnsUntilComplete: turns
+        });
+    });
+
+
+    // 2) Subtract build costs from player resources
+    let set = {};
+    cfg.pdus.find(pdu => pdu.type === pduType).costs.forEach(slot => {
+        set["resources." + slot.resourceType + ".current"] =
+            req.user.selectedPlayer.resources[slot.resourceType].current - (Math.floor(slot.amount * amount));
+    });
+    logger.info("set " + JSON.stringify(set, null, 2));
+
+    // 3) and write
+    const pduPromise = Pdu.insertMany(pdus);
+    const playerPromise = Player.findOneAndUpdate(
+        {_id: req.user.selectedPlayer._id},
+        {$set: set},
+        {new: true, runValidators: true, context: "query"}
+    );
+    const [newPdus, updatedPlayer] = await Promise.all([pduPromise, playerPromise]);
+    const pduIds = newPdus.map(pdu => pdu._id);
+    if (!updatedPlayer) {
+        logger.error(`[App] error saving build costs for PDUs.`);
+    }
+    if (!newPdus) {
+        logger.error(`[App] error saving new PDU to db.`);
+    }
+
+    // 4) log success and send pdu IDs to client
+    updatedPlayer &&
+    newPdus &&
+    logger.success(
+        `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" +
+        req.user.username} installed ${amount} ${chalk.yellow(pduType)} PDUs on Planet ${chalk.cyan(
+            "#" + planetId
+        )}: ${JSON.stringify(pduIds, null, 2)}`
+    );
+
+    // send new IDs to client
+    return res.status(200).json({pduType, pduIds, turnsUntilComplete: turns});
+
 };

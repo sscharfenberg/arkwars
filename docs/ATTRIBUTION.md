@@ -15,7 +15,9 @@ https://material.io/icons/
 
 **Weapontype: Missiles**: "Missile Launcher" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/delapouite/originals/missile-launcher.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
-**Weapontype: Laser**: "Missile Launcher" by [Lorc](http://lorcblog.blogspot.com/) from [game-icons.net](http://game-icons.net/lorc/originals/ringed-beam.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Weapontype: Laser**: "Tesla Turret" by [Lorc](http://lorcblog.blogspot.com/) from [game-icons.net](http://game-icons.net/lorc/originals/tesla-turret.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
+**Weapontype: Plasma**: "Ringed Beam" by [Lorc](http://lorcblog.blogspot.com/) from [game-icons.net](http://game-icons.net/lorc/originals/ringed-beam.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
 **PDU**: "Defense Satellite" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/delapouite/originals/defense-satellite.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 

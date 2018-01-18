@@ -4,6 +4,8 @@
 - [x] Refactored `Construction` Component - it now includes the title, a (new) toggle list of PDU types, and the form-rows for each type. Previously, the component was rendered once for each type, but with that the tab-like mechanic was not possible.
 - [x] Added "Is Planet Constructing" mechanics, similar to isStarNameSaving with the planetid in a state array.
 - [x] Max PDU value is now enforced (tmp: 10), but it is still not clear how this value will be determined - techlevel, population, planet type?
+- [x] api endpoint implemented, server now verifies the request is valid, then creates new PDUs and subtracts build costs. New PDU ids are sent to the client, who updates the state.
+- [x] pdu build costs are now dynamic, depending on the amount selected. Surprisingly simple - this reactive stuff is pretty nice.
 
 `17.01.2018`
 - [x] Resource grade is now shown before install. It doesn't really make sense to hide this information from the player in the first place.

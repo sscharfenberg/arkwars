@@ -12,6 +12,7 @@ const Game = mongoose.model("Game");
 const Planet = mongoose.model("Planet");
 const Player = mongoose.model("Player");
 const Harvester = mongoose.model("Harvester");
+const Pdu = mongoose.model("Pdu");
 const Turn = mongoose.model("Turn");
 const cfg = require("../config");
 
@@ -29,9 +30,9 @@ const harvesterBuildProcess = async (game, log) => {
         {$inc: {turnsUntilComplete: -1}},
         {new: true, runValidators: true, context: "query"}
     );
-    logger.info(`processed ${chalk.cyan(processedHarvesters.nModified)} harvesters in build.`);
+    logger.info(`processed ${chalk.cyan(processedHarvesters.nModified)} harvesters under construction.`);
     return {
-        harvesterBuilding: processedHarvesters.nModified || 0,
+        harvesterConstruction: processedHarvesters.nModified || 0,
         ...log
     };
 };
@@ -133,6 +134,22 @@ const enforceStockPileMax = changedPlayerResources => {
 };
 
 /*
+ * PDU construction
+ */
+const pduConstruction = async (game, log) => {
+    const processedPdus = await Pdu.updateMany(
+        {turnsUntilComplete: {$ne: 0}, game: game._id},
+        {$inc: {turnsUntilComplete: -1}},
+        {new: true, runValidators: true, context: "query"}
+    );
+    logger.info(`processed ${chalk.cyan(processedPdus.nModified)} PDUs under construction.`);
+    return {
+        pduConstruction: processedPdus.nModified || 0,
+        ...log
+    };
+};
+
+/*
  * turn processing order
  * @param {object} game - Game model object from mongo
  * @returns {object} log
@@ -140,15 +157,21 @@ const enforceStockPileMax = changedPlayerResources => {
 const turnProcessingOrder = async game => {
     logger.debug(`start turn processing for game ${chalk.red("g" + game.number)} turn ${chalk.yellow(game.turn)}`);
     let log = {};
-    // harvesters that are actually harvesting ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // harvester production ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     try {
         log = await playerHarvesterProduction(game, log);
     } catch (e) {
         logger.error(e);
     }
-    // harvesters in production ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // harvesters construction ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     try {
         log = await harvesterBuildProcess(game, log);
+    } catch (e) {
+        logger.error(e);
+    }
+    // PDU construction ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    try {
+        log = await pduConstruction(game, log);
     } catch (e) {
         logger.error(e);
     }

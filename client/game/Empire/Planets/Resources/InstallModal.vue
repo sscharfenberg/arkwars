@@ -60,7 +60,7 @@
                 return canInstall;
             },
             resGrade () {
-                const planetResources = this.$store.getters.getPlanetById(this.planetid).resourceSlots;
+                const planetResources = this.$store.getters.planetById(this.planetid).resourceSlots;
                 return planetResources.find(res => res.resourceType === this.resourceType).resGrade;
             },
             resGradeClass () {
