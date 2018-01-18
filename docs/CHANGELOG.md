@@ -1,5 +1,10 @@
 # Changelog
 
+`18.01.2018`
+- [x] Refactored `Construction` Component - it now includes the title, a (new) toggle list of PDU types, and the form-rows for each type. Previously, the component was rendered once for each type, but with that the tab-like mechanic was not possible.
+- [x] Added "Is Planet Constructing" mechanics, similar to isStarNameSaving with the planetid in a state array.
+- [x] Max PDU value is now enforced (tmp: 10), but it is still not clear how this value will be determined - techlevel, population, planet type?
+
 `17.01.2018`
 - [x] Resource grade is now shown before install. It doesn't really make sense to hide this information from the player in the first place.
 - [x] worked an PDUs - icon in planet list now shows the number of active PDUs, click on the button opens the `DefenseDetails` Modal.

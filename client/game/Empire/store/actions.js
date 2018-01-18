@@ -94,6 +94,29 @@ const ACTIONS = {
                     saving: false
                 });
             });
+    },
+
+    /*
+     * REQUEST BUILD PDUS
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {String} payload.type
+     * @param {Number} payload.amount
+     */
+    BUILD_PDUS: function(ctx, payload) {
+        cfg.DEBUG && console.log("requesting build PDUs ", payload);
+        ctx.commit("SAVING_BUILD_PDU_PLANET", {planet: payload.planet, saving: true});
+        axios
+            .post("/api/game/empire/pdu/build", payload)
+            .then(response => {
+                console.log(response);
+                ctx.commit("SAVING_BUILD_PDU_PLANET", {planet: payload.planet, saving: false});
+            })
+            .catch(error => {
+                console.error(error);
+                ctx.commit("SAVING_BUILD_PDU_PLANET", {planet: payload.planet, saving: false});
+            });
     }
 };
 

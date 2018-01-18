@@ -25,7 +25,8 @@ const store = new Vuex.Store({
         // UI state
         savingStarName: [],
         editingStarName: [],
-        installingResourceTypes: []
+        installingResourceTypes: [],
+        savingBuildPduPlanets: []
     },
     getters: {
         // App state
@@ -34,6 +35,7 @@ const store = new Vuex.Store({
         savingStarNameIds: state => state.savingStarName,
         editingStarNameIds: state => state.editingStarName,
         installingResourceTypes: state => state.installingResourceTypes,
+        savingBuildPduPlanetIds: state => state.savingBuildPduPlanets,
         // game state
         stars: state => state.stars,
         player: state => state.player,

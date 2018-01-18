@@ -15,7 +15,7 @@ const MUTATIONS = {
      * @param {Object} payload - game data object from api
      */
     SET_GAME_DATA: (state, payload) => {
-        cfg.DEBUG && console.log("committing game data to store", payload);
+        cfg.DEBUG && console.log("committing game data to store ", payload);
         state.game = payload.game;
         state.stars = payload.stars;
         state.planets = payload.planets;
@@ -129,10 +129,26 @@ const MUTATIONS = {
      */
     PAY_HARVESTER: (state, payload) => {
         const costs = cfg.rules.harvesters.build.find(harvester => harvester.type === payload.harvesterType).costs;
-        console.log("pay for harvester ", costs);
         costs.forEach(slot => {
             state.resources.find(resource => resource.type === slot.resourceType).current -= slot.amount;
         });
+    },
+
+    /*
+     * SET/UNSERT "Installing PDUs on planet"
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {Booleaen} payload.saving
+     */
+    SAVING_BUILD_PDU_PLANET: (state, payload) => {
+        if (payload.saving) {
+            // add slot to array
+            state.savingBuildPduPlanets.push(payload.planet);
+        } else {
+            // remove ID from array
+            state.savingBuildPduPlanets.splice(state.savingBuildPduPlanets.indexOf(payload.planet), 1);
+        }
     }
 };
 

@@ -10,8 +10,8 @@ const RULES =  [
         orbitRange: 3,
         baseDamage: 6,
         costs: [
-            {resourceType: "energy", amount: 25},
-            {resourceType: "minerals", amount: 25}
+            {resourceType: "energy", amount: 38},
+            {resourceType: "minerals", amount: 37}
         ],
         buildDuration: 8,
         baseHp: 25
@@ -21,8 +21,8 @@ const RULES =  [
         orbitRange: 0,
         baseDamage: 15,
         costs: [
-            {resourceType: "energy", amount: 40},
-            {resourceType: "minerals", amount: 10}
+            {resourceType: "energy", amount: 50},
+            {resourceType: "minerals", amount: 25}
         ],
         buildDuration: 6,
         baseHp: 50
@@ -32,8 +32,8 @@ const RULES =  [
         orbitRange: 1,
         baseDamage: 12,
         costs: [
-            {resourceType: "energy", amount: 20},
-            {resourceType: "minerals", amount: 30}
+            {resourceType: "energy", amount: 25},
+            {resourceType: "minerals", amount: 50}
         ],
         buildDuration: 6,
         baseHp: 35
@@ -44,7 +44,7 @@ const RULES =  [
         baseDamage: 9,
         costs: [
             {resourceType: "energy", amount: 15},
-            {resourceType: "minerals", amount: 35}
+            {resourceType: "minerals", amount: 60}
         ],
         buildDuration: 10,
         baseHp: 35

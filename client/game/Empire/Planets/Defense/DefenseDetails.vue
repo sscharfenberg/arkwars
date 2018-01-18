@@ -85,13 +85,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="build">
-                <div class="build__title">{{$t("planet.pdus.build.title")}}</div>
-            </div>
-            <construction v-for="type in types"
-                          :key="type"
-                          :planetId="planetId"
-                          :pduType="type" />
+            <construction :planetId="planetId" />
         </div>
         <btn class="close-modal" :onClick="closeModal" iconName="cancel" />
     </modal>
@@ -201,10 +195,6 @@
 
                 border-radius: 50%;
             }
-        }
-
-        .build__title {
-            padding: 0.7rem 1rem 0.5rem 1rem;
         }
     }
 
