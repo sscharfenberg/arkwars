@@ -13,7 +13,7 @@
             fetching () { return this.$store.getters.fetchingGameDataFromApi; }
         },
         methods: {
-            fetchGameData () { return this.$store.dispatch("FETCH_GAMEDATA_FROM_API"); }
+            fetchGameData () { return this.$store.dispatch("FETCH_GAMEDATA_FROM_API", {area: "empire"}); }
         }
     };
 </script>

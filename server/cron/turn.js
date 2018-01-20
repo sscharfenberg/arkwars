@@ -157,6 +157,12 @@ const pduConstruction = async (game, log) => {
 const turnProcessingOrder = async game => {
     logger.debug(`start turn processing for game ${chalk.red("g" + game.number)} turn ${chalk.yellow(game.turn)}`);
     let log = {};
+    // PDU construction ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    try {
+        log = await pduConstruction(game, log);
+    } catch (e) {
+        logger.error(e);
+    }
     // harvester production ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     try {
         log = await playerHarvesterProduction(game, log);
@@ -166,12 +172,6 @@ const turnProcessingOrder = async game => {
     // harvesters construction ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     try {
         log = await harvesterBuildProcess(game, log);
-    } catch (e) {
-        logger.error(e);
-    }
-    // PDU construction ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    try {
-        log = await pduConstruction(game, log);
     } catch (e) {
         logger.error(e);
     }

@@ -32,7 +32,7 @@ const normalizeStars = (points, dimensions) => {
         return true;
     });
     logger.info(
-        `[App] normmalized all ${chalk.yellow(points.length)} stars, filtered ${chalk.red(
+        `[seedGameHandler] normmalized all ${chalk.yellow(points.length)} stars, filtered ${chalk.red(
             points.length - filteredPoints.length
         )}.`
     );
@@ -124,7 +124,7 @@ const systems = (game, user, distMin, distMax) => {
         tries
     );
     let points = pds.fill();
-    logger.info(`[App] generated ${chalk.yellow(points.length)} stars.`);
+    logger.info(`[seedGameHandler] generated ${chalk.yellow(points.length)} stars.`);
     return normalizeStars(points, game.dimensions);
 };
 

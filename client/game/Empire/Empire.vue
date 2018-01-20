@@ -21,6 +21,7 @@
     <div>
         <app-header :areaTitle="$t('title')" area="empire" />
         <stars />
+        <vue-snotify></vue-snotify>
         TODO: reports? statistics? show citadel?
     </div>
 </template>
@@ -36,4 +37,8 @@
             background: palette("brand", "christine");
         }
     }
+</style>
+
+<style lang="scss">
+    @import "~vue-snotify/styles/dark";
 </style>

@@ -7,6 +7,7 @@ import Vue from "vue";
 import VueI18n from "vue-i18n";
 import Vuelidate from "vuelidate";
 import VModal from "vue-js-modal";
+import Snotify, { SnotifyPosition } from "vue-snotify";
 import store from "./store";
 import Empire from "./Empire.vue";
 import cfg from "Config";
@@ -18,6 +19,12 @@ if (document.getElementById("gameRoot")) {
     Vue.use(VueI18n);
     Vue.use(Vuelidate);
     Vue.use(VModal);
+    Vue.use(Snotify, {
+        toast: {
+            position: SnotifyPosition.rightTop,
+            timeout: 4000
+        }
+    });
     cfg.DEBUG && console.log(`bootstrapping VueJS, locale ${locale}.`);
     getAreaMessages(locale, getAreaSlug(), getMessagesVersion(), messages => {
         let i18nConfig = {
@@ -33,10 +40,7 @@ if (document.getElementById("gameRoot")) {
             template: "<Empire/>",
             components: {Empire},
             beforeCreate: function() {
-                return this.$store.dispatch("FETCH_GAMEDATA_FROM_API");
-            },
-            mounted: function() {
-                cfg.DEBUG && console.log("VueJS app mounted.");
+                return this.$store.dispatch("FETCH_GAMEDATA_FROM_API", {area: getAreaSlug()});
             }
         });
     });

@@ -252,7 +252,7 @@
                 padding: 0.5rem 1rem;
                 border: 0;
 
-                background: transparent;
+                background: palette("grey", "deep");
                 color: palette("text");
 
                 font-size: 0.7em;

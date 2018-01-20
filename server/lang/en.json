@@ -587,5 +587,24 @@
             "TITLE_NAV": "Email Templates",
             "HDL_TEMPLATE": "Email template: <strong>%s</strong>"
         }
+    },
+
+    "API": {
+        "EMPIRE": {
+            "STAR": {
+                "NOTOWNER": "You are not the owner of this star.",
+                "LENGTH": "Star name length is out of bounds."
+            },
+            "HARVESTER": {
+                "NOTOWNER": "You are not the owner of this star.",
+                "FUNDS": "Insufficient funds to install harvester.",
+                "SLOTS": "No more harvesters can be installed."
+            },
+            "PDU": {
+                "NOTOWNER": "You are not the owner of this star.",
+                "FUNDS": "Insufficient funds to construct PDU.",
+                "SLOTS": "No more PDUs can be installed."
+            }
+        }
     }
 }

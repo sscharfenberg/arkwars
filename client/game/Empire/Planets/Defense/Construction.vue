@@ -76,7 +76,6 @@
                 return this.buildAmount[type] = 1;
             },
             disableSave (type) {
-                console.log("check disable save for type " + type);
                 if (this.buildAmount[type] === 0) return true;
                 if (this.isPlanetConstructing) return true;
                 if (this.buildAmount[type] + this.pdus.length > this.maxPdus) return true;

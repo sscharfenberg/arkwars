@@ -136,7 +136,7 @@ const MUTATIONS = {
 
     /*
      * SET/UNSERT "Installing PDUs on planet"
-     * @param {Object} ctx - Vuex $store context
+     * @param {Object} state - Vuex $store.state
      * @param {Object} payload
      * @param {Mongoose.ObjectId} payload.planet
      * @param {Booleaen} payload.saving
@@ -153,7 +153,7 @@ const MUTATIONS = {
 
     /*
      * add new PDUs from server to state
-     * @param {Object} ctx - Vuex $store context
+     * @param {Object} state - Vuex $store.state
      * @param {Object} payload
      * @param {Mongoose.ObjectId} payload.planetId
      * @param {Array} payload.pduIds

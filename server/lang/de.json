@@ -607,5 +607,24 @@
             "TITLE_NAV": "E-Mail Vorlagen",
             "HDL_TEMPLATE": "E-Mail Vorlage: <strong>%s</strong>"
         }
+    },
+
+    "API": {
+        "EMPIRE": {
+            "STAR": {
+                "NOTOWNER": "Sie sind nicht der Besitzer dieses Systems.",
+                "LENGTH": "Länge des Sternen-Namens nicht korrekt."
+            },
+            "HARVESTER": {
+                "NOTOWNER": "Sie sind nicht der Besitzer dieses Systems.",
+                "FUNDS": "Ihre Vorräte reichen nicht aus um den Ernter zu installieren.",
+                "SLOTS": "Keine weiteren Ernter installierbar."
+            },
+            "PDU": {
+                "NOTOWNER": "Sie sind nicht der Besitzer dieses Systems.",
+                "FUNDS": "Ihre Vorräte reichen nicht aus um PDUs zu bauen.",
+                "SLOTS": "Keine weiteren PDUs installierbar."
+            }
+        }
     }
 }
