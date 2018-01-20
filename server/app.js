@@ -110,7 +110,7 @@ app.use(
         secret: process.env.SECRET,
         key: process.env.KEY,
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         cookie: {sameSite: true},
         store: new RedisStore({client: redisClient})
     })

@@ -4,9 +4,9 @@
  * renders turn icon and current turn.
  *
  **********************************************************************************************************************/
-@import "../../abstracts/config";
-@import "../../abstracts/functions";
-@import "../../abstracts/mixins";
+@import "abstracts/config";
+@import "abstracts/functions";
+@import "abstracts/mixins";
 
 .aw-turn {
     display: inline-flex;

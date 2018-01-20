@@ -3,9 +3,9 @@
  * Pagination Component
  *
  **********************************************************************************************************************/
-@import "../../abstracts/config";
-@import "../../abstracts/functions";
-@import "../../abstracts/mixins";
+@import "abstracts/config";
+@import "abstracts/functions";
+@import "abstracts/mixins";
 
 $basecolor: darken(palette("grey", "raven"), 6%);
 $altcolor: palette("grey", "raven");

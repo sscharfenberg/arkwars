@@ -47,6 +47,12 @@ const planetSchema = new mongoose.Schema({
     // real population value => float
     population: {
         type: Number
+    },
+
+    // food consumption modifier.
+    foodConsumption: {
+        type: Number,
+        default: 1
     }
 
 });
@@ -71,6 +77,14 @@ planetSchema.virtual("pdus", {
  */
 planetSchema.virtual("effectivePop").get(function() {
     return Math.floor(this.population);
+});
+
+/*
+ * virtual function to find out if the harvester is actually producing resources
+ * @returns {Boolean}
+ */
+planetSchema.virtual("totalFoodConsumption").get(function() {
+    return Math.ceil(this.population * this.foodConsumption);
 });
 
 

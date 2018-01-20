@@ -5,6 +5,7 @@
  *
  **********************************************************************************************************************/
 const fs = require("fs"); // https://nodejs.org/api/fs.html
+const path = require("path");
 const gulp = require("gulp"); // https://www.npmjs.com/package/gulp
 const autoprefixer = require("autoprefixer"); // https://www.npmjs.com/package/autoprefixer
 const cached = require("gulp-cached"); // https://www.npmjs.com/package/gulp-cached
@@ -73,7 +74,10 @@ gulp.task("styles:build", ["styles:lint"], function() {
                 precision: 6,
                 onError: console.error.bind(console, "Sass error:"),
                 sourceMap: true,
-                includePaths: ["node_modules"],
+                includePaths: [
+                    "node_modules",
+                    path.join(config.projectRoot, "client", "theme")
+                ],
                 outputStyle: "compressed"
             })
         )

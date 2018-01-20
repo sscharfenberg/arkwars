@@ -148,6 +148,7 @@ exports.assignHomeSystem = async (req, res) => {
             req._player.name
         )}.`
     );
+    // TODO: seed home system - assign population to default star
     const updatatedStar = await Star.findOneAndUpdate(
         {_id: homeSystem.id},
         {$set: {owner: req._player._id}},

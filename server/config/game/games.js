@@ -6,7 +6,11 @@
 const RULES =  {
     empire: {
         name: {bounds: [6, 32]}, // [min, max]
-        ticker: {bounds: [2, 5]} // [min, max]
+        ticker: {bounds: [2, 5]}, // [min, max]
+        population: {
+            homeSystemDefault: 5,
+            bounds: [0,20] // [min, max]
+        }
     },
     turns: {
         // server tick threshold for game turn processing.
