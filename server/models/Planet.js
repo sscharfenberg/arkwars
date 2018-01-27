@@ -46,13 +46,17 @@ const planetSchema = new mongoose.Schema({
 
     // real population value => float
     population: {
-        type: Number
+        type: Number,
+        min: cfg.planets.population.bounds[0],
+        max: cfg.planets.population.bounds[1]
     },
 
-    // food consumption modifier.
+    // food consumption in number of resource units per population
     foodConsumption: {
         type: Number,
-        default: 1
+        default: cfg.planets.population.food.default,
+        min: cfg.planets.population.food.bounds[0],
+        max: cfg.planets.population.food.bounds[1]
     }
 
 });
@@ -80,7 +84,7 @@ planetSchema.virtual("effectivePop").get(function() {
 });
 
 /*
- * virtual function to find out if the harvester is actually producing resources
+ * virtual function to calculate total food consumption (rounded up)
  * @returns {Boolean}
  */
 planetSchema.virtual("totalFoodConsumption").get(function() {

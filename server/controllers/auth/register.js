@@ -218,11 +218,14 @@ exports.confirmEmail = async (req, res, next) => {
     } else {
         req.login(user, function(err) {
             // log in
-            if (err) return next(err);
+            if (err) {
+                logger.error(err);
+                return next(err);
+            }
             req.user = user;
             logger.info(`[App] user @${user.username} logged in.`);
             req.flash("success", i18n.__("APP.REGISTER.CONFIRM_SUCCESS"));
-            res.redirect("/dashboard");
+            return res.redirect("/dashboard");
         });
     }
 };

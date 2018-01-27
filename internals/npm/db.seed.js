@@ -164,9 +164,7 @@ logger.info(`[mockdata] prepared ${chalk.yellow(pdus.length)} random PDUs.`);
 
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
-mongoose.connect(process.env.DATABASE, {
-    useMongoClient: true
-});
+mongoose.connect(process.env.DATABASE);
 mongoose.Promise = global.Promise;
 
 try {

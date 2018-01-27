@@ -88,7 +88,14 @@ const RULES =  {
                 {type: "research", chance: 100, max: 3, potential: [1.2, 2.4]}
             ]
         }
-    ]
+    ],
+    population: {
+        bounds: [0, 20], // min, max
+        food: {
+            bounds: [0, 3], // min, max
+            default: 1
+        }
+    }
 };
 
 module.exports = RULES;

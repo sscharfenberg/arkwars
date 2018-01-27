@@ -1,7 +1,12 @@
 # Changelog
 
+`27.01.2018`
+- [x] bumped dependencies. Mostly semver patch/minor; with the exception of Mongoose that was bumped from v4 to v5. So far, no massive breakage. 
+
 `20.01.2018`
 - [x] Improved error handling when client and server are out of sync. If the server finds an api request to be not valid, he sends the translated error message to the client. the client then shows a `vue-snotify` notification (new dependency, yeah!). Implemented for all current game api endpoints.
+- [x] holiday two-week sprint is over -.- 
+
 
 `18.01.2018`
 - [x] Refactored `Construction` Component - it now includes the title, a (new) toggle list of PDU types, and the form-rows for each type. Previously, the component was rendered once for each type, but with that the tab-like mechanic was not possible.

@@ -47,14 +47,13 @@ const pruneDatabase = async () => {
     logger.debug("[node] harvesters removed.");
     await Pdu.remove();
     logger.debug("[node] pdus removed.");
+    // all done
     logger.success("[node] collections deleted.");
     process.exit(0);
 };
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
-mongoose.connect(process.env.DATABASE, {
-    useMongoClient: true
-});
+mongoose.connect(process.env.DATABASE);
 mongoose.Promise = global.Promise;
 
 try {
