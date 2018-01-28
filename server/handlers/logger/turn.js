@@ -23,7 +23,7 @@ module.exports = (game, log) => {
         "server",
         "logs",
         "turns",
-        `${moment().format("YYYYMMDD")}.g${game.number}t${game.turn}.log`
+        `g${game.number}t${game.turn}.log`
     );
     log = {
         gameId: game._id,

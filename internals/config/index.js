@@ -104,6 +104,11 @@ module.exports = {
             out: path.join(BUILDDIR, "images")
         },
         eslintrc: path.join(PROJECTROOT, "internals", "config", ".eslintrc"),
-        cleanup: ["server/public/assets/**/*", "server/views/webpack/**/*", "server/public/avatars/**/*"]
+        cleanup: [
+            "server/public/**",
+            "server/logs/**",
+            "server/views/webpack/**",
+            ".babel-cache/**"
+        ]
     }
 };

@@ -6,6 +6,7 @@
  **********************************************************************************************************************/
 const path = require("path"); // https://nodejs.org/api/path.html
 const fs = require("fs-extra"); // https://www.npmjs.com/package/fs-extra
+const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const cfg = require("../../server/config");
 
 const paths = [
@@ -20,9 +21,9 @@ const paths = [
     path.join(cfg.app.projectDir, "server", "public", "avatars")
 ];
 
-console.log(`${cfg.app.title} creating necessary directories.`);
+console.log(`${chalk.cyan(cfg.app.title)} ${chalk.yellow("postinstall")} creating necessary directories.`);
 
 paths.forEach( path => {
-    console.log(`creating "${path}" ...`);
+    console.log(`ensuring ${chalk.yellow(path)} exists ${chalk.magenta("√")}`);
     fs.ensureDirSync(path, "0o644");
 });

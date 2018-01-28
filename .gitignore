@@ -4,7 +4,6 @@
 node_modules
 webpack-bundles.report.html
 webpack-stats.json
-server/public/assets
-server/public/avatars
-server/views/webpack/*.pug
-*.log
+server/public
+server/logs
+server/views/webpack
