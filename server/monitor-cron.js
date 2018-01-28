@@ -16,7 +16,7 @@ const logger = require("./handlers/logger/console");
 const monitor = nodemon({
     script: path.join(__dirname, "cron.js"),
     ext: "js json",
-    watch: ["server/cron", "server/models"],
+    watch: ["server/cron", "server/models", "server/handlers"],
     ignore: [],
     verbose: true
 });

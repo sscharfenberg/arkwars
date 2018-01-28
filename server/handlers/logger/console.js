@@ -2,10 +2,9 @@
  *
  * CONSOLE LOGGER
  *
- * this exports a winstonLogger instance for use in our app
+ * this exports a functions that we can use in our app
  *
  * @type {Node.js}
- * @exports {winston.Logger} logger
  *
  **********************************************************************************************************************/
 const fs = require("fs-extra"); // https://nodejs.org/api/fs.html

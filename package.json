@@ -18,6 +18,7 @@
         "npm": "5.6.0"
     },
     "scripts": {
+        "tmp": "node tst.js",
         "server.start": "node server/monitor-backend.js",
         "server.cron": "node server/monitor-cron.js",
         "app.static.build": "gulp build:static",
@@ -33,7 +34,8 @@
         "files.cleanup": "gulp cleanup",
         "db.prune": "node internals/npm/db.prune.js",
         "db.seed": "node internals/npm/db.seed.js",
-        "db.reseed": "node internals/npm/db.prune.js && node internals/npm/db.seed.js"
+        "db.reseed": "node internals/npm/db.prune.js && node internals/npm/db.seed.js",
+        "postinstall": "node internals/npm/postinstall.js"
     },
     "dependencies": {
         "body-parser": "^1.18.2",
@@ -131,7 +133,7 @@
         "url-loader": "^0.6.2",
         "vue": "^2.5.13",
         "vue-i18n": "^7.4.1",
-        "vue-js-modal": "^1.3.8",
+        "vue-js-modal": "^1.3.9",
         "vue-loader": "^13.7.0",
         "vue-snotify": "^3.0.4",
         "vue-style-loader": "^3.1.1",

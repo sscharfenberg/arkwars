@@ -4,8 +4,8 @@
  *
  **********************************************************************************************************************/
 const serverRules = {
-    harvesters: require("../../server/config/game/harvesters"),
-    pdus:  require("../../server/config/game/pdus")
+    harvesters: require("../../shared/rules/harvesters"),
+    pdus:  require("../../shared/rules/pdus")
 };
 
 const config = {

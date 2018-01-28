@@ -1,7 +1,12 @@
 # Changelog
 
-`27.01.2018`
-- [x] bumped dependencies. Mostly semver patch/minor; with the exception of Mongoose that was bumped from v4 to v5. So far, no massive breakage. 
+`28.01.2018`
+- [x] bumped dependencies. Mostly semver patch/minor; with the exception of Mongoose that was bumped from v4 to v5. So far, no massive breakage.
+- [x] more work on implementing **population**: cron server now handles population growth. Calculation of growth is imported from a shared server/client function.
+- [x] refactored turn handler a bit, `cron` folder now has the first subdirectory for `turn`s.
+- [x] food Consumption uses Mongoose bulkWrite API, this means updates are sent in batches to the db. This should allow us to handle more players and bigger maps (hopefully!). With small sample sizes this works well.
+- [x] population - effective and real - is sent to client and dumped - no visualization or functions yet.
+- [x] added postinstall script that creates the necessary directories, so we don't need `.gitkeep` files anymore.  
 
 `20.01.2018`
 - [x] Improved error handling when client and server are out of sync. If the server finds an api request to be not valid, he sends the translated error message to the client. the client then shows a `vue-snotify` notification (new dependency, yeah!). Implemented for all current game api endpoints.

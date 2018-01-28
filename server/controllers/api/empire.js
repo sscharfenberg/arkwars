@@ -91,6 +91,10 @@ exports.getGameData = async (req, res) => {
             id: planet._id,
             type: planet.type,
             orbitalIndex: planet.orbitalIndex,
+            population: planet.population,
+            effectivePopulation: planet.effectivePopulation,
+            foodConsumptionPerPop: planet.foodConsumptionPerPop,
+            foodConsumptionTotal: planet.foodConsumptionTotal,
             resourceSlots: planet.resources.map(slot => {
                 // harvester data into returnData.harvesters array
                 returnData.harvesters = planet.harvesters

@@ -32,11 +32,6 @@ const turnSchema = new mongoose.Schema({
     dateProcessed: {
         type: Date,
         required: true
-    },
-
-    // JSON log string
-    log: {
-        type: String
     }
 });
 

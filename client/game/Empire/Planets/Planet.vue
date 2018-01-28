@@ -30,6 +30,9 @@
             getPlanetType () { return this.$t("planet.types." + this.$store.getters.planetById(this.id).type); },
             getPlanetName () {
                 return `${this.starName} - ${latinToRoman(this.$store.getters.planetById(this.id).orbitalIndex)}`;
+            },
+            getEffectivePopulation () {
+                return this.$store.getters.planetById(this.id).effectivePopulation;
             }
         },
         methods: {
@@ -58,7 +61,7 @@
                  :label="$t('planet.name')"
                  :title="$t('planet.name')">{{getPlanetName}}</div>
             <div class="planet__population">
-                population
+                population {{getEffectivePopulation}}
             </div>
             <resources v-if="resourceSlots().length"
                        :resources="resourceSlots()"

@@ -86,9 +86,9 @@ const appConfig = {
 
     planets: require("./game/planets"),
 
-    harvesters: require("./game/harvesters"),
+    harvesters: require("../../shared/rules/harvesters"),
 
-    pdus: require("./game/pdus"),
+    pdus: require("../../shared/rules/pdus"),
 
     defaultPagination: {
         admin: {
