@@ -5,7 +5,7 @@
  *
  **********************************************************************************************************************/
 import noUiSlider from "nouislider";
-import cfg from "../../config";
+import {DEBUG} from "../../config";
 const SELECTOR_SLIDERS = ".aw-slider";
 const CLASSNAME_INPUT = "aw-slider__input";
 
@@ -47,7 +47,7 @@ const updateSliderInputs = (slider, values) => {
     inputs.forEach((input, index) => {
         input.value = values[index];
     });
-    cfg.DEBUG && console.log(`updated #${slider.id} with values [${values}].`);
+    DEBUG && console.log(`updated #${slider.id} with values [${values}].`);
 };
 
 /*
@@ -69,20 +69,17 @@ const initSlider = slider => {
     sliderOptions.start = values;
     console.log(sliderOptions);
     noUiSlider.create(slider, sliderOptions);
-    slider.noUiSlider.on("change", function (values) {
+    slider.noUiSlider.on("change", function(values) {
         updateSliderInputs(slider, values);
     });
-    cfg.DEBUG &&
-        console.log(
-            `bound #${slider.id} with ${inputs.length} hidden fields and [${values}] as values.`
-        );
+    DEBUG && console.log(`bound #${slider.id} with ${inputs.length} hidden fields and [${values}] as values.`);
 };
 
 const initSliders = () => {
     const sliders = document.querySelectorAll(SELECTOR_SLIDERS);
     if (!sliders || !sliders.length) return;
-    cfg.DEBUG && console.log(`binding ${sliders.length} range inputs.`);
+    DEBUG && console.log(`binding ${sliders.length} range inputs.`);
     for (let slider of sliders) initSlider(slider);
 };
 
-export { initSliders };
+export {initSliders};

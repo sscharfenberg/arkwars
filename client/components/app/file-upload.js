@@ -4,9 +4,8 @@
  * @exports {function} initFlashMessages
  *
  **********************************************************************************************************************/
-import cfg from "../../config";
+import {DEBUG} from "../../config";
 const SELECTOR_INPUTS = "input[type=file]";
-
 
 /*
  * get text node from input ============================================================================================
@@ -28,7 +27,6 @@ const getTextNode = input => {
     return span;
 };
 
-
 /*
  * initialize file upload fields =======================================================================================
  */
@@ -46,8 +44,7 @@ const initFileUploadFields = () => {
             });
         }
     }
-    cfg.DEBUG && console.log(`bound ${num} event listeners for file uploads.`);
+    DEBUG && console.log(`bound ${num} event listeners for file uploads.`);
 };
 
-
-export { initFileUploadFields };
+export {initFileUploadFields};

@@ -6,7 +6,10 @@
 - [x] refactored turn handler a bit, `cron` folder now has the first subdirectory for `turn`s.
 - [x] food Consumption uses Mongoose bulkWrite API, this means updates are sent in batches to the db. This should allow us to handle more players and bigger maps (hopefully!). With small sample sizes this works well.
 - [x] population - effective and real - is sent to client and dumped - no visualization or functions yet.
-- [x] added postinstall script that creates the necessary directories, so we don't need `.gitkeep` files anymore.  
+- [x] added postinstall script that creates the necessary directories, so we don't need `.gitkeep` files anymore.
+- [x] refactored `cron/turn/harvesterProduction.js` so it uses `bulkWrite` API instead of seperate Promises.
+- [x] refactored the files that are shared between server and client (game rules!) into a `/shared/` directory - this contains either constants or pure functions. client config imports specific files, other handlers will import functions (future food consumption slider). Changed objects around a bit.
+- [x] improved checking if construction > save + build buttons need to be disabled.  
 
 `20.01.2018`
 - [x] Improved error handling when client and server are out of sync. If the server finds an api request to be not valid, he sends the translated error message to the client. the client then shows a `vue-snotify` notification (new dependency, yeah!). Implemented for all current game api endpoints.

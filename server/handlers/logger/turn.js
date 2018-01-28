@@ -2,7 +2,6 @@
  *
  * TURN LOGGER
  *
- *
  * @type {Node.js}
  *
  **********************************************************************************************************************/
@@ -33,6 +32,7 @@ module.exports = (game, log) => {
         ...log
     };
     const logString = JSON.stringify(log, null, 2);
+    // apend instead of write because if we process a turn twice, we want to have logs for it
     fs.appendFile(logFileName, logString, "utf8", err => {
         if (err) {
             logger.error(err);

@@ -8,23 +8,23 @@
  *
  ******************************************************************************************************************** */
 import FontFaceObserver from "fontfaceobserver";
-import cfg from "../../config";
+import {DEBUG} from "../../config";
 
 let switchToLoaded = () => {
     document.querySelector("body").classList.add("fonts-loaded");
-    cfg.DEBUG && console.log("fonts have been applied.");
+    DEBUG && console.log("fonts have been applied.");
 };
 
 export default () => {
     // Optimization for Repeat Views
     if (sessionStorage && sessionStorage.foutFontsLoaded) {
-        cfg.DEBUG && console.log("fonts are (probably) cached.");
+        DEBUG && console.log("fonts are (probably) cached.");
         switchToLoaded();
         return;
     }
     let fontA = new FontFaceObserver("Roboto");
     Promise.all([fontA.load()]).then(function() {
-        cfg.DEBUG && console.log("fonts have loaded.");
+        DEBUG && console.log("fonts have loaded.");
         switchToLoaded();
         sessionStorage.foutFontsLoaded = true;
     });

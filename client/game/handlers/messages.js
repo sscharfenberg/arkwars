@@ -7,7 +7,7 @@
 import axios from "axios";
 import moment from "moment";
 import "moment/locale/de"; // import the locale even though webpack ignores moment/locale
-import cfg from "../../config";
+import {DEBUG} from "../../config";
 
 /*
  * converts a json string to JS object
@@ -19,8 +19,8 @@ const jsonStringToObject = json => {
     try {
         return JSON.parse(json);
     } catch (error) {
-        cfg.DEBUG && console.warn("got malformed JSON string: ", json);
-        cfg.DEBUG && console.warn(error);
+        console.warn("got malformed JSON string: ", json);
+        console.warn(error);
         return {};
     }
 };
@@ -35,8 +35,8 @@ const objectToJsonString = object => {
     try {
         return JSON.stringify(object);
     } catch (error) {
-        cfg.DEBUG && console.warn("could not stringify object: ", object);
-        cfg.DEBUG && console.warn(error);
+        console.warn("could not stringify object: ", object);
+        console.warn(error);
         return "";
     }
 };
@@ -50,7 +50,7 @@ const objectToJsonString = object => {
  */
 const cacheMessages = (language, area, texts) => {
     if (!window.localStorage || !language || !area || !texts) return;
-    cfg.DEBUG && console.log(`caching texts "txt-${language}-${area}" `, texts);
+    DEBUG && console.log(`caching texts "txt-${language}-${area}" `, texts);
     localStorage.setItem(`txt-${language}-${area}`, objectToJsonString(texts));
 };
 
@@ -68,8 +68,8 @@ const getAreaMessages = (language, area, version, cb) => {
     let noCache = !textCache;
     let versionDiffers = moment(version).isAfter(moment(texts.version)) || false;
 
-    noCache && cfg.DEBUG && console.warn("no texts cached.");
-    versionDiffers && cfg.DEBUG && console.warn("cached texts have a different version.");
+    noCache && DEBUG && console.warn("no texts cached.");
+    versionDiffers && DEBUG && console.warn("cached texts have a different version.");
 
     if (noCache || versionDiffers) {
         console.log(`asking server for texts "txt-${language}-${area}".`);
@@ -77,13 +77,13 @@ const getAreaMessages = (language, area, version, cb) => {
             .get(`/api/textstrings/${language}/${area}`)
             .then(response => {
                 if (response.status === 200 && response.data) {
-                    cfg.DEBUG && console.log("recieved texts from server: ", response.data);
+                    DEBUG && console.log("recieved texts from server: ", response.data);
                     cacheMessages(language, area, response.data);
                     cb(response.data);
                 }
             })
             .catch(error => {
-                cfg.DEBUG && console.error(error);
+                DEBUG && console.error(error);
                 cb({});
             });
     } else {

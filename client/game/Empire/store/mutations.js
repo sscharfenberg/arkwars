@@ -6,7 +6,9 @@
  *
  **********************************************************************************************************************/
 import Vue from "vue";
-import cfg from "../../../config";
+import {pduRules} from "Config";
+import {harvesterRules} from "Config";
+import {DEBUG} from "Config";
 
 const MUTATIONS = {
     /*
@@ -15,7 +17,7 @@ const MUTATIONS = {
      * @param {Object} payload - game data object from api
      */
     SET_GAME_DATA: (state, payload) => {
-        cfg.DEBUG && console.log("committing game data to store ", payload);
+        DEBUG && console.log("committing game data to store ", payload);
         state.game = payload.game;
         state.stars = payload.stars;
         state.planets = payload.planets;
@@ -128,7 +130,7 @@ const MUTATIONS = {
      * @param {String} payload.harvesterType
      */
     PAY_HARVESTER: (state, payload) => {
-        const costs = cfg.rules.harvesters.build.find(harvester => harvester.type === payload.harvesterType).costs;
+        const costs = harvesterRules.types.find(harvester => harvester.type === payload.harvesterType).costs;
         costs.forEach(slot => {
             state.resources.find(resource => resource.type === slot.resourceType).current -= slot.amount;
         });
@@ -182,7 +184,7 @@ const MUTATIONS = {
      * @param {Number} payload.amount
      */
     PAY_PDUS: (state, payload) => {
-        const costs = cfg.rules.pdus.find(pdu => pdu.type === payload.pduType).costs;
+        const costs = pduRules.types.find(pdu => pdu.type === payload.pduType).costs;
         costs.forEach(slot => {
             state.resources.find(resource => resource.type === slot.resourceType).current -= Math.floor(
                 slot.amount * payload.amount

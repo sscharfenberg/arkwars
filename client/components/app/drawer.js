@@ -5,7 +5,7 @@
  *
  **********************************************************************************************************************/
 import axios from "axios";
-import cfg from "../../config";
+import {DEBUG} from "../../config";
 
 const SELECTOR_DRAWER = "appDrawer";
 const SELECTOR_DRAWER_BUTTON = "appDrawerBtn";
@@ -15,7 +15,6 @@ const CLASSNAME_OPENING = "aw-drawer--opening";
 const CLASSNAME_CLOSING = "aw-drawer--closing";
 // needs to by synched to css value of @keyframes "openDrawer" and "closeDrawer" in theme/components/app/_drawer.scss
 const ANIMATION_DURATION = 150;
-
 
 /*
  * simple non-trusted way to find out if the user is logged in.
@@ -31,24 +30,24 @@ const isLoggedIn = () => document.querySelector("body").getAttribute("data-user"
 const openDrawer = (drawer, button) => {
     drawer.classList.add(CLASSNAME_OPENING);
     button.classList.add(CLASSNAME_BTN_OPEN);
-    cfg.DEBUG && console.log("opening drawer");
+    DEBUG && console.log("opening drawer");
     setTimeout(() => {
         drawer.classList.remove(CLASSNAME_OPENING);
         drawer.classList.add(CLASSNAME_OPEN);
         drawer.setAttribute("aria-hidden", "false");
-        isLoggedIn() && axios
-            .post("/api/user/opendrawer")
-            .then(response => {
-                if (response.data.status === "success") {
-                    cfg.DEBUG && console.log("saved drawer setting in db.");
-                } else {
-                    cfg.DEBUG && console.error(`error while saving to database: ${response}`);
-                }
-            })
-            .catch(error => {
-                cfg.DEBUG && console.error(error);
-            });
-
+        isLoggedIn() &&
+            axios
+                .post("/api/user/opendrawer")
+                .then(response => {
+                    if (response.data.status === "success") {
+                        DEBUG && console.log("saved drawer setting in db.");
+                    } else {
+                        DEBUG && console.error(`error while saving to database: ${response}`);
+                    }
+                })
+                .catch(error => {
+                    DEBUG && console.error(error);
+                });
     }, ANIMATION_DURATION);
 };
 
@@ -60,22 +59,23 @@ const openDrawer = (drawer, button) => {
 const closeDrawer = (drawer, button) => {
     drawer.classList.add(CLASSNAME_CLOSING);
     button.classList.remove(CLASSNAME_BTN_OPEN);
-    cfg.DEBUG && console.log("closing drawer");
+    DEBUG && console.log("closing drawer");
     setTimeout(() => {
         drawer.classList.remove(CLASSNAME_OPEN, CLASSNAME_CLOSING);
         drawer.setAttribute("aria-hidden", "true");
-        isLoggedIn() && axios
-            .post("/api/user/closedrawer")
-            .then(response => {
-                if (response.data.status === "success") {
-                    cfg.DEBUG && console.log("saved drawer setting in db.");
-                } else {
-                    cfg.DEBUG && console.error(`error while saving to database: ${response}`);
-                }
-            })
-            .catch(error => {
-                cfg.DEBUG && console.error(error);
-            });
+        isLoggedIn() &&
+            axios
+                .post("/api/user/closedrawer")
+                .then(response => {
+                    if (response.data.status === "success") {
+                        DEBUG && console.log("saved drawer setting in db.");
+                    } else {
+                        DEBUG && console.error(`error while saving to database: ${response}`);
+                    }
+                })
+                .catch(error => {
+                    DEBUG && console.error(error);
+                });
     }, ANIMATION_DURATION);
 };
 
@@ -101,4 +101,4 @@ const initDrawer = () => {
 /*
  * public export
  */
-export { initDrawer };
+export {initDrawer};

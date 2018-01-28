@@ -1,6 +1,7 @@
 /***********************************************************************************************************************
  *
  * calculations handler
+ * @type "CommonJS"
  * this calculates various game stuff. all functions need to be "pure" so we can use them in the client as well
  *
  **********************************************************************************************************************/

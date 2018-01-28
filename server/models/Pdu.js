@@ -33,7 +33,7 @@ const pduSchema = new mongoose.Schema({
     // type of resource that is harvested
     pduType: {
         type: String,
-        enum: cfg.pdus.map(pdu => pdu.type),
+        enum: cfg.pdus.types.map(pdu => pdu.type),
         required: true
     },
 

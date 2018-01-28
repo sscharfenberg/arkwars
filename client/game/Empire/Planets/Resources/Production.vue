@@ -4,7 +4,7 @@
      * this component shows the production values of a harvester
      ******************************************************************************************************************/
     import Icon from "Game/common/Icon/Icon.vue";
-    import cfg from "Config";
+    import {harvesterRules} from "Config";
     export default {
         props: {
             harvesterId: {
@@ -21,7 +21,7 @@
                 return Math.floor(this.harvester.resGrade * this.baseProductionValue);
             },
             baseProductionValue () {
-                return cfg.rules.harvesters.build
+                return harvesterRules.types
                     .find( harvester => harvester.type === this.harvester.resourceType).baseProduction;
             },
             baseProductionLabel () {

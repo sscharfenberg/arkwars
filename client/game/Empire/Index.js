@@ -7,10 +7,10 @@ import Vue from "vue";
 import VueI18n from "vue-i18n";
 import Vuelidate from "vuelidate";
 import VModal from "vue-js-modal";
-import Snotify, { SnotifyPosition } from "vue-snotify";
+import Snotify, {SnotifyPosition} from "vue-snotify";
 import store from "./store";
 import Empire from "./Empire.vue";
-import cfg from "Config";
+import {DEBUG} from "Config";
 import {getAreaMessages} from "../handlers/messages";
 import {getLocale, getAreaSlug, getMessagesVersion} from "../handlers/gameConstants";
 
@@ -25,7 +25,7 @@ if (document.getElementById("gameRoot")) {
             timeout: 4000
         }
     });
-    cfg.DEBUG && console.log(`bootstrapping VueJS, locale ${locale}.`);
+    DEBUG && console.log(`bootstrapping VueJS, locale ${locale}.`);
     getAreaMessages(locale, getAreaSlug(), getMessagesVersion(), messages => {
         let i18nConfig = {
             locale: locale,
@@ -45,4 +45,3 @@ if (document.getElementById("gameRoot")) {
         });
     });
 }
-

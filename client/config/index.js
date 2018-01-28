@@ -1,22 +1,17 @@
 /** ********************************************************************************************************************
  *
  *  Client Config
+ *  we use only named exports so we can seperate and minify bundles better
  *
  **********************************************************************************************************************/
-const serverRules = {
-    harvesters: require("../../shared/rules/harvesters"),
-    pdus:  require("../../shared/rules/pdus")
-};
 
-const config = {
-    DEBUG: true,
-    LOCALES: {
-        SUPPORT: ["en", "de"]
-    },
-    rules: {
-        harvesters: serverRules.harvesters,
-        pdus: serverRules.pdus
-    }
-};
+// needs to match /server/config/index.js
+// first locale is the default
+export const LOCALES = ["en", "de"];
 
-export default config;
+// game rules
+export const harvesterRules = require("../../shared/rules/harvesters");
+export const pduRules = require("../../shared/rules/pdus");
+
+// output console.log info messages. warn and error are always printed.
+export const DEBUG = true;

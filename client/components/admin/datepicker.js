@@ -6,10 +6,8 @@
  **********************************************************************************************************************/
 import flatpickr from "flatpickr";
 import moment from "moment";
-import cfg from "../../config";
+import {DEBUG} from "../../config";
 const SELECTOR_DATEPICKERS = ".admin-datetimepicker";
-
-
 
 const initFlatPickr = element => {
     let elements = element.parentNode.childNodes;
@@ -24,20 +22,19 @@ const initFlatPickr = element => {
         dateFormat: "d.m.Y H:i",
         time_24hr: true,
         minuteIncrement: 15,
-        onChange: function(selectedDates, dateStr) { // dateStr, instance available as well
+        onChange: function(selectedDates, dateStr) {
+            // dateStr, instance available as well
             hiddenField.value = moment(selectedDates[0]).toISOString();
-            cfg.DEBUG && console.log(`datepicker #${element.id}: updated hidden field to ${dateStr} as ISO.`);
+            DEBUG && console.log(`datepicker #${element.id}: updated hidden field to ${dateStr} as ISO.`);
         }
     });
 };
 
-
-
 const initDatePickers = () => {
     const datepickers = document.querySelectorAll(SELECTOR_DATEPICKERS);
     if (!datepickers || !datepickers.length) return;
-    cfg.DEBUG && console.log(`binding ${datepickers.length} datepickers.`);
+    DEBUG && console.log(`binding ${datepickers.length} datepickers.`);
     for (let datepicker of datepickers) initFlatPickr(datepicker);
 };
 
-export { initDatePickers };
+export {initDatePickers};

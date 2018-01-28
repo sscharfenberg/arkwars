@@ -6,10 +6,9 @@
  *
  **********************************************************************************************************************/
 import axios from "axios";
-import cfg from "../../../config";
+import {DEBUG} from "../../../config";
 
 const ACTIONS = {
-
     /*
      * fetch game data from api via XHR
      * @param {Object} ctx - Vuex $store context
@@ -17,7 +16,7 @@ const ACTIONS = {
      * @param {String} payload.area
      */
     FETCH_GAMEDATA_FROM_API: function(ctx, payload) {
-        cfg.DEBUG && console.log(`fetching game data from api for area ${payload.area}`);
+        DEBUG && console.log(`fetching game data from api for area ${payload.area}`);
         ctx.commit("FETCHING_GAME_DATA_FROM_API", true);
         axios
             .get(`/api/game/${payload.area}/data`)
@@ -37,7 +36,7 @@ const ACTIONS = {
      * toggle editing star name
      */
     EDIT_STAR_NAME: function(ctx, payload) {
-        cfg.DEBUG && console.log(`${payload.editing ? "editing" : "canceled editing"} star name of id ${payload.id}`);
+        DEBUG && console.log(`${payload.editing ? "editing" : "canceled editing"} star name of id ${payload.id}`);
         ctx.commit("EDITING_STAR_NAME", payload);
     },
 
@@ -45,7 +44,7 @@ const ACTIONS = {
      * post xhr "change star name" request
      */
     SAVE_STAR_NAME: function(ctx, payload) {
-        cfg.DEBUG && console.log("save changed star name");
+        DEBUG && console.log("save changed star name");
         ctx.commit("SAVING_STAR_NAME", {id: payload.id, saving: true});
         axios
             .post("/api/game/empire/star/name", {
@@ -72,7 +71,7 @@ const ACTIONS = {
      * post "install harvester on planet" request
      */
     INSTALL_HARVESTER: function(ctx, payload) {
-        cfg.DEBUG && console.log("requesting install harvestester", payload);
+        DEBUG && console.log("requesting install harvestester", payload);
         ctx.commit("SAVING_INSTALL_HARVESTER", {resourceId: payload.resourceId, saving: true});
         axios
             .post("/api/game/empire/harvester/install", payload)
@@ -85,7 +84,6 @@ const ACTIONS = {
                         turnsUntilComplete: response.data.turnsUntilComplete,
                         isHarvesting: false
                     });
-
                 }
                 // server has error message ?
                 if (response.data.error) {
@@ -113,13 +111,13 @@ const ACTIONS = {
      * @param {Number} payload.amount
      */
     BUILD_PDUS: function(ctx, payload) {
-        cfg.DEBUG && console.log("requesting build PDUs ", payload);
+        DEBUG && console.log("requesting build PDUs ", payload);
         ctx.commit("SAVING_BUILD_PDU_PLANET", {planet: payload.planet, saving: true});
         axios
             .post("/api/game/empire/pdu/build", payload)
             .then(response => {
                 if (response.status === 200 && response.data && !response.data.error) {
-                    cfg.DEBUG && console.log("recieved new PDUs from server ", response.data);
+                    DEBUG && console.log("recieved new PDUs from server ", response.data);
                     ctx.commit("ADD_PDUS", {
                         planetId: payload.planet,
                         pduIds: response.data.pduIds,

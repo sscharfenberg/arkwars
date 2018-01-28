@@ -48,9 +48,9 @@ module.exports = async (game, log) => {
         )} player.`
     );
 
-    /*******************************************************************************************************************
+    /*
      * loop colonies - async because we might need to do a batch write
-     ******************************************************************************************************************/
+     */
     colonies.forEach(async colony => {
         // who owns this colony?
         const owner = players.find(player => player.stars.includes(`${colony.star}`));
@@ -97,9 +97,9 @@ module.exports = async (game, log) => {
         }
     });
 
-    /*******************************************************************************************************************
+    /*
      * loop players - async because we might need to do a batch write
-     ******************************************************************************************************************/
+     */
     players.forEach(async player => {
         // add player to bulk writes
         playerBulkUpdates.push({
@@ -124,9 +124,9 @@ module.exports = async (game, log) => {
         }
     });
 
-    /*******************************************************************************************************************
+    /*
      * execute the remaining bulk writes as the last batch if there are any left.
-     ******************************************************************************************************************/
+     */
     if (planetWriteCounter % BULK_WRITES !== 0) {
         const updatedPlanets = await Planet.bulkWrite(planetBulkUpdates, {ordered: true, w: 1});
         newLog.colonyWrites.matched += updatedPlanets.matchedCount;
@@ -141,22 +141,22 @@ module.exports = async (game, log) => {
     }
 
     logger.info(
-        `processed ${chalk.cyan(newLog.colonyWrites.modified)} colony updates in ${chalk.yellow(
+        `updated ${chalk.yellow(newLog.colonyWrites.modified)} ${chalk.cyan("colony updates")} in ${chalk.yellow(
             planetBatches
         )} batches.`
     );
     logger.info(
-        `processed ${chalk.cyan(newLog.playerWrites.modified)} player updates in ${chalk.yellow(
+        `updated ${chalk.yellow(newLog.playerWrites.modified)} ${chalk.cyan("player updates")} in ${chalk.yellow(
             playerBatches
         )} batches.`
     );
 
     // all done
     return {
+        ...log,
         colonyPopulationGrowth: newLog.colonies,
         colonyPopulationGrowthWrites: newLog.colonyWrites,
         colonyFoodConsumptionPlayerChanges: newLog.players,
-        colonyFoodConsumptionPlayerWrites: newLog.playerWrites,
-        ...log
+        colonyFoodConsumptionPlayerWrites: newLog.playerWrites
     };
 };

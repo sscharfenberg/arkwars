@@ -21,10 +21,12 @@ const harvesterBuildProcess = async (game, log) => {
         {$inc: {turnsUntilComplete: -1}},
         {new: true, runValidators: true, context: "query"}
     );
-    logger.info(`processed ${chalk.cyan(processedHarvesters.nModified)} harvesters under construction.`);
+    logger.info(
+        `updated ${chalk.yellow(processedHarvesters.nModified)} ${chalk.cyan("harvesters under construction")}.`
+    );
     return {
-        harvesterConstruction: processedHarvesters.nModified || 0,
-        ...log
+        ...log,
+        harvesterConstruction: processedHarvesters.nModified || 0
     };
 };
 

@@ -13,7 +13,10 @@ Installation instructions vary depending on your OS. I'm on Windows 10, so I'm g
 Start by cloning the repository, then `npm install`. This will take a while.
 
 Please note that you might run into problems during installation under windows where `fsvents` installation fails with EPERM. In this case, try `npm install --verbose` or `npm install --force` and make sure the console that you run this command in has administrator privileges.
-This is a known issue with npm where some files a race condition fails because required files are already deleted. Lets hope for npm6 I guess? `--verbose` creates more noise and delays the operation a bit, which helps with the race condition. Weird.
+
+This is a known issue with npm where for some files a race condition fails because required files are already deleted. Lets hope for npm6 I guess? `--verbose` creates more noise and delays the operation a bit, which helps with the race condition - `--force` does, too. Weird.
+
+The `postinstall` script creates necessary directories.
 
 ## Setup Mailserver for Development
 
@@ -57,7 +60,7 @@ The redis server will run as long as you have the shell open.
 
 [https://github.com/ServiceStack/redis-windows/#option-2-running-the-latest-version-of-redis-with-vagrant](https://github.com/ServiceStack/redis-windows/#option-2-running-the-latest-version-of-redis-with-vagrant) 
 
-I have no clue about Vagrant ¯\_(ツ)_/¯
+I have no clue about Vagrant `¯\_(ツ)_/¯`
 
 **3. Microsoft's Redis Port**
 
@@ -70,13 +73,13 @@ The native Windows Redis port from Microsoft simply installs `.exe`s for `redis-
 To prepare the client, we need to generate the files:
 
 ```
-npm run build.static
+npm run app.static.build
 npm run js.prod
 ```
 
 ## Finally ...
 
-Start the application server:
+Start the servers:
 
 ```
 npm run server.start
@@ -88,10 +91,10 @@ Your should get messages like these:
 [App] Successfully connected to MongoDB.
 ```
 
-To start the turn 'clock', start a new console and:
+To start the turn 'clock', start a new console/screen and:
 
 ```
-npm run server.cron
+npm run cron.start
 ```
 
-Now, open your browser and point it to [http://localhost:7777](http://localhost:7777). Email of admin user is `ashaltiriak@gmail.com`, password is `123123`.
+Now, open your browser and point it to [http://localhost:7777](http://localhost:7777). Email of admin user is `ashaltiriak@gmail.com`, password for all users is `123123`.

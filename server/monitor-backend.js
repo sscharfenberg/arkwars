@@ -20,7 +20,7 @@ const monitor = nodemon({
         "server",
         "client/lang"
     ],
-    ignore: ["server/public/", "server/handlers/cron"],
+    ignore: ["server/public/", "server/cron", "server/logs", "server/views", "server/public"],
     verbose: true
 });
 

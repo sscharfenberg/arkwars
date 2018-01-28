@@ -20,7 +20,7 @@ const config = require("../config");
 /*
  * copy all static resources to /public/assets
  */
-gulp.task("build:static", ["cleanup"], function(callback) {
+gulp.task("build:static", function(callback) {
     return run(
         ["sync:fonts", "sync:images", "app:icons", "game:icons", "styles:build"],
         callback

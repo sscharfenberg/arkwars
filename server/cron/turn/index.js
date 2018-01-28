@@ -104,6 +104,7 @@ const processTurnData = async game => {
 
     // process game data
     try {
+        // TODO: set processing to true
         updatedGame = await processGameTurn(game);
     } catch (err) {
         updatedGame = game;
@@ -113,7 +114,7 @@ const processTurnData = async game => {
     // after the game data has been processed, save to db
     await Game.findOneAndUpdate({_id: updatedGame._id}, updatedGame, {
         runValidators: true
-    }).exec();
+    });
 
     logger.success(
         `turn ${chalk.cyan(updatedGame.turn)} for ${chalk.red(

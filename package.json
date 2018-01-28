@@ -1,7 +1,7 @@
 {
     "name": "arkwars",
     "description": "Arkwars - a strategic turn-based game of galactic conquest.",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "url": "https://arkwars.io",
     "author": {
         "name": "Sven Scharfenberg",
@@ -19,7 +19,7 @@
     },
     "scripts": {
         "server.start": "node server/monitor-backend.js",
-        "server.cron": "node server/monitor-cron.js",
+        "cron.start": "node server/monitor-cron.js",
         "app.static.build": "gulp build:static",
         "app.static.watch": "gulp watch",
         "js.prod": "node internals/npm/js.prod.js",

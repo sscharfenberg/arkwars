@@ -6,7 +6,9 @@
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const moment = require("moment"); // https://momentjs.com/
 const cfg = require("../config");
+const resTypes = cfg.player.resourceTypes;
 mongoose.Promise = global.Promise;
+
 
 const playerSchema = new mongoose.Schema(
     {
@@ -41,78 +43,73 @@ const playerSchema = new mongoose.Schema(
         /*
          * global player resources. we define default and max values for all of them
          * so we at least have database errors if something goes wrong.
+         * CAUTION: this references resType by index; this needs to be synced to the order of player resTypes
+         * the advantage of this object syntax is that we can get certain resources much faster and easier
+         * than as an array
          */
         resources: {
             energy: {
                 current: {
                     type: Number,
-                    default: cfg.player.resourceTypes[0].start,
-                    max:
-                        cfg.player.resourceTypes[0].max.start +
-                        cfg.player.resourceTypes[0].max.increase.steps *
-                            cfg.player.resourceTypes[0].max.increase.by
+                    default: resTypes[0].start,
+                    max: resTypes[0].max.start + resTypes[0].max.increase.steps * resTypes[0].max.increase.by
                 },
                 max: {
                     type: Number,
-                    default: cfg.player.resourceTypes[0].max.start,
-                    max:
-                        cfg.player.resourceTypes[0].max.start +
-                        cfg.player.resourceTypes[0].max.increase.steps *
-                            cfg.player.resourceTypes[0].max.increase.by
+                    default: resTypes[0].max.start,
+                    max: resTypes[0].max.start + resTypes[0].max.increase.steps * resTypes[0].max.increase.by
+                },
+                lastChange: {
+                    type: Number,
+                    default: 0
                 }
             },
             food: {
                 current: {
                     type: Number,
-                    default: cfg.player.resourceTypes[1].start,
-                    max:
-                        cfg.player.resourceTypes[1].max.start +
-                        cfg.player.resourceTypes[1].max.increase.steps *
-                            cfg.player.resourceTypes[1].max.increase.by
+                    default: resTypes[1].start,
+                    max: resTypes[1].max.start + resTypes[1].max.increase.steps * resTypes[1].max.increase.by
                 },
                 max: {
                     type: Number,
-                    default: cfg.player.resourceTypes[1].max.start,
-                    max:
-                        cfg.player.resourceTypes[1].max.start +
-                        cfg.player.resourceTypes[1].max.increase.steps *
-                            cfg.player.resourceTypes[1].max.increase.by
+                    default: resTypes[1].max.start,
+                    max: resTypes[1].max.start + resTypes[1].max.increase.steps * resTypes[1].max.increase.by
+                },
+                lastChange: {
+                    type: Number,
+                    default: 0
                 }
             },
             minerals: {
                 current: {
                     type: Number,
-                    default: cfg.player.resourceTypes[2].start,
-                    max:
-                        cfg.player.resourceTypes[2].max.start +
-                        cfg.player.resourceTypes[2].max.increase.steps *
-                            cfg.player.resourceTypes[2].max.increase.by
+                    default: resTypes[2].start,
+                    max: resTypes[2].max.start + resTypes[2].max.increase.steps * resTypes[2].max.increase.by
                 },
                 max: {
                     type: Number,
-                    default: cfg.player.resourceTypes[2].max.start,
-                    max:
-                        cfg.player.resourceTypes[2].max.start +
-                        cfg.player.resourceTypes[2].max.increase.steps *
-                            cfg.player.resourceTypes[2].max.increase.by
+                    default: resTypes[2].max.start,
+                    max: resTypes[2].max.start + resTypes[2].max.increase.steps * resTypes[2].max.increase.by
+                },
+                lastChange: {
+                    type: Number,
+                    default: 0
                 }
             },
             research: {
                 current: {
                     type: Number,
-                    default: cfg.player.resourceTypes[3].start,
-                    max:
-                        cfg.player.resourceTypes[3].max.start +
-                        cfg.player.resourceTypes[3].max.increase.steps *
-                            cfg.player.resourceTypes[3].max.increase.by
+                    default: resTypes[3].start,
+                    max: resTypes[3].max.start + resTypes[3].max.increase.steps * resTypes[3].max.increase.by
                 },
                 max: {
                     type: Number,
-                    default: cfg.player.resourceTypes[3].max.start,
-                    max:
-                        cfg.player.resourceTypes[3].max.start +
-                        cfg.player.resourceTypes[3].max.increase.steps *
-                            cfg.player.resourceTypes[3].max.increase.by
+                    default: resTypes[3].max.start,
+                    max: resTypes[3].max.start + resTypes[3].max.increase.steps * resTypes[3].max.increase.by
+                },
+                lastChange: {
+                    type: Number,
+                    default: 0
                 }
             }
         }

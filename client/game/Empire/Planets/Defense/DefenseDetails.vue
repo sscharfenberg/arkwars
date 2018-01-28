@@ -6,12 +6,12 @@
     import Button from "Game/common/Button/Button.vue";
     import Icon from "Game/common/Icon/Icon.vue";
     import Construction from "./Construction.vue";
-    import cfg from "Config";
+    import {pduRules} from "Config";
     import {latinToRoman} from "../../../handlers/format";
     export default {
         data: function() {
             return {
-                types: cfg.rules.pdus.map(pdu => pdu.type)
+                types: pduRules.types.map(pdu => pdu.type)
             };
         },
         props: {

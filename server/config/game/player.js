@@ -11,7 +11,7 @@ const RULES = {
         {
             type: "energy",
             start: 1000,
-            max: {start: 1000, increase: {steps: 5, by: 200}}
+            max: {start: 1000, increase: {steps: 5, by: 250}}
         },
         {
             type: "food",
@@ -21,11 +21,11 @@ const RULES = {
         {
             type: "minerals",
             start: 1000,
-            max: {start: 1000, increase: {steps: 5, by: 200}}
+            max: {start: 1000, increase: {steps: 5, by: 250}}
         },
         {
             type: "research",
-            start: 500,
+            start: 250,
             max: {start: 500, increase: {steps: 5, by: 100}}
         }
     ]

@@ -50,11 +50,32 @@ exports.getGameData = async (req, res) => {
             ticker: player.ticker
         },
         resources: [
-            // props from player
-            {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
-            {type: "food", current: player.resources.food.current, max: player.resources.food.max},
-            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
-            {type: "research", current: player.resources.research.current, max: player.resources.research.max}
+            // flatten resource data into an array for VueJS
+            // TODO: find a more elegant way to do this.
+            {
+                type: "energy",
+                current: player.resources.energy.current,
+                max: player.resources.energy.max,
+                lastChange: player.resources.energy.lastChange
+            },
+            {
+                type: "food",
+                current: player.resources.food.current,
+                max: player.resources.food.max,
+                lastChange: player.resources.food.lastChange
+            },
+            {
+                type: "minerals",
+                current: player.resources.minerals.current,
+                max: player.resources.minerals.max,
+                lastChange: player.resources.minerals.lastChange
+            },
+            {
+                type: "research",
+                current: player.resources.research.current,
+                max: player.resources.research.max,
+                lastChange: player.resources.research.lastChange
+            }
         ],
         // avoid specific properties on the star and add an array of planetids
         stars: player.stars.map(star => {
@@ -194,7 +215,7 @@ exports.checkInstallHarvester = async (req, res, next) => {
     }
     // 2. verify that the player has sufficient resources to pay the build cost
     let fundsError = false;
-    const buildCosts = cfg.harvesters.build.filter(harvester => harvester.type === harvesterType).shift().costs;
+    const buildCosts = cfg.harvesters.types.filter(harvester => harvester.type === harvesterType).shift().costs;
     buildCosts.forEach(slot => {
         const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
         if (slot.amount > stockpile) fundsError = true;
@@ -223,7 +244,7 @@ exports.checkInstallHarvester = async (req, res, next) => {
 exports.installHarvester = async (req, res) => {
     const harvesterType = strip(req.body.harvesterType);
     const planetid = strip(req.body.planet);
-    const turns = cfg.harvesters.build.filter(harvester => harvester.type === harvesterType).shift().duration;
+    const turns = cfg.harvesters.types.filter(harvester => harvester.type === harvesterType).shift().duration;
     // create new harvester
     const harvester = new Harvester({
         planet: planetid,
@@ -233,7 +254,7 @@ exports.installHarvester = async (req, res) => {
         turnsUntilComplete: turns
     });
     // get the new values for resources
-    const buildCosts = cfg.harvesters.build.find(harvester => harvester.type === harvesterType).costs;
+    const buildCosts = cfg.harvesters.types.find(harvester => harvester.type === harvesterType).costs;
     let set = {};
     buildCosts.forEach(resource => {
         set["resources." + resource.resourceType + ".current"] =
@@ -289,7 +310,7 @@ exports.checkBuildPdu = async (req, res, next) => {
     }
     // 2. verify that the player has sufficient resources to pay the build cost
     let fundsError = false;
-    cfg.pdus.find(pdu => pdu.type === pduType).costs.forEach(slot => {
+    cfg.pdus.types.find(pdu => pdu.type === pduType).costs.forEach(slot => {
         const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
         if (Math.floor(slot.amount * amount) > stockpile) fundsError = true;
     });
@@ -299,7 +320,7 @@ exports.checkBuildPdu = async (req, res, next) => {
     }
     // 3. verify that the number of new PDUs does not go above maxPDUs
     // maxPDU is not yet implemented since I'm not sure if this should depend on techlevel, planet type or population.
-    const planetMaxPdus = 10; // mockup, same as in client/game/Empire/Planets/Defense/Construction.vue
+    const planetMaxPdus = cfg.pdus.maxPerPlanet; // mockup, same as in client/game/Empire/Planets/Defense/Construction.vue
     const installedPdus = planet.pdus.length;
     if (installedPdus + amount > planetMaxPdus) {
         const msg = `no ${amount} PDU slots available on planet (max: ${planetMaxPdus}, installed: ${installedPdus}).`;
@@ -312,18 +333,18 @@ exports.checkBuildPdu = async (req, res, next) => {
 };
 
 /*
- * do build PDU ========================================================================================================
+ * do build PDUs =======================================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  */
-exports.buildPdu = async (req, res) => {
+exports.buildPdus = async (req, res) => {
     const pduType = strip(req.body.type);
     const planetId = strip(req.body.planet);
     const amount = strip(req.body.amount);
-    const turns = cfg.pdus.find(pdu => pdu.type === pduType).buildDuration;
+    const turns = cfg.pdus.types.find(pdu => pdu.type === pduType).buildDuration;
 
     // 1) prepare new PDUs
-    let pdus = Array.from({length: amount}).map( () => {
+    let pdus = Array.from({length: amount}).map(() => {
         return new Pdu({
             planet: planetId,
             game: req.user.selectedPlayer.game._id,
@@ -335,9 +356,9 @@ exports.buildPdu = async (req, res) => {
 
     // 2) Subtract build costs from player resources
     let set = {};
-    cfg.pdus.find(pdu => pdu.type === pduType).costs.forEach(slot => {
+    cfg.pdus.types.find(pdu => pdu.type === pduType).costs.forEach(slot => {
         set["resources." + slot.resourceType + ".current"] =
-            req.user.selectedPlayer.resources[slot.resourceType].current - (Math.floor(slot.amount * amount));
+            req.user.selectedPlayer.resources[slot.resourceType].current - Math.floor(slot.amount * amount);
     });
     logger.info("set " + JSON.stringify(set, null, 2));
 
@@ -359,15 +380,14 @@ exports.buildPdu = async (req, res) => {
 
     // 4) log success and send pdu IDs to client
     updatedPlayer &&
-    newPdus &&
-    logger.success(
-        `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" +
-        req.user.username} installed ${amount} ${chalk.yellow(pduType)} PDUs on Planet ${chalk.cyan(
-            "#" + planetId
-        )}: ${JSON.stringify(pduIds, null, 2)}`
-    );
+        newPdus &&
+        logger.success(
+            `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" +
+                req.user.username} installed ${amount} ${chalk.yellow(pduType)} PDUs on Planet ${chalk.cyan(
+                "#" + planetId
+            )}: ${JSON.stringify(pduIds, null, 2)}`
+        );
 
     // send new IDs to client
     return res.status(200).json({pduType, pduIds, turnsUntilComplete: turns});
-
 };

@@ -21,6 +21,7 @@ router.post("/star/name", jsonParser, catchErrors(apiController.saveStarName));
 router.post(
     "/harvester/install",
     jsonParser,
+    // TODO: check if game is processing
     catchErrors(apiController.checkInstallHarvester), // check for auth, funds, slots
     catchErrors(apiController.installHarvester) // do db updates
 );
@@ -29,8 +30,9 @@ router.post(
 router.post(
     "/pdu/build",
     jsonParser,
+    // TODO: check if game is processing
     catchErrors(apiController.checkBuildPdu), // check for auth, funds, maxPdu
-    catchErrors(apiController.buildPdu) // do db updates
+    catchErrors(apiController.buildPdus) // do db updates
 );
 
 module.exports = router;

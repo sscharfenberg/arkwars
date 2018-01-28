@@ -138,7 +138,7 @@ i18n.configure({
 
 // pass variables to our templates + all requests
 app.use((req, res, next) => {
-    let locale = cfg.app.locales.map(locale => locale.name).shift() || "en";
+    let locale = cfg.app.locales.map(locale => locale.name).shift();
     if (req.session && req.session.locale) {
         locale = req.session.locale;
     }

@@ -6,7 +6,7 @@
     import Button from "Game/common/Button/Button.vue";
     import Costs from "Game/common/Costs/Costs.vue";
     import Icon from "Game/common/Icon/Icon.vue";
-    import cfg from "Config";
+    import {harvesterRules} from "Config";
     export default {
         props: {
             resourceId: {
@@ -42,7 +42,7 @@
                 return this.$t("planet.harvesters.installModal.question", {typ: harvesterName, planet: this.planetName });
             },
             installCosts () {
-                const rules = cfg.rules.harvesters.build.find(slot => slot.type === this.resourceType);
+                const rules = harvesterRules.types.find(slot => slot.type === this.resourceType);
                 let returnObj = [{
                     resourceType: "turns",
                     amount: rules.duration
@@ -52,7 +52,7 @@
             },
             sufficientFunds () {
                 let canInstall = true;
-                const costs = cfg.rules.harvesters.build.find(slot => slot.type === this.resourceType).costs;
+                const costs = harvesterRules.types.find(slot => slot.type === this.resourceType).costs;
                 costs.forEach( cost => {
                     const stockpile = this.playerResources.find(stock => stock.type === cost.resourceType).current;
                     if ( cost.amount > stockpile ) canInstall = false;

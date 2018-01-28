@@ -35,7 +35,7 @@ Use at your own risk.
 (this needs work!)
 
 * [Changelog](https://github.com/sscharfenberg/arkwars/blob/master/docs/CHANGELOG.md)
-* [TODO](https://github.com/sscharfenberg/arkwars/blob/master/docs/TODO.md)
+* [Todos](https://github.com/sscharfenberg/arkwars/blob/master/docs/TODO.md)
 * [Installation](https://github.com/sscharfenberg/arkwars/blob/master/docs/INSTALLATION.md)
 
 
