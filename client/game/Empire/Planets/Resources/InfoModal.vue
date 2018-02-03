@@ -28,31 +28,27 @@
 <template>
     <modal :name="`harvester-info-${harvesterId}`"
            :adaptive="true"
-           class="info-modal"
-           classes="info-modal-box"
-           :width="354"
+           :width="320"
            height="auto"
            :scrollable="true">
-        <div class="info__box">
-            <header class="info__header">
-                {{ $t("planet.harvesters.names." + this.harvester.resourceType) }}
-            </header>
-            <ul class="info__building" v-if="!harvester.isHarvesting">
-                <li class="info__building-label">
-                    {{$t("planet.harvesters.building")}}
-                    <div v-for="n in harvester.turnsUntilComplete"
-                         class="info__build-turn"
-                         role="presentation"
-                         aria-hidden="true"
-                         :key="n"></div>
-                </li>
-                <li class="info__building-turns">
-                    {{$t("planet.harvesters.untilComplete", {turns:harvester.turnsUntilComplete})}}
-                </li>
-            </ul>
-            <div class="info__prod" v-if="harvester.isHarvesting">
-                <production :harvesterId="harvesterId" />
-            </div>
+        <header class="info__header">
+            {{ $t("planet.harvesters.names." + this.harvester.resourceType) }}
+        </header>
+        <ul class="info__building" v-if="!harvester.isHarvesting">
+            <li class="info__building-label">
+                {{$t("planet.harvesters.building")}}
+                <div v-for="n in harvester.turnsUntilComplete"
+                     class="info__build-turn"
+                     role="presentation"
+                     aria-hidden="true"
+                     :key="n"></div>
+            </li>
+            <li class="info__building-turns">
+                {{$t("planet.harvesters.untilComplete", {turns:harvester.turnsUntilComplete})}}
+            </li>
+        </ul>
+        <div class="info__prod" v-if="harvester.isHarvesting">
+            <production :harvesterId="harvesterId" />
         </div>
         <m-button class="close-modal" :onClick="closeModal" iconName="cancel" />
     </modal>
@@ -61,27 +57,10 @@
 
 
 <style lang="scss" scoped>
-    .info-modal {
-        background: rgba(palette("grey", "black"), 0.5);
-    }
-
-    .info__box {
-        position: relative;
-
-        overflow: visible;
-        border: 3px solid palette("grey", "charcoal");
-        margin: 17px;
-
-        background: palette("grey", "sunken");
-        color: palette("text");
-        border-radius: 0;
-        box-shadow: 0 0 20px rgba(palette("grey", "mystic"), 0.15);
-    }
-
     .info {
         &__header {
             padding: 1rem;
-            border-bottom: 3px solid palette("grey", "charcoal");
+            border-bottom: 1px solid palette("brand", "viking");
 
             color: palette("brand", "viking");
 
@@ -120,25 +99,6 @@
             padding: 1rem;
         }
 
-        &__actions {
-            display: flex;
-            justify-content: stretch;
-
-            padding: 0.2rem;
-            border-top: 3px solid palette("grey", "charcoal");
-
-            > button {
-                justify-content: center;
-
-                margin-right: 0.2rem;
-                flex: 1;
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
-
         &__build-turn {
             width: 4px;
             height: 4px;
@@ -152,11 +112,5 @@
                 margin-left: 1rem;
             }
         }
-    }
-
-    .close-modal {
-        position: absolute;
-        top: 0;
-        right: 0;
     }
 </style>

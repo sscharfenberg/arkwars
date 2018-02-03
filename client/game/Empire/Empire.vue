@@ -26,19 +26,29 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-    p {
-        margin: 0;
-
-        font-size: 40px;
-        text-align: right;
-
-        &:hover {
-            background: palette("brand", "christine");
-        }
-    }
-</style>
-
 <style lang="scss">
     @import "~vue-snotify/styles/dark";
+
+    // styles for vue-modal
+    .v--modal-overlay {
+        background: rgba(palette("grey", "black"), 0.5);
+
+        .v--modal-box {
+            position: relative;
+
+            overflow: visible;
+            border: 1px solid palette("brand", "viking");
+
+            background: palette("grey", "bunker");
+            color: palette("text");
+            border-radius: 0;
+            box-shadow: 0 0 20px rgba(palette("grey", "mystic"), 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -17px;
+            right: -17px;
+        }
+    }
 </style>

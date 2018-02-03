@@ -89,59 +89,38 @@
 <template>
     <modal :name="`installharvester-${resourceId}-${resourceType}-${index}`"
            :adaptive="true"
-           class="install-modal"
-           classes="install-modal__box"
-           :width="354"
+           :width="320"
            height="auto"
            :scrollable="true">
-        <div class="modal__box">
-            <header class="install__header">{{ $t("planet.harvesters.installModal.title") }}</header>
-            <div class="install__content">
-                {{ installModalQuestion }}
-            </div>
-            <div class="install__costs">
-                <ul class="grade">
-                    <li class="label">{{resGradeLabel}}</li>
-                    <li class="value" :class="resGradeClass">{{resGrade}}</li>
-                </ul>
-                <costs :costs="installCosts" />
-            </div>
-            <div class="install__actions">
-                <m-button :onClick="installCancel"
-                          :textString="$t('common.buttons.cancel')"
-                          iconName="cancel" />
-                <m-button :onClick="installConfirm"
-                          :textString="$t('common.buttons.install')"
-                          iconName="done"
-                          :disable="!sufficientFunds" />
-            </div>
+        <header class="install__header">{{ $t("planet.harvesters.installModal.title") }}</header>
+        <div class="install__content">
+            {{ installModalQuestion }}
+        </div>
+        <div class="install__costs">
+            <ul class="grade">
+                <li class="label">{{resGradeLabel}}</li>
+                <li class="value" :class="resGradeClass">{{resGrade}}</li>
+            </ul>
+            <costs :costs="installCosts" />
+        </div>
+        <div class="install__actions">
+            <m-button :onClick="installCancel"
+                      :textString="$t('common.buttons.cancel')"
+                      iconName="cancel" />
+            <m-button :onClick="installConfirm"
+                      :textString="$t('common.buttons.install')"
+                      iconName="done"
+                      :disable="!sufficientFunds" />
         </div>
         <m-button class="close-modal" :onClick="installCancel" iconName="cancel" />
     </modal>
 </template>
 
 <style lang="scss" scoped>
-    .install-modal {
-        background: rgba(palette("grey", "black"), 0.5);
-    }
-
-    .modal__box {
-        position: relative;
-
-        overflow: visible;
-        border: 3px solid palette("grey", "charcoal");
-        margin: 17px;
-
-        background: palette("grey", "sunken");
-        color: palette("text");
-        border-radius: 0;
-        box-shadow: 0 0 20px rgba(palette("grey", "mystic"), 0.15);
-    }
-
     .install {
         &__header {
             padding: 1rem;
-            border-bottom: 3px solid palette("grey", "charcoal");
+            border-bottom: 1px solid palette("brand", "viking");
 
             color: palette("brand", "viking");
 
@@ -161,7 +140,7 @@
             justify-content: stretch;
 
             padding: 0.2rem;
-            border-top: 3px solid palette("grey", "charcoal");
+            border-top: 1px solid palette("brand", "viking");
 
             > button {
                 justify-content: center;
@@ -219,11 +198,5 @@
                 border-color: palette("state", "building");
             }
         }
-    }
-
-    .close-modal {
-        position: absolute;
-        top: 0;
-        right: 0;
     }
 </style>

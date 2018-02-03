@@ -1,5 +1,9 @@
 # Changelog
 
+`03.02.2018`
+- [x] Refactored Modals so the styles are app-global. Adjusted styling a bit.
+
+
 `28.01.2018`
 - [x] bumped dependencies. Mostly semver patch/minor; with the exception of Mongoose that was bumped from v4 to v5. So far, no massive breakage.
 - [x] more work on implementing **population**: cron server now handles population growth. Calculation of growth is imported from a shared server/client function.
