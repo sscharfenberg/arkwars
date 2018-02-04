@@ -13,7 +13,7 @@
             }
         },
         components: {
-            "icon": Icon
+            Icon
         },
         computed: {
             harvester () { return this.$store.getters.harvesterById(this.harvesterId); },

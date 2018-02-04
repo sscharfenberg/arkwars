@@ -43,7 +43,7 @@ module.exports = async (game, log) => {
         };
     });
     logger.info(
-        `processing population food consumption for ${chalk.cyan(colonies.length)} colonies and ${chalk.yellow(
+        `processing population ${chalk.cyan("food consumption")} for ${chalk.cyan(colonies.length)} colonies and ${chalk.yellow(
             players.length
         )} player.`
     );

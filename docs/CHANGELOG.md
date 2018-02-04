@@ -1,8 +1,12 @@
 # Changelog
 
-`03.02.2018`
+`04.02.2018`
 - [x] Refactored Modals so the styles are app-global. Adjusted styling a bit.
-
+- [x] small improvements: changed modal styling; pdu build is only shown if there are slots left, changed pdu display from dots to number (consistency, we use dots for turns).
+- [x] Visualization of population of planet - new Components `Population`, `Colony` and `FoodConsumption` - modal window for colony that shows accurate population value, and Food Consumption slider that shows resulting total consumption and population change.
+- [x] API endpoint for food consumption change - as usual, validate first, update DB next. 
+- [x] bumped dependencies
+- [x] games are now set to `processing` when the turn is being calculated; api sends error message if turn is still processing.
 
 `28.01.2018`
 - [x] bumped dependencies. Mostly semver patch/minor; with the exception of Mongoose that was bumped from v4 to v5. So far, no massive breakage.

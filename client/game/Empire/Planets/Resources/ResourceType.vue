@@ -35,9 +35,9 @@
             }
         },
         components: {
-            "icon": Icon,
+            Icon,
             "install-modal": InstallModal,
-            "harvester": Harvester
+            Harvester
         },
         computed: {
             getIconName () { return "res-" + this.resourceType; },

@@ -34,9 +34,9 @@
             }
         },
         components: {
-            "icon": Icon,
-            "costs": Costs,
-            "spinner": Spinner
+            Icon,
+            Costs,
+            Spinner
         },
         computed: {
             pdus () { return this.$store.getters.pdusByPlanetId(this.planetId); },
@@ -140,6 +140,7 @@
             </button>
             <div class="hint">{{textHint(type)}}</div>
             <costs v-if="buildAmount[type] !== 0"
+                   class="pdu-costs"
                    :costs="installCosts(type, buildAmount[type])" />
         </div>
     </div>
@@ -178,7 +179,8 @@
 
                 cursor: pointer;
 
-                transition: opacity map-get($animation-speeds, "fast") linear,
+                transition:
+                    opacity map-get($animation-speeds, "fast") linear,
                     border-color map-get($animation-speeds, "fast") linear;
 
                 &:focus {
@@ -219,7 +221,7 @@
             }
 
             .hint {
-                margin: 1rem 0;
+                margin: 1rem 0 0 0;
                 flex: 0 0 100%;
             }
         }
@@ -279,5 +281,9 @@
         &__spinner {
             margin-left: 0.5rem;
         }
+    }
+
+    .pdu-costs.pdu-costs {
+        margin-top: 1rem;
     }
 </style>

@@ -52,13 +52,14 @@ const ACTIONS = {
                 name: payload.starName
             })
             .then(response => {
+                console.log(response.data);
                 if (response.status === 200 && response.data && !response.data.error) {
                     ctx.commit("SET_STAR_NAME", {id: payload.id, name: payload.starName});
                 }
                 if (response.data.error) {
                     this._vm.$snotify.error(response.data.error);
-                    ctx.commit("EDITING_STAR_NAME", {id: payload.id, editing: false});
                 }
+                ctx.commit("EDITING_STAR_NAME", {id: payload.id, editing: false});
                 ctx.commit("SAVING_STAR_NAME", {id: payload.id, saving: false});
             })
             .catch(error => {
@@ -136,6 +137,34 @@ const ACTIONS = {
             .catch(error => {
                 console.error(error);
                 ctx.commit("SAVING_BUILD_PDU_PLANET", {planet: payload.planet, saving: false});
+            });
+    },
+
+    /*
+     * REQUEST CHANGE FOOD CONSUMPTION
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {Number} payload.consumption
+     */
+    CHANGE_FOOD_CONSUMPTION: function(ctx, payload) {
+        DEBUG && console.log("requesting change food consumption ", payload);
+        ctx.commit("SAVING_FOOD_CONSUMPTION", {planet: payload.planet, saving: true});
+        axios
+            .post("/api/game/empire/planet/food", payload)
+            .then(response => {
+                if (response.status === 200 && response.data && !response.data.error) {
+                    DEBUG && console.log("recieved new data from server ", response.data);
+                }
+                // server has error message ?
+                if (response.data.error) {
+                    this._vm.$snotify.error(response.data.error);
+                }
+                ctx.commit("SAVING_FOOD_CONSUMPTION", {planet: payload.planet, saving: false});
+            })
+            .catch(error => {
+                console.error(error);
+                ctx.commit("SAVING_FOOD_CONSUMPTION", {planet: payload.planet, saving: false});
             });
     }
 };

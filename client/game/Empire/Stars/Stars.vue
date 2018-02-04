@@ -11,7 +11,7 @@
             }
         },
         components: {
-            "star": Star
+            Star
         }
     };
 </script>

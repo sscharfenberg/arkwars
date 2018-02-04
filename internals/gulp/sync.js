@@ -74,7 +74,12 @@ gulp.task("sync:images", function() {
                     quality: 85
                 }),
                 imagemin.optipng({ optimizationLevel: 5 }),
-                imagemin.svgo()
+                imagemin.svgo({
+                    plugins: [
+                        {removeTitle: false},
+                        {cleanupIDs: false}
+                    ]
+                })
             ])
         )
         .pipe(gulp.dest(config.paths.images.out))

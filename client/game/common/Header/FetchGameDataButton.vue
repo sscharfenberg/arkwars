@@ -6,8 +6,8 @@
     import Spinner from "Game/common/Spinner/Spinner.vue";
     export default {
         components: {
-            "icon": Icon,
-            "spinner": Spinner
+            Icon,
+            Spinner
         },
         computed: {
             fetching () { return this.$store.getters.fetchingGameDataFromApi; }

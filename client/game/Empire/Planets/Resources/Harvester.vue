@@ -13,7 +13,7 @@
             }
         },
         components: {
-            "icon": Icon,
+            Icon,
             "info-modal": InfoModal
         },
         computed: {

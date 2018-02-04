@@ -590,6 +590,9 @@
     },
 
     "API": {
+        "GAME": {
+            "PROCESSING": "Server is currently calculating the turn."
+        },
         "EMPIRE": {
             "STAR": {
                 "NOTOWNER": "You are not the owner of this star.",
@@ -604,6 +607,10 @@
                 "NOTOWNER": "You are not the owner of this star.",
                 "FUNDS": "Insufficient funds to construct PDU.",
                 "SLOTS": "No more PDUs can be installed."
+            },
+            "FOOD": {
+                "NOTOWNER": "You are not the owner of this star.",
+                "OUTOFBOUNDS": "Food consumption not within expected values (%s)."
             }
         }
     }

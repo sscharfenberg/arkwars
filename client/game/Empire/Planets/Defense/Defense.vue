@@ -17,7 +17,7 @@
             }
         },
         components: {
-            "icon": Icon,
+            Icon,
             "defense-details": Details
         },
         computed: {
@@ -37,10 +37,9 @@
                 :class="btnClass"
                 @click="openDetails()">
             <icon class="pdu__icon" name="pdu" />
-            <div class="pdu__list" v-if="activePdus.length">
-                <div class="pdu__list-item"
-                     v-for="pdu in activePdus" :key="pdu.id"></div>
-            </div>
+            <span v-if="activePdus.length">
+                {{activePdus.length}}
+            </span>
         </button>
         <defense-details :planetId="planetId"
                          :starName="starName" />
@@ -65,6 +64,8 @@
 
             cursor: pointer;
 
+            font-weight: 300;
+
             transition:
                 background-color map-get($animation-speeds, "fast") linear,
                 border-color map-get($animation-speeds, "fast") linear;
@@ -83,6 +84,10 @@
                 &:active {
                     background-color: palette("grey", "ebony");
                     color: palette("grey", "white");
+                }
+
+                > svg {
+                    margin-right: 0.6rem;
                 }
             }
 
@@ -110,24 +115,6 @@
             &[disabled] {
                 cursor: not-allowed;
             }
-        }
-
-        &__list {
-            display: flex;
-            flex-wrap: wrap;
-
-            max-width: 4rem;
-            margin: 4px 0 0 10px;
-        }
-
-        &__list-item {
-            width: 4px;
-            height: 4px;
-            margin: 0 4px 4px 0;
-
-            background: linear-gradient(to bottom, palette("state", "success") 0%, palette("state", "online") 100%);
-
-            border-radius: 50%;
         }
     }
 </style>

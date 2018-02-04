@@ -41,7 +41,7 @@
             }
         },
         components: {
-            "icon": Icon
+            Icon
         }
     };
 </script>

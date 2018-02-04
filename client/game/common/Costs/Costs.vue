@@ -12,7 +12,7 @@
             }
         },
         components: {
-            "icon": Icon
+            Icon
         },
         computed: {
             playerResources () { return this.$store.getters.playerResources; }

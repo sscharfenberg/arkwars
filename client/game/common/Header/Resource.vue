@@ -20,7 +20,7 @@
             }
         },
         components: {
-            "icon": Icon
+            Icon
         },
         computed: {
             getResourceBarWidth () { return `${100 - (this.current / this.max) * 100}%`; },
@@ -34,16 +34,16 @@
 </script>
 
 <template>
-    <div class="res">
+    <div class="res"
+         :title="getFullTypeLabel"
+         :aria-label="getFullTypeLabel">
         <div class="res__bar"
             :style="{right: getResourceBarWidth}"
             role="progressbar"
             aria-valuemin="0"
             aria-valuemax="100"
             :aria-valuenow="getProgressBarPct">{{ getProgressBarPct + "%" }}</div>
-        <div class="res__type"
-            :title="getFullTypeLabel"
-            :aria-label="getFullTypeLabel">
+        <div class="res__type">
             <icon :name="getResourceTypeIcon"
                 class="res__icon"
                 aria-hidden="true" />

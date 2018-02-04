@@ -114,8 +114,7 @@ exports.getGameData = async (req, res) => {
             orbitalIndex: planet.orbitalIndex,
             population: planet.population,
             effectivePopulation: planet.effectivePopulation,
-            foodConsumptionPerPop: planet.foodConsumptionPerPop,
-            foodConsumptionTotal: planet.foodConsumptionTotal,
+            foodConsumption: planet.foodConsumptionPerPop,
             resourceSlots: planet.resources.map(slot => {
                 // harvester data into returnData.harvesters array
                 returnData.harvesters = planet.harvesters
@@ -170,16 +169,16 @@ exports.saveStarName = async (req, res) => {
     // don't trust the client.
     if (!playerStars.includes(req.body.id)) {
         logger.error(`[App] user ${req.user.username} is not owner of the star.`);
-        return res.json({error: "you are not allowed to edit this star."});
+        return res.json({error: i18n.__("API.EMPIRE.STAR.NOTOWNER")});
     }
     if (req.body.name.length < cfg.stars.name.bounds[0] || req.body.name.length > cfg.stars.name.bounds[1]) {
         logger.error(`[App] star name ${req.body.name} length is out of bounds.`);
-        return res.json({error: "length of star name out of bounds."});
+        return res.json({error: i18n.__("API.EMPIRE.STAR.LENGTH")});
     }
     const updatedStar = await Star.findOneAndUpdate(
         {_id: strip(req.body.id)},
         {$set: {name: strip(req.body.name)}},
-        {new: true, runValidators: true, context: "query"}
+        {new: true, runValidators: true}
     );
     if (updatedStar) {
         logger.success(
@@ -264,7 +263,7 @@ exports.installHarvester = async (req, res) => {
     const playerPromise = Player.findOneAndUpdate(
         {_id: req.user.selectedPlayer._id},
         {$set: set},
-        {new: true, runValidators: true, context: "query"}
+        {new: true, runValidators: true}
     );
     const [newHarvester, updatedPlayer] = await Promise.all([harvesterPromise, playerPromise]);
 
@@ -390,4 +389,64 @@ exports.buildPdus = async (req, res) => {
 
     // send new IDs to client
     return res.status(200).json({pduType, pduIds, turnsUntilComplete: turns});
+};
+
+/*
+ * check if XHR POST set food consumption is valid =====================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.checkFoodConsumption = async (req, res, next) => {
+    const planetId = strip(req.body.planet);
+    const consumption = parseFloat(req.body.consumption);
+    logger.info(
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} set food consumption ${JSON.stringify(
+            req.body,
+            null,
+            2
+        )}.`
+    );
+    // 1. check if the planet belongs to one of the player stars
+    const playerStars = req.user.selectedPlayer.stars.map(star => star._id);
+    const planet = await Planet.findOne({star: {$in: playerStars}, _id: planetId});
+    if (!planet) {
+        logger.error(`[App] user ${req.user.username} is not owner of the planet.`);
+        return res.json({error: i18n.__("API.EMPIRE.FOOD.NOTOWNER")});
+    }
+    // 2. check if consumption is within bounds
+    const bounds = cfg.planets.population.food.bounds;
+    if (isNaN(consumption) || consumption < bounds[0] || consumption > bounds[1]) {
+        logger.error(`[App] consumption of ${consumption} is NaN or out of bounds.`);
+        return res.json({error: i18n.__("API.EMPIRE.FOOD.OUTOFBOUNDS", `${bounds[0]} - ${bounds[1]}`)});
+    }
+
+    // no errors => proceed.
+    return next();
+};
+
+/*
+ * do change food consumption ==========================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.setFoodConsumption = async (req, res) => {
+    const planetId = strip(req.body.planet);
+    const consumption = parseFloat(req.body.consumption);
+    // update db
+    const updatedPlanet = await Planet.findOneAndUpdate(
+        {_id: planetId},
+        {$set: {foodConsumptionPerPop: consumption}},
+        {new: true, runValidators: true}
+    );
+    if (updatedPlanet) {
+        logger.success(
+            `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" +
+            req.user.username} changed food consumption of planet #${chalk.cyan(planetId)} to ${chalk.yellow(
+                consumption
+            )}`
+        );
+        return res.status(200).json({foodConsumptionPerPop: updatedPlanet.foodConsumptionPerPop});
+    }
+
 };

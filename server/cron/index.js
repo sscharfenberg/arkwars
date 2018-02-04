@@ -102,15 +102,8 @@ const processGameTurns = async () => {
         `processing games: ${chalk.cyan("[ " + processingGameNumbers + " ]")}.`
     );
     gamesToProcess.forEach(async game => {
-        logger.info(
-            `processing ${chalk.red("g" + game.number)} ${chalk.yellow(
-                "t" + (game.turn + 1)
-            )} due @ ${chalk.cyan(
-                moment(game.turnDue).format("HH:mm:ss.SSSS")
-            )}`
-        );
         try {
-            await turnHandlers.processTurnData(game);
+            await turnHandlers.processGameTurn(game);
         } catch (e) {
             logger.error(e);
         }

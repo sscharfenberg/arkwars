@@ -22,10 +22,10 @@
  * @returns {Number} new population - float
  */
 const populationGrowth = (population, foodConsumption) => {
-    let starvingMultiplier = 0.8; // 20% of population dies if noone eats ^.^
+    const starvingMultiplier = 0.8; // 20% of population dies if noone eats ^.^
     let newPop = foodConsumption < 1
         ? population * (1 + ((Math.log(foodConsumption) * 3) / 100))
-        : population + ((Math.log(foodConsumption * 3) / population) / 100);
+        : population + ((Math.exp(foodConsumption - 3) / population) / 10);
     newPop = foodConsumption < 0.01 ? population * starvingMultiplier : newPop;
     return newPop.toFixed(8); // we don't need this much precision, waste of db space
 };

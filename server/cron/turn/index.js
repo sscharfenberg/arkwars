@@ -22,7 +22,7 @@ const Turn = mongoose.model("Turn");
  * @returns {object} log
  */
 const turnProcessingOrder = async game => {
-    logger.debug(`start turn processing for game ${chalk.red("g" + game.number)} turn ${chalk.yellow(game.turn)}`);
+    logger.debug(`beginning turn steps for ${chalk.red("g" + game.number)}${chalk.yellow("t" + game.turn)}`);
     let log = {};
 
     /*******************************************************************************************************************
@@ -61,6 +61,7 @@ const turnProcessingOrder = async game => {
         logger.error(e);
     }
 
+    logger.debug(`finished turn steps for ${chalk.red("g" + game.number)}${chalk.yellow("t" + game.turn)}`);
     return log;
 };
 
@@ -70,18 +71,14 @@ const turnProcessingOrder = async game => {
  * @param {Object} game - Game model object from mongo
  * @returns {Object} game - new turn, turnDue
  */
-const processGameTurn = async game => {
-    game.turn++; // new turn!
-    game.turnDue = moment()
-        .add(game.turnDuration, "minutes")
-        .toISOString();
+const processTurnData = async game => {
     let turn = new Turn({
         game: game._id,
         number: game.turn,
         slug: `g${game.number}t${game.turn}`,
         dateProcessed: moment().toISOString()
     });
-    logger.info(`processing ${chalk.red("g" + game.number)} game data for turn ${chalk.cyan(turn.number)}`);
+    logger.info(`processing turn data for ${chalk.red("g" + game.number)}${chalk.yellow("t" + turn.number)}`);
     try {
         // PROCESS TURN
         const log = await turnProcessingOrder(game);
@@ -97,30 +94,43 @@ const processGameTurn = async game => {
  * process a turn
  * @param {object} game - Game model object from mongo
  */
-const processTurnData = async game => {
+const processGameTurn = async game => {
     let startTime = moment(); // remember the starting time so we can calculate runtime.
-    let updatedGame;
-    logger.debug(`processing turn ${chalk.magenta(game.turn + 1)} for ${chalk.red("g" + game.number)}.`);
+    game = await Game.findOneAndUpdate(
+        {_id: game._id},
+        {$set: {processing: true}},
+        {new: true, runValidators: true}
+    );
+    logger.debug(`processing turn ${chalk.red("g" + game.number)}${chalk.yellow("t" + (game.turn + 1))}.`);
+    game.turn++;
 
     // process game data
     try {
         // TODO: set processing to true
-        updatedGame = await processGameTurn(game);
+        game = await processTurnData(game);
     } catch (err) {
-        updatedGame = game;
         logger.error(err);
     }
 
     // after the game data has been processed, save to db
-    await Game.findOneAndUpdate({_id: updatedGame._id}, updatedGame, {
-        runValidators: true
-    });
-
+    game = await Game.findOneAndUpdate(
+        {_id: game._id},
+        {
+            $set: {
+                turn: game.turn,
+                processing: false,
+                turnDue: moment()
+                    .add(game.turnDuration, "minutes")
+                    .toISOString()
+            }
+        },
+        {new: true, runValidators: true}
+    );
     logger.success(
-        `turn ${chalk.cyan(updatedGame.turn)} for ${chalk.red(
-            "g" + updatedGame.number
-        )} has been processed in ${chalk.yellow(moment.duration(moment().diff(startTime)).milliseconds())}ms.`
+        `turn ${chalk.red("g" + game.number)}${chalk.yellow("t" + game.turn)} has been processed in ${chalk.yellow(
+            moment.duration(moment().diff(startTime)).milliseconds()
+        )}ms.`
     );
 };
 
-exports.processTurnData = processTurnData;
+exports.processGameTurn = processGameTurn;

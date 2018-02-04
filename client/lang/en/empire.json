@@ -68,6 +68,16 @@
                 "save": "Build",
                 "explanation": "Base damage {dmg}, orbit range {range}."
             }
+        },
+        "population": {
+            "buttonLabel": "Colony population: {num}",
+            "title": "Colony",
+            "food": {
+                "title": "Food consumption",
+                "perPop": "per population and turn",
+                "total": "total",
+                "change": "population change"
+            }
         }
     }
 }

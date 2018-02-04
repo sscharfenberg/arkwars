@@ -38,7 +38,8 @@ gulp.task("app:icons", () => {
             imagemin([
                 imagemin.svgo({
                     plugins: [
-                        {removeTitle: true}
+                        {removeTitle: true},
+                        {cleanupIDs: false}
                     ]
                 })
             ])
@@ -77,7 +78,8 @@ gulp.task("game:icons", () => {
             imagemin([
                 imagemin.svgo({
                     plugins: [
-                        {removeTitle: false}
+                        {removeTitle: true},
+                        {cleanupIDs: false}
                     ]
                 })
             ])

@@ -10,7 +10,7 @@
                 type: Array,
                 required: true
             },
-            planetid: {
+            planetId: {
                 type: String,
                 required: true
             },
@@ -32,7 +32,7 @@
                            :resourceType="resource.resourceType"
                            :slots="resource.slots"
                            :harvesters="resource.harvesters"
-                           :planetid="planetid"
+                           :planetid="planetId"
                            :planetName="planetName" />
         </li>
     </ul>

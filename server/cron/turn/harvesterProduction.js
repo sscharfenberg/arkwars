@@ -55,7 +55,7 @@ const harvesterProduction = async (game, log) => {
         });
     });
     changedPlayerResources = enforceStockPileMax(changedPlayerResources);
-    logger.info(`processed ${chalk.yellow(producingHarvesters)} producing harvesters.`);
+    logger.info(`processed ${chalk.yellow(producingHarvesters)} ${chalk.cyan("producing harvesters")}.`);
 
     /*
      * loop players - async because we might need to do a batch write

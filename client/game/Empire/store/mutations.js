@@ -190,6 +190,26 @@ const MUTATIONS = {
                 slot.amount * payload.amount
             );
         });
+    },
+
+    /*
+     * SET/UNSERT "Installing PDUs on planet"
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {Booleaen} payload.saving
+     */
+    SAVING_FOOD_CONSUMPTION: (state, payload) => {
+        if (payload.saving) {
+            // add slot to array
+            state.savingFoodConsumption.push(payload.planet);
+        } else {
+            // remove ID from array
+            state.savingFoodConsumption.splice(
+                state.savingFoodConsumption.indexOf(payload.planet),
+                1
+            );
+        }
     }
 };
 

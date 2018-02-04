@@ -6,6 +6,7 @@
     import {latinToRoman} from "../../handlers/format";
     import Icon from "Game/common/Icon/Icon.vue";
     import Resources from "./Resources/Resources.vue";
+    import Population from "./Population/Population.vue";
     import Defense from "./Defense/Defense.vue";
     export default {
         props: {
@@ -31,7 +32,7 @@
             getPlanetName () {
                 return `${this.starName} - ${latinToRoman(this.$store.getters.planetById(this.id).orbitalIndex)}`;
             },
-            getEffectivePopulation () {
+            effectivePopulation () {
                 return this.$store.getters.planetById(this.id).effectivePopulation;
             }
         },
@@ -39,9 +40,10 @@
             resourceSlots () { return this.$store.getters.planetById(this.id).resourceSlots; }
         },
         components: {
-            "resources": Resources,
-            "icon": Icon,
-            "defense": Defense
+            Resources,
+            Icon,
+            Defense,
+            Population
         }
     };
 </script>
@@ -60,12 +62,12 @@
             <div class="planet__name"
                  :label="$t('planet.name')"
                  :title="$t('planet.name')">{{getPlanetName}}</div>
-            <div class="planet__population">
-                population {{getEffectivePopulation}}
-            </div>
+            <population v-if="effectivePopulation > 0"
+                        :planetId="id"
+                        :starName="starName"/>
             <resources v-if="resourceSlots().length"
                        :resources="resourceSlots()"
-                       :planetid="this.id"
+                       :planetId="id"
                        :planetName="getPlanetName" />
             <defense :planetId="id"
                      :starName="starName" />
@@ -115,7 +117,6 @@
             margin-top: 0.9rem;
         }
 
-        &__population,
         &__name {
             height: 2.6rem;
             padding: 0.5rem 1rem;
@@ -123,9 +124,6 @@
             margin: 0 0.8rem 0.8rem 0;
 
             background: rgba(palette("grey", "mystic"), 0.05);
-        }
-
-        &__name {
             color: palette("text", "lighter");
         }
     }

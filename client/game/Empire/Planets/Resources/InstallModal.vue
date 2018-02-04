@@ -32,8 +32,8 @@
         },
         components: {
             "m-button": Button,
-            "costs": Costs,
-            "icon": Icon
+            Costs,
+            Icon
         },
         computed: {
             playerResources () { return this.$store.getters.playerResources; },

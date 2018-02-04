@@ -14,7 +14,7 @@
         },
         components: {
             "m-button": Button,
-            "production": Production
+            Production
         },
         computed: {
             harvester () { return this.$store.getters.harvesterById(this.harvesterId); }

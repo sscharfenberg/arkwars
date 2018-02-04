@@ -17,7 +17,7 @@
         },
         components: {
             "fetch-button": FetchGameDataButton,
-            "resource": Resource
+            Resource
         },
         computed: {
             player () { return this.$store.getters.player; },
@@ -31,12 +31,13 @@
         <fetch-button class="fetch-data-button" />
         <h1>
             {{areaTitle}}
-            <small v-if="player">
+            <small v-if="player.name">
                 <br />[{{ player.ticker }}]
                 {{ player.name }}
             </small>
         </h1>
-        <ul class="resources">
+        <ul class="resources"
+            v-if="resources.length">
             <li v-for="resource in resources">
                 <resource :type="resource.type"
                           :current="resource.current"

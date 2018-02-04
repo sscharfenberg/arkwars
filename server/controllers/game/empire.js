@@ -5,10 +5,8 @@
  **********************************************************************************************************************/
 const fs = require("fs"); // https://nodejs.org/api/fs.html
 const path = require("path"); // https://nodejs.org/api/path.html
-const mongoose = require("mongoose"); // http://mongoosejs.com/
+const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
-const Player = mongoose.model("Player");
-const Game = mongoose.model("Game");
 const cfg = require("../../config");
 
 /*
@@ -22,7 +20,7 @@ exports.showIndex = async (req, res) => {
     const areaTime = fs.statSync(pathArea).mtime;
     const commonTime = fs.statSync(pathCommon).mtime;
     res.render("game/empire", {
-        title: "Game Empire",
+        title: i18n.__("GAME.EMPIRE.LABEL"),
         session: req.session,
         textVersion: moment(areaTime).diff(commonTime) > 0 ? areaTime : commonTime,
         gameData: {}

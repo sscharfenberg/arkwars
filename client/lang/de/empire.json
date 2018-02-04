@@ -68,6 +68,16 @@
                 "save": "Bauen",
                 "explanation": "Grundschaden {dmg}, Orbitale Reichweite {range}."
             }
+        },
+        "population": {
+            "buttonLabel": "Kolonie Bevölkerung: {num}",
+            "title": "Kolonie",
+            "food": {
+                "title": "Nahrungsverbrauch",
+                "perPop": "pro Bevölkerung und Runde",
+                "total": "Gesamt",
+                "change": "Bevölkerungszuwachs"
+            }
         }
     }
 }

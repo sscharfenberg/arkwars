@@ -11,7 +11,8 @@
     export default {
         data: function() {
             return {
-                types: pduRules.types.map(pdu => pdu.type)
+                types: pduRules.types.map(pdu => pdu.type),
+                maxPdus: pduRules.maxPerPlanet
             };
         },
         props: {
@@ -25,9 +26,9 @@
             }
         },
         components: {
-            "icon": Icon,
+            Icon,
             "btn": Button,
-            "construction": Construction
+            Construction
         },
         computed: {
             pdus () { return this.$store.getters.pdusByPlanetId(this.planetId); },
@@ -104,7 +105,7 @@
                 </div>
             </li>
         </ul>
-        <construction :planetId="planetId" />
+        <construction v-if="pdus.length < maxPdus" :planetId="planetId" />
         <btn class="close-modal" :onClick="closeModal" iconName="cancel" />
     </modal>
 </template>

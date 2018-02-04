@@ -610,6 +610,9 @@
     },
 
     "API": {
+        "GAME": {
+            "PROCESSING": "Server berechnet gerade die aktuelle Runde."
+        },
         "EMPIRE": {
             "STAR": {
                 "NOTOWNER": "Sie sind nicht der Besitzer dieses Systems.",
@@ -624,6 +627,10 @@
                 "NOTOWNER": "Sie sind nicht der Besitzer dieses Systems.",
                 "FUNDS": "Ihre Vorräte reichen nicht aus um PDUs zu bauen.",
                 "SLOTS": "Keine weiteren PDUs installierbar."
+            },
+            "FOOD": {
+                "NOTOWNER": "Sie sind nicht der Besitzer dieses Systems.",
+                "OUTOFBOUNDS": "Nahrungszuweisung nicht innerhalb des erwarteten Bereichs (%s)."
             }
         }
     }

@@ -8,11 +8,11 @@
 const fs = require("fs"); // https://nodejs.org/api/fs.html
 const path = require("path"); // https://nodejs.org/api/path.html
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
+const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const Game = mongoose.model("Game");
-const Planet = mongoose.model("Planet");
 const logger = require("../../handlers/logger/console");
 const cfg = require("../../config");
 
@@ -122,4 +122,24 @@ exports.getTextStrings = async (req, res) => {
     } else {
         res.json({error: "could not get client text strings."});
     }
+};
+
+
+/*
+ * check if game is processing =========================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.gameProcessing = async (req, res, next) => {
+    const game = await Game.findOne({_id: req.user.selectedPlayer.game._id});
+    if (!game) {
+        logger.error(`[App] game g${req.user.selectedPlayer.game.number} not found.`);
+        return res.status(500).end();
+    }
+    if (game.processing) {
+        logger.debug(`[App] game g${req.user.selectedPlayer.game.number} is still processing.`);
+        return res.json({error: i18n.__("API.GAME.PROCESSING")});
+    }
+    return next();
 };

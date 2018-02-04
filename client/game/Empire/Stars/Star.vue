@@ -51,14 +51,16 @@
         computed: {
             spectralClassName () { return `star__spectral--${this.spectral}`; },
             spectralTypeString () { return this.$t("star.spectralType") + ": " + this.spectral; },
-            isStarNameSaving () { return this.$store.getters.savingStarNameIds.includes(this.id); },
+            isStarNameSaving () {
+                return this.$store.getters.savingStarNameIds.includes(this.id);
+            },
             isStarNameEditing () { return this.$store.getters.editingStarNameIds.includes(this.id); }
         },
         components: {
-            "icon": Icon,
+            Icon,
             "btn": Button,
-            "spinner": Spinner,
-            "planets": Planets
+            Spinner,
+            Planets
         },
         methods: {
             startEditStarName() {

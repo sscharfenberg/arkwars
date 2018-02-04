@@ -16,7 +16,7 @@
             }
         },
         components: {
-            "planet": Planet
+            Planet
         }
     };
 </script>
