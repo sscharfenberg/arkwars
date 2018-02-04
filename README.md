@@ -1,7 +1,9 @@
 # ArkWars
 ![](./docs/badges/license.svg) ![](./docs/badges/mongodb.svg) ![](./docs/badges/node.svg) ![](./docs/badges/npm.svg)
 
-Frontend and Backend for Arkwars (**working title!**) - a strategic turn-based game of galactic conquest. 
+Frontend and Backend for Arkwars (**working title, will change!**) - a strategic turn-based game of galactic conquest. 
+
+![Empire Screen](./docs/empire.jpg)
 
 Number of times `.env` file got submitted to github: **2** 
 
@@ -37,8 +39,6 @@ Use at your own risk.
 * [Changelog](https://github.com/sscharfenberg/arkwars/blob/master/docs/CHANGELOG.md)
 * [Todos](https://github.com/sscharfenberg/arkwars/blob/master/docs/TODO.md)
 * [Installation](https://github.com/sscharfenberg/arkwars/blob/master/docs/INSTALLATION.md)
-
-![Empire Screen](./docs/empire.jpg)
 
 ## Attribution
 
