@@ -1,64 +1,66 @@
 <script>
-    /*******************************************************************************************************************
-     * Production
-     * this component shows the production values of a harvester
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    import {harvesterRules} from "Config";
-    export default {
-        props: {
-            harvesterId: {
-                type: String,
-                required: true
-            }
-        },
-        components: {
-            Icon
-        },
-        computed: {
-            harvester () { return this.$store.getters.harvesterById(this.harvesterId); },
-            finalProduction () {
-                return Math.floor(this.harvester.resGrade * this.baseProductionValue);
-            },
-            baseProductionValue () {
-                return harvesterRules.types
-                    .find( harvester => harvester.type === this.harvester.resourceType).baseProduction;
-            },
-            baseProductionLabel () {
-                const harvesterName = this.$t("planet.harvesters.names." + this.harvester.resourceType);
-                return this.$t("planet.harvesters.production.base", {type: harvesterName});
-            },
-            resGradeLabel () {
-                const resName = this.$t("common.resourceTypes." + this.harvester.resourceType);
-                return this.$t("planet.harvesters.production.resGrade", {type: resName});
-            }
+/*******************************************************************************************************************
+ * Production
+ * this component shows the production values of a harvester
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+import {harvesterRules} from "Config";
+export default {
+    props: {
+        harvesterId: {
+            type: String,
+            required: true
         }
-    };
+    },
+    components: {
+        Icon
+    },
+    computed: {
+        harvester () { return this.$store.getters.harvesterById(this.harvesterId); },
+        finalProduction () {
+            return Math.floor(this.harvester.resGrade * this.baseProductionValue);
+        },
+        baseProductionValue () {
+            return harvesterRules.types
+                .find( harvester => harvester.type === this.harvester.resourceType).baseProduction;
+        },
+        baseProductionLabel () {
+            const harvesterName = this.$t("planet.harvesters.names." + this.harvester.resourceType);
+            return this.$t("planet.harvesters.production.base", {type: harvesterName});
+        },
+        resGradeLabel () {
+            const resName = this.$t("common.resourceTypes." + this.harvester.resourceType);
+            return this.$t("planet.harvesters.production.resGrade", {type: resName});
+        }
+    }
+};
 </script>
 
 <template>
     <table>
         <colgroup>
-            <col width="70%" />
-            <col width="30%" />
+            <col width="70%">
+            <col width="30%">
         </colgroup>
         <thead>
             <tr>
-                <th class="title" colspan="2">{{$t("planet.harvesters.production.title")}}</th>
+                <th
+                    class="title"
+                    colspan="2">{{ $t("planet.harvesters.production.title") }}</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <th>{{baseProductionLabel}}</th>
+                <th>{{ baseProductionLabel }}</th>
                 <td>
                     <div class="value-base">
                         <icon :name="`res-${harvester.resourceType}`" />
-                        {{baseProductionValue}}
+                        {{ baseProductionValue }}
                     </div>
                 </td>
             </tr>
             <tr>
-                <th>{{resGradeLabel}}</th>
+                <th>{{ resGradeLabel }}</th>
                 <td>
                     <div class="value-base">
                         {{ harvester.resGrade }}
@@ -66,11 +68,11 @@
                 </td>
             </tr>
             <tr>
-                <th>{{$t("planet.harvesters.production.finalProd")}}</th>
+                <th>{{ $t("planet.harvesters.production.finalProd") }}</th>
                 <td>
                     <div class="value-base">
                         <icon :name="`res-${harvester.resourceType}`" />
-                        {{finalProduction}}
+                        {{ finalProduction }}
                     </div>
                 </td>
             </tr>

@@ -1,61 +1,64 @@
 <script>
-    /*******************************************************************************************************************
-     * Harvester
-     * this component shows extractors (with status!) and available slots of a single type (ie, "energy")
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    import InfoModal from "./InfoModal.vue";
-    export default {
-        props: {
-            id: {
-                type: String,
-                required: true
-            }
-        },
-        components: {
-            Icon,
-            "info-modal": InfoModal
-        },
-        computed: {
-            iconName () { return "res-" + this.$store.getters.harvesterById(this.id).resourceType; },
-            buildingHarvesterClass () {
-                return this.$store.getters.harvesterById(this.id).turnsUntilComplete > 0 ? "harvester--building" : "";
-            },
-            turnsUntilComplete () { return this.$store.getters.harvesterById(this.id).turnsUntilComplete; },
-            harvesterLabel () {
-                let turns = this.$store.getters.harvesterById(this.id).turnsUntilComplete;
-                let label = this.$t("planet.harvesters.names." + this.$store.getters.harvesterById(this.id).resourceType);
-                label += turns ? " - " + this.$t("planet.harvesters.untilComplete", {turns}) : "";
-                return label;
-            },
-            resGrade () { return this.$store.getters.harvesterById(this.id).resGrade; }
-        },
-        methods: {
-            showInfoModal (harvester) {
-                return this.$modal.show(`harvester-info-${harvester}`);
-            }
+/*******************************************************************************************************************
+ * Harvester
+ * this component shows extractors (with status!) and available slots of a single type (ie, "energy")
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+import InfoModal from "./InfoModal.vue";
+export default {
+    props: {
+        id: {
+            type: String,
+            required: true
         }
-    };
+    },
+    components: {
+        Icon,
+        "info-modal": InfoModal
+    },
+    computed: {
+        iconName () { return "res-" + this.$store.getters.harvesterById(this.id).resourceType; },
+        buildingHarvesterClass () {
+            return this.$store.getters.harvesterById(this.id).turnsUntilComplete > 0 ? "harvester--building" : "";
+        },
+        turnsUntilComplete () { return this.$store.getters.harvesterById(this.id).turnsUntilComplete; },
+        harvesterLabel () {
+            let turns = this.$store.getters.harvesterById(this.id).turnsUntilComplete;
+            let label = this.$t("planet.harvesters.names." + this.$store.getters.harvesterById(this.id).resourceType);
+            label += turns ? " - " + this.$t("planet.harvesters.untilComplete", {turns}) : "";
+            return label;
+        },
+        resGrade () { return this.$store.getters.harvesterById(this.id).resGrade; }
+    },
+    methods: {
+        showInfoModal (harvester) {
+            return this.$modal.show(`harvester-info-${harvester}`);
+        }
+    }
+};
 </script>
 
 <template>
     <li class="harvester">
-        <button class="harvester__button"
-                :class="buildingHarvesterClass"
-                :title="harvesterLabel"
-                :aria-label="harvesterLabel"
-                @click="showInfoModal(id)">
+        <button
+            class="harvester__button"
+            :class="buildingHarvesterClass"
+            :title="harvesterLabel"
+            :aria-label="harvesterLabel"
+            @click="showInfoModal(id)">
             <icon :name="iconName" />
-            <div v-if="turnsUntilComplete"
-                 class="harvester__build-turns">
-                <div v-for="n in turnsUntilComplete"
-                     class="harvester__build-turn"
-                     role="presentation"
-                     aria-hidden="true"
-                     :key="n"></div>
+            <div
+                v-if="turnsUntilComplete"
+                class="harvester__build-turns">
+                <div
+                    v-for="n in turnsUntilComplete"
+                    class="harvester__build-turn"
+                    role="presentation"
+                    aria-hidden="true"
+                    :key="n">•</div>
             </div>
         </button>
-        <info-modal :harvesterId="id" />
+        <info-modal :harvester-id="id" />
     </li>
 </template>
 
@@ -121,6 +124,8 @@
             background: linear-gradient(to bottom, palette("state", "warning") 0%, palette("state", "error") 100%);
 
             border-radius: 50%;
+
+            text-indent: -1000em;
         }
     }
 </style>

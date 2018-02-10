@@ -1,27 +1,24 @@
 <script>
-    /*******************************************************************************************************************
-     * Empire (entry) Component
-     ******************************************************************************************************************/
-    import Header from "Game/common/Header/Header.vue";
-    import Stars from "./Stars/Stars.vue";
-    export default {
-        data: function() {
-            return {
-                greeting: "Hello"
-            };
-        },
-        components: {
-            "app-header": Header,
-            Stars
-        }
-    };
+/*******************************************************************************************************************
+ * Empire (entry) Component
+ ******************************************************************************************************************/
+import Header from "Game/common/Header/Header.vue";
+import Stars from "./Stars/Stars.vue";
+export default {
+    components: {
+        "app-header": Header,
+        Stars
+    }
+};
 </script>
 
 <template>
     <div>
-        <app-header :areaTitle="$t('title')" area="empire" />
+        <app-header
+            :area-title="$t('title')"
+            area="empire" />
         <stars />
-        <vue-snotify></vue-snotify>
+        <vue-snotify />
         TODO: reports? statistics? show citadel?
     </div>
 </template>

@@ -1,79 +1,86 @@
 <script>
-    /*******************************************************************************************************************
-     * Resource Type
-     * this component shows harvesters (with status!) and available slots
-     * for a single resource type (ie, "energy")
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    import Harvester from "./Harvester.vue";
-    import InstallModal from "./InstallModal.vue";
-    export default {
-        props: {
-            id: {
-                type: String,
-                required: true
-            },
-            resourceType: {
-                type: String,
-                required: true
-            },
-            slots: {
-                type: Number,
-                required: true
-            },
-            harvesters: {
-                type: Array,
-                required: true
-            },
-            planetid: {
-                type: String,
-                required: true
-            },
-            planetName: {
-                type: String,
-                required: true
-            }
+/*******************************************************************************************************************
+ * Resource Type
+ * this component shows harvesters (with status!) and available slots
+ * for a single resource type (ie, "energy")
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+import Harvester from "./Harvester.vue";
+import InstallModal from "./InstallModal.vue";
+export default {
+    props: {
+        id: {
+            type: String,
+            required: true
         },
-        components: {
-            Icon,
-            "install-modal": InstallModal,
-            Harvester
+        resourceType: {
+            type: String,
+            required: true
         },
-        computed: {
-            getIconName () { return "res-" + this.resourceType; },
-            installSaving () { return this.$store.getters.installingResourceTypes.includes(this.id); },
-            numEmptySlots () { return this.slots - this.harvesters.length; }
+        slots: {
+            type: Number,
+            required: true
         },
-        methods: {
-            installModal (index) {
-                return this.$modal.show(`installharvester-${this.id}-${this.resourceType}-${index}`);
-            }
+        harvesters: {
+            type: Array,
+            required: true
+        },
+        planetid: {
+            type: String,
+            required: true
+        },
+        planetName: {
+            type: String,
+            required: true
         }
+    },
+    components: {
+        Icon,
+        "install-modal": InstallModal,
+        Harvester
+    },
+    computed: {
+        getIconName () { return "res-" + this.resourceType; },
+        installSaving () { return this.$store.getters.installingResourceTypes.includes(this.id); },
+        numEmptySlots () { return this.slots - this.harvesters.length; }
+    },
+    methods: {
+        installModal (index) {
+            return this.$modal.show(`installharvester-${this.id}-${this.resourceType}-${index}`);
+        }
+    }
 
-    };
+};
 </script>
 
 <template>
     <ul class="slots">
-        <harvester v-if="harvesters"
+        <harvester
+            v-if="harvesters"
             v-for="harvesterId in harvesters"
             :id="harvesterId"
             :key="harvesterId" />
 
-        <li class="installable" v-if="numEmptySlots">
-            <div v-for="n in numEmptySlots" :key="n">
-                <button class="available"
-                        :title="$t('planet.harvesters.install')"
-                        :aria-label="$t('planet.harvesters.install')"
-                        @click="installModal(n)"
-                        :disabled="installSaving">
+        <li
+            class="installable"
+            v-if="numEmptySlots">
+            <div
+                v-for="n in numEmptySlots"
+                :key="n">
+                <button
+                    class="available"
+                    :title="$t('planet.harvesters.install')"
+                    :aria-label="$t('planet.harvesters.install')"
+                    @click="installModal(n)"
+                    :disabled="installSaving">
                     <icon :name="getIconName" />
                 </button>
-                <install-modal :resourceId="id"
-                               :index="n"
-                               :resourceType="resourceType"
-                               :planetName="planetName"
-                               :planetid="planetid" />
+                <install-modal
+                    :resource-id="id"
+                    :index="n"
+                    :resource-type="resourceType"
+                    :planet-name="planetName"
+                    :planetid="planetid" />
             </div>
 
         </li>

@@ -1,50 +1,53 @@
 <script>
-    /*******************************************************************************************************************
-     * Population
-     * this component shows the current effective population
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    import Colony from "./Colony.vue";
-    export default {
-        props: {
-            planetId: {
-                type: String,
-                required: true
-            },
-            starName: {
-                type: String,
-                required: true
-            }
+/*******************************************************************************************************************
+ * Population
+ * this component shows the current effective population
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+import Colony from "./Colony.vue";
+export default {
+    props: {
+        planetId: {
+            type: String,
+            required: true
         },
-        components: {
-            Icon,
-            Colony
-        },
-        computed: {
-            effectivePopulation () {
-                return this.$store.getters.planetById(this.planetId).effectivePopulation;
-            },
-            buttonLabel () {
-                return this.$t("planet.population.buttonLabel", {
-                    num: this.$store.getters.planetById(this.planetId).population
-                });
-            }
-        },
-        methods: {
-            openDetails () { return this.$modal.show(`colony-${this.planetId}`); }
+        starName: {
+            type: String,
+            required: true
         }
-    };
+    },
+    components: {
+        Icon,
+        Colony
+    },
+    computed: {
+        effectivePopulation () {
+            return this.$store.getters.planetById(this.planetId).effectivePopulation;
+        },
+        buttonLabel () {
+            return this.$t("planet.population.buttonLabel", {
+                num: this.$store.getters.planetById(this.planetId).population
+            });
+        }
+    },
+    methods: {
+        openDetails () { return this.$modal.show(`colony-${this.planetId}`); }
+    }
+};
 </script>
 
 <template>
     <div class="population">
-        <button :aria-label="buttonLabel"
-                :title="buttonLabel"
-                @click="openDetails">
+        <button
+            :aria-label="buttonLabel"
+            :title="buttonLabel"
+            @click="openDetails()">
             <icon name="population" />
-            {{effectivePopulation}}
+            {{ effectivePopulation }}
         </button>
-        <colony :planetId="planetId" :starName="starName" />
+        <colony
+            :planet-id="planetId"
+            :star-name="starName" />
     </div>
 </template>
 

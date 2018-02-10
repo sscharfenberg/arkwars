@@ -1,60 +1,62 @@
 <script>
-    /*******************************************************************************************************************
-     * Button Component
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    export default {
-        props: {
-            onClick: {
-                type: Function,
-                required: true
-            },
-            textString: {
-                type: String
-            },
-            iconName: {
-                type: String
-            },
-            disable: {
-                type: Boolean,
-                default: false
-            },
-            label: {
-                type: String
-            },
-            scale: {
-                type: Number, // [0..2]
-                default: 2
-            }
+/*******************************************************************************************************************
+ * Button Component
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+export default {
+    props: {
+        onClick: {
+            type: Function,
+            required: true
         },
-        computed: {
-            isDisabled() { return this.disable; },
-            typeModifier() { return this.iconName && !this.textString ? "btn--icon" : "btn--text"; },
-            getLabel() { return this.label || this.textString || ""; },
-            getSizeClass() {
-                switch(this.scale) {
-                    case 0: return "tiny";
-                    case 1: return "small";
-                    case 2: return "";
-                    case 3: return "large";
-                }
-            }
+        textString: {
+            type: String
         },
-        components: {
-            Icon
+        iconName: {
+            type: String
+        },
+        disable: {
+            type: Boolean,
+            default: false
+        },
+        label: {
+            type: String
+        },
+        scale: {
+            type: Number, // [0..2]
+            default: 2
         }
-    };
+    },
+    computed: {
+        isDisabled() { return this.disable; },
+        typeModifier() { return this.iconName && !this.textString ? "btn--icon" : "btn--text"; },
+        getLabel() { return this.label || this.textString || ""; },
+        getSizeClass() {
+            switch(this.scale) {
+                case 0: return "tiny";
+                case 1: return "small";
+                case 2: return "";
+                case 3: return "large";
+            }
+        }
+    },
+    components: {
+        Icon
+    }
+};
 </script>
 
 <template>
-    <button class="btn"
-            v-bind:class="[typeModifier, getSizeClass]"
-            @click="onClick"
-            :disabled="isDisabled"
-            :aria-disabled="isDisabled"
-            :aria-label="getLabel"
-            :title="getLabel">
-        <icon v-if="iconName"
+    <button
+        class="btn"
+        :class="[typeModifier, getSizeClass]"
+        @click="onClick"
+        :disabled="isDisabled"
+        :aria-disabled="isDisabled"
+        :aria-label="getLabel"
+        :title="getLabel">
+        <icon
+            v-if="iconName"
             :name="iconName"
             :size="scale" />
         <span v-if="textString">{{ textString }}</span>

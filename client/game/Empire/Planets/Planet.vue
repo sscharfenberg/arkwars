@@ -1,76 +1,81 @@
 <script>
-    /*******************************************************************************************************************
-     * Planet
-     * this component displays a single planet
-     ******************************************************************************************************************/
-    import {latinToRoman} from "../../handlers/format";
-    import Icon from "Game/common/Icon/Icon.vue";
-    import Resources from "./Resources/Resources.vue";
-    import Population from "./Population/Population.vue";
-    import Defense from "./Defense/Defense.vue";
-    export default {
-        props: {
-            id: {
-                type: String,
-                required: true
-            },
-            starName: {
-                type: String,
-                required: true
-            }
+/*******************************************************************************************************************
+ * Planet
+ * this component displays a single planet
+ ******************************************************************************************************************/
+import {latinToRoman} from "../../handlers/format";
+import Icon from "Game/common/Icon/Icon.vue";
+import Resources from "./Resources/Resources.vue";
+import Population from "./Population/Population.vue";
+import Defense from "./Defense/Defense.vue";
+export default {
+    props: {
+        id: {
+            type: String,
+            required: true
         },
-        computed: {
-            getPlanetVisualClass () { return "planet__visual--" + this.$store.getters.planetById(this.id).type; },
-            getPlanetTypeToolTip () {
-                return this.$t("planet.typeLabel") +
-                    ": " +
-                    this.$t("planet.types." +
-                    this.$store.getters.planetById(this.id).type);
-            },
-            getPlanetAriaLabel () { return this.$t("planet.typeLabel"); },
-            getPlanetType () { return this.$t("planet.types." + this.$store.getters.planetById(this.id).type); },
-            getPlanetName () {
-                return `${this.starName} - ${latinToRoman(this.$store.getters.planetById(this.id).orbitalIndex)}`;
-            },
-            effectivePopulation () {
-                return this.$store.getters.planetById(this.id).effectivePopulation;
-            }
-        },
-        methods: {
-            resourceSlots () { return this.$store.getters.planetById(this.id).resourceSlots; }
-        },
-        components: {
-            Resources,
-            Icon,
-            Defense,
-            Population
+        starName: {
+            type: String,
+            required: true
         }
-    };
+    },
+    computed: {
+        getPlanetVisualClass () { return "planet__visual--" + this.$store.getters.planetById(this.id).type; },
+        getPlanetTypeToolTip () {
+            return this.$t("planet.typeLabel") +
+                ": " +
+                this.$t("planet.types." +
+                this.$store.getters.planetById(this.id).type);
+        },
+        getPlanetAriaLabel () { return this.$t("planet.typeLabel"); },
+        getPlanetType () { return this.$t("planet.types." + this.$store.getters.planetById(this.id).type); },
+        getPlanetName () {
+            return `${this.starName} - ${latinToRoman(this.$store.getters.planetById(this.id).orbitalIndex)}`;
+        },
+        effectivePopulation () {
+            return this.$store.getters.planetById(this.id).effectivePopulation;
+        }
+    },
+    methods: {
+        resourceSlots () { return this.$store.getters.planetById(this.id).resourceSlots; }
+    },
+    components: {
+        Resources,
+        Icon,
+        Defense,
+        Population
+    }
+};
 </script>
 
 <template>
     <div class="planet">
 
         <div class="planet__orbit">
-            <aside class="planet__visual"
-                   v-bind:class="getPlanetVisualClass"
-                   :title="getPlanetTypeToolTip"
-                   :aria-label="getPlanetAriaLabel">{{ getPlanetType }}</aside>
+            <aside
+                class="planet__visual"
+                :class="getPlanetVisualClass"
+                :title="getPlanetTypeToolTip"
+                :aria-label="getPlanetAriaLabel">{{ getPlanetType }}</aside>
         </div>
 
         <div class="planet__data">
-            <div class="planet__name"
-                 :label="$t('planet.name')"
-                 :title="$t('planet.name')">{{getPlanetName}}</div>
-            <population v-if="effectivePopulation > 0"
-                        :planetId="id"
-                        :starName="starName"/>
-            <resources v-if="resourceSlots().length"
-                       :resources="resourceSlots()"
-                       :planetId="id"
-                       :planetName="getPlanetName" />
-            <defense :planetId="id"
-                     :starName="starName" />
+            <div
+                class="planet__name"
+                :label="$t('planet.name')"
+                :title="$t('planet.name')">{{ getPlanetName }}</div>
+            <population
+                v-if="effectivePopulation > 0"
+                :planet-id="id"
+                :star-name="starName"/>
+            <resources
+                v-if="resourceSlots().length"
+                :resources="resourceSlots()"
+                :planet-id="id"
+                :planet-name="getPlanetName" />
+            <defense
+                :planet-id="id"
+                :star-name="starName" />
         </div>
 
     </div>

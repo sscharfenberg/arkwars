@@ -1,5 +1,9 @@
 # Changelog
 
+`11.02.2018`
+- [x] Switched from `eslint-plugin-html` to `eslint-plugin-vue`. Reformatted/refactored all .vue components so they follow eslints vue-rules.
+- [x] bumped a few dependencies.
+
 `04.02.2018`
 - [x] Refactored Modals so the styles are app-global. Adjusted styling a bit.
 - [x] small improvements: changed modal styling; pdu build is only shown if there are slots left, changed pdu display from dots to number (consistency, we use dots for turns).

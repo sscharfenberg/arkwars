@@ -1,25 +1,26 @@
 <script>
-    /*******************************************************************************************************************
-     * Button that fetches game data
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    import Spinner from "Game/common/Spinner/Spinner.vue";
-    export default {
-        components: {
-            Icon,
-            Spinner
-        },
-        computed: {
-            fetching () { return this.$store.getters.fetchingGameDataFromApi; }
-        },
-        methods: {
-            fetchGameData () { return this.$store.dispatch("FETCH_GAMEDATA_FROM_API", {area: "empire"}); }
-        }
-    };
+/*******************************************************************************************************************
+ * Button that fetches game data
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+import Spinner from "Game/common/Spinner/Spinner.vue";
+export default {
+    components: {
+        Icon,
+        Spinner
+    },
+    computed: {
+        fetching () { return this.$store.getters.fetchingGameDataFromApi; }
+    },
+    methods: {
+        fetchGameData () { return this.$store.dispatch("FETCH_GAMEDATA_FROM_API", {area: "empire"}); }
+    }
+};
 </script>
 
 <template>
-    <button @click="fetchGameData"
+    <button
+        @click="fetchGameData"
         :disabled="fetching"
         :aria-disabled="fetching"
         :aria-expanded="fetching"
@@ -31,7 +32,9 @@
             {{ $t("common.header.refreshGameDataBtn.fetching") }} ...
         </span>
         <span v-else>
-            <icon class="refresh-icon" name="sync" />
+            <icon
+                class="refresh-icon"
+                name="sync" />
             {{ $t("common.header.refreshGameDataBtn.fetch") }}
         </span>
     </button>

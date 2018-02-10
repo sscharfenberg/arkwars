@@ -1,25 +1,28 @@
 <script>
-    /*******************************************************************************************************************
-     * List all my stars
-     * this component lists the stars
-     ******************************************************************************************************************/
-    import Star from "./Star.vue";
-    export default {
-        computed: {
-            stars: function () {
-                return this.$store.getters.stars;
-            }
-        },
-        components: {
-            Star
+/*******************************************************************************************************************
+ * List all my stars
+ * this component lists the stars
+ ******************************************************************************************************************/
+import Star from "./Star.vue";
+export default {
+    computed: {
+        stars: function () {
+            return this.$store.getters.stars;
         }
-    };
+    },
+    components: {
+        Star
+    }
+};
 </script>
 
 <template>
     <ul v-if="stars.length > 0">
-        <li v-for="star in stars">
-            <star :id="star.id"
+        <li
+            v-for="star in stars"
+            :key="star.id">
+            <star
+                :id="star.id"
                 :name="star.name"
                 :coord-x="star.coordX"
                 :coord-y="star.coordY"

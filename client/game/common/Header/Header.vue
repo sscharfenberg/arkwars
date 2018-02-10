@@ -1,47 +1,53 @@
 <script>
-    /*******************************************************************************************************************
-     * Common Header Component
-     ******************************************************************************************************************/
-    import FetchGameDataButton from "./FetchGameDataButton.vue";
-    import Resource from "./Resource.vue";
-    export default {
-        props: {
-            areaTitle: {
-                type: String,
-                required: true
-            },
-            area: {
-                type: String,
-                required: true
-            }
+/*******************************************************************************************************************
+ * Common Header Component
+ ******************************************************************************************************************/
+import FetchGameDataButton from "./FetchGameDataButton.vue";
+import Resource from "./Resource.vue";
+export default {
+    props: {
+        areaTitle: {
+            type: String,
+            required: true
         },
-        components: {
-            "fetch-button": FetchGameDataButton,
-            Resource
-        },
-        computed: {
-            player () { return this.$store.getters.player; },
-            resources () { return this.$store.getters.playerResources; }
+        area: {
+            type: String,
+            required: true
         }
-    };
+    },
+    components: {
+        "fetch-button": FetchGameDataButton,
+        Resource
+    },
+    computed: {
+        player () { return this.$store.getters.player; },
+        resources () { return this.$store.getters.playerResources; }
+    }
+};
 </script>
 
 <template>
-    <header :class="area" class="header">
+    <header
+        :class="area"
+        class="header">
         <fetch-button class="fetch-data-button" />
         <h1>
-            {{areaTitle}}
+            {{ areaTitle }}
             <small v-if="player.name">
-                <br />[{{ player.ticker }}]
+                <br>[{{ player.ticker }}]
                 {{ player.name }}
             </small>
         </h1>
-        <ul class="resources"
+        <ul
+            class="resources"
             v-if="resources.length">
-            <li v-for="resource in resources">
-                <resource :type="resource.type"
-                          :current="resource.current"
-                          :max="resource.max" />
+            <li
+                v-for="resource in resources"
+                :key="resource.type">
+                <resource
+                    :type="resource.type"
+                    :current="resource.current"
+                    :max="resource.max" />
             </li>
         </ul>
     </header>

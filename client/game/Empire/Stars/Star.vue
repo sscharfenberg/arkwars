@@ -1,94 +1,95 @@
 <script>
-    /*******************************************************************************************************************
-     * Star
-     * this component displays a single star
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    import Button from "Game/common/Button/Button.vue";
-    import Spinner from "Game/common/Spinner/Spinner.vue";
-    import Planets from "../Planets/Planets.vue";
-    import { required, minLength, maxLength } from "vuelidate/lib/validators";
-    export default {
-        data: function() {
-            return {
-                starName: this.name
-            };
-        },
-        validations: {
-            starName: {
-                // this needs to be synced with /server/config/index.js
-                required,
-                minLength: minLength(4),
-                maxLength: maxLength(40)
-            }
-        },
-        props: {
-            id: {
-                type: String,
-                required: true
-            },
-            spectral: {
-                type: String,
-                required: true
-            },
-            coordX: {
-                type: Number,
-                required: true
-            },
-            coordY: {
-                type: Number,
-                required: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            planets: {
-                type: Array,
-                required: true
-            }
-        },
-        computed: {
-            spectralClassName () { return `star__spectral--${this.spectral}`; },
-            spectralTypeString () { return this.$t("star.spectralType") + ": " + this.spectral; },
-            isStarNameSaving () {
-                return this.$store.getters.savingStarNameIds.includes(this.id);
-            },
-            isStarNameEditing () { return this.$store.getters.editingStarNameIds.includes(this.id); }
-        },
-        components: {
-            Icon,
-            "btn": Button,
-            Spinner,
-            Planets
-        },
-        methods: {
-            startEditStarName() {
-                this.$store.dispatch("EDIT_STAR_NAME", {id: this.id, editing: true});
-                this.$nextTick( function () {
-                    // wait for next render tick because the element might not be focussable yet
-                    return this.$refs.starNameInput.focus();
-                });
-            },
-            cancelEditStarName() {
-                this.starName = this.name;
-                return this.$store.dispatch("EDIT_STAR_NAME", {id: this.id, editing: false});
-            },
-            saveStarName() {
-                if (this.starName.length < 4) return;
-                return this.$store.dispatch("SAVE_STAR_NAME", {id: this.id, starName: this.starName});
-            }
+/*******************************************************************************************************************
+ * Star
+ * this component displays a single star
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+import Button from "Game/common/Button/Button.vue";
+import Spinner from "Game/common/Spinner/Spinner.vue";
+import Planets from "../Planets/Planets.vue";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+export default {
+    data: function() {
+        return {
+            starName: this.name
+        };
+    },
+    validations: {
+        starName: {
+            // this needs to be synced with /server/config/index.js
+            required,
+            minLength: minLength(4),
+            maxLength: maxLength(40)
         }
-    };
+    },
+    props: {
+        id: {
+            type: String,
+            required: true
+        },
+        spectral: {
+            type: String,
+            required: true
+        },
+        coordX: {
+            type: Number,
+            required: true
+        },
+        coordY: {
+            type: Number,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        planets: {
+            type: Array,
+            required: true
+        }
+    },
+    computed: {
+        spectralClassName () { return `star__spectral--${this.spectral}`; },
+        spectralTypeString () { return this.$t("star.spectralType") + ": " + this.spectral; },
+        isStarNameSaving () {
+            return this.$store.getters.savingStarNameIds.includes(this.id);
+        },
+        isStarNameEditing () { return this.$store.getters.editingStarNameIds.includes(this.id); }
+    },
+    components: {
+        Icon,
+        "btn": Button,
+        Spinner,
+        Planets
+    },
+    methods: {
+        startEditStarName() {
+            this.$store.dispatch("EDIT_STAR_NAME", {id: this.id, editing: true});
+            this.$nextTick( function () {
+                // wait for next render tick because the element might not be focussable yet
+                return this.$refs.starNameInput.focus();
+            });
+        },
+        cancelEditStarName() {
+            this.starName = this.name;
+            return this.$store.dispatch("EDIT_STAR_NAME", {id: this.id, editing: false});
+        },
+        saveStarName() {
+            if (this.starName.length < 4) return;
+            return this.$store.dispatch("SAVE_STAR_NAME", {id: this.id, starName: this.starName});
+        }
+    }
+};
 </script>
 
 <template>
     <article class="star">
         <header class="star__header">
-            <div class="star__spectral"
-                v-bind:class="spectralClassName"
+            <div
+                class="star__spectral"
+                :class="spectralClassName"
                 :aria-label="spectralTypeString"
-                :title="spectralTypeString"></div>
+                :title="spectralTypeString">•</div>
 
             <h1 class="star__name">
                 <span
@@ -96,13 +97,15 @@
                     v-show="!isStarNameEditing">{{ name }}</span>
                 <btn
                     v-show="!isStarNameEditing"
-                    :onClick="startEditStarName"
-                    iconName="edit"
+                    :on-click="startEditStarName"
+                    icon-name="edit"
                     class="star__btn star__btn--edit"
                     :scale="1"
                     :label="$t('star.name.edit')" />
 
-                <div v-show="isStarNameEditing" class="star__edit">
+                <div
+                    v-show="isStarNameEditing"
+                    class="star__edit">
                     <div class="star__name-input">
                         <input
                             v-model="starName"
@@ -114,20 +117,20 @@
                             @keyup.enter="saveStarName"
                             @keyup.esc="cancelEditStarName"
                             @keyup="$v.starName.$touch()"
-                            required />
+                            required>
                     </div>
                     <btn
                         v-show="!isStarNameSaving"
-                        :onClick="saveStarName"
+                        :on-click="saveStarName"
                         class="star__btn star__btn--save"
                         :disable="$v.starName.$error"
-                        iconName="done"
+                        icon-name="done"
                         :scale="1"
                         :label="$t('star.name.save')" />
                     <btn
                         v-show="!isStarNameSaving"
-                        :onClick="cancelEditStarName"
-                        iconName="cancel"
+                        :on-click="cancelEditStarName"
+                        icon-name="cancel"
                         class="star__btn star__btn--cancel"
                         :scale="1"
                         :label="$t('star.name.cancel')" />
@@ -135,16 +138,21 @@
                 </div>
             </h1>
 
-            <aside class="star__location"
-                   :aria-label="$t('star.location')"
-                   :title="$t('star.location')">
+            <aside
+                class="star__location"
+                :aria-label="$t('star.location')"
+                :title="$t('star.location')">
                 <div class="star__location-inner">
-                    <icon class="location-icon" name="location" />
+                    <icon
+                        class="location-icon"
+                        name="location" />
                     <span>{{ coordX }}/{{ coordY }}</span>
                 </div>
             </aside>
         </header>
-        <div v-if="$v.starName.$error" class="error-message">
+        <div
+            v-if="$v.starName.$error"
+            class="error-message">
             <div v-if="!$v.starName.minLength">
                 {{ $t('star.name.validation.minLength', { min: $v.starName.$params.minLength.min }) }}
             </div>
@@ -155,7 +163,9 @@
                 {{ $t('star.name.validation.required') }}
             </div>
         </div>
-        <planets :planets="planets" :starName="name"/>
+        <planets
+            :planets="planets"
+            :star-name="name"/>
     </article>
 </template>
 
@@ -186,6 +196,8 @@
             background-size: 48px;
             border-top-right-radius: 50%;
             border-bottom-right-radius: 50%;
+
+            text-indent: -1000em;
 
             &--O { background-position: 0 0; }
             &--B { background-position: 0 -48px; }

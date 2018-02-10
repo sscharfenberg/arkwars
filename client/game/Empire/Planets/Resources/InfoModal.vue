@@ -1,56 +1,65 @@
 <script>
-    /*******************************************************************************************************************
-     * InfoModal
-     * this component shows some information about the extractor
-     ******************************************************************************************************************/
-    import Button from "Game/common/Button/Button.vue";
-    import Production from "./Production.vue";
-    export default {
-        props: {
-            harvesterId: {
-                type: String,
-                required: true
-            }
-        },
-        components: {
-            "m-button": Button,
-            Production
-        },
-        computed: {
-            harvester () { return this.$store.getters.harvesterById(this.harvesterId); }
-        },
-        methods: {
-            closeModal () { return this.$modal.hide(`harvester-info-${this.harvesterId}`); }
+/*******************************************************************************************************************
+ * InfoModal
+ * this component shows some information about the extractor
+ ******************************************************************************************************************/
+import Button from "Game/common/Button/Button.vue";
+import Production from "./Production.vue";
+export default {
+    props: {
+        harvesterId: {
+            type: String,
+            required: true
         }
-    };
+    },
+    components: {
+        "m-button": Button,
+        Production
+    },
+    computed: {
+        harvester () { return this.$store.getters.harvesterById(this.harvesterId); }
+    },
+    methods: {
+        closeModal () { return this.$modal.hide(`harvester-info-${this.harvesterId}`); }
+    }
+};
 </script>
 
 <template>
-    <modal :name="`harvester-info-${harvesterId}`"
-           :adaptive="true"
-           :width="320"
-           height="auto"
-           :scrollable="true">
+    <modal
+        :name="`harvester-info-${harvesterId}`"
+        :adaptive="true"
+        :width="320"
+        height="auto"
+        :scrollable="true">
         <header class="info__header">
             {{ $t("planet.harvesters.names." + this.harvester.resourceType) }}
         </header>
-        <ul class="info__building" v-if="!harvester.isHarvesting">
+        <ul
+            class="info__building"
+            v-if="!harvester.isHarvesting">
             <li class="info__building-label">
-                {{$t("planet.harvesters.building")}}
-                <div v-for="n in harvester.turnsUntilComplete"
-                     class="info__build-turn"
-                     role="presentation"
-                     aria-hidden="true"
-                     :key="n"></div>
+                {{ $t("planet.harvesters.building") }}
+                <div
+                    v-for="n in harvester.turnsUntilComplete"
+                    class="info__build-turn"
+                    role="presentation"
+                    aria-hidden="true"
+                    :key="n">•</div>
             </li>
             <li class="info__building-turns">
-                {{$t("planet.harvesters.untilComplete", {turns:harvester.turnsUntilComplete})}}
+                {{ $t("planet.harvesters.untilComplete", {turns:harvester.turnsUntilComplete}) }}
             </li>
         </ul>
-        <div class="info__prod" v-if="harvester.isHarvesting">
-            <production :harvesterId="harvesterId" />
+        <div
+            class="info__prod"
+            v-if="harvester.isHarvesting">
+            <production :harvester-id="harvesterId" />
         </div>
-        <m-button class="close-modal" :onClick="closeModal" iconName="cancel" />
+        <m-button
+            class="close-modal"
+            :on-click="closeModal"
+            icon-name="cancel" />
     </modal>
 </template>
 
@@ -107,6 +116,8 @@
             background: linear-gradient(to bottom, palette("state", "warning") 0%, palette("state", "error") 100%);
 
             border-radius: 50%;
+
+            text-indent: -1000em;
 
             &:first-of-type {
                 margin-left: 1rem;

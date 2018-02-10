@@ -1,46 +1,50 @@
 <script>
-    /*******************************************************************************************************************
-     * Costs
-     * this component displays the cost for something
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    export default {
-        props: {
-            costs: {
-                type: Array,
-                required: true
-            }
-        },
-        components: {
-            Icon
-        },
-        computed: {
-            playerResources () { return this.$store.getters.playerResources; }
-        },
-        methods: {
-            isStockpiled ( resourceType ) {
-                if (resourceType === "turns") return true;
-                const cost = this.costs.find( slot => slot.resourceType === resourceType).amount;
-                const stockpile = this.playerResources.filter(resource => resource.type === resourceType).shift().current;
-                return stockpile >= cost;
-            },
-            getAffordableClass ( resourceType ) {
-                if (resourceType === "turns") return "";
-                return this.isStockpiled(resourceType) ? "affordable" : "insufficient-funds";
-            }
+/*******************************************************************************************************************
+ * Costs
+ * this component displays the cost for something
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+export default {
+    props: {
+        costs: {
+            type: Array,
+            required: true
         }
-    };
+    },
+    components: {
+        Icon
+    },
+    computed: {
+        playerResources () { return this.$store.getters.playerResources; }
+    },
+    methods: {
+        isStockpiled ( resourceType ) {
+            if (resourceType === "turns") return true;
+            const cost = this.costs.find( slot => slot.resourceType === resourceType).amount;
+            const stockpile = this.playerResources.filter(resource => resource.type === resourceType).shift().current;
+            return stockpile >= cost;
+        },
+        getAffordableClass ( resourceType ) {
+            if (resourceType === "turns") return "";
+            return this.isStockpiled(resourceType) ? "affordable" : "insufficient-funds";
+        }
+    }
+};
 </script>
 
 <template>
     <ul class="costs">
         <li class="title">{{ $t("common.costs.label") }}:</li>
-        <li class="cost"
+        <li
+            class="cost"
             v-for="cost in costs"
             :class="getAffordableClass(cost.resourceType)"
-            :aria-label="$t('common.costs.ariaLabel', {type: $t('common.resourceTypes.'+cost.resourceType)})">
+            :aria-label="$t('common.costs.ariaLabel', {type: $t('common.resourceTypes.'+cost.resourceType)})"
+            :key="cost.resourceType">
             {{ cost.amount }}
-            <icon :name="'res-'+cost.resourceType" :size="1" />
+            <icon
+                :name="'res-'+cost.resourceType"
+                :size="1" />
         </li>
     </ul>
 </template>

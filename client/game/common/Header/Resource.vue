@@ -1,50 +1,53 @@
 <script>
-    /*******************************************************************************************************************
-     * Resource Component
-     * this componenet displays a single resource
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    export default {
-        props: {
-            type: {
-                type: String,
-                required: true
-            },
-            current: {
-                type: Number,
-                required: true
-            },
-            max: {
-                type: Number,
-                required: true
-            }
+/*******************************************************************************************************************
+ * Resource Component
+ * this componenet displays a single resource
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+export default {
+    props: {
+        type: {
+            type: String,
+            required: true
         },
-        components: {
-            Icon
+        current: {
+            type: Number,
+            required: true
         },
-        computed: {
-            getResourceBarWidth () { return `${100 - (this.current / this.max) * 100}%`; },
-            getResourceTypeIcon () { return "res-" + this.type; },
-            getProgressBarPct () { return Math.round(this.current / this.max * 100); },
-            getFullTypeLabel () {
-                return `${this.$t("common.resourceTypes.label")}: ${this.$t("common.resourceTypes." + this.type)}`;
-            }
+        max: {
+            type: Number,
+            required: true
         }
-    };
+    },
+    components: {
+        Icon
+    },
+    computed: {
+        getResourceBarWidth () { return `${100 - (this.current / this.max) * 100}%`; },
+        getResourceTypeIcon () { return "res-" + this.type; },
+        getProgressBarPct () { return Math.round(this.current / this.max * 100); },
+        getFullTypeLabel () {
+            return `${this.$t("common.resourceTypes.label")}: ${this.$t("common.resourceTypes." + this.type)}`;
+        }
+    }
+};
 </script>
 
 <template>
-    <div class="res"
-         :title="getFullTypeLabel"
-         :aria-label="getFullTypeLabel">
-        <div class="res__bar"
+    <div
+        class="res"
+        :title="getFullTypeLabel"
+        :aria-label="getFullTypeLabel">
+        <div
+            class="res__bar"
             :style="{right: getResourceBarWidth}"
             role="progressbar"
             aria-valuemin="0"
             aria-valuemax="100"
             :aria-valuenow="getProgressBarPct">{{ getProgressBarPct + "%" }}</div>
         <div class="res__type">
-            <icon :name="getResourceTypeIcon"
+            <icon
+                :name="getResourceTypeIcon"
                 class="res__icon"
                 aria-hidden="true" />
         </div>
@@ -93,4 +96,3 @@
         }
     }
 </style>
-

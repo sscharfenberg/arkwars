@@ -1,48 +1,52 @@
 <script>
-    /*******************************************************************************************************************
-     * Defense
-     * this component shows a Defense summary and opens the detail window
-     ******************************************************************************************************************/
-    import Icon from "Game/common/Icon/Icon.vue";
-    import Details from "./DefenseDetails.vue";
-    export default {
-        props: {
-            planetId: {
-                type: String,
-                required: true
-            },
-            starName: {
-                type: String,
-                required: true,
-            }
+/*******************************************************************************************************************
+ * Defense
+ * this component shows a Defense summary and opens the detail window
+ ******************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
+import Details from "./DefenseDetails.vue";
+export default {
+    props: {
+        planetId: {
+            type: String,
+            required: true
         },
-        components: {
-            Icon,
-            "defense-details": Details
-        },
-        computed: {
-            pdus () { return this.$store.getters.pdusByPlanetId(this.planetId); },
-            activePdus () { return this.$store.getters.pdusByPlanetId(this.planetId).filter(pdu => pdu.isActive); },
-            btnClass () { return this.activePdus.length > 0 ? "military" : "civilian"; }
-        },
-        methods: {
-            openDetails () { return this.$modal.show(`defense-${this.planetId}`); }
+        starName: {
+            type: String,
+            required: true,
         }
-    };
+    },
+    components: {
+        Icon,
+        "defense-details": Details
+    },
+    computed: {
+        pdus () { return this.$store.getters.pdusByPlanetId(this.planetId); },
+        activePdus () { return this.$store.getters.pdusByPlanetId(this.planetId).filter(pdu => pdu.isActive); },
+        btnClass () { return this.activePdus.length > 0 ? "military" : "civilian"; }
+    },
+    methods: {
+        openDetails () { return this.$modal.show(`defense-${this.planetId}`); }
+    }
+};
 </script>
 
 <template>
     <div class="pdu">
-        <button class="pdu__btn"
-                :class="btnClass"
-                @click="openDetails()">
-            <icon class="pdu__icon" name="pdu" />
+        <button
+            class="pdu__btn"
+            :class="btnClass"
+            @click="openDetails()">
+            <icon
+                class="pdu__icon"
+                name="pdu" />
             <span v-if="activePdus.length">
-                {{activePdus.length}}
+                {{ activePdus.length }}
             </span>
         </button>
-        <defense-details :planetId="planetId"
-                         :starName="starName" />
+        <defense-details
+            :planet-id="planetId"
+            :star-name="starName" />
     </div>
 </template>
 

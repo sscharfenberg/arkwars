@@ -1,58 +1,59 @@
 <script>
-    /*******************************************************************************************************************
-     * Spinner
-     * shamelessly taken from https://github.com/sergeyloysha/vue-spinner-component/ and simplified
-     ******************************************************************************************************************/
-    export default {
-        props: {
-            status: {
-                type: Boolean,
-                default: true
-            },
-            rotation: {
-                type: Boolean,
-                default: true
-            },
-            size: {
-                type: Number,
-                default: 24
-            },
-            depth: {
-                type: Number,
-                default: 4
-            },
-            speed: {
-                type: Number,
-                default: 0.8
-            }
+/*******************************************************************************************************************
+ * Spinner
+ * shamelessly taken from https://github.com/sergeyloysha/vue-spinner-component/ and simplified
+ ******************************************************************************************************************/
+export default {
+    props: {
+        status: {
+            type: Boolean,
+            default: true
         },
-        data() {
-            return {
-                rotationAnimations: ["forward", "backward"],
-                sizeUnits: "px",
-                timeUnits: "s"
-            };
+        rotation: {
+            type: Boolean,
+            default: true
         },
-        computed: {
-            spinnerSize () { return this.size + this.sizeUnits; },
-            spinnerDepth () { return this.depth + this.sizeUnits; },
-            spinnerSpeed () { return this.speed + this.timeUnits; },
-            spinnerStyle () {
-                return {
-                    width: this.spinnerSize,
-                    height: this.spinnerSize,
-                    borderWidth: this.spinnerDepth,
-                    animationDuration: this.spinnerSpeed
-                };
-            }
+        size: {
+            type: Number,
+            default: 24
+        },
+        depth: {
+            type: Number,
+            default: 4
+        },
+        speed: {
+            type: Number,
+            default: 0.8
         }
-    };
+    },
+    data() {
+        return {
+            rotationAnimations: ["forward", "backward"],
+            sizeUnits: "px",
+            timeUnits: "s"
+        };
+    },
+    computed: {
+        spinnerSize () { return this.size + this.sizeUnits; },
+        spinnerDepth () { return this.depth + this.sizeUnits; },
+        spinnerSpeed () { return this.speed + this.timeUnits; },
+        spinnerStyle () {
+            return {
+                width: this.spinnerSize,
+                height: this.spinnerSize,
+                borderWidth: this.spinnerDepth,
+                animationDuration: this.spinnerSpeed
+            };
+        }
+    }
+};
 </script>
 
 <template>
-    <div class="spinner"
+    <div
+        class="spinner"
         v-show="status"
-        :style="spinnerStyle"></div>
+        :style="spinnerStyle">&nbsp;</div>
 </template>
 
 <style lang="scss" scoped>
@@ -71,6 +72,8 @@
             palette("grey", "mystic")
             palette("grey", "mystic")
             palette("brand", "viking");
+
+        text-indent: -1000em;
 
         animation-name: forward;
         animation-timing-function: cubic-bezier(0.15, 0.64, 0.83, 0.38), steps(4), linear;
