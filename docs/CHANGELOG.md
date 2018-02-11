@@ -1,7 +1,7 @@
 # Changelog
 
-`11.02.2018`
-- [x] Switched from `eslint-plugin-html` to `eslint-plugin-vue`. Reformatted/refactored all .vue components so they follow eslints vue-rules.
+`11.02.2018 - @0.0.5`
+- [x] Switched from `eslint-plugin-html` to `eslint-plugin-vue`. Reformatted/refactored all .vue components so they follow eslints vue-rules. Cleaner sourcecode, hooray!
 - [x] bumped a few dependencies.
 - [x] added `Summary` to Empire - shows the number of produced resources per type and turn, as well as food consumption and total population. Realized with grid layout because i want to :)
 - [x] added starting colony population to the planet with the most resources:
@@ -32,7 +32,7 @@
 - [x] holiday two-week sprint is over -.- 
 
 
-`18.01.2018`
+`18.01.2018 - @0.0.4`
 - [x] Refactored `Construction` Component - it now includes the title, a (new) toggle list of PDU types, and the form-rows for each type. Previously, the component was rendered once for each type, but with that the tab-like mechanic was not possible.
 - [x] Added "Is Planet Constructing" mechanics, similar to isStarNameSaving with the planetid in a state array.
 - [x] Max PDU value is now enforced (tmp: 10), but it is still not clear how this value will be determined - techlevel, population, planet type?

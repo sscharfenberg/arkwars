@@ -1,7 +1,7 @@
 {
     "name": "arkwars",
     "description": "Arkwars - a strategic turn-based game of galactic conquest.",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "url": "https://arkwars.io",
     "author": {
         "name": "Sven Scharfenberg",
