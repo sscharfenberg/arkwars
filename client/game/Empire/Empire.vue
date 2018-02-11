@@ -4,10 +4,12 @@
  ******************************************************************************************************************/
 import Header from "Game/common/Header/Header.vue";
 import Stars from "./Stars/Stars.vue";
+import Summary from "./Summary/Summary.vue";
 export default {
     components: {
         "app-header": Header,
-        Stars
+        Stars,
+        Summary
     }
 };
 </script>
@@ -17,6 +19,7 @@ export default {
         <app-header
             :area-title="$t('title')"
             area="empire" />
+        <Summary />
         <stars />
         <vue-snotify />
         TODO: reports? statistics? show citadel?

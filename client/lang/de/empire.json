@@ -5,6 +5,16 @@
         "fleets": "Flotten",
         "ships": "Schiffe"
     },
+    "summary": {
+        "resources": {
+            "production": "durch {num} Ernter",
+            "foodConsumption": "Nahrungsverbrauch"
+        },
+        "population": {
+            "label": "Bevölkerung",
+            "value": "Bevölkerung in {numColonies} Kolonie(en)"
+        }
+    },
     "star": {
         "spectralType": "Spektralklasse",
         "name": {

@@ -5,6 +5,16 @@
         "fleets": "Fleets",
         "ships": "Ships"
     },
+    "summary": {
+        "resources": {
+            "production": "from {num} harvesters",
+            "foodConsumption": "food consumption"
+        },
+        "population": {
+            "label": "Population",
+            "value": "population in {numColonies} colonies"
+        }
+    },
     "star": {
         "spectralType": "Spectral type",
         "name": {

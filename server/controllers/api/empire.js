@@ -55,26 +55,22 @@ exports.getGameData = async (req, res) => {
             {
                 type: "energy",
                 current: player.resources.energy.current,
-                max: player.resources.energy.max,
-                lastChange: player.resources.energy.lastChange
+                max: player.resources.energy.max
             },
             {
                 type: "food",
                 current: player.resources.food.current,
-                max: player.resources.food.max,
-                lastChange: player.resources.food.lastChange
+                max: player.resources.food.max
             },
             {
                 type: "minerals",
                 current: player.resources.minerals.current,
-                max: player.resources.minerals.max,
-                lastChange: player.resources.minerals.lastChange
+                max: player.resources.minerals.max
             },
             {
                 type: "research",
                 current: player.resources.research.current,
-                max: player.resources.research.max,
-                lastChange: player.resources.research.lastChange
+                max: player.resources.research.max
             }
         ],
         // avoid specific properties on the star and add an array of planetids

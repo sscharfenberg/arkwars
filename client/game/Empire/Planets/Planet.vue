@@ -32,11 +32,7 @@ export default {
         getPlanetName () {
             return `${this.starName} - ${latinToRoman(this.$store.getters.planetById(this.id).orbitalIndex)}`;
         },
-        effectivePopulation () {
-            return this.$store.getters.planetById(this.id).effectivePopulation;
-        }
-    },
-    methods: {
+        effectivePopulation () { return this.$store.getters.planetById(this.id).effectivePopulation; },
         resourceSlots () { return this.$store.getters.planetById(this.id).resourceSlots; }
     },
     components: {
@@ -50,7 +46,6 @@ export default {
 
 <template>
     <div class="planet">
-
         <div class="planet__orbit">
             <aside
                 class="planet__visual"
@@ -58,7 +53,6 @@ export default {
                 :title="getPlanetTypeToolTip"
                 :aria-label="getPlanetAriaLabel">{{ getPlanetType }}</aside>
         </div>
-
         <div class="planet__data">
             <div
                 class="planet__name"
@@ -69,15 +63,14 @@ export default {
                 :planet-id="id"
                 :star-name="starName"/>
             <resources
-                v-if="resourceSlots().length"
-                :resources="resourceSlots()"
+                v-if="resourceSlots.length"
+                :resources="resourceSlots"
                 :planet-id="id"
                 :planet-name="getPlanetName" />
             <defense
                 :planet-id="id"
                 :star-name="starName" />
         </div>
-
     </div>
 </template>
 

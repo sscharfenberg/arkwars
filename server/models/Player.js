@@ -58,10 +58,6 @@ const playerSchema = new mongoose.Schema(
                     type: Number,
                     default: resTypes[0].max.start,
                     max: resTypes[0].max.start + resTypes[0].max.increase.steps * resTypes[0].max.increase.by
-                },
-                lastChange: {
-                    type: Number,
-                    default: 0
                 }
             },
             food: {
@@ -74,10 +70,6 @@ const playerSchema = new mongoose.Schema(
                     type: Number,
                     default: resTypes[1].max.start,
                     max: resTypes[1].max.start + resTypes[1].max.increase.steps * resTypes[1].max.increase.by
-                },
-                lastChange: {
-                    type: Number,
-                    default: 0
                 }
             },
             minerals: {
@@ -90,10 +82,6 @@ const playerSchema = new mongoose.Schema(
                     type: Number,
                     default: resTypes[2].max.start,
                     max: resTypes[2].max.start + resTypes[2].max.increase.steps * resTypes[2].max.increase.by
-                },
-                lastChange: {
-                    type: Number,
-                    default: 0
                 }
             },
             research: {
@@ -106,10 +94,6 @@ const playerSchema = new mongoose.Schema(
                     type: Number,
                     default: resTypes[3].max.start,
                     max: resTypes[3].max.start + resTypes[3].max.increase.steps * resTypes[3].max.increase.by
-                },
-                lastChange: {
-                    type: Number,
-                    default: 0
                 }
             }
         }

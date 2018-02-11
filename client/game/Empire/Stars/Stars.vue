@@ -6,9 +6,7 @@
 import Star from "./Star.vue";
 export default {
     computed: {
-        stars: function () {
-            return this.$store.getters.stars;
-        }
+        stars: function () { return this.$store.getters.stars; }
     },
     components: {
         Star
