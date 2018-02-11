@@ -210,6 +210,23 @@ const MUTATIONS = {
                 1
             );
         }
+    },
+
+    /*
+     * Change food consumption of planet
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {Number} payload.consumption
+     */
+    CHANGE_FOOD_CONSUMPTION: (state, payload) => {
+        console.log("committing change food consumption", payload);
+        state.planets.forEach((planet, index) => {
+            if (planet.id === payload.planet) {
+                planet.foodConsumption = payload.consumption;
+                Vue.set(state.planets, index, planet);
+            }
+        });
     }
 };
 

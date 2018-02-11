@@ -155,6 +155,7 @@ const ACTIONS = {
             .then(response => {
                 if (response.status === 200 && response.data && !response.data.error) {
                     DEBUG && console.log("recieved new data from server ", response.data);
+                    ctx.commit("CHANGE_FOOD_CONSUMPTION", {planet: payload.planet, consumption: payload.consumption});
                 }
                 // server has error message ?
                 if (response.data.error) {

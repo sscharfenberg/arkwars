@@ -4,6 +4,9 @@
 - [x] Switched from `eslint-plugin-html` to `eslint-plugin-vue`. Reformatted/refactored all .vue components so they follow eslints vue-rules.
 - [x] bumped a few dependencies.
 - [x] added `Summary` to Empire - shows the number of produced resources per type and turn, as well as food consumption and total population. Realized with grid layout because i want to :)
+- [x] added starting colony population to the planet with the most resources:
+  - when a player enlists to a game
+  - `db.seed` and `db.reseed`
 
 `04.02.2018`
 - [x] Refactored Modals so the styles are app-global. Adjusted styling a bit.

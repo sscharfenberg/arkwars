@@ -91,6 +91,7 @@ const RULES =  {
     ],
     population: {
         bounds: [0, 20], // min, max
+        startingColony: 10, // population of initial starting colony
         food: {
             bounds: [0, 3], // min, max
             default: 1

@@ -175,7 +175,9 @@ const randomPlanet = (gameId, starId, orbitalIndex, npc) => {
                 resourceType: slot.type, // type of the resource
                 slots, // the number of available extractor slots
                 // exact value of remaining resources on the planet
-                value: parseFloat(Math.random() * (slot.potential[1] - slot.potential[0]) + slot.potential[0]).toFixed(2)
+                value: parseFloat(Math.random() * (slot.potential[1] - slot.potential[0]) + slot.potential[0]).toFixed(
+                    2
+                )
             });
         }
     });
@@ -189,6 +191,30 @@ const randomPlanet = (gameId, starId, orbitalIndex, npc) => {
     };
 };
 
+/*
+ * select the player's starting colongy ================================================================================
+ * count resource slots multiplied with resource grade and use this as score. the planet with the most resources becomes
+ * starting colony.
+ * @param {Array} planets - Array of Mongoose.model("Planet")
+ * @returns {Mongoose.ObjectId}
+ *
+ */
+const selectPlayerStartingColony = (planets) => {
+    planets = planets.map(planet => {
+        return {
+            id: planet._id,
+            score: planet.resources.map(res => res.slots * res.value).reduce((accumulator, currentValue) => {
+                return accumulator + currentValue;
+            }, 0)
+        };
+    }).sort((a, b) => {
+        if (a.score < b.score) return 1;
+        if (a.score > b.score) return -1;
+        return 0;
+    });
+    return planets[0].id;
+};
+
 module.exports = {
     normalizeStars,
     randomType,
@@ -196,5 +222,6 @@ module.exports = {
     getStarName,
     systems,
     assignRandomStar,
-    randomPlanet
+    randomPlanet,
+    selectPlayerStartingColony
 };

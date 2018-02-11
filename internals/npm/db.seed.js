@@ -32,7 +32,8 @@ const map = require("../mockdata/mapData");
 const stars = map.stars;
 const planets = map.planets;
 let playerHomeSystems = [];
-
+let pdus = [];
+let harvesters = [];
 
 /*
  * seed database with mock json data
@@ -69,27 +70,17 @@ const seedDatabase = async () => {
  * since maxplayers are determined by available homeSystems (which depends on size and distance)
  * we need to assign them now that stars have been created
  */
-logger.info(
-    `[node] modifying maxplayers for ${chalk.red(games.length)} Games.`
-);
+logger.info(`[node] modifying maxplayers for ${chalk.red(games.length)} Games.`);
 games.forEach(game => {
-    let gameStars = stars.filter(
-        star => star.homeSystem && star.game === game._id
-    );
+    let gameStars = stars.filter(star => star.homeSystem && star.game === game._id);
     game.maxPlayers = gameStars.length;
-    logger.info(
-        `game ${chalk.red("g" + game.number)} set to ${chalk.yellow(
-            gameStars.length
-        )} maxplayers`
-    );
+    logger.info(`game ${chalk.red("g" + game.number)} set to ${chalk.yellow(gameStars.length)} maxplayers`);
 });
 
 /*
  * assign homeSystems to players. this is normally done during enlisting.
  */
-logger.info(
-    `[node] selecting homesystems for ${chalk.red(players.length)} Players.`
-);
+logger.info(`[node] selecting homesystems for ${chalk.red(players.length)} Players.`);
 players.forEach(player => {
     // available stars as homesystem have
     const gameStars = stars.filter(
@@ -101,67 +92,30 @@ players.forEach(player => {
     const homeSystem = seed.assignRandomStar(gameStars);
     playerHomeSystems.push(homeSystem);
     logger.info(
-        `[node] chosen Star ${chalk.yellow(
-            homeSystem.name
-        )} for player ${chalk.red("[" + player.ticker + "]")} ${chalk.cyan(
-            player.name
-        )}`
+        `[node] chosen Star ${chalk.yellow(homeSystem.name)} for player ${chalk.red(
+            "[" + player.ticker + "]"
+        )} ${chalk.cyan(player.name)}`
     );
-    stars.forEach( function(star) {
-        if (
-            player.game === star.game &&
-            star._id === homeSystem._id
-        ) {
+    stars.forEach(function(star) {
+        if (player.game === star.game && star._id === homeSystem._id) {
             star.owner = player._id;
         }
     });
 });
 
-
 /*
- * add random harvesters for testing purposes
+ * add colony to player home systems
  */
-let harvesters = [];
-let pdus = [];
-//playerHomeSystems.forEach( star => {
-//    let starPlanets = planets.filter( planet => planet.star === star._id && planet.resources.length);
-//    const numHarvesters = Math.floor(starPlanets.length / 2);
-//    for (let i = 0; i < numHarvesters; i++ ) {
-//        const randomIndex = Math.floor(Math.random() * starPlanets.length);
-//        const randomPlanet = starPlanets[randomIndex];
-//        let harvester = {
-//            planet: randomPlanet._id,
-//            game: randomPlanet.game,
-//            owner: star.owner,
-//            resourceType: randomPlanet.resources[0].resourceType,
-//            turnsUntilComplete: Math.random() > 0.4 ? 0 : Math.floor(Math.random() * 6)
-//        };
-//        logger.info(`[mockdata] created ${chalk.red(harvester.resourceType)} harvester for star ${chalk.yellow(star.name)} - ${randomPlanet.orbitalIndex}`);
-//        // add PDUs
-//        //const numPdus = Math.floor(Math.random() * 16);
-//        //for (let j = 0; j < numPdus; j++) {
-//        //    let randomType = "";
-//        //    let rolled = Math.random();
-//        //    if (rolled < 0.25) randomType="laser";
-//        //    else if (rolled < 0.50) randomType="plasma";
-//        //    else if (rolled < 0.75) randomType="railgun";
-//        //    else randomType="missile";
-//        //    let pdu = {
-//        //        game: randomPlanet.game,
-//        //        planet: randomPlanet._id,
-//        //        owner: star.owner,
-//        //        pduType: randomType, // tmp
-//        //        turnsUntilComplete: Math.random() > 0.7 ? 0 : Math.floor(Math.random() * 10 + 1)
-//        //    };
-//        //    pdus.push(pdu);
-//        //}
-//        harvesters.push(harvester);
-//        starPlanets.splice(randomIndex, 1);
-//    }
-//});
-
-logger.info(`[mockdata] prepared ${chalk.yellow(pdus.length)} random PDUs.`);
-
+playerHomeSystems.forEach(system => {
+    let starPlanets = planets.filter(planet => planet.star === system._id && planet.resources.length);
+    let colonyId = seed.selectPlayerStartingColony(starPlanets);
+    planets.forEach(function(planet) {
+        if (planet._id === colonyId) {
+            planet.population = 10;
+            logger.info(`[mockdata] assigned starting colony to planet #${colonyId}`);
+        }
+    });
+});
 
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
 mongoose.connect(process.env.DATABASE);

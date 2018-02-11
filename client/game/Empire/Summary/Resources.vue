@@ -13,22 +13,23 @@ export default {
         }
     },
     computed: {
-        resources: function () { return this.$store.getters.playerResources.map(resource => resource.type); },
-        harvesters: function () {
-            return this.$store.getters.harvesters
-                .filter(harvester => harvester.resourceType === this.resType && harvester.isHarvesting);
-        },
         colonies: function () { return this.$store.getters.planets.filter(planet => planet.effectivePopulation > 0); },
         production: function () {
             const baseProduction = harvesterRules.types.find(slot => slot.type === this.resType).baseProduction;
-            return this.harvesters
+            return this.$store.getters.harvesters
+                .filter(harvester => harvester.resourceType === this.resType && harvester.isHarvesting)
                 .map(harvester => Math.floor(harvester.resGrade * baseProduction))
-                .reduce((accumulator, currentValue) => accumulator + currentValue);
+                .reduce((accumulator, currentValue) => { return accumulator + currentValue; }, 0);
         },
         foodConsumption: function () {
-            return this.colonies
+            return this.$store.getters.planets.filter(planet => planet.effectivePopulation > 0)
                 .map(planet => Math.ceil(planet.foodConsumption * planet.population))
-                .reduce((accumulator, currentValue) => accumulator + currentValue);
+                .reduce((accumulator, currentValue) => { return accumulator + currentValue; }, 0);
+        },
+        numHarvesters: function () {
+            return this.$store.getters.harvesters
+                .filter(harvester => harvester.resourceType === this.resType && harvester.isHarvesting)
+                .length;
         }
     },
     components: {
@@ -48,7 +49,7 @@ export default {
         </h3>
         <div class="value">
             <span class="highlight">+{{ production }}</span>
-            {{ $t("summary.resources.production", {num: harvesters.length}) }}
+            {{ $t("summary.resources.production", {num: numHarvesters}) }}
             <span v-if="resType === 'food'">
                 <br>
                 <span class="negative">-{{ foodConsumption }}</span>

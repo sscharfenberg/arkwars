@@ -28,7 +28,7 @@ router.post(
     catchErrors(gameController.checkCanEnlist), // 1. check if the game can be enlisted to
     catchErrors(gameController.validateEnlistForm), // 2. validate form data
     catchErrors(gameController.enlistUser), // 3. enlist user
-    catchErrors(gameController.assignHomeSystem) // 4. assign an available home system to the user.
+    catchErrors(gameController.prepareHomeSystem) // 4. assign an available home system to the user.
 );
 
 // switch to game

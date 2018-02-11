@@ -10,6 +10,7 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const Game = mongoose.model("Game");
 const Player = mongoose.model("Player");
+const Planet = mongoose.model("Planet");
 const User = mongoose.model("User");
 const Star = mongoose.model("Star");
 const logger = require("../../handlers/logger/console");
@@ -136,25 +137,32 @@ exports.enlistUser = async (req, res, next) => {
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  */
-exports.assignHomeSystem = async (req, res) => {
+exports.prepareHomeSystem = async (req, res) => {
     const game = await Game.findById(req._player.game).populate("stars");
     const availableStars = game.stars.filter(star => {
         return star.homeSystem && !star.owner;
     });
     logger.info(`[App] select random star from ${chalk.yellow(availableStars.length)} available stars.`);
     const homeSystem = seed.assignRandomStar(availableStars);
+    const homePlanets = await Planet.find({star: homeSystem._id});
     logger.info(
         `[App] Decided on using Star ${chalk.cyan(homeSystem.name)} as home system for player ${chalk.magenta(
             req._player.name
         )}.`
     );
-    // TODO: seed home system - assign population to default star
-    const updatatedStar = await Star.findOneAndUpdate(
+    const colony = seed.selectPlayerStartingColony(homePlanets);
+    const starPromise = Star.findOneAndUpdate(
         {_id: homeSystem.id},
         {$set: {owner: req._player._id}},
-        {new: true, runValidators: true, context: "query"}
+        {new: true, runValidators: true}
     );
-    if (updatatedStar) {
+    const planetPromise = Planet.findOneAndUpdate(
+        {_id: colony},
+        {$set: {population: cfg.planets.population.startingColony}},
+        {new: true, runValidators: true}
+    );
+    const [updatedStar, updatedPlanet] = await Promise.all([starPromise, planetPromise]);
+    if (updatedStar && updatedPlanet) {
         logger.success(
             `[App] user ${chalk.red("@" + req.user.username)} enlisted to ${chalk.yellow("g" + req.params.game)}.`
         );
@@ -279,7 +287,7 @@ exports.withdrawEnlistedUser = async (req, res) => {
         await User.findByIdAndUpdate(
             req.user._id,
             {$set: {selectedPlayer: null}},
-            {new: false, runValidators: true, context: "query"}
+            {new: false, runValidators: true}
         );
     }
     // remove ownership of stars if necessary
