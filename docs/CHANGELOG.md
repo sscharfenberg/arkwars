@@ -1,5 +1,8 @@
 # Changelog
 
+`18.02.2018`
+- [x] bumped dependencies, free weekend ^.^
+
 `11.02.2018 - @0.0.5`
 - [x] Switched from `eslint-plugin-html` to `eslint-plugin-vue`. Reformatted/refactored all .vue components so they follow eslints vue-rules. Cleaner sourcecode, hooray!
 - [x] bumped a few dependencies.
