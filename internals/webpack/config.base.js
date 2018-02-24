@@ -109,7 +109,7 @@ const webpackConfig = {
                 exclude: /node_modules/,
                 loader: require.resolve("babel-loader"),
                 options: {
-                    extends: path.join(cfg.projectRoot, "internals", "config", ".babelrc"),
+                    extends: path.join(cfg.projectRoot, ".babelrc"),
                     cacheDirectory: path.join(cfg.projectRoot, ".babel-cache")
                 }
             },
