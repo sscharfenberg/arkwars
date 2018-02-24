@@ -1,7 +1,7 @@
 import {mount} from "vue-test-utils";
 import Icon from "./Icon.vue";
 
-describe("Icon.test.js", () => {
+describe("Icon.vue", () => {
     let cmp;
 
     beforeEach(() => {
@@ -16,7 +16,7 @@ describe("Icon.test.js", () => {
         expect(cmp.vm.$el).toMatchSnapshot();
     });
 
-    it('uses class="large" size=3', () => {
+    it("uses class=\"large\" for size=3", () => {
         expect(cmp.find("svg").attributes().class).toMatch(/large/);
     });
 });

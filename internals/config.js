@@ -9,7 +9,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const moment = require("moment");
-const pkg = require("../../package.json");
+const pkg = require("../package.json");
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -84,7 +84,7 @@ module.exports = {
             in: [path.join(PROJECTROOT, "client", "theme", "*.scss")],
             out: BUILDDIR,
             lint: path.join(PROJECTROOT, "client", "theme", "**/*.scss"),
-            styleLintRc: path.join(PROJECTROOT, "internals", "config", ".stylelintrc")
+            styleLintRc: path.join(PROJECTROOT, ".stylelintrc")
 
         },
         fonts: {
@@ -103,7 +103,7 @@ module.exports = {
             in: [path.join(PROJECTROOT, "client", "game", "common", "Icon", "*.svg")],
             out: path.join(BUILDDIR, "images")
         },
-        eslintrc: path.join(PROJECTROOT, "internals", "config", ".eslintrc"),
+        eslintrc: path.join(PROJECTROOT, ".eslintrc"),
         cleanup: [
             "server/public/**",
             "server/logs/**",

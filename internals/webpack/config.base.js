@@ -206,7 +206,7 @@ const webpackConfig = {
             files: ["**/*.vue"],
             syntax: "scss",
             reporters: [{ formatter: "verbose", console: true }],
-            configFile: path.join(cfg.projectRoot, "internals", "config", ".stylelintrc")
+            configFile: path.join(cfg.projectRoot, ".stylelintrc")
         })
     ],
 

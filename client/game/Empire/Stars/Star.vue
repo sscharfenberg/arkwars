@@ -16,7 +16,7 @@ export default {
     },
     validations: {
         starName: {
-            // this needs to be synced with /server/config/index.js
+            // this needs to be synced with /server/config/config.js
             required,
             minLength: minLength(4),
             maxLength: maxLength(40)

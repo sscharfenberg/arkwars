@@ -1,5 +1,9 @@
 # Changelog
 
+`24.02.2018`
+- [x] moved `dotfiles` to project root - `.eslintrc`, `.babelrc`, `.stylelintrc`. It is currently way to annoying to move these files elsewhere, latest culprit is babel-jest and babelrc location. So they now make the project root a bit uglier, but it should avoid tooling problems.
+- [x] added unit tests via `Jest`. Started with unit tests for stateless components - `Icon`, `Button`.
+
 `18.02.2018`
 - [x] bumped dependencies, free weekend ^.^
 

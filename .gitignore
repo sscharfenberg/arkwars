@@ -1,6 +1,7 @@
 .idea
 .env
 .babel-cache
+coverage
 node_modules
 webpack-bundles.report.html
 webpack-stats.json

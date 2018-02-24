@@ -25,6 +25,7 @@
         "js.prod": "node internals/npm/js.prod.js",
         "js.dev": "node internals/npm/js.dev.js",
         "test": "jest --no-cache --watch",
+        "test.coverage": "jest --no-cache --watch --coverage",
         "app.styles.build": "gulp styles:build",
         "app.styles.lint": "gulp styles:lint",
         "app.fonts.sync": "gulp sync:fonts",
@@ -173,7 +174,11 @@
     },
     "jest": {
         "moduleNameMapper": {
-            "^vue$": "vue/dist/vue.common.js"
+            "^vue$": "vue/dist/vue.common.js",
+            "^Theme/(.*)$": "<rootDir>/client/theme/$1",
+            "^Game/(.*)$": "<rootDir>/client/game/$1",
+            "^Config/(.*)$": "<rootDir>/client/config/$1",
+            "^Shared/(.*)$": "<rootDir>/shared/$1"
         },
         "moduleFileExtensions": [
             "js",

@@ -151,7 +151,7 @@ export default {
 
             text-indent: -1000em;
 
-            // these need to be synced with /server/config/index.js
+            // these need to be synced with /server/config/config.js
             &.gas { background-position: 0 -48px; }
             &.ice { background-position: 0 -96px; }
             &.iron { background-position: 0 -144px; }
