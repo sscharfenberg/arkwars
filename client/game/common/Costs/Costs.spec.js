@@ -5,6 +5,9 @@ import VueI18n from "vue-i18n";
 import Vuex from "vuex";
 import {shallow, createLocalVue} from "@vue/test-utils";
 import Costs from "./Costs.vue";
+/*
+ * mock data
+ */
 const localVue = createLocalVue();
 localVue.use(VueI18n);
 localVue.use(Vuex);
@@ -39,6 +42,9 @@ const store = new Vuex.Store({
     }
 });
 
+/*
+ * test suite
+ */
 describe("Costs.vue", () => {
     let cmp;
 

@@ -30,7 +30,9 @@ export default {
     <header
         :class="area"
         class="header">
-        <fetch-button class="fetch-data-button" />
+        <fetch-button
+            class="fetch-data-button"
+            :area="area" />
         <h1>
             {{ areaTitle }}
             <small v-if="player.name">

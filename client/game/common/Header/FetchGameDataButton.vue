@@ -5,6 +5,12 @@
 import Icon from "Game/common/Icon/Icon.vue";
 import Spinner from "Game/common/Spinner/Spinner.vue";
 export default {
+    props: {
+        area: {
+            type: String,
+            required: true
+        }
+    },
     components: {
         Icon,
         Spinner
@@ -13,7 +19,7 @@ export default {
         fetching () { return this.$store.getters.fetchingGameDataFromApi; }
     },
     methods: {
-        fetchGameData () { return this.$store.dispatch("FETCH_GAMEDATA_FROM_API", {area: "empire"}); }
+        fetchGameData () { return this.$store.dispatch("FETCH_GAMEDATA_FROM_API", {area: this.area}); }
     }
 };
 </script>
