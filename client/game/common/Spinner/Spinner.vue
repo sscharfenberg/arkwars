@@ -26,17 +26,10 @@ export default {
             default: 0.8
         }
     },
-    data() {
-        return {
-            rotationAnimations: ["forward", "backward"],
-            sizeUnits: "px",
-            timeUnits: "s"
-        };
-    },
     computed: {
-        spinnerSize () { return this.size + this.sizeUnits; },
-        spinnerDepth () { return this.depth + this.sizeUnits; },
-        spinnerSpeed () { return this.speed + this.timeUnits; },
+        spinnerSize () { return this.size + "px"; },
+        spinnerDepth () { return this.depth + "px"; },
+        spinnerSpeed () { return this.speed + "s"; },
         spinnerStyle () {
             return {
                 width: this.spinnerSize,
