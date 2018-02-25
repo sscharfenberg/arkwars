@@ -2,6 +2,7 @@
 .env
 .babel-cache
 coverage
+__snapshots__
 node_modules
 webpack-bundles.report.html
 webpack-stats.json

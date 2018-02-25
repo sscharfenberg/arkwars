@@ -21,7 +21,7 @@ export default {
         isStockpiled ( resourceType ) {
             if (resourceType === "turns") return true;
             const cost = this.costs.find( slot => slot.resourceType === resourceType).amount;
-            const stockpile = this.playerResources.filter(resource => resource.type === resourceType).shift().current;
+            const stockpile = this.playerResources.find(resource => resource.type === resourceType).current;
             return stockpile >= cost;
         },
         getAffordableClass ( resourceType ) {
@@ -33,7 +33,9 @@ export default {
 </script>
 
 <template>
-    <ul class="costs">
+    <ul
+        class="costs"
+        v-if="costs.length">
         <li class="title">{{ $t("common.costs.label") }}:</li>
         <li
             class="cost"
