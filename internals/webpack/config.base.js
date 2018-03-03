@@ -157,6 +157,20 @@ const webpackConfig = {
         ]
     },
 
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                common: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "common",
+                    minChunks: 2,
+                    chunks: "all"
+                }
+            }
+        },
+        runtimeChunk: false
+    },
+
     // https://webpack.js.org/configuration/resolve/
     // A resolver is a library which helps in locating a module by its absolute path.
     // A module can be required as a dependency from another module
@@ -192,14 +206,14 @@ const webpackConfig = {
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
-        // https://webpack.js.org/plugins/commons-chunk-plugin
-        // The CommonsChunkPlugin is an opt-in feature that creates a separate file
-        // (known as a chunk), consisting of common modules shared between multiple entry points.
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "common",
-            filename: "common.js",
-            minChunks: 2
-        }),
+        //// https://webpack.js.org/plugins/commons-chunk-plugin
+        //// The CommonsChunkPlugin is an opt-in feature that creates a separate file
+        //// (known as a chunk), consisting of common modules shared between multiple entry points.
+        //new webpack.optimize.CommonsChunkPlugin({
+        //    name: "common",
+        //    filename: "common.js",
+        //    minChunks: 2
+        //}),
 
         // https://github.com/JaKXz/stylelint-webpack-plugin
         new StylelintPlugin({

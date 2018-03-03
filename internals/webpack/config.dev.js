@@ -15,6 +15,10 @@ const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 const cfg = require("../config");
 
 let webpackConfig = merge(baseWebpackConfig, {
+
+    // development enables comments and hint for development and enables the eval devtool
+    mode: "development",
+
     // https://webpack.js.org/configuration/devtool/
     // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
     // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
@@ -42,10 +46,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         }),
 
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
-        new webpack.HotModuleReplacementPlugin(),
-
-        // HMR shows correct file names in console on update.
-        new webpack.NamedModulesPlugin()
+        new webpack.HotModuleReplacementPlugin()
     ]
 });
 

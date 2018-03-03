@@ -32,6 +32,10 @@ require("dotenv").config({
 });
 
 let webpackConfig = merge(baseWebpackConfig, {
+
+    // production enables all kind of optimizations to generate optimized bundles
+    mode: "production",
+
     // https://webpack.js.org/configuration/devtool/
     devtool: "source-map",
 
@@ -78,7 +82,6 @@ let webpackConfig = merge(baseWebpackConfig, {
                     comments: false,
                     beautify: false,
                     safari10: true
-
                 },
                 compress: {
                     warnings: true,
