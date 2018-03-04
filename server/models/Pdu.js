@@ -27,7 +27,7 @@ const pduSchema = new mongoose.Schema({
     // reference to player id
     owner: {
         type: mongoose.Schema.ObjectId,
-        ref: "player"
+        ref: "Player"
     },
 
     // type of resource that is harvested

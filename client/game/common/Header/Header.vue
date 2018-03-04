@@ -29,13 +29,14 @@ export default {
 <template>
     <header
         :class="area"
-        class="header">
+        class="header"
+        v-if="player.name && resources.length">
         <fetch-button
             class="fetch-data-button"
             :area="area" />
         <h1>
             {{ areaTitle }}
-            <small v-if="player.name">
+            <small>
                 <br>[{{ player.ticker }}]
                 {{ player.name }}
             </small>

@@ -41,7 +41,7 @@ const playerSchema = new mongoose.Schema(
         },
 
         /*
-         * global player resources. we define default and max values for all of them
+         * player resources. we define default and max values for all of them
          * so we at least have database errors if something goes wrong.
          * CAUTION: this references resType by index; this needs to be synced to the order of player resTypes
          * the advantage of this object syntax is that we can get certain resources much faster and easier
@@ -96,8 +96,52 @@ const playerSchema = new mongoose.Schema(
                     max: resTypes[3].max.start + resTypes[3].max.increase.steps * resTypes[3].max.increase.by
                 }
             }
-        }
+        },
         // end resources
+
+        /*
+         * tech levels
+         */
+        tech: {
+            plasma: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.initial
+            },
+            railgun: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.initial
+            },
+            missile: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.initial
+            },
+            laser: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.initial
+            },
+            shields: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.initial
+            },
+            armour: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.initial
+            }
+        }
+        // end tech levels
+
     },
     {
         toJSON: {virtuals: true},

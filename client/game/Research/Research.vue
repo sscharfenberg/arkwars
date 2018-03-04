@@ -1,15 +1,11 @@
 <script>
 /*******************************************************************************************************************
- * Empire (entry) Component
+ * Research (entry) Component
  ******************************************************************************************************************/
 import Header from "Game/common/Header/Header.vue";
-import Stars from "./Stars/Stars.vue";
-import Summary from "./Summary/Summary.vue";
 export default {
     components: {
-        "app-header": Header,
-        Stars,
-        Summary
+        "app-header": Header
     }
 };
 </script>
@@ -18,17 +14,13 @@ export default {
     <div>
         <app-header
             :area-title="$t('title')"
-            area="empire" />
-        <Summary />
-        <Stars />
-        <vue-snotify />
-        TODO: reports? statistics? show citadel?
+            area="research" />
+        Research!
     </div>
 </template>
 
 <style lang="scss">
     @import "~vue-snotify/styles/dark";
-    @import "~Theme/components/game/input-range";
 
     // styles for vue-modal
     .v--modal-overlay {

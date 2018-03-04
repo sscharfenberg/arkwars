@@ -1,11 +1,80 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 503.606 503.606">
-    <g transform="rotate(45, 257, 257)">
-        <polygon points="285.374,191.068 285.374,151.082 218.227,151.082 218.227,191.068 204.646,218.23 298.955,218.23 			"/>
-        <rect x="201.441" y="235.015" width="100.721" height="184.656"/>
-        <path d="M270.558,41.682L259.84,5.985C258.774,2.434,255.509,0,251.799,0c-3.702,0-6.975,2.434-8.041,5.984l-10.71,35.697
-            c-9.031,30.107-13.765,61.23-14.512,92.613h66.535C284.323,102.912,279.589,71.789,270.558,41.682z"/>
-        <path d="M294.703,458.164c0.26-0.688,0.537-1.368,0.713-2.09l4.902-19.615h-97.037l4.893,19.615
-            c0.185,0.722,0.453,1.402,0.722,2.09c-4.516,3.794-7.453,9.417-7.453,15.763v8.998c0,11.407,9.275,20.681,20.681,20.681h59.358
-            c11.398,0,20.681-9.275,20.681-20.681v-8.998C302.165,467.581,299.228,461.957,294.703,458.164z"/>
+<svg viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Railgun</title>
+    <desc>"Railgun" by Nizamettin Kocaaga</desc>
+    <defs>
+        <clipPath id="clipPath18" clipPathUnits="userSpaceOnUse">
+            <path d="M 0,24 H 24 V 0 H 0 Z"/>
+        </clipPath>
+        <clipPath id="clipPath34" clipPathUnits="userSpaceOnUse">
+            <path d="m 10.8916,18.1182 h 6.0742 V 5.62305 h -6.0742 z"/>
+        </clipPath>
+        <clipPath id="clipPath54" clipPathUnits="userSpaceOnUse">
+            <path d="M 2.35693,18.0186 H 13.4375 V 14.2095 H 2.35693 Z"/>
+        </clipPath>
+        <clipPath id="clipPath82" clipPathUnits="userSpaceOnUse">
+            <path d="m 22.4473,22.5 h 0.8125 v -2.3569 h -0.8125 z"/>
+        </clipPath>
+        <clipPath id="clipPath114" clipPathUnits="userSpaceOnUse">
+            <path d="M 5.29541,20.6421 H 6.98779 V 18.748 H 5.29541 Z"/>
+        </clipPath>
+    </defs>
+    <g transform="matrix(1.3333333,0,0,-1.3333333,0,32)">
+        <g>
+            <g clip-path="url(#clipPath18)">
+                <g transform="translate(14.4355,21.8027)">
+                    <path style="fill:#604212;fill-opacity:1;fill-rule:nonzero;stroke:none" d="M 0,0 -0.609,-0.08 -4.454,0.465 -5.517,0.304 -5.88,0.225 -12.631,-0.478 c 0,0 -1.064,-0.278 -1.064,-2.119 0,-1.817 1.195,-2.271 1.195,-2.271 l 8.51,0.803 3.869,-0.976 1.489,-7.791 0.479,-2.572 0.187,-0.808 1.762,-0.143 0.081,1.537 z"/>
+                </g>
+                <g transform="translate(16.79,5.7187)">
+                    <path style="fill:#abab8b;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c 0,0 -3.928,0.246 -4.233,0.216 -0.084,0.44 -1.665,11.873 -1.665,11.873 l 3.416,0.31 2.658,-11.246 z"/>
+                </g>
+                <g style="opacity:0.5" clip-path="url(#clipPath34)">
+                    <g transform="translate(16.7744,5.623)">
+                        <path style="fill:#888e91;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c 0,0 -3.912,0.342 -4.218,0.312 -0.084,0.44 -1.665,11.873 -1.665,11.873 l 3.416,0.31 2.658,-11.246 z"/>
+                    </g>
+                </g>
+                <g transform="translate(13.4375,14.8364)">
+                    <path style="fill:#604212;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c 0,0 -9.383,-0.535 -10.316,-0.627 -0.902,0.276 -0.756,2.766 -0.756,2.766 l 10.665,1.043 z"/>
+                </g>
+                <g clip-path="url(#clipPath54)">
+                    <g transform="translate(13.4375,14.8364)">
+                        <path style="fill:#abab8b;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c 0,0 -9.383,-0.535 -10.316,-0.627 -0.902,0.276 -0.756,2.766 -0.756,2.766 l 10.665,1.043 z"/>
+                    </g>
+                </g>
+                <g transform="translate(13.8477,16.4619)">
+                    <path style="fill:#abab8b;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c 0.093,-0.878 -0.104,-1.609 -0.442,-1.633 -0.339,-0.025 -0.692,0.668 -0.787,1.548 -0.095,0.877 0.104,1.608 0.443,1.633 C -0.447,1.572 -0.096,0.878 0,0"/>
+                </g>
+                <g transform="translate(11.6294,21.1382)">
+                    <path style="fill:#abab8b;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 11.215,1.355 -0.041,-2.35 c 0,0 -11.066,-1.39 -11.254,-1.424 -0.189,-0.035 -0.541,0.255 -0.633,1.065 C -0.807,-0.545 -0.476,-0.074 0,0"/>
+                </g>
+                <g transform="translate(23.2578,21.3042)">
+                    <path style="fill:#604212;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c -0.021,-0.651 -0.221,-1.171 -0.442,-1.161 -0.223,0.009 -0.387,0.544 -0.367,1.195 0.024,0.651 0.222,1.172 0.445,1.162 C -0.143,1.187 0.021,0.651 0,0"/>
+                </g>
+                <g style="opacity:0.5" clip-path="url(#clipPath82)">
+                    <g transform="translate(23.2578,21.3042)">
+                        <path style="fill:#604212;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c -0.021,-0.651 -0.221,-1.171 -0.442,-1.161 -0.223,0.009 -0.387,0.544 -0.367,1.195 0.024,0.651 0.222,1.172 0.445,1.162 C -0.143,1.187 0.021,0.651 0,0"/>
+                    </g>
+                </g>
+                <g transform="translate(22.8936,22.5)">
+                    <path style="fill:#abab8b;fill-opacity:1;fill-rule:nonzero;stroke:none" d="M 0,0 C -0.024,0 -0.046,-0.004 -0.071,-0.015 0.138,-0.121 0.282,-0.61 0.263,-1.191 0.244,-1.772 0.065,-2.248 -0.149,-2.337 c 0.025,-0.012 0.047,-0.019 0.071,-0.02 0.222,-0.01 0.421,0.51 0.442,1.161 C 0.385,-0.544 0.222,-0.009 0,0"/>
+                </g>
+                <g transform="translate(8.1265,22.6538)">
+                    <path style="fill:#abab8b;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 -0.057,-3.584 2.283,-9.968 0.78,-1.73 0.083,-1.352 c 0,0 -4.37,0.03 -5.679,-0.533 l -0.028,0.218 0.334,0.378 0.029,0.694 -0.781,1.601 -1.002,13.334 0.251,0.283 z"/>
+                </g>
+                <g transform="translate(8.1265,22.6538)">
+                    <path style="fill:#604212;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 0.861,-0.314 v -3.584 l 2.478,-8.963 1.544,-2.792 0.183,-1.107 c 0,0 -1.782,0.062 -1.977,0 -0.056,0.315 -0.083,1.478 -0.083,1.478 l -0.78,1.73 -2.283,9.968 z"/>
+                </g>
+                <g transform="translate(20.834,3.748)">
+                    <path style="fill:#604212;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c -0.382,0.155 -0.932,0.283 -1.567,0.397 0,0.385 0.002,0.727 0.004,0.868 -0.315,0.409 -0.723,0.409 -0.723,0.409 0,0 -2.089,0.577 -7.638,0.619 -5.55,0.042 -5.949,-0.849 -5.949,-0.849 V 0.53 c -1.441,-0.202 -1.875,-0.425 -1.875,-0.425 l -1.773,-2.637 0.066,-1.216 H 1.759 l -0.02,1.218 c 0,0 -1.483,1.84 -1.739,2.53"/>
+                </g>
+                <g clip-path="url(#clipPath114)">
+                    <g transform="translate(6.9766,19.8174)">
+                        <path  style="fill:#abab8b;fill-opacity:1;fill-rule:nonzero;stroke:none" d="M 0,0 C 0.076,-0.519 -0.237,-0.994 -0.698,-1.062 -1.159,-1.129 -1.594,-0.763 -1.67,-0.245 -1.746,0.273 -1.433,0.75 -0.973,0.817 -0.512,0.884 -0.076,0.519 0,0"/>
+                    </g>
+                </g>
+                <g transform="translate(6.707,19.8013)">
+                    <path style="fill:#604212;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c 0.077,-0.518 -0.237,-0.993 -0.697,-1.062 -0.461,-0.066 -0.896,0.299 -0.972,0.817 -0.077,0.519 0.236,0.995 0.697,1.062 C -0.511,0.884 -0.076,0.518 0,0"/>
+                </g>
+            </g>
+        </g>
     </g>
 </svg>

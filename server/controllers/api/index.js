@@ -116,7 +116,7 @@ exports.gameStatus = async (req, res, next) => {
 exports.getTextStrings = async (req, res) => {
     const slug = `txt-${req.params.locale}-${req.params.area}`;
     logger.info(`[App] delivering client text strings for slug ${slug}`);
-    const textObj = allTexts.filter(obj => obj.slug === slug)[0];
+    const textObj = allTexts.find(obj => obj.slug === slug);
     if (textObj.data) {
         res.json(textObj.data);
     } else {

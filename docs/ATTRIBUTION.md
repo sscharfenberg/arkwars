@@ -13,11 +13,7 @@ https://material.io/icons/
 
 **Resource: Research**: "Nuclear" by Mike Rowe, AU from [the Noun Project](https://thenounproject.com/term/nuclear/75368/), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
-**Weapontype: Missiles**: "Missile Launcher" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/delapouite/originals/missile-launcher.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
-
-**Weapontype: Laser**: "Tesla Turret" by [Lorc](http://lorcblog.blogspot.com/) from [game-icons.net](http://game-icons.net/lorc/originals/tesla-turret.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
-
-**Weapontype: Plasma**: "Ringed Beam" by [Lorc](http://lorcblog.blogspot.com/) from [game-icons.net](http://game-icons.net/lorc/originals/ringed-beam.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Weapontypes**: `missile`, `laser`, `plasma`, `railgun` by [Nizamettin Kocaaga](http://www.effectdesign.de/). Used with explicit permission.
 
 **PDU**: "Defense Satellite" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/delapouite/originals/defense-satellite.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 

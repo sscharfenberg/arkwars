@@ -4,7 +4,8 @@
 - [x] bumped dependencies. Switched to `webpack`@4 and refactored build scripts accordingly. Some webpack plugins where not yet ready for webpack4, so I used instructions from [Ivan Erceg](https://coderwall.com/p/q_gh-w/fork-and-patch-npm-moduels-hosted-on-github) to link to forks with fixes for two plugins. Using these forks until the fixes land upstream.
     - `stylelint-webpack-plugin`: [Github Issue](https://github.com/JaKXz/stylelint-webpack-plugin/issues/137) - [Fork with fix](https://github.com/waterfoul/stylelint-webpack-plugin/commit/0f46e8fcc857db10e01b84dbe4b378e3956a9379)
     - `html-webpack-harddisk-plugin`: [Github Issue](https://github.com/jantimon/html-webpack-harddisk-plugin/issues/12) - [Fork with fix](https://github.com/sscharfenberg/html-webpack-harddisk-plugin/commit/968d2538b004f2fc257e6cceb997954f07891d05)
-    
+- [x] some layout work - added Nizza's Icons for weapontypes (much appreciated!), changed defense construction active classes.
+- [x] started preparations for research and tech levels - added techlevels to player, created `Research` model, added some researches to `db.seed`.    
 
 `25.02.2018`
 - [x] moved `dotfiles` to project root - `.eslintrc`, `.babelrc`, `.stylelintrc`. It is currently way to annoying to move these files elsewhere, latest culprit is babel-jest and babelrc location. So they now make the project root a bit uglier, but it should avoid tooling problems.

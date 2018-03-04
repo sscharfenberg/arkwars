@@ -40,7 +40,8 @@ router.post("/user/closedrawer", catchErrors(userController.closeDrawer));
 // get language and area specific textstrings
 router.get("/textstrings/:locale/:area", apiController.getTextStrings);
 
-// api/game/empire routes
+// api/game routes
 router.use("/game/empire/", require("./empire"));
+router.use("/game/research/", require("./research"));
 
 module.exports = router;

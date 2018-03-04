@@ -1,16 +1,11 @@
 /***********************************************************************************************************************
  *
- * require all mongoose schemas
+ * TechLevel RULES
  *
  **********************************************************************************************************************/
-require("./User");
-require("./Suspension");
-require("./Game");
-require("./Turn");
-require("./Player");
-require("./Research");
-require("./Star");
-require("./Planet");
-require("./Harvester");
-require("./Pdu");
+const RULES =  {
+    bounds: [0, 10],
+    initial: 0
+};
 
+module.exports = RULES;

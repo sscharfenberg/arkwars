@@ -90,6 +90,8 @@ const appConfig = {
 
     pdus: require("../../shared/rules/pdus"),
 
+    tech: require("../../shared/rules/tech"),
+
     defaultPagination: {
         admin: {
             users: 20,

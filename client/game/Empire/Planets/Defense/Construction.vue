@@ -183,7 +183,6 @@ export default {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                opacity: 0.2;
 
                 box-sizing: content-box;
                 width: calc(100% - 1.2rem);
@@ -201,15 +200,11 @@ export default {
                     border-color map-get($animation-speeds, "fast") linear;
 
                 &:focus {
-                    opacity: 0.5;
-
                     outline: 0;
                 }
 
                 &:hover,
                 &.active {
-                    opacity: 1;
-
                     outline: 0;
                     border-color: palette("brand", "christine");
                 }

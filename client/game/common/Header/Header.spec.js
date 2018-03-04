@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     state: {},
     getters: {
         playerResources() {
-            return [];
+            return [{type: "energy", current: 100, max: 1000}];
         },
         player() {
             return {

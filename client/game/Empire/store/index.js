@@ -20,12 +20,13 @@ const store = new Vuex.Store({
         installingResourceTypes: [],
         savingBuildPduPlanets: [],
         savingFoodConsumption: [],
-        // game state
+        // common game state
         game: {},
-        stars: [],
-        planets: [],
         player: {},
         resources: [],
+        // area game state
+        stars: [],
+        planets: [],
         harvesters: [],
         pdus: []
     },

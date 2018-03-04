@@ -11,6 +11,7 @@ const router = express.Router(); // http://expressjs.com/en/api.html#router
 const authController = require("../../controllers/auth");
 const gameController = require("../../controllers/game");
 const empireController = require("../../controllers/game/empire");
+const researchController = require("../../controllers/game/research");
 const {catchErrors} = require("../../handlers/error");
 
 router.use("/", authController.isValidUser);
@@ -50,6 +51,12 @@ router.get(
     "/:game/empire",
     catchErrors(gameController.verifyGameAuth), // 1. check if game exists and user is enlisted
     catchErrors(empireController.showIndex) // 2. show index page
+);
+
+router.get(
+    "/:game/research",
+    catchErrors(gameController.verifyGameAuth), // 1. check if game exists and user is enlisted
+    catchErrors(researchController.showIndex) // 2. show index page
 );
 
 module.exports = router;

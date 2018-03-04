@@ -142,9 +142,11 @@ exports.getGameData = async (req, res) => {
     });
 
     logger.info(
-        `[App] User ${chalk.red("@" + req.user.username)} requested game data for ${chalk.yellow(
-            "g" + returnData.game.number
-        )} ${chalk.cyan("[" + returnData.player.ticker + "]")} ${chalk.cyan(returnData.player.name)}`
+        `[App] User ${chalk.red("@" + req.user.username)} requested ${chalk.cyan(
+            "empire"
+        )} game data for ${chalk.yellow("g" + returnData.game.number)} ${chalk.cyan(
+            "[" + returnData.player.ticker + "]"
+        )} ${chalk.cyan(returnData.player.name)}`
     );
 
     return res.json(returnData);
