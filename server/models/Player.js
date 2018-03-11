@@ -107,37 +107,37 @@ const playerSchema = new mongoose.Schema(
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.initial
+                default: cfg.tech.types.offensive.find(tl => tl.type === "plasma").initial
             },
             railgun: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.initial
+                default: cfg.tech.types.offensive.find(tl => tl.type === "railgun").initial
             },
             missile: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.initial
+                default: cfg.tech.types.offensive.find(tl => tl.type === "missile").initial
             },
             laser: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.initial
+                default: cfg.tech.types.offensive.find(tl => tl.type === "laser").initial
             },
             shields: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.initial
+                default: cfg.tech.types.defensive.find(tl => tl.type === "shields").initial
             },
             armour: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.initial
+                default: cfg.tech.types.defensive.find(tl => tl.type === "armour").initial
             }
         }
         // end tech levels
@@ -167,6 +167,13 @@ playerSchema.virtual("harvesters", {
     ref: "Harvester", // what model to link?
     localField: "_id", // which field on the Player?
     foreignField: "owner" // which field on the Harvester?
+});
+
+// find research jobs that are owned by this player
+playerSchema.virtual("researches", {
+    ref: "Research", // what model to link?
+    localField: "_id", // which field on the Player?
+    foreignField: "player" // which field on the Research?
 });
 
 // auto populate games

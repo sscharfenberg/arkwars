@@ -27,7 +27,7 @@ const store = new Vuex.Store({
 /*
  * test suite
  */
-describe("Costs.vue", () => {
+describe("Header.vue", () => {
     let cmp;
 
     beforeEach(() => {

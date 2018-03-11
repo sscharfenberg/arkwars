@@ -1,4 +1,9 @@
 # Changelog
+`11.03.2018`
+- [x] bumped dependencies again. Webpack4 continues to mature, one fork could be removed already.
+- [x] List Player TechLevels: TechLevels and Research Jobs are now sent from API to client, and visualized via `TechLevels` and `TechLevel` Components. If there is a research qeued for a technology, the research is shown (very raw/unstyled).
+- [x] new Icons for Armour (yes, british spelling, sue me) and shields.
+ 
 
 `03.03.2018`
 - [x] bumped dependencies. Switched to `webpack`@4 and refactored build scripts accordingly. Some webpack plugins where not yet ready for webpack4, so I used instructions from [Ivan Erceg](https://coderwall.com/p/q_gh-w/fork-and-patch-npm-moduels-hosted-on-github) to link to forks with fixes for two plugins. Using these forks until the fixes land upstream.

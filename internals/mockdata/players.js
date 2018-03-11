@@ -6,7 +6,11 @@ module.exports = [
         user: "597c523b7331ca2e2436b37f",
         name: "Per Aspera Ad Astra",
         ticker: "PAAA",
-        created: "2017-08-14T19:31:10.861Z"
+        created: "2017-08-14T19:31:10.861Z",
+        tech: {
+            laser: 4,
+            shields: 6
+        }
     },
     {
         // g2

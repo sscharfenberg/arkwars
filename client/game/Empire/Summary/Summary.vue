@@ -47,6 +47,7 @@ export default {
         }
     }
 
+    // .item is not used by this component, but rather by the children <resources /> and <population />
     .item {
         display: flex;
         align-items: flex-start;

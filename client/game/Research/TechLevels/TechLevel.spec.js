@@ -1,39 +1,48 @@
 /***********************************************************************************************************************
  * JEST spec file
  **********************************************************************************************************************/
-import VueI18n from "vue-i18n";
 import Vuex from "vuex";
+import VueI18n from "vue-i18n";
 import {shallow, createLocalVue} from "@vue/test-utils";
-import FetchGameDataButton from "./FetchGameDataButton.vue";
+import TechLevel from "./TechLevel.vue";
+
 /*
  * mock data
  */
 const localVue = createLocalVue();
-localVue.use(VueI18n);
 localVue.use(Vuex);
+localVue.use(VueI18n);
 const i18n = new VueI18n({
     locale: "de",
-    messages: {de: {common: {header: {refreshGameDataBtn: {fetching: "fetching", fetch: "fetch"}}}}}
+    messages: {de: {techLevels:{shields: "Schutzschilde"}, research: {start: "Forschung starten"}}}
 });
 const store = new Vuex.Store({
     state: {},
     getters: {
-        fetchingGameDataFromApi() { return false; }
+        playerResearches() {
+            return [
+                {area: "laser", order: 0, work: 50, remaining: 1500},
+                {area: "armour", order: 0, work: 50, remaining: 1500}
+            ];
+        }
     }
 });
 
 /*
  * test suite
  */
-describe("FetchGameDataButton.vue", () => {
+describe("TechLevel.vue", () => {
     let cmp;
 
     beforeEach(() => {
-        cmp = shallow(FetchGameDataButton, {
+        cmp = shallow(TechLevel, {
             localVue,
             i18n,
             store,
-            propsData: {area: "empire"}
+            propsData: {
+                tlType: "shields",
+                level: 4
+            }
         });
     });
 
@@ -45,11 +54,11 @@ describe("FetchGameDataButton.vue", () => {
         expect(cmp.vm.$el).toMatchSnapshot();
     });
 
-    it("calls the click function", () => {
-        cmp.setMethods({fetchGameData: jest.fn()});
-        const spy = jest.spyOn(cmp.vm, "fetchGameData");
-        cmp.update(); // Forces to re-render, applying changes on template
-        cmp.find("button").trigger("click");
-        expect(cmp.vm.fetchGameData).toBeCalled();
+    it("shows the correct tech level as active", () => {
+        expect(cmp.find(".current").text()).toBe("4");
+    });
+
+    it("shows the correct headline for the tech level type", () => {
+        expect(cmp.find("h4").text()).toBe("Schutzschilde");
     });
 });

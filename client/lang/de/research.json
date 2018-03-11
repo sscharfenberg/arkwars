@@ -1,3 +1,15 @@
 {
-    "title": "Forschung"
+    "title": "Forschung",
+    "techLevels": {
+        "label": "Tech Levels",
+        "laser": "Laser",
+        "plasma": "Plasma",
+        "railgun": "Railguns",
+        "missile": "Raketen",
+        "shields": "Schutzschilde",
+        "armour": "Panzerung"
+    },
+    "research": {
+        "start": "Forschung starten"
+    }
 }

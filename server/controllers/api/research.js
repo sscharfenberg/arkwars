@@ -7,13 +7,7 @@
  **********************************************************************************************************************/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const mongoose = require("mongoose"); // http://mongoosejs.com/
-const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
-const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
-const Planet = mongoose.model("Planet");
-const Player = mongoose.model("Player");
-const Star = mongoose.model("Star");
-const Harvester = mongoose.model("Harvester");
-const Pdu = mongoose.model("Pdu");
+const Research = mongoose.model("Research");
 const logger = require("../../handlers/logger/console");
 const cfg = require("../../config");
 
@@ -28,7 +22,7 @@ const cfg = require("../../config");
 exports.getGameData = async (req, res) => {
     const player = req.user.selectedPlayer;
     const game = player.game;
-    const stars = player.stars.map(star => star.id);
+    const researches = await Research.find({player: player._id});
 
     // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const returnData = {
@@ -48,29 +42,29 @@ exports.getGameData = async (req, res) => {
             ticker: player.ticker
         },
         resources: [
-            // flatten resource data into an array for VueJS
-            // TODO: find a more elegant way to do this.
-            {
-                type: "energy",
-                current: player.resources.energy.current,
-                max: player.resources.energy.max
-            },
-            {
-                type: "food",
-                current: player.resources.food.current,
-                max: player.resources.food.max
-            },
-            {
-                type: "minerals",
-                current: player.resources.minerals.current,
-                max: player.resources.minerals.max
-            },
-            {
-                type: "research",
-                current: player.resources.research.current,
-                max: player.resources.research.max
+            // un-flatten resource data into an array for VueJS
+            {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
+            {type: "food", current: player.resources.food.current, max: player.resources.food.max},
+            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
+            {type: "research", current: player.resources.research.current, max: player.resources.research.max}
+        ],
+        techLevels: [
+            {type: "plasma", level: player.tech.plasma},
+            {type: "railgun", level: player.tech.railgun},
+            {type: "missile", level: player.tech.missile},
+            {type: "laser", level: player.tech.laser},
+            {type: "shields", level: player.tech.shields},
+            {type: "armour", level: player.tech.armour}
+        ],
+        researches: researches.map( research => {
+            return {
+                id: research._id,
+                area: research.area,
+                newLevel: research.newLevel,
+                order: research.order,
+                remaining: research.remaining
             }
-        ]
+        })
     };
 
     logger.info(

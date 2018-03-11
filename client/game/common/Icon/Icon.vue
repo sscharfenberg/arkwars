@@ -10,7 +10,7 @@ export default {
             required: true
         },
         size: {
-            type: Number, // [0..3]
+            type: Number, // [0..4]
             default: 2
         }
     },
@@ -22,6 +22,7 @@ export default {
                 case 1: return "small";
                 case 2: return "";
                 case 3: return "large";
+                case 4: return "xlarge";
             }
         }
     }
@@ -59,6 +60,11 @@ export default {
         &.large {
             width: 3.2rem;
             height: 3.2rem;
+        }
+
+        &.xlarge {
+            width: 6.4rem;
+            height: 6.4rem;
         }
     }
 </style>

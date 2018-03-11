@@ -25,7 +25,7 @@ const populationGrowth = (population, foodConsumption) => {
     const starvingMultiplier = 0.8; // 20% of population dies if noone eats ^.^
     let newPop = foodConsumption < 1
         ? population * (1 + ((Math.log(foodConsumption) * 3) / 100))
-        : population + ((Math.exp(foodConsumption - 3) / population) / 10);
+        : population + ((Math.exp(foodConsumption - 3) / population) / 20);
     newPop = foodConsumption < 0.01 ? population * starvingMultiplier : newPop;
     return newPop.toFixed(8); // we don't need this much precision, waste of db space
 };

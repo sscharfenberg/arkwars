@@ -29,13 +29,15 @@ const researchSchema = new mongoose.Schema({
     },
 
     // research work remaining to finish this project
-    remaining: {
+    newLevel: {
         type: Number,
-        required: true
+        required: true,
+        min: cfg.tech.bounds[0] + 1,
+        max: cfg.tech.bounds[1]
     },
 
-    // the amount of research work that is done in a turn
-    work: {
+    // research work remaining to finish this project
+    remaining: {
         type: Number,
         required: true
     },

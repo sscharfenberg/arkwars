@@ -50,28 +50,11 @@ exports.getGameData = async (req, res) => {
             ticker: player.ticker
         },
         resources: [
-            // flatten resource data into an array for VueJS
-            // TODO: find a more elegant way to do this.
-            {
-                type: "energy",
-                current: player.resources.energy.current,
-                max: player.resources.energy.max
-            },
-            {
-                type: "food",
-                current: player.resources.food.current,
-                max: player.resources.food.max
-            },
-            {
-                type: "minerals",
-                current: player.resources.minerals.current,
-                max: player.resources.minerals.max
-            },
-            {
-                type: "research",
-                current: player.resources.research.current,
-                max: player.resources.research.max
-            }
+            // un-flatten resource data into an array for VueJS
+            {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
+            {type: "food", current: player.resources.food.current, max: player.resources.food.max},
+            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
+            {type: "research", current: player.resources.research.current, max: player.resources.research.max}
         ],
         // avoid specific properties on the star and add an array of planetids
         stars: player.stars.map(star => {
@@ -440,11 +423,10 @@ exports.setFoodConsumption = async (req, res) => {
     if (updatedPlanet) {
         logger.success(
             `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" +
-            req.user.username} changed food consumption of planet #${chalk.cyan(planetId)} to ${chalk.yellow(
+                req.user.username} changed food consumption of planet #${chalk.cyan(planetId)} to ${chalk.yellow(
                 consumption
             )}`
         );
         return res.status(200).json({foodConsumptionPerPop: updatedPlanet.foodConsumptionPerPop});
     }
-
 };

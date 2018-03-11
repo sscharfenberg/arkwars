@@ -16,12 +16,10 @@ const MUTATIONS = {
     SET_GAME_DATA: (state, payload) => {
         DEBUG && console.log("committing game data to store ", payload);
         state.game = payload.game;
-        state.stars = payload.stars;
-        state.planets = payload.planets;
         state.player = payload.player;
         state.resources = payload.resources;
-        state.harvesters = payload.harvesters;
-        state.pdus = payload.pdus;
+        state.techLevels = payload.techLevels;
+        state.researches = payload.researches;
     },
 
     /*

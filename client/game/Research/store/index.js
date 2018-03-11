@@ -19,6 +19,8 @@ const store = new Vuex.Store({
         player: {},
         resources: [],
         // area game state
+        techLevels: [],
+        researches: []
     },
     getters: {
         // App state
@@ -26,7 +28,10 @@ const store = new Vuex.Store({
         // common game state
         game: state => state.game || {},
         player: state => state.player || {},
-        playerResources: state => state.resources || []
+        playerResources: state => state.resources || [],
+        // area game state
+        playerTechLevels: state => state.techLevels || [],
+        playerResearches: state => state.researches || []
     },
     mutations,
     actions
