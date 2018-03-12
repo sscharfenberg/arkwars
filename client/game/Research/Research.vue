@@ -17,6 +17,8 @@ export default {
         <app-header
             :area-title="$t('title')"
             area="research" />
+        <br>
+        Research Qeue - show research jobs, cancel, re-order
         <Techs />
     </div>
 </template>

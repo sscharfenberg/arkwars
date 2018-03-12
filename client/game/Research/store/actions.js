@@ -6,6 +6,7 @@
  *
  **********************************************************************************************************************/
 import axios from "axios";
+import {applyServerPulse} from "../../../components/game/time";
 import {DEBUG} from "../../../config";
 
 const ACTIONS = {
@@ -23,6 +24,7 @@ const ACTIONS = {
             .then(response => {
                 if (response.status === 200 && response.data) {
                     ctx.commit("SET_GAME_DATA", response.data);
+                    applyServerPulse(response.data.game);
                 }
                 ctx.commit("FETCHING_GAME_DATA_FROM_API", false);
             })

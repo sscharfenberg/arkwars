@@ -156,8 +156,10 @@ const updateProgress = (max, value) => {
 
     // next turn time
     if (value === max) {
+        const lang = document.querySelector("html").getAttribute("lang");
         for (let domNode of _nextTurn) {
-            domNode.textContent = "Jetzt"; // TODO: i18n
+            if (lang === "de") domNode.textContent = "Jetzt";
+            if (lang === "en") domNode.textContent = "Now";
         }
         doServerPulse();
     }
@@ -220,7 +222,7 @@ const doServerPulse = () => {
 
 /*
  * apply server data in DOM
- * @params {object} pulse
+ * @params {object} game
  */
 const applyServerPulse = game => {
     const max = game.turnDuration;
@@ -265,4 +267,4 @@ const initTime = () => {
     }
 };
 
-export {initTime};
+export {initTime, applyServerPulse};

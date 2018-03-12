@@ -3,6 +3,7 @@
 - [x] bumped dependencies again. Webpack4 continues to mature, one fork could be removed already.
 - [x] List Player TechLevels: TechLevels and Research Jobs are now sent from API to client, and visualized via `TechLevels` and `TechLevel` Components. If there is a research qeued for a technology, the research is shown (very raw/unstyled).
 - [x] new Icons for Armour (yes, british spelling, sue me) and shields.
+- [x] using the "fetch from api" button now also updates the turn progress on the right side.
  
 
 `03.03.2018`

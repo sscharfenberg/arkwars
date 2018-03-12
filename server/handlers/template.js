@@ -62,23 +62,23 @@ exports.spritesheet = () =>
  * progressbar helper function
  */
 exports.progressbar = (max, value, active) => {
-    let pct;
-    let colorClass = "aw-progress__bar-value--";
+    //let pct;
+    //let colorClass = "aw-progress__bar-value--";
     let svg = fs.readFileSync("./server/public/assets/images/progressbar.svg", {
         encoding: "utf-8"
     });
     if (value > max) value = max; // just to make sure.
-    pct = parseInt(100 - parseInt(value, 10) / parseInt(max, 10) * 100, 10);
-    if (pct > 0 && pct <= 20) colorClass += "1";
-    if (pct > 21 && pct <= 40) colorClass += "2";
-    if (pct > 41 && pct <= 60) colorClass += "3";
-    if (pct > 61 && pct <= 80) colorClass += "4";
-    if (pct > 81) colorClass += "5";
+    //pct = parseInt(100 - parseInt(value, 10) / parseInt(max, 10) * 100, 10);
+    //if (pct > 0 && pct <= 20) colorClass += "1";
+    //if (pct > 21 && pct <= 40) colorClass += "2";
+    //if (pct > 41 && pct <= 60) colorClass += "3";
+    //if (pct > 61 && pct <= 80) colorClass += "4";
+    //if (pct > 81) colorClass += "5";
     let activeClass = active ? "active" : "";
-    colorClass = active ? colorClass : ""; // reset color class for inactive progressbars
-    svg = svg.replace("__DASHOFFSET__", pct);
-    svg = svg.replace("__COLORCLASS__", colorClass);
-    svg = svg.replace("__ACTIVE__", activeClass);
+    //colorClass = active ? colorClass : ""; // reset color class for inactive progressbars
+    //svg = svg.replace("__DASHOFFSET__", pct);
+    //svg = svg.replace("__COLORCLASS__", colorClass);
+    //svg = svg.replace("__ACTIVE__", activeClass);
     return svg;
 };
 

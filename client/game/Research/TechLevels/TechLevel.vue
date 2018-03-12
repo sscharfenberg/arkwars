@@ -61,14 +61,9 @@ export default {
             :size="4" />
         <section class="level">
             <h4>{{ $t("techLevels." + tlType ) }}</h4>
-            <ul class="levels">
-                <li
-                    v-for="n in numTechLevels"
-                    :key="n"
-                    :class="getResearchedClass(n-1)">{{ n - 1 }}</li>
-            </ul>
             <btn
-                v-if="!hasResearch && !isMaxed && !showResearch"
+                v-if="!hasResearch"
+                :disabled="isMaxed || showResearch"
                 :on-click="startResearch"
                 class="start-research"
                 :label="$t('research.start')"
@@ -78,6 +73,12 @@ export default {
                 :remaining="hasResearch.remaining"
                 :new-level="hasResearch.newLevel"
                 :tl-type="tlType" />
+            <ul class="levels">
+                <li
+                    v-for="n in numTechLevels"
+                    :key="n"
+                    :class="getResearchedClass(n-1)">{{ n - 1 }}</li>
+            </ul>
             <start-research v-if="showResearch" />
         </section>
     </li>
@@ -118,6 +119,11 @@ export default {
     }
 
     .level {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
         flex-grow: 1;
 
         > h4 {
