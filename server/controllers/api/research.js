@@ -22,7 +22,7 @@ const cfg = require("../../config");
 exports.getGameData = async (req, res) => {
     const player = req.user.selectedPlayer;
     const game = player.game;
-    const researches = await Research.find({player: player._id});
+    const researches = await Research.find({player: player._id}).sort({order: "asc"});
 
     // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const returnData = {
@@ -56,14 +56,14 @@ exports.getGameData = async (req, res) => {
             {type: "shields", level: player.tech.shields},
             {type: "armour", level: player.tech.armour}
         ],
-        researches: researches.map( research => {
+        researches: researches.map(research => {
             return {
                 id: research._id,
                 area: research.area,
                 newLevel: research.newLevel,
                 order: research.order,
                 remaining: research.remaining
-            }
+            };
         })
     };
 
@@ -76,4 +76,42 @@ exports.getGameData = async (req, res) => {
     );
 
     return res.json(returnData);
+};
+
+/*
+ * change research order ===============================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.changeOrder = async (req, res) => {
+    let bulkUpdates = [];
+    // prepare bulk updates
+    req.body.forEach(res => {
+        bulkUpdates.push({
+            updateOne: {
+                filter: {_id: res.id},
+                update: {$set: {order: res.order}}
+            }
+        });
+    });
+    // update database with new order
+    const updatedResearches = await Research.bulkWrite(bulkUpdates, {ordered: true, w: 1});
+    logger.info(
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} changed research order in ${chalk.yellow(
+            "g" + req.user.selectedPlayer.game.number
+        )}. matched ${chalk.yellow(updatedResearches.matchedCount)}, modified ${chalk.yellow(
+            updatedResearches.modifiedCount
+        )}`
+    );
+    // get fresh objects from database
+    const newResearches = await Research.find({player: req.user.selectedPlayer._id}).sort({order: "asc"});
+    return res.json(newResearches.map(research => {
+        return {
+            id: research._id,
+            area: research.area,
+            newLevel: research.newLevel,
+            order: research.order,
+            remaining: research.remaining
+        };
+    }));
 };

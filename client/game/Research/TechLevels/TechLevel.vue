@@ -4,20 +4,13 @@
  **********************************************************************************************************************/
 import Icon from "Game/common/Icon/Icon.vue";
 import Button from "Game/common/Button/Button.vue";
-import ResearchProgress from "./Research/ResearchProgress.vue";
-import StartResearch from "./Research/StartResearch.vue";
+import ResearchProgress from "./ResearchProgress.vue";
 import {techRules} from "Config";
 export default {
-    data: function() {
-        return {
-            showResearch: false
-        };
-    },
     components: {
         Icon,
         "btn": Button,
-        ResearchProgress,
-        StartResearch
+        ResearchProgress
     },
     props: {
         tlType: {
@@ -30,14 +23,9 @@ export default {
         }
     },
     computed: {
-        iconName: function () {
-            if (techRules.types.offensive.find(tl => tl.type === this.tlType)) {
-                return `wpn-${this.tlType}`;
-            }
-            return this.tlType;
-        },
+        iconName: function () { return techRules.areas.find(tl => tl.area === this.tlType).icon; },
         numTechLevels: function () { return techRules.bounds[1] + 1; },
-        hasResearch: function () { return this.$store.getters.playerResearches.find(res => res.area === this.tlType); },
+        research: function () { return this.$store.getters.playerResearches.find(res => res.area === this.tlType); },
         isMaxed: function () { return this.level >= techRules.bounds[1]; }
     },
     methods: {
@@ -46,8 +34,7 @@ export default {
             return this.level === tl ? returnClass + " current" : returnClass;
         },
         startResearch: function () {
-            console.log("toggling reasearch panel from ", this.showResearch);
-            return this.showResearch = !this.showResearch;
+            alert("start research action");
         }
     }
 };
@@ -62,24 +49,23 @@ export default {
         <section class="level">
             <h4>{{ $t("techLevels." + tlType ) }}</h4>
             <btn
-                v-if="!hasResearch"
-                :disabled="isMaxed || showResearch"
+                v-if="!research"
+                :disabled="isMaxed"
                 :on-click="startResearch"
                 class="start-research"
                 :label="$t('research.start')"
                 :text-string="$t('research.start')"/>
             <research-progress
-                v-if="hasResearch"
-                :remaining="hasResearch.remaining"
-                :new-level="hasResearch.newLevel"
-                :tl-type="tlType" />
+                v-if="research"
+                :research-id="research.id" />
             <ul class="levels">
                 <li
                     v-for="n in numTechLevels"
                     :key="n"
-                    :class="getResearchedClass(n-1)">{{ n - 1 }}</li>
+                    :class="getResearchedClass(n-1)"
+                    :aria-selected="(n - 1) === level"
+                    :aria-hidden="(n - 1) !== level">{{ n - 1 }}</li>
             </ul>
-            <start-research v-if="showResearch" />
         </section>
     </li>
 </template>
@@ -92,7 +78,6 @@ export default {
         align-items: center;
 
         padding: 1rem;
-        border: 1px solid palette("grey", "abbey");
         margin-top: 1rem;
 
         background: palette("grey", "sunken");

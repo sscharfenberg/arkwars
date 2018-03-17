@@ -10,6 +10,7 @@
         "armour": "Panzerung"
     },
     "research": {
-        "start": "Forschung starten"
+        "start": "Forschung starten",
+        "cancel": "Forschung abbrechen"
     }
 }

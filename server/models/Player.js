@@ -107,37 +107,37 @@ const playerSchema = new mongoose.Schema(
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.types.offensive.find(tl => tl.type === "plasma").initial
+                default: cfg.tech.areas.find(tl => tl.area === "plasma").initial
             },
             railgun: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.types.offensive.find(tl => tl.type === "railgun").initial
+                default: cfg.tech.areas.find(tl => tl.area === "railgun").initial
             },
             missile: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.types.offensive.find(tl => tl.type === "missile").initial
+                default: cfg.tech.areas.find(tl => tl.area === "missile").initial
             },
             laser: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.types.offensive.find(tl => tl.type === "laser").initial
+                default: cfg.tech.areas.find(tl => tl.area === "laser").initial
             },
             shields: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.types.defensive.find(tl => tl.type === "shields").initial
+                default: cfg.tech.areas.find(tl => tl.area === "shields").initial
             },
             armour: {
                 type: Number,
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
-                default: cfg.tech.types.defensive.find(tl => tl.type === "armour").initial
+                default: cfg.tech.areas.find(tl => tl.area === "armour").initial
             }
         }
         // end tech levels

@@ -32,6 +32,35 @@ const ACTIONS = {
                 console.error(error);
                 ctx.commit("FETCHING_GAME_DATA_FROM_API", false);
             });
+    },
+
+    /*
+     * fetch game data from api via XHR
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload - Array of full research objects
+     */
+    CHANGE_RESEARCH_ORDER: function(ctx, payload) {
+        let pos = 0;
+        let data = payload.map(res => {
+            res.order = pos;
+            pos++;
+            return res;
+        });
+        DEBUG && console.log(`requesting change research order ${payload.map(res => `${res.area} TL${res.newLevel}`)}`);
+        ctx.commit("IS_CHANGING_ORDER", true);
+        ctx.commit("SET_RESEARCHES", data); // we pre-emptively change the state to appear `snappier`
+        axios
+            .post("/api/game/research/order", data)
+            .then(response => {
+                if (response.status === 200 && response.data) {
+                    ctx.commit("SET_RESEARCHES", response.data);
+                }
+                ctx.commit("IS_CHANGING_ORDER", false);
+            })
+            .catch(error => {
+                console.error(error);
+                ctx.commit("IS_CHANGING_ORDER", false);
+            });
     }
 };
 

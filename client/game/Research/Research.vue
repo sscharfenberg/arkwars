@@ -4,10 +4,12 @@
  **********************************************************************************************************************/
 import Header from "Game/common/Header/Header.vue";
 import Techs from "./TechLevels/TechLevels.vue";
+import Qeue from "./Qeue/Qeue.vue";
 export default {
     components: {
         "app-header": Header,
-        Techs
+        Techs,
+        Qeue
     }
 };
 </script>
@@ -18,8 +20,8 @@ export default {
             :area-title="$t('title')"
             area="research" />
         <br>
-        Research Qeue - show research jobs, cancel, re-order
-        <Techs />
+        <qeue />
+        <techs />
     </div>
 </template>
 

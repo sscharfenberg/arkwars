@@ -15,9 +15,9 @@ export default {
 </script>
 
 <template>
-    <div
+    <section
         v-if="techLevels.length"
-        class="summary">
+        class="all-levels">
         <h2>{{ $t("techLevels.label" ) }}</h2>
         <ul class="techs">
             <tech-level
@@ -26,13 +26,13 @@ export default {
                 :tl-type="techLevel.type"
                 :level="techLevel.level" />
         </ul>
-    </div>
+    </section>
 </template>
 
 
 
 <style lang="scss" scoped>
-    .summary {
+    .all-levels {
         margin: 1rem 0;
 
         @include respond-to("medium") {

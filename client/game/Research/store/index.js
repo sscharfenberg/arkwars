@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     state: {
         // App state
         fetchingGameDataFromApi: false,
+        changingResearchOrder: false,
         // common game state
         game: {},
         player: {},
@@ -25,13 +26,15 @@ const store = new Vuex.Store({
     getters: {
         // App state
         fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
+        isChangingResearchOrder: state => state.changingResearchOrder,
         // common game state
         game: state => state.game || {},
         player: state => state.player || {},
         playerResources: state => state.resources || [],
         // area game state
         playerTechLevels: state => state.techLevels || [],
-        playerResearches: state => state.researches || []
+        playerResearches: state => state.researches || [],
+        researchById: state => id => state.researches.find( res => res.id === id) || {}
     },
     mutations,
     actions
