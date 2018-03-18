@@ -4,13 +4,13 @@
  **********************************************************************************************************************/
 import Icon from "Game/common/Icon/Icon.vue";
 import Button from "Game/common/Button/Button.vue";
-import ResearchProgress from "./ResearchProgress.vue";
+import LevelOverview from "./LevelOverview.vue";
 import {techRules} from "Config";
 export default {
     components: {
         Icon,
         "btn": Button,
-        ResearchProgress
+        LevelOverview
     },
     props: {
         tlType: {
@@ -24,17 +24,25 @@ export default {
     },
     computed: {
         iconName: function () { return techRules.areas.find(tl => tl.area === this.tlType).icon; },
-        numTechLevels: function () { return techRules.bounds[1] + 1; },
-        research: function () { return this.$store.getters.playerResearches.find(res => res.area === this.tlType); },
-        isMaxed: function () { return this.level >= techRules.bounds[1]; }
+        researches: function () {
+            return this.$store.getters.playerResearches.filter(res => this.tlType === res.area);
+        },
+        isMaxed: function () { return this.level >= techRules.bounds[1]; },
+        getStartLabel: function () { return this.$t("research.start", {tl: this.nextLevel}); },
+        nextLevel: function () {
+            const researches = this.researches;
+            if (this.researches.length === 0) return this.level + 1;
+            const nextLevel = researches.sort((a, b) => {
+                if (a.newLevel > b.newLevel) return -1;
+                if (a.newLevel < b.newLevel) return 1;
+                return 0;
+            })[0].newLevel;
+            return nextLevel + 1;
+        }
     },
     methods: {
-        getResearchedClass: function (tl) {
-            const returnClass = this.level >= tl ? "researched" : "unresearched";
-            return this.level === tl ? returnClass + " current" : returnClass;
-        },
         startResearch: function () {
-            alert("start research action");
+            alert("TODO: start research " + this.tlType + " TL" + this.nextLevel);
         }
     }
 };
@@ -49,23 +57,14 @@ export default {
         <section class="level">
             <h4>{{ $t("techLevels." + tlType ) }}</h4>
             <btn
-                v-if="!research"
                 :disabled="isMaxed"
                 :on-click="startResearch"
                 class="start-research"
-                :label="$t('research.start')"
-                :text-string="$t('research.start')"/>
-            <research-progress
-                v-if="research"
-                :research-id="research.id" />
-            <ul class="levels">
-                <li
-                    v-for="n in numTechLevels"
-                    :key="n"
-                    :class="getResearchedClass(n-1)"
-                    :aria-selected="(n - 1) === level"
-                    :aria-hidden="(n - 1) !== level">{{ n - 1 }}</li>
-            </ul>
+                :label="getStartLabel"
+                :text-string="getStartLabel"/>
+            <level-overview
+                :tl-type="tlType"
+                :level="level" />
         </section>
     </li>
 </template>
@@ -118,43 +117,5 @@ export default {
         }
     }
 
-    .levels {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 
-        width: 100%;
-
-        padding: 0;
-        margin: 1rem 0;
-        grid-gap: 1rem;
-
-        list-style: none;
-
-        > li {
-            padding: 0.3rem;
-
-            text-align: center;
-        }
-
-        .unresearched {
-            border: 2px solid palette("grey", "bunker");
-
-            background: palette("grey", "bunker");
-            color: palette("text", "subdued");
-        }
-
-        .researched {
-            border: 2px solid palette("grey", "asher");
-
-            background: palette("grey", "asher");
-        }
-
-        .current {
-            background-color: palette("state", "online");
-            color: palette("text", "light");
-            border-color: palette("state", "success");
-
-            font-weight: 700;
-        }
-    }
 </style>

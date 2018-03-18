@@ -54,7 +54,6 @@ const ACTIONS = {
                 name: payload.starName
             })
             .then(response => {
-                console.log(response.data);
                 if (response.status === 200 && response.data && !response.data.error) {
                     ctx.commit("SET_STAR_NAME", {id: payload.id, name: payload.starName});
                 }

@@ -11,5 +11,5 @@
 
 ## Frontend
 - [ ] PostCSS currently not working, probably a vue-loader issue? https://github.com/vuejs/vue-loader/issues/1160
-- [ ] `Progress` Component 
+
 

@@ -46,8 +46,32 @@ const MUTATIONS = {
      * @param {Boolean} payload - researches array from API
      */
     SET_RESEARCHES: (state, payload) => {
+        state.researchRollBacks = state.researches;
         state.researches = payload;
     },
+
+    /*
+     * SET researches
+     * @param {Object} state - Vuex $store.state
+     */
+    ROLLBACK_RESEARCHES: (state) => {
+        state.researches = state.researchRollBacks;
+    },
+
+    /*
+     * SET/UNSET "Editing star name" for a specific star
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Booleaen} payload.deleting
+     */
+    DELETING_RESEARCH_JOB: (state, payload) => {
+        if (payload.deleting) {
+            state.deletingResearchJobs.push(payload.id); // add ID to array
+        } else {
+            state.deletingResearchJobs.splice(state.deletingResearchJobs.indexOf(payload.id), 1); // remove ID from array
+        }
+    }
 };
 
 export default MUTATIONS;

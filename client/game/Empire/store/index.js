@@ -14,7 +14,6 @@ const store = new Vuex.Store({
     state: {
         // App state
         fetchingGameDataFromApi: false,
-        // UI state
         savingStarName: [],
         editingStarName: [],
         installingResourceTypes: [],
@@ -33,7 +32,6 @@ const store = new Vuex.Store({
     getters: {
         // App state
         fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
-        // UI state
         savingStarNameIds: state => state.savingStarName,
         editingStarNameIds: state => state.editingStarName,
         installingResourceTypes: state => state.installingResourceTypes,

@@ -3,7 +3,7 @@ module.exports = [
         // g1
         game: "598b652d0404e604046bd35b",
         player: "5990c7871e8258089436d748",
-        area: "missile",
+        area: "armour",
         remaining: 923,
         newLevel: 1,
         order: 0
@@ -20,8 +20,8 @@ module.exports = [
         game: "598b652d0404e604046bd35b",
         player: "5990c7871e8258089436d748",
         area: "armour",
-        remaining: 364,
-        newLevel: 1,
+        remaining: 1800,
+        newLevel: 2,
         order: 2
     },
     {

@@ -612,6 +612,16 @@
                 "NOTOWNER": "You are not the owner of this star.",
                 "OUTOFBOUNDS": "Food consumption not within expected values (%s)."
             }
+        },
+        "RESEARCH": {
+            "ORDER": {
+                "NOTOWNER": "You are not the owner of all research jobs.",
+                "SORTERROR": "Error during sorting.",
+                "TYPEORDER": "Tech Levels of the same type must be in the correct order."
+            },
+            "DELETE": {
+                "NOTOWNER": "Research job not found."
+            }
         }
     }
 }

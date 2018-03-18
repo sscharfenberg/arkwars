@@ -9,7 +9,7 @@ module.exports = [
         created: "2017-08-14T19:31:10.861Z",
         tech: {
             laser: 4,
-            shields: 6
+            shields: 2
         }
     },
     {

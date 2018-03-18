@@ -1,7 +1,16 @@
 # Changelog
+
+`18.03.2018`
+- [x] refactored and cleaned up `TechLevel`(s) components. 
+- [x] created a common (generic) component for `ProgressBar`s.
+- [x] added research qeue - `Queue`, `QueueItem`, `AbortResearch` components. QeueItems can be dragged to change order, and they can be aborted using a modal confirm window.
+- [x] added API middlewares for verifying and executing `change order` and `delete job`.
+- [x] server currently does not progress researches, and `start research` is currently mocked (needs to be a modal showing research costs).
+- [x] bumped dependencies
+
 `11.03.2018`
 - [x] bumped dependencies again. Webpack4 continues to mature, one fork could be removed already.
-- [x] List Player TechLevels: TechLevels and Research Jobs are now sent from API to client, and visualized via `TechLevels` and `TechLevel` Components. If there is a research qeued for a technology, the research is shown (very raw/unstyled).
+- [x] List Player TechLevels: TechLevels and Research Jobs are now sent from API to client, and visualized via `TechLevels` and `TechLevel` Components. If there is a research queued for a technology, the research is shown (very raw/unstyled).
 - [x] new Icons for Armour (yes, british spelling, sue me) and shields.
 - [x] using the "fetch from api" button now also updates the turn progress on the right side.
  

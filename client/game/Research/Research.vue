@@ -4,12 +4,12 @@
  **********************************************************************************************************************/
 import Header from "Game/common/Header/Header.vue";
 import Techs from "./TechLevels/TechLevels.vue";
-import Qeue from "./Qeue/Qeue.vue";
+import Queue from "./Queue/Queue.vue";
 export default {
     components: {
         "app-header": Header,
         Techs,
-        Qeue
+        Queue
     }
 };
 </script>
@@ -19,9 +19,9 @@ export default {
         <app-header
             :area-title="$t('title')"
             area="research" />
-        <br>
-        <qeue />
+        <queue />
         <techs />
+        <vue-snotify />
     </div>
 </template>
 

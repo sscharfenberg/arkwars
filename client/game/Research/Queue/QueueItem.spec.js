@@ -4,7 +4,7 @@
 import Vuex from "vuex";
 import VueI18n from "vue-i18n";
 import {shallow, createLocalVue} from "@vue/test-utils";
-import TechLevel from "./TechLevel.vue";
+import QueueItem from "./QueueItem.vue";
 
 /*
  * mock data
@@ -17,20 +17,25 @@ const i18n = new VueI18n({
     messages: {
         de: {
             techLevels: {shields: "Schutzschilde", laser: "Laser", armour: "Panzerung", missile: "Raketen"},
-            research: {start: "TL{tl} Erforschen"}
+            research: {start: "TL{tl} Erforschen", abort: "Forschung Abbrechen"}
         }
     }
 });
 const store = new Vuex.Store({
     state: {},
     getters: {
-        playerResearches() {
-            return [
-                {area: "laser", order: 0, newLevel: 1},
-                {area: "armour", order: 1, newLevel: 1},
-                {area: "shields", order: 2, newLevel: 5},
-                {area: "shields", order: 3, newLevel: 6}
-            ];
+        isChangingResearchOrder: function() { return false; },
+        researchById: function(id) {
+            return function(id) {
+                return {
+                    id,
+                    area: "laser",
+                    newLevel: 5,
+                    remaining: 1400,
+                    icon: "wpn-laser",
+                    order: 0
+                };
+            };
         }
     }
 });
@@ -38,17 +43,16 @@ const store = new Vuex.Store({
 /*
  * test suite
  */
-describe("TechLevel.vue", () => {
+describe("QueueItem.vue", () => {
     let cmp;
 
     beforeEach(() => {
-        cmp = shallow(TechLevel, {
+        cmp = shallow(QueueItem, {
             localVue,
             i18n,
             store,
             propsData: {
-                tlType: "shields",
-                level: 4
+                researchId: "0123456789abcdef"
             }
         });
     });
@@ -61,15 +65,8 @@ describe("TechLevel.vue", () => {
         expect(cmp.vm.$el).toMatchSnapshot();
     });
 
-    it("calculates the correct next level", () => {
-        expect(cmp.vm.nextLevel).toBe(7);
-        cmp.setProps({tlType: "laser", level: 0});
-        expect(cmp.vm.nextLevel).toBe(2);
-        cmp.setProps({tlType: "missile", level: 0});
-        expect(cmp.vm.nextLevel).toBe(1);
+    it("calculates the correct progress", () => {
+        expect(cmp.vm.label).toBe("Laser TL5 32%"); // 2048 max, 648 done => 31.64
     });
 
-    it("shows the correct headline for the tech level type", () => {
-        expect(cmp.find("h4").text()).toBe("Schutzschilde");
-    });
 });

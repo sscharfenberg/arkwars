@@ -1,5 +1,9 @@
 {
     "title": "Research",
+    "queue": {
+        "label": "Research queue",
+        "explanation": "Only the first job in the queue is researched."
+    },
     "techLevels": {
         "label": "Tech Levels",
         "laser": "Laser",
@@ -7,10 +11,16 @@
         "railgun": "Railgun",
         "missile": "Missile",
         "shields": "Shields",
-        "armour": "Armour"
+        "armour": "Armour",
+        "status": {
+            "researched": "researched",
+            "queued": "in queue",
+            "unresearched": "unresearched"
+        }
     },
     "research": {
-        "start": "Start Research",
-        "cancel": "Cancel Research"
+        "start": "Research TL{tl}",
+        "abort": "Abort Research",
+        "abortDesc": "If you abort this research all progress ({workDone}) will be lost."
     }
 }

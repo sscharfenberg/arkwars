@@ -1,8 +1,9 @@
 <script>
 /***********************************************************************************************************************
- * shows a single item in the research qeue
+ * shows a single item in the research queue
  **********************************************************************************************************************/
 import Icon from "Game/common/Icon/Icon.vue";
+import ProgressBar from "Game/common/Progress/ProgressBar.vue";
 import Button from "Game/common/Button/Button.vue";
 import {techRules} from "Config";
 export default {
@@ -14,10 +15,13 @@ export default {
     },
     components: {
         Icon,
-        btn: Button
+        btn: Button,
+        ProgressBar
     },
     computed: {
-        newLevel: function() { return this.$store.getters.researchById(this.researchId).newLevel; },
+        newLevel: function() {
+            return this.$store.getters.researchById(this.researchId).newLevel;
+        },
         remaining: function () { return this.$store.getters.researchById(this.researchId).remaining; },
         area: function () { return this.$store.getters.researchById(this.researchId).area; },
         researchCosts: function () {
@@ -25,39 +29,47 @@ export default {
         },
         researchDone: function () { return this.researchCosts - this.remaining; },
         iconName: function () { return techRules.areas.find(tl => tl.area === this.area).icon; },
-        isResearching: function () { return this.$store.getters.researchById(this.researchId).order === 0; }
+        isActive: function () { return this.$store.getters.researchById(this.researchId).order === 0; },
+        label: function () {
+            return `${this.$t("techLevels." + this.area )} TL${this.newLevel} ${Math.round(this.researchDone / this.researchCosts * 100)}%`;
+        },
+        disabledClass () { return this.$store.getters.isChangingResearchOrder ? "disabled" : ""; }
     },
     methods: {
-        cancelResearch () {
-            alert("cancel");
-        }
+        showAbortResearch () { this.$modal.show(`cancel-research-${this.researchId}`); }
     }
 };
 </script>
 
 <template>
-    <div class="qeue-item">
+    <div
+        class="queue-item"
+        :class="disabledClass"
+        :title="label">
         <icon
             name="drag"
             class="drag-handle" />
         <icon
             :name="iconName"
-            class="qeue-icon" />
-        <div class="tl-name">{{ $t("techLevels." + area ) }}</div>
-        <div class="new-level">TL{{ newLevel }}</div>
+            class="queue-icon" />
         <div
-            v-if="isResearching"
-            class="progress">progress {{ researchDone }} / {{ researchCosts }}</div>
+            class="new-level"
+            aria-hidden="true">{{ newLevel }}</div>
+        <progress-bar
+            class="progress"
+            :max="researchCosts"
+            :active="isActive"
+            :value="researchDone" />
         <btn
-            :on-click="cancelResearch"
+            :on-click="showAbortResearch"
             icon-name="delete"
             class="cancel"
-            :label="$t('research.cancel')" />
+            :label="$t('research.abort')" />
     </div>
 </template>
 
 <style lang="scss" scoped>
-    .qeue-item {
+    .queue-item {
         display: flex;
         align-items: center;
 
@@ -69,12 +81,14 @@ export default {
 
         cursor: move;
 
-        &:last-child {
-            margin-bottom: 0;
+        &.disabled {
+            opacity: 0.6;
+
+            cursor: wait;
         }
 
-        &:first-child {
-            border-color: palette("grey", "fog");
+        &:last-child {
+            margin-bottom: 0;
         }
 
         &.sortable-ghost {
@@ -84,8 +98,7 @@ export default {
         }
     }
 
-    .qeue-icon,
-    .tl-name,
+    .queue-icon,
     .new-level {
         margin-right: 1rem;
     }
@@ -94,19 +107,26 @@ export default {
         margin-right: 1rem;
 
         fill: palette("grey", "raven");
+
+        @include respond-to("medium") { margin-right: 2rem; }
     }
 
     .new-level {
-        padding: 0.2rem 0.5rem;
+        width: 3rem;
+        padding: 0 0.5rem;
         border: 1px solid palette("grey", "charcoal");
 
         background-color: palette("grey", "asher");
         color: palette("text", "light");
+
+        text-align: center;
     }
 
     .progress {
-        margin-right: 1rem;
+        margin: 0 1rem 0 0;
         flex-grow: 1;
+
+        @include respond-to("medium") { margin: 0 2rem 0 1rem; }
     }
 
     .cancel {

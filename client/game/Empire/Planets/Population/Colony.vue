@@ -1,4 +1,8 @@
 <script>
+/***********************************************************************************************************************
+ * Colony Popup
+ * shows true pop and allows changing of food consumption
+ **********************************************************************************************************************/
 import Button from "Game/common/Button/Button.vue";
 import Icon from "Game/common/Icon/Icon.vue";
 import {latinToRoman} from "../../../handlers/format";

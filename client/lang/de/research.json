@@ -1,16 +1,26 @@
 {
     "title": "Forschung",
+    "queue": {
+        "label": "Forschung Warteschlange",
+        "explanation": "Nur der oberste Forschungsauftrag wird bearbeitet."
+    },
     "techLevels": {
-        "label": "Tech Levels",
+        "label": "Technologie Stufen",
         "laser": "Laser",
         "plasma": "Plasma",
         "railgun": "Railguns",
         "missile": "Raketen",
         "shields": "Schutzschilde",
-        "armour": "Panzerung"
+        "armour": "Panzerung",
+        "status": {
+            "researched": "erforscht",
+            "queued": "in Warteschlange",
+            "unresearched": "unerforscht"
+        }
     },
     "research": {
-        "start": "Forschung starten",
-        "cancel": "Forschung abbrechen"
+        "start": "TL{tl} Erforschen",
+        "abort": "Forschung Abbrechen",
+        "abortDesc": "Wenn Sie die Forschung abbrechen gehen alle bisherigen Fortschritte ({workDone}) verloren."
     }
 }
