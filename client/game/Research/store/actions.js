@@ -35,7 +35,7 @@ const ACTIONS = {
     },
 
     /*
-     * fetch game data from api via XHR
+     * request "change research order"
      * @param {Object} ctx - Vuex $store context
      * @param {Array} payload - Array of full research objects
      */
