@@ -22,7 +22,7 @@ export default {
 </script>
 
 <template>
-    <section>
+    <section v-if="researches.length">
         <h2>{{ $t("queue.label") }}</h2>
         <draggable
             v-if="researches.length"

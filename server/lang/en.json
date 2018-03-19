@@ -617,7 +617,8 @@
             "ORDER": {
                 "NOTOWNER": "You are not the owner of all research jobs.",
                 "SORTERROR": "Error during sorting.",
-                "TYPEORDER": "Tech Levels of the same type must be in the correct order."
+                "TYPEORDER": "Tech Levels of the same type must be in the correct order.",
+                "LENGTH": "Your queue has more than the allowed number of items (%s)."
             },
             "DELETE": {
                 "NOTOWNER": "Research job not found."

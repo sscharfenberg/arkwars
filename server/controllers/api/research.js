@@ -149,6 +149,15 @@ exports.verifyChangeOrder = async (req, res, next) => {
         return res.json({error: i18n.__("API.RESEARCH.ORDER.TYPEORDER"), researches: cmpDbResearches});
     }
 
+    // 4. make sure the number of passed research jobs is not > max
+    if (req.body.length > cfg.tech.queue) {
+        logger.error(
+            `[App] user ${"@" +
+            req.user.username} passed more research jobs than allowed.`
+        );
+        return res.json({error: i18n.__("API.RESEARCH.ORDER.LENGTH", cfg.tech.queue), researches: cmpDbResearches});
+    }
+
     // no error so far => proceed.
     return next();
 };

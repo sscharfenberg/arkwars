@@ -637,7 +637,8 @@
             "ORDER": {
                 "NOTOWNER": "Sie sind nicht der Besitzer aller Forschungsaufträge.",
                 "SORTERROR": "Fehler bei der Sortierung.",
-                "TYPEORDER": "Technologiestufen des gleichen Typs müssen in der richtigen Reihenfolge sein."
+                "TYPEORDER": "Technologiestufen des gleichen Typs müssen in der richtigen Reihenfolge sein.",
+                "LENGTH": "Mehr Forschungen in Warteschlange als erlaubt (%s)."
             },
             "DELETE": {
                 "NOTOWNER": "Forschungsauftrag nicht gefunden."

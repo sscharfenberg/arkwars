@@ -27,7 +27,15 @@ export default {
         researches: function () {
             return this.$store.getters.playerResearches.filter(res => this.tlType === res.area);
         },
-        isMaxed: function () { return this.level >= techRules.bounds[1]; },
+        /*
+         * "enqueue" button is disabled if
+         * a) level is >= max level
+         * b) queue.length >= queue maxlength
+         * TODO: c) currently requesting "enqueue"
+         */
+        disableEnqueue: function () {
+            return this.level >= techRules.bounds[1] || this.$store.getters.playerResearches.length >= techRules.queue;
+        },
         getStartLabel: function () { return this.$t("research.start", {tl: this.nextLevel}); },
         nextLevel: function () {
             const researches = this.researches;
@@ -57,7 +65,7 @@ export default {
         <section class="level">
             <h4>{{ $t("techLevels." + tlType ) }}</h4>
             <btn
-                :disabled="isMaxed"
+                :disabled="disableEnqueue"
                 :on-click="startResearch"
                 class="start-research"
                 :label="getStartLabel"
