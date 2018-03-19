@@ -21,6 +21,11 @@
     "research": {
         "start": "TL{tl} Erforschen",
         "abort": "Forschung Abbrechen",
-        "abortDesc": "Wenn Sie die Forschung abbrechen gehen alle bisherigen Fortschritte ({workDone}) verloren."
+        "abortDesc": "Wenn Sie die Forschung abbrechen gehen alle bisherigen Fortschritte ({workDone}) verloren.",
+        "enqueue": {
+            "title": "Forschung Starten",
+            "start": "Starten",
+            "explanation": "Nur der oberste Forschungsauftrag wird bearbeitet. Forschung wird kontinuierlich über {turns} Runden investiert."
+        }
     }
 }

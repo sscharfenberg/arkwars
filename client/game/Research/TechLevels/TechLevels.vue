@@ -4,9 +4,11 @@
  * shows a summary of available tech levels
  **********************************************************************************************************************/
 import TechLevel from "./TechLevel.vue";
+import Enqueue from "./Enqueue.vue";
 export default {
     components: {
-        TechLevel
+        TechLevel,
+        Enqueue
     },
     computed: {
         techLevels: function () { return this.$store.getters.playerTechLevels; }
@@ -26,6 +28,11 @@ export default {
                 :tl-type="techLevel.type"
                 :level="techLevel.level" />
         </ul>
+        <enqueue
+            v-for="techLevel in techLevels"
+            :key="techLevel.type"
+            :area="techLevel.type"
+            :level="techLevel.level" />
     </section>
 </template>
 

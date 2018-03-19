@@ -50,7 +50,7 @@ export default {
     },
     methods: {
         startResearch: function () {
-            alert("TODO: start research " + this.tlType + " TL" + this.nextLevel);
+            this.$modal.show(`start-${this.tlType}`);
         }
     }
 };
@@ -76,8 +76,6 @@ export default {
         </section>
     </li>
 </template>
-
-
 
 <style lang="scss" scoped>
     .item {

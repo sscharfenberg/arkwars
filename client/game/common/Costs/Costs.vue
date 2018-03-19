@@ -9,6 +9,10 @@ export default {
         costs: {
             type: Array,
             required: true
+        },
+        showAffordable: {
+            type: Boolean,
+            default: true
         }
     },
     components: {
@@ -25,7 +29,7 @@ export default {
             return stockpile >= cost;
         },
         getAffordableClass ( resourceType ) {
-            if (resourceType === "turns") return "";
+            if (resourceType === "turns" || !this.showAffordable) return "";
             return this.isStockpiled(resourceType) ? "affordable" : "insufficient-funds";
         }
     }

@@ -21,6 +21,11 @@
     "research": {
         "start": "Research TL{tl}",
         "abort": "Abort Research",
-        "abortDesc": "If you abort this research all progress ({workDone}) will be lost."
+        "abortDesc": "If you abort this research all progress ({workDone}) will be lost.",
+        "enqueue": {
+            "title": "Start research",
+            "start": "Start",
+            "explanation": "Only the top research job is being worked on. Research is invested continuously over {turns} turns."
+        }
     }
 }

@@ -97,4 +97,13 @@ describe("Costs.vue", () => {
         expect(cmp.findAll("ul").length).toBe(0);
         expect(cmp.findAll("li").length).toBe(0);
     });
+
+    it("does not show affordable/not affordable if showAffordable=false", () => {
+        cmp.setProps({
+            costs: [{resourceType: "research", amount: 2500}],
+            showAffordable: false
+        });
+        expect(cmp.findAll(".affordable").length).toBe(0);
+        expect(cmp.findAll(".insufficient-funds").length).toBe(0);
+    });
 });
