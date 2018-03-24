@@ -18,7 +18,7 @@ const monitor = nodemon({
     ext: "js,json",
     watch: [
         "server",
-        "client/lang"
+        "shared"
     ],
     ignore: ["server/public/", "server/cron", "server/logs", "server/views", "server/public"],
     verbose: true

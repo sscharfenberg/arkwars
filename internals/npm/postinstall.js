@@ -11,6 +11,7 @@ const cfg = require("../../server/config");
 
 const paths = [
     path.join(cfg.app.projectDir, ".babel-cache"),
+    path.join(cfg.app.projectDir, "server", "config", "https"),
     path.join(cfg.app.projectDir, "server", "logs"),
     path.join(cfg.app.projectDir, "server", "logs", "turns"),
     path.join(cfg.app.projectDir, "server", "views", "webpack"),

@@ -8,8 +8,16 @@
  *
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // https://www.npmjs.com/package/mongoose
+const fs = require("fs"); // https://nodejs.org/api/path.html
+const https = require("https"); // https://nodejs.org/api/https.html
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("./handlers/logger/console");
+const httpsOptions = {
+    key: fs.readFileSync( "./server/config/https/localhost.key" ),
+    cert: fs.readFileSync( "./server/config/https/localhost.cert" ),
+    requestCert: false,
+    rejectUnauthorized: false
+};
 
 // import environmental variables from our .env file to process.env
 require("dotenv").config({path: "./server/config/.env"});
@@ -40,11 +48,11 @@ mongoose.connection
  *
  */
 const app = require("./app"); // app.js exports the express app
-app.set("port", process.env.PORT || 80); // set port
+app.set("port", process.env.PORT || 443); // set port
+
+const server = https.createServer( httpsOptions, app );
 
 // start server by listening to requests on app port
-const server = app.listen(app.get("port"), () => {
-    logger.info(
-        `[node] Server listening on port ${chalk.yellow(app.get("port"))}`
-    );
+server.listen(app.get("port"), () => {
+    logger.info(`[node] Server listening on port ${chalk.yellow(app.get("port"))}`);
 });
