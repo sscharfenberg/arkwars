@@ -3,6 +3,7 @@
  * Icon Component
  * these svg icons use a external svg sprite sheet and reference the id in that file
  ******************************************************************************************************************/
+const basePath = "/public/assets/images/icons-game.svg";
 export default {
     props: {
         name: {
@@ -15,7 +16,7 @@ export default {
         }
     },
     computed: {
-        iconPath () { return `#g-${this.name}`; },
+        iconPath () { return `${basePath}#g-${this.name}`; },
         sizeClass () {
             switch(this.size) {
                 case 0: return "tiny";

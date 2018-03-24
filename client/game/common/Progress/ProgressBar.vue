@@ -61,7 +61,7 @@ export default {
         border-radius: 8px;
 
         &.active {
-            background: linear-gradient(to right, #ff2d55, #5856d6, #34aadc, #007aff, #5ac8fa, #4cd964, #337a15);
+            background: linear-gradient(to right, #ff2d55, #4a48b1, #007aff, #4cd964, #337a15);
         }
     }
 

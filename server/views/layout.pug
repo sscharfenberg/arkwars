@@ -10,11 +10,6 @@ html(lang=(session.locale))
 
 body(data-user=(user ? 1 : 0))
 
-    != h.spritesheet()
-
-    if currentPath.split("/").includes("game")
-        != h.gameIcons()
-
     header.aw-header
 
         .aw-header__menu

@@ -31,32 +31,13 @@ exports.image = path => fs.readFileSync(`./server/public/assets/images/${path}`)
  * != h.icon("games", ["small"])
  */
 exports.icon = (name, modifiers) => {
+    const basePath = "/public/assets/images/icons-app.svg";
     modifiers = modifiers || [];
     modifiers = modifiers.map(modifier => {
         return "aw-icon--" + modifier;
     });
-    return `<svg class="aw-icon ${modifiers.join(" ")}"><use xlink:href="#${name}"></use></svg>`;
+    return `<svg class="aw-icon ${modifiers.join(" ")}"><use xlink:href="${basePath}#${name}"></use></svg>`;
 };
-
-/*
- * insert inline spritesheet into body.
- * this means we don't use caching for this, but we avoid a lot of problems.
- */
-exports.gameIcons = () =>
-    fs
-        .readFileSync("./server/public/assets/images/icons-game.svg", {encoding: "utf-8"})
-        .replace("<svg", `<svg class="aw-icon-sprite"`)
-        .replace(`<?xml version="1.0" encoding="UTF-8"?>`, "");
-
-/*
- * insert inline spritesheet of game icons for routes that include "game".
- * this means we don't use caching for this, but we avoid a lot of problems.
- */
-exports.spritesheet = () =>
-    fs
-        .readFileSync(`./server/public/assets/images/icons-app.svg`, {encoding: "utf-8"})
-        .replace("<svg", `<svg class="aw-icon-sprite"`)
-        .replace(`<?xml version="1.0" encoding="UTF-8"?>`, "");
 
 /*
  * progressbar helper function
@@ -78,7 +59,7 @@ exports.progressbar = (max, value, active) => {
     //colorClass = active ? colorClass : ""; // reset color class for inactive progressbars
     //svg = svg.replace("__DASHOFFSET__", pct);
     //svg = svg.replace("__COLORCLASS__", colorClass);
-    //svg = svg.replace("__ACTIVE__", activeClass);
+    svg = svg.replace("__ACTIVE__", activeClass);
     return svg;
 };
 
