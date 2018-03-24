@@ -1,5 +1,9 @@
 # Changelog
 
+`25.03.2018`
+- [x] switched svg icon spritesheets from inline in html to external files for better caching. 
+- [x] bumped dependencies
+
 `18.03.2018`
 - [x] refactored and cleaned up `TechLevel`(s) components. 
 - [x] created a common (generic) component for `ProgressBar`s.

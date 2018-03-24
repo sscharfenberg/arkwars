@@ -94,11 +94,11 @@ module.exports = {
             out: path.join(BUILDDIR, "images")
         },
         icons: {
-            in: [path.join(PROJECTROOT, "client", "theme", "icons", "**/*")],
+            in: [path.join(PROJECTROOT, "client", "theme", "icons", "**/*.svg")],
             out: path.join(BUILDDIR, "images")
         },
         gameIcons: {
-            in: [path.join(PROJECTROOT, "client", "game", "common", "Icon", "*.svg")],
+            in: [path.join(PROJECTROOT, "client", "game", "common", "Icon", "svg", "**/*.svg")],
             out: path.join(BUILDDIR, "images")
         },
         eslintrc: path.join(PROJECTROOT, ".eslintrc"),

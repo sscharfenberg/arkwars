@@ -29,7 +29,8 @@ Use at your own risk.
 * `npm run app.static.watch`: watch static (gulp) assets and recompile / start tasks as needed.
 * `npm run js.prod`: generate webpack bundles (including templates) for a **production** environment.
 * `npm run js.dev`: generate webpack bundles (including templates) for a **development** environment and starts webpack-dev-server. webpack-dev-server will serve assets, only the pug template includes will be written to disk.
-* `npm run files.cleanup`: empty directories with webpack-generated, git-ignored files.
+* `npm test`: starts the jest test-suite and watches for changes.
+* `npm run files.cleanup`: empty directories with webpack and server-generated, git-ignored files.
 * `npm run db.prune`: delete MongoDB collections.
 * `npm run db.seed`: seed MongoDB with mock data.
 

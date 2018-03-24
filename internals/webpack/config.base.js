@@ -164,7 +164,8 @@ const webpackConfig = {
                     test: /[\\/]node_modules[\\/]/,
                     name: "common",
                     minChunks: 2,
-                    chunks: "all"
+                    chunks: "all",
+                    priority: -10
                 }
             }
         },
