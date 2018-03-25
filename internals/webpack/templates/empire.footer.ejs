@@ -2,5 +2,5 @@
 <% if (htmlWebpackPlugin.options.meta.isProd) { %>
 script(src="/public/assets/empire.<%= htmlWebpackPlugin.files.chunks["empire"].hash %>.js" defer nonce=(nonce))
 <% } else { %>
-script(src="http://localhost:<%= htmlWebpackPlugin.options.meta.webPackPort %>/empire.js" defer nonce=(nonce))
+script(src="//localhost:<%= htmlWebpackPlugin.options.meta.webPackPort %>/empire.js" defer nonce=(nonce))
 <% } %>

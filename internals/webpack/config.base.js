@@ -160,16 +160,22 @@ const webpackConfig = {
     optimization: {
         splitChunks: {
             cacheGroups: {
-                common: {
+                vendor: {
                     test: /[\\/]node_modules[\\/]/,
-                    name: "common",
+                    name: "vendor",
                     minChunks: 2,
                     chunks: "all",
                     priority: -10
+                },
+                common: {
+                    test: new RegExp("time.js|common|shared"),
+                    chunks: "initial",
+                    name: "common",
+                    minChunks: 2,
+                    enforce: true
                 }
             }
-        },
-        runtimeChunk: false
+        }
     },
 
     // https://webpack.js.org/configuration/resolve/

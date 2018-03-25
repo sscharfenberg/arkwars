@@ -2,5 +2,5 @@
 <% if (htmlWebpackPlugin.options.meta.isProd) { %>
 script(src="/public/assets/admin.<%= htmlWebpackPlugin.files.chunks["admin"].hash %>.js" defer nonce=(nonce))
 <% } else { %>
-script(src="http://localhost:<%= htmlWebpackPlugin.options.meta.webPackPort %>/admin.js" defer nonce=(nonce))
+script(src="//localhost:<%= htmlWebpackPlugin.options.meta.webPackPort %>/admin.js" defer nonce=(nonce))
 <% } %>
