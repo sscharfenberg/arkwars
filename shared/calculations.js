@@ -2,7 +2,7 @@
  *
  * calculations handler
  * @type "CommonJS"
- * this calculates various game stuff. all functions need to be "pure" so we can use them in the client as well
+ * this calculates various game stuff. all functions need to be "pure" so we can use them in client _and_ server
  *
  **********************************************************************************************************************/
 
@@ -22,6 +22,7 @@
  * @returns {Number} new population - float
  */
 const populationGrowth = (population, foodConsumption) => {
+    foodConsumption = parseFloat(foodConsumption);
     const starvingMultiplier = 0.8; // 20% of population dies if noone eats ^.^
     let newPop = foodConsumption < 1
         ? population * (1 + ((Math.log(foodConsumption) * 3) / 100))
@@ -30,4 +31,26 @@ const populationGrowth = (population, foodConsumption) => {
     return newPop.toFixed(8); // we don't need this much precision, waste of db space
 };
 
-module.exports = {populationGrowth};
+
+/*
+ * calculate effective research
+ *
+ * default priority is 1
+ * resource costs is priority * population
+ *
+ * @param {Number} population - float
+ * @param {Number} priority - float
+ * @returns {Number} effectiveResearch - float
+ */
+const effectiveResearch = (population, priority) => {
+    priority = parseFloat(priority);
+    let effectivePriority = priority;
+    if (priority <= 1) return Math.ceil(population * effectivePriority);
+    for (let i = 1; i < priority; i++) {
+        effectivePriority = effectivePriority * 0.92;
+    }
+    return Math.floor(population * effectivePriority);
+};
+
+
+module.exports = {populationGrowth, effectiveResearch};

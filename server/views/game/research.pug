@@ -4,6 +4,7 @@ block head
     link(rel='stylesheet', href='/public/assets/styles.css')
     include ../webpack/research.header.pug
 
+
 block content
 
     main.aw-content__inner
@@ -12,7 +13,8 @@ block content
             data-playerid=(user.selectedPlayer._id),
             data-gameid=(user.selectedPlayer.game._id),
             data-locale=(session.locale),
-            data-area="research"
+            data-area="research",
+            data-initial=(gameData)
         )
             div#gameRoot
 

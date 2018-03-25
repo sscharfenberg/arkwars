@@ -27,6 +27,7 @@ export default {
 
 <style lang="scss">
     @import "~vue-snotify/styles/dark";
+    @import "~Theme/components/game/input-range";
 
     // styles for vue-modal
     .v--modal-overlay {

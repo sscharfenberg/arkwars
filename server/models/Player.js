@@ -139,8 +139,15 @@ const playerSchema = new mongoose.Schema(
                 max: cfg.tech.bounds[1],
                 default: cfg.tech.areas.find(tl => tl.area === "armour").initial
             }
-        }
+        },
         // end tech levels
+
+        researchPriority: {
+            type: Number,
+            min: cfg.tech.researchPriority[0],
+            max:  cfg.tech.researchPriority[1],
+            default: cfg.tech.researchPriority[2]
+        }
 
     },
     {

@@ -1,7 +1,7 @@
 {
     "title": "Forschung",
     "queue": {
-        "label": "Forschung Warteschlange",
+        "label": "Forschungsaufträge",
         "explanation": "Nur der oberste Forschungsauftrag wird bearbeitet."
     },
     "techLevels": {
@@ -26,6 +26,11 @@
             "title": "Forschung Starten",
             "start": "Starten",
             "explanation": "Nur der oberste Forschungsauftrag wird bearbeitet. Forschung wird kontinuierlich über {turns} Runden investiert."
+        },
+        "priority": {
+            "label": "Forschungs Priorität",
+            "costs": "Resourcenkosten pro Runde",
+            "work": "Effektive Forschungsergebnisse"
         }
     }
 }

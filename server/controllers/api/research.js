@@ -9,7 +9,9 @@ const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
+const apiRsearchGameDataController = require("./research.gameData");
 const Research = mongoose.model("Research");
+const Player = mongoose.model("Player");
 const logger = require("../../handlers/logger/console");
 const cfg = require("../../config");
 
@@ -22,53 +24,7 @@ const cfg = require("../../config");
  * @param {ExpressHTTPResponse} res
  */
 exports.getGameData = async (req, res) => {
-    const player = req.user.selectedPlayer;
-    const game = player.game;
-    const researches = await Research.find({player: player._id}).sort({order: "asc"});
-
-    // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    const returnData = {
-        game: {
-            // only selected game props
-            number: game.number,
-            active: game.active,
-            dimensions: game.dimensions,
-            turn: game.turn,
-            turnDue: game.turnDue,
-            turnDuration: game.turnDuration,
-            processing: game.processing
-        },
-        player: {
-            // again, only selected props
-            name: player.name,
-            ticker: player.ticker
-        },
-        resources: [
-            // un-flatten resource data into an array for VueJS
-            {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
-            {type: "food", current: player.resources.food.current, max: player.resources.food.max},
-            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
-            {type: "research", current: player.resources.research.current, max: player.resources.research.max}
-        ],
-        techLevels: [
-            {type: "plasma", level: player.tech.plasma},
-            {type: "railgun", level: player.tech.railgun},
-            {type: "missile", level: player.tech.missile},
-            {type: "laser", level: player.tech.laser},
-            {type: "shields", level: player.tech.shields},
-            {type: "armour", level: player.tech.armour}
-        ],
-        researches: researches.map(research => {
-            return {
-                id: research._id,
-                area: research.area,
-                newLevel: research.newLevel,
-                order: research.order,
-                remaining: research.remaining
-            };
-        })
-    };
-
+    const returnData = await apiRsearchGameDataController.fetch(req.user.selectedPlayer);
     logger.info(
         `[App] User ${chalk.red("@" + req.user.username)} requested ${chalk.cyan(
             "research"
@@ -76,7 +32,6 @@ exports.getGameData = async (req, res) => {
             "[" + returnData.player.ticker + "]"
         )} ${chalk.cyan(returnData.player.name)}`
     );
-
     return res.json(returnData);
 };
 
@@ -257,4 +212,54 @@ exports.sendResearches = async (req, res) => {
         };
     });
     return res.json(newResearches);
+};
+
+/*
+ * verify if change research priority request is valid =================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.verifyChangePriority = async (req, res, next) => {
+    // sanitize user inputs
+    req.body.researchPriority = parseFloat(strip(req.body.researchPriority));
+    const prio = req.body.researchPriority;
+    logger.info(
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]"
+        )} changing research priority to ${chalk.yellow(req.body.researchPriority)}`
+    );
+    // 1. verify priority is within expected bounds
+    if (prio < cfg.tech.researchPriority[0] || prio > cfg.tech.researchPriority[1]) {
+        logger.error(`[App] research priority ${chalk.yellow(prio)} is out of bounds.`);
+        const bounds = `${cfg.tech.researchPriority[0]} - ${cfg.tech.researchPriority[1]}`;
+        return res.json({
+            error: i18n.__("API.RESEARCH.PRIORITY.OUTOFBOUNDS", bounds),
+            researchPriority: req.user.selectedPlayer.researchPriority
+        });
+    }
+    // no error so far => proceed.
+    return next();
+};
+
+/*
+ * do change priority ==================================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.doChangePriority = async (req, res) => {
+    const updatedPlayer = await Player.findOneAndUpdate(
+        {_id: req.user.selectedPlayer._id},
+        {$set: {researchPriority: req.body.researchPriority}},
+        {new: true, runValidators: true}
+    );
+    if (updatedPlayer) {
+        logger.success(
+            `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} changed research priority to ${chalk.yellow(
+                updatedPlayer.researchPriority
+            )}.`
+        );
+        res.json({researchPriority: updatedPlayer.researchPriority});
+    }
+    res.status(500).end();
 };

@@ -622,6 +622,9 @@
             },
             "DELETE": {
                 "NOTOWNER": "Research job not found."
+            },
+            "PRIORITY": {
+                "OUTOFBOUNDS": "Research priority is out of bounds (%s)."
             }
         }
     }

@@ -43,7 +43,7 @@ export default {
             {{ $t("planet.population.food.title") }}
         </li>
         <li class="perpop">
-            <label :for="`setFood-slider-${planetId}`">{{ $t("planet.population.food.perPop") }}</label>
+            <label :for="`setFood-number-${planetId}`">{{ $t("planet.population.food.perPop") }}</label>
             <input
                 type="range"
                 :id="`setFood-slider-${planetId}`"
@@ -62,7 +62,7 @@ export default {
                 aria-valuemin="0"
                 max="3"
                 aria-valuemax="3"
-                step="0.01"
+                step="0.2"
                 v-model="setFood"
                 :aria-label="$t('planet.population.food.title') + ' ' + $t('planet.population.food.perPop')"
                 :disabled="changeDisabled"

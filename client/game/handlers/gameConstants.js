@@ -15,5 +15,6 @@ const getMessagesVersion = () =>
         .add(99, "years")
         .toISOString();
 const getAreaSlug = () => document.getElementById("gameData").getAttribute("data-area");
+const getInitialState = () => JSON.parse(document.getElementById("gameData").getAttribute("data-initial"));
 
-export {getPlayerId, getGameId, getLocale, getMessagesVersion, getAreaSlug};
+export {getPlayerId, getGameId, getLocale, getMessagesVersion, getAreaSlug, getInitialState};

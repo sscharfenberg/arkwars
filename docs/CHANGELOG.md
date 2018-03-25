@@ -1,7 +1,10 @@
 # Changelog
 
 `25.03.2018`
-- [x] switched svg icon spritesheets from inline in html to external files for better caching. 
+- [x] Improved chunk splitting by changing the old `common` chunk into a `common` chunk (shared components, rule files, time.js) and a `vendor` chunk (third party vendor libraries). This reduces the amount of bytes that have to be fetched and parsed, and it should improve caching - `common` and `vendor` chunks are included on every single page.
+- [x] initial state is not fetched from the vue action via XHR, but rather passed from the page controller into the template/DOM, where Vue picks it up and uses it to set the state.  
+- [x] switched svg icon spritesheets from inline in html to external files for better caching.
+- [x] Added `researchPriority` - to the player model, as a child-component of `Queue` and as API endpoint. Resource costs and effective research vary (slight diminishing returns).
 - [x] bumped dependencies
 
 `18.03.2018`

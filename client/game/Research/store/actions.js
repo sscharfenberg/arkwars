@@ -10,6 +10,18 @@ import {applyServerPulse} from "../../../components/game/time";
 import {DEBUG} from "../../../config";
 
 const ACTIONS = {
+
+    /*
+     * set initial state that we get from html dom
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     * @param {String} payload.area
+     */
+    SET_INITIAL_STATE: function(ctx, payload) {
+        DEBUG && console.log("setting intial state");
+        ctx.commit("SET_GAME_DATA", payload);
+    },
+
     /*
      * fetch game data from api via XHR
      * @param {Object} ctx - Vuex $store context
@@ -93,6 +105,35 @@ const ACTIONS = {
                 ctx.commit("DELETING_RESEARCH_JOB", {id: payload, deleting: false});
             });
     },
+
+    /*
+     * request "change research priority"
+     * @param {Object} ctx - Vuex $store context
+     * @param {String} payload - new priority
+     */
+    CHANGE_RESEARCH_PRIORITY: function(ctx, payload) {
+        DEBUG && console.log(`requesting change research priority to ${payload}`);
+        ctx.commit("CHANGING_RESEARCH_PRIORITY", true);
+        axios
+            .post("/api/game/research/priority", { researchPriority: payload })
+            .then(response => {
+                if (response.data && !response.data.error) {
+                    ctx.commit("SET_RESEARCH_PRIORITY", response.data.researchPriority);
+                }
+                if (response.data && response.data.error) { // server has error message ?
+                    this._vm.$snotify.error(response.data.error);
+                    if (response.data.researchPriority) {
+                        ctx.commit("SET_RESEARCH_PRIORITY", response.data.researchPriority);
+                    }
+                }
+                ctx.commit("CHANGING_RESEARCH_PRIORITY", false);
+            })
+            .catch(error => {
+                console.error(error);
+                ctx.commit("CHANGING_RESEARCH_PRIORITY", false);
+            });
+    }
+
 };
 
 export default ACTIONS;

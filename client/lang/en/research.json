@@ -1,7 +1,7 @@
 {
     "title": "Research",
     "queue": {
-        "label": "Research queue",
+        "label": "Research jobs",
         "explanation": "Only the first job in the queue is researched."
     },
     "techLevels": {
@@ -26,6 +26,11 @@
             "title": "Start research",
             "start": "Start",
             "explanation": "Only the top research job is being worked on. Research is invested continuously over {turns} turns."
+        },
+        "priority": {
+            "label": "Research Priority",
+            "costs": "Resource cost per turn",
+            "work": "Effective research"
         }
     }
 }

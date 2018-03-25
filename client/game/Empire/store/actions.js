@@ -10,6 +10,18 @@ import {applyServerPulse} from "../../../components/game/time";
 import {DEBUG} from "../../../config";
 
 const ACTIONS = {
+
+    /*
+     * fetch game data from api via XHR
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     * @param {String} payload.area
+     */
+    SET_INITIAL_STATE: function(ctx, payload) {
+        DEBUG && console.log("setting intial state");
+        ctx.commit("SET_GAME_DATA", payload);
+    },
+
     /*
      * fetch game data from api via XHR
      * @param {Object} ctx - Vuex $store context

@@ -9,6 +9,7 @@ const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
+const apiEmpireGameDataController = require("./empire.gameData");
 const Planet = mongoose.model("Planet");
 const Player = mongoose.model("Player");
 const Star = mongoose.model("Star");
@@ -26,104 +27,7 @@ const cfg = require("../../config");
  * @param {ExpressHTTPResponse} res
  */
 exports.getGameData = async (req, res) => {
-    const player = req.user.selectedPlayer;
-    const game = player.game;
-    const stars = player.stars.map(star => star.id);
-    // get unsorted array of all planets that belong to the player's stars
-    let planets = await Planet.find({star: {$in: stars}}).populate("harvesters pdus");
-
-    // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    const returnData = {
-        game: {
-            // only selected game props
-            number: game.number,
-            active: game.active,
-            dimensions: game.dimensions,
-            turn: game.turn,
-            turnDue: game.turnDue,
-            turnDuration: game.turnDuration,
-            processing: game.processing
-        },
-        player: {
-            // again, only selected props
-            name: player.name,
-            ticker: player.ticker
-        },
-        resources: [
-            // un-flatten resource data into an array for VueJS
-            {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
-            {type: "food", current: player.resources.food.current, max: player.resources.food.max},
-            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
-            {type: "research", current: player.resources.research.current, max: player.resources.research.max}
-        ],
-        // avoid specific properties on the star and add an array of planetids
-        stars: player.stars.map(star => {
-            return {
-                id: star._id,
-                name: star.name,
-                spectral: star.spectral,
-                coordX: star.coordX,
-                coordY: star.coordY,
-                planets: planets.filter(planet => `${planet.star}` === `${star._id}`).map(planet => planet.id)
-            };
-        }),
-        harvesters: [],
-        planets: [],
-        pdus: []
-    };
-
-    // add mapped planets
-    returnData.planets = planets.map(planet => {
-        // add PDU data to pdus array
-        returnData.pdus = planet.pdus
-            .map(pdu => {
-                return {
-                    id: pdu._id,
-                    planet: pdu.planet,
-                    pduType: pdu.pduType,
-                    turnsUntilComplete: pdu.turnsUntilComplete,
-                    isActive: pdu.isActive
-                };
-            })
-            .concat(returnData.pdus);
-        // prepare planet
-        return {
-            id: planet._id,
-            type: planet.type,
-            orbitalIndex: planet.orbitalIndex,
-            population: planet.population,
-            effectivePopulation: planet.effectivePopulation,
-            foodConsumption: planet.foodConsumptionPerPop,
-            resourceSlots: planet.resources.map(slot => {
-                // harvester data into returnData.harvesters array
-                returnData.harvesters = planet.harvesters
-                    // only harvesters with the correct type
-                    .filter(harvester => harvester.resourceType === slot.resourceType)
-                    // map to new object with specific order
-                    .map(harvester => {
-                        return {
-                            id: harvester._id,
-                            resourceType: harvester.resourceType,
-                            turnsUntilComplete: harvester.turnsUntilComplete,
-                            isHarvesting: harvester.isHarvesting,
-                            resGrade: slot.value
-                        };
-                    })
-                    .concat(returnData.harvesters);
-                return {
-                    resourceType: slot.resourceType,
-                    slots: slot.slots,
-                    id: slot._id,
-                    resGrade: slot.value,
-                    // harvester ids are added into array here
-                    harvesters: planet.harvesters
-                        .filter(harvester => harvester.resourceType === slot.resourceType)
-                        .map(harvester => harvester._id)
-                };
-            })
-        };
-    });
-
+    const returnData = await apiEmpireGameDataController.fetch(req.user.selectedPlayer);
     logger.info(
         `[App] User ${chalk.red("@" + req.user.username)} requested ${chalk.cyan(
             "empire"
@@ -131,7 +35,6 @@ exports.getGameData = async (req, res) => {
             "[" + returnData.player.ticker + "]"
         )} ${chalk.cyan(returnData.player.name)}`
     );
-
     return res.json(returnData);
 };
 

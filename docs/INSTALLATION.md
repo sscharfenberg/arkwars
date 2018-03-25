@@ -18,18 +18,6 @@ This is a known issue with npm where for some files a race condition fails becau
 
 The `postinstall` script creates necessary directories.
 
-## Prepare certificates for https
-
-For production, you will probably want to setup letsencrypt. For development - or if on a windows machine - I recommend making it simple and creating long-lasting dev certificates. These will be untrusted by your browser, but they will work.
-
-```
-openssl genrsa -out localhost.key 2048
-openssl req -new -x509 -key localhost.key -out localhost.cert -days 3650 -subj /CN=localhost
-```
-
-Copy the two generated files to `server/config/https/`.
- 
-
 ## Setup Mailserver for Development
 
 I strongly recommend [https://mailtrap.io/](https://mailtrap.io/) - they pretend to be a mailserver, but do not actually send anything. Instead, the mails are placed conveniently in an inbox for you to study. Create a free inbox, and copy the credentials to `/server/config/.env`. 

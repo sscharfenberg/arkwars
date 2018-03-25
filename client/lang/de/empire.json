@@ -1,10 +1,5 @@
 {
     "title": "Imperium",
-    "res": {
-        "stars": "Systeme",
-        "fleets": "Flotten",
-        "ships": "Schiffe"
-    },
     "summary": {
         "resources": {
             "production": "durch {num} Ernter",
@@ -15,6 +10,7 @@
             "value": "Bevölkerung in {numColonies} Kolonie(en)"
         }
     },
+    "stars": "Sternensysteme unseres Imperiums",
     "star": {
         "spectralType": "Spektralklasse",
         "name": {

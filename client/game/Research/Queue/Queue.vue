@@ -5,11 +5,15 @@
 import draggable from "vuedraggable";
 import QueueItem from "./QueueItem.vue";
 import AbortResearch from "./AbortResearch.vue";
+import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
+import ResearchPriority from "./ResearchPriority.vue";
 export default {
     components: {
         draggable,
         QueueItem,
-        AbortResearch
+        AbortResearch,
+        ScreenSection,
+        ResearchPriority
     },
     computed: {
         researches: {
@@ -22,8 +26,10 @@ export default {
 </script>
 
 <template>
-    <section v-if="researches.length">
-        <h2>{{ $t("queue.label") }}</h2>
+    <screen-section
+        v-if="researches.length"
+        :hdl="$t('queue.label')">
+        <research-priority />
         <draggable
             v-if="researches.length"
             v-model="researches"
@@ -37,13 +43,5 @@ export default {
             v-for="research in researches"
             :key="research.id"
             :research-id="research.id" />
-    </section>
+    </screen-section>
 </template>
-
-<style lang="scss" scoped>
-    h2 {
-        color: palette("brand", "viking");
-
-        font-weight: 300;
-    }
-</style>

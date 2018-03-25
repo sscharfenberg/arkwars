@@ -15,6 +15,7 @@ const store = new Vuex.Store({
         // App state
         fetchingGameDataFromApi: false,
         changingResearchOrder: false,
+        changingResearchPriority: false,
         deletingResearchJobs: [],
         // common game state
         game: {},
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
         // App state
         fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
         isChangingResearchOrder: state => state.changingResearchOrder,
+        isChangingResearchPriority: state => state.changingResearchPriority,
         deletingResearchJobs: state => state.deletingResearchJobs || [],
         // common game state
         game: state => state.game || {},

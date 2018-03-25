@@ -1,10 +1,5 @@
 {
     "title": "Empire",
-    "res": {
-        "stars": "Stars",
-        "fleets": "Fleets",
-        "ships": "Ships"
-    },
     "summary": {
         "resources": {
             "production": "from {num} harvesters",
@@ -15,6 +10,7 @@
             "value": "population in {numColonies} colonies"
         }
     },
+    "stars": "Stars of our empire",
     "star": {
         "spectralType": "Spectral type",
         "name": {

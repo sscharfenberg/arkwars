@@ -10,7 +10,7 @@ process.env.BABEL_ENV = "development";
 process.env.NODE_ENV = "development";
 
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
-const fs = require("fs"); // https://nodejs.org/api/path.html
+//const fs = require("fs"); // https://nodejs.org/api/path.html
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
 const WebpackDevServer = require("webpack-dev-server"); // https://webpack.js.org/configuration/dev-server/
 const webpackConfig = require("../webpack/config.dev");
@@ -18,12 +18,12 @@ const logger = require("../utils/clientlogger");
 const config = require("../config");
 let compiler = webpack(webpackConfig);
 let initialCompile = true;
-const httpsOptions = {
-    key: fs.readFileSync( "./server/config/https/localhost.key" ),
-    cert: fs.readFileSync( "./server/config/https/localhost.cert" ),
-    requestCert: false,
-    rejectUnauthorized: false
-};
+//const httpsOptions = {
+//    key: fs.readFileSync( "./server/config/https/localhost.key" ),
+//    cert: fs.readFileSync( "./server/config/https/localhost.cert" ),
+//    requestCert: false,
+//    rejectUnauthorized: false
+//};
 
 // https://webpack.js.org/configuration/dev-server/
 // start the dev server

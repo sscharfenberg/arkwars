@@ -71,6 +71,24 @@ const MUTATIONS = {
         } else {
             state.deletingResearchJobs.splice(state.deletingResearchJobs.indexOf(payload.id), 1); // remove ID from array
         }
+    },
+
+    /*
+     * SET/UNSET "Changing research priority"
+     * @param {Object} state - Vuex $store.state
+     * @param {Boolean} payload
+     */
+    CHANGING_RESEARCH_PRIORITY: (state, payload) => {
+        state.changingResearchPriority = payload;
+    },
+
+    /*
+     * SET research priority
+     * @param {Object} state - Vuex $store.state
+     * @param {Number} payload
+     */
+    SET_RESEARCH_PRIORITY: (state, payload) => {
+        state.player.researchPriority = payload;
     }
 };
 

@@ -642,6 +642,9 @@
             },
             "DELETE": {
                 "NOTOWNER": "Forschungsauftrag nicht gefunden."
+            },
+            "PRIORITY": {
+                "OUTOFBOUNDS": "Forschungspriorität nicht in erwartetem Bereich (%s)."
             }
         }
     }

@@ -15,7 +15,7 @@ const {catchErrors} = require("../../handlers/error");
 // get empire game data for player
 router.get("/data", catchErrors(researchController.getGameData));
 
-// set star name request
+// change research queue order
 router.post(
     "/order",
     jsonParser, // 1. add JSON parameters to req.body
@@ -25,7 +25,7 @@ router.post(
     catchErrors(researchController.sendResearches) // 5. get research jobs from DB and send to client via JSON
 );
 
-// set star name request
+// delete research job
 router.post(
     "/delete",
     jsonParser, // 1. add JSON parameters to req.body
@@ -33,6 +33,15 @@ router.post(
     catchErrors(researchController.verifyDeleteResearch), // 3. verify request is valid
     catchErrors(researchController.doDeleteResearch), // 4. delete research job
     catchErrors(researchController.sendResearches) // 5. get research jobs from DB and send to client via JSON
+);
+
+// set research priority
+router.post(
+    "/priority",
+    jsonParser, // 1. add JSON parameters to req.body
+    catchErrors(apiController.gameProcessing), // 2. verify game is not processing.
+    catchErrors(researchController.verifyChangePriority), // 3. verify request is valid
+    catchErrors(researchController.doChangePriority) // 4. change research priority
 );
 
 module.exports = router;
