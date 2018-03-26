@@ -86,11 +86,13 @@ export default {
 
         padding: 1rem;
         margin-top: 1rem;
+        flex-basis: 4.8rem;
 
         background: palette("grey", "sunken");
 
         @include respond-to("medium") {
             margin-top: 2rem;
+            flex-basis: 6.4rem;
         }
 
         .icon {
@@ -98,7 +100,7 @@ export default {
 
             width: 4.8rem;
             height: 4.8rem;
-            margin: 1rem 1rem 0 0;
+            margin: 0 1rem 0 0;
 
             @include respond-to("medium") {
                 align-self: center;
@@ -119,9 +121,15 @@ export default {
         flex-grow: 1;
 
         > h4 {
-            margin: 0;
+            margin: 0 0 1rem 0;
+            flex-basis: 100%;
 
             font-weight: 300;
+
+            @include respond-to("medium") {
+                margin: 0;
+                flex-basis: auto;
+            }
         }
     }
 

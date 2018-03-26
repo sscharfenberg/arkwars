@@ -20,7 +20,7 @@ const Planet = mongoose.model("Planet");
  */
 exports.fetch = async (player) => {
     const stars = player.stars.map(star => star.id);
-    const colonyPromise = Planet.find({star: {$in: stars}, population: {$gt: 0}});
+    const colonyPromise = Planet.find({star: {$in: stars}, population: {$gte: 1}});
     const researchPromise = Research.find({player: player._id}).sort({order: "asc"});
     const [colonies, researches] = await Promise.all([colonyPromise, researchPromise]);
     const totalPopulation = colonies.map(colony => colony.effectivePopulation).reduce((acc, val) => acc + val);
@@ -56,7 +56,11 @@ exports.fetch = async (player) => {
             {type: "missile", level: player.tech.missile},
             {type: "laser", level: player.tech.laser},
             {type: "shields", level: player.tech.shields},
-            {type: "armour", level: player.tech.armour}
+            {type: "armour", level: player.tech.armour},
+            {type: "energy", level: player.tech.energy},
+            {type: "food", level: player.tech.food},
+            {type: "minerals", level: player.tech.minerals},
+            {type: "research", level: player.tech.research}
         ],
         researches: researches.map(research => {
             return {

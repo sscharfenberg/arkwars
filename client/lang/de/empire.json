@@ -3,7 +3,8 @@
     "summary": {
         "resources": {
             "production": "durch {num} Ernter",
-            "foodConsumption": "Nahrungsverbrauch"
+            "foodConsumption": "Nahrungsverbrauch",
+            "researchConsumption": "für Forschung"
         },
         "population": {
             "label": "Bevölkerung",

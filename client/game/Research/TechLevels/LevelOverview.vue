@@ -82,7 +82,7 @@ export default {
         width: 100%;
 
         padding: 0;
-        margin: 1rem 0;
+        margin: 1rem 0 0 0;
         grid-gap: 1rem;
 
         list-style: none;

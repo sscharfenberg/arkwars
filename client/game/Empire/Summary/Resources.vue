@@ -26,6 +26,9 @@ export default {
                 .map(planet => Math.ceil(planet.foodConsumption * planet.population))
                 .reduce((accumulator, currentValue) => { return accumulator + currentValue; }, 0);
         },
+        researchConsumption: function () {
+            return Math.ceil(this.$store.getters.player.totalPopulation * this.$store.getters.player.researchPriority);
+        },
         numHarvesters: function () {
             return this.$store.getters.harvesters
                 .filter(harvester => harvester.resourceType === this.resType && harvester.isHarvesting)
@@ -54,6 +57,11 @@ export default {
                 <br>
                 <span class="negative">-{{ foodConsumption }}</span>
                 {{ $t("summary.resources.foodConsumption") }}
+            </span>
+            <span v-if="resType === 'research'">
+                <br>
+                <span class="negative">-{{ researchConsumption }}</span>
+                {{ $t("summary.resources.researchConsumption") }}
             </span>
         </div>
     </li>

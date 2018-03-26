@@ -138,6 +138,30 @@ const playerSchema = new mongoose.Schema(
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
                 default: cfg.tech.areas.find(tl => tl.area === "armour").initial
+            },
+            energy: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.areas.find(tl => tl.area === "energy").initial
+            },
+            food: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.areas.find(tl => tl.area === "food").initial
+            },
+            minerals: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.areas.find(tl => tl.area === "minerals").initial
+            },
+            research: {
+                type: Number,
+                min: cfg.tech.bounds[0],
+                max: cfg.tech.bounds[1],
+                default: cfg.tech.areas.find(tl => tl.area === "research").initial
             }
         },
         // end tech levels

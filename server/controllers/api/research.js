@@ -57,7 +57,7 @@ exports.verifyChangeOrder = async (req, res, next) => {
         _id: {$in: req.body.map(res => res.id)},
         player: req.user.selectedPlayer._id
     }).sort({order: "asc"});
-    const cmpDbResearches = dbResearches.map( res => {
+    const cmpDbResearches = dbResearches.map(res => {
         return {
             id: res._id,
             area: res.area,
@@ -77,39 +77,32 @@ exports.verifyChangeOrder = async (req, res, next) => {
     // 2. check if the researches are ordered [0..n]
     let counter = 0;
     let sortError = false;
-    req.body.forEach( res => {
+    req.body.forEach(res => {
         if (res.order !== counter) sortError = true;
         counter++;
     });
     if (sortError) {
-        logger.error(
-            `[App] user ${"@" +
-            req.user.username} requested an incorrect sort order [0..n].`
-        );
+        logger.error(`[App] user ${"@" + req.user.username} requested an incorrect sort order [0..n].`);
         return res.json({error: i18n.__("API.RESEARCH.ORDER.SORTERROR"), researches: cmpDbResearches});
     }
 
     // 3. check if techLevels of the same type are in the correct order
     let skipLevelError = false;
-    req.body.forEach( res => {
+    req.body.forEach(res => {
         if (req.body.find(job => job.area === res.area && job.newLevel < res.newLevel && job.order > res.order)) {
             skipLevelError = true;
         }
     });
     if (skipLevelError) {
         logger.error(
-            `[App] user ${"@" +
-            req.user.username} has techlevels of the same type in incorrect order [skipError].`
+            `[App] user ${"@" + req.user.username} has techlevels of the same type in incorrect order [skipError].`
         );
         return res.json({error: i18n.__("API.RESEARCH.ORDER.TYPEORDER"), researches: cmpDbResearches});
     }
 
     // 4. make sure the number of passed research jobs is not > max
     if (req.body.length > cfg.tech.queue) {
-        logger.error(
-            `[App] user ${"@" +
-            req.user.username} passed more research jobs than allowed.`
-        );
+        logger.error(`[App] user ${"@" + req.user.username} passed more research jobs than allowed.`);
         return res.json({error: i18n.__("API.RESEARCH.ORDER.LENGTH", cfg.tech.queue), researches: cmpDbResearches});
     }
 
@@ -160,8 +153,9 @@ exports.verifyDeleteResearch = async (req, res, next) => {
     // sanitize user inputs
     req.body.id = strip(req.body.id);
     logger.info(
-        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]"
-        )} deleting research job ${chalk.yellow("#"+req.body.id)}`
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} deleting research job ${chalk.yellow(
+            "#" + req.body.id
+        )}`
     );
 
     // 1. check if the research job is owned by the player
@@ -174,7 +168,6 @@ exports.verifyDeleteResearch = async (req, res, next) => {
     // no error so far => proceed.
     return next();
 };
-
 
 /*
  * delete research job =================================================================================================
@@ -225,7 +218,8 @@ exports.verifyChangePriority = async (req, res, next) => {
     req.body.researchPriority = parseFloat(strip(req.body.researchPriority));
     const prio = req.body.researchPriority;
     logger.info(
-        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]"
+        `[App] Player ${chalk.red(
+            "[" + req.user.selectedPlayer.ticker + "]"
         )} changing research priority to ${chalk.yellow(req.body.researchPriority)}`
     );
     // 1. verify priority is within expected bounds
@@ -255,15 +249,14 @@ exports.doChangePriority = async (req, res) => {
     );
     if (updatedPlayer) {
         logger.success(
-            `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} changed research priority to ${chalk.yellow(
-                updatedPlayer.researchPriority
-            )}.`
+            `[App] Player ${chalk.red(
+                "[" + req.user.selectedPlayer.ticker + "]"
+            )} changed research priority to ${chalk.yellow(updatedPlayer.researchPriority)}.`
         );
         return res.json({researchPriority: updatedPlayer.researchPriority});
     }
     res.status(500).end();
 };
-
 
 /*
  * verify "start research job" request is valid ========================================================================
@@ -281,16 +274,19 @@ exports.verifyStartResearch = async (req, res, next) => {
     const areaResearches = researches.filter(res => res.area === req.body.area);
     const nextLevel = () => {
         if (areaResearches.length === 0) return techLevel + 1;
-        return areaResearches.map(research => research.newLevel).sort((a, b) => {
-            if (a > b) return -1;
-            if (a < b) return 1;
-            return 0;
-        })[0] + 1;
+        return (
+            areaResearches.map(research => research.newLevel).sort((a, b) => {
+                if (a > b) return -1;
+                if (a < b) return 1;
+                return 0;
+            })[0] + 1
+        );
     };
     req.body.newLevel = nextLevel();
     logger.info(
-        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]"
-        )} add research job ${chalk.yellow(req.body.area)} ${chalk.red("TL"+req.body.newLevel)} to queue.`
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} add research job ${chalk.yellow(
+            req.body.area
+        )} ${chalk.red("TL" + req.body.newLevel)} to queue.`
     );
 
     // 1) Check if the area supplied exists
@@ -309,7 +305,9 @@ exports.verifyStartResearch = async (req, res, next) => {
 
     // 3) Ensure new level is within bounds
     if (req.body.newLevel < cfg.tech.bounds[0] || req.body.newLevel > cfg.tech.bounds[1]) {
-        logger.error(`[App] new TL ${chalk.yellow(req.body.newLevel)} is out of bounds ${chalk.red(cfg.tech.bounds.join(","))}.`);
+        logger.error(
+            `[App] new TL ${chalk.yellow(req.body.newLevel)} is out of bounds ${chalk.red(cfg.tech.bounds.join(","))}.`
+        );
         return res.json({error: i18n.__("API.RESEARCH.START.OUTOFBOUNDS", req.body.newLevel)});
     }
 

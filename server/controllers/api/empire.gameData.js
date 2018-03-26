@@ -17,10 +17,14 @@ const Planet = mongoose.model("Planet");
  * so we massage the data a bit.
  * @param {Object} playedr - Mongoose.model("Player")
  */
-exports.fetch = async (player) => {
+exports.fetch = async player => {
     const stars = player.stars.map(star => star.id);
     // get unsorted array of all planets that belong to the player's stars
     let planets = await Planet.find({star: {$in: stars}}).populate("harvesters pdus");
+    const totalPopulation = planets
+        .filter(planet => planet.population >= 1)
+        .map(colony => colony.effectivePopulation)
+        .reduce((acc, val) => acc + val);
 
     // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const returnData = {
@@ -37,7 +41,9 @@ exports.fetch = async (player) => {
         player: {
             // again, only selected props
             name: player.name,
-            ticker: player.ticker
+            ticker: player.ticker,
+            researchPriority: player.researchPriority,
+            totalPopulation
         },
         resources: [
             // un-flatten resource data into an array for VueJS
@@ -87,7 +93,7 @@ exports.fetch = async (player) => {
             resourceSlots: planet.resources.map(slot => {
                 // harvester data into returnData.harvesters array
                 returnData.harvesters = planet.harvesters
-                // only harvesters with the correct type
+                    // only harvesters with the correct type
                     .filter(harvester => harvester.resourceType === slot.resourceType)
                     // map to new object with specific order
                     .map(harvester => {

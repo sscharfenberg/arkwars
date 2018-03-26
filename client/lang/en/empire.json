@@ -3,7 +3,8 @@
     "summary": {
         "resources": {
             "production": "from {num} harvesters",
-            "foodConsumption": "food consumption"
+            "foodConsumption": "food consumption",
+            "researchConsumption": "for research"
         },
         "population": {
             "label": "Population",
