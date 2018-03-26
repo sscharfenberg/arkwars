@@ -625,6 +625,12 @@
             },
             "PRIORITY": {
                 "OUTOFBOUNDS": "Research priority is out of bounds (%s)."
+            },
+            "START": {
+                "AREANOTFOUND": "Research area \"%s\" does not exist. What?",
+                "ALREADYRESEARCHED": "TL%s already researched or enqueued.",
+                "OUTOFBOUNDS": "TL%s is out of bounds.",
+                "QUEUEFULL": "Max %s research jobs can be queued."
             }
         }
     }

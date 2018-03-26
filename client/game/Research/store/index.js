@@ -17,6 +17,7 @@ const store = new Vuex.Store({
         changingResearchOrder: false,
         changingResearchPriority: false,
         deletingResearchJobs: [],
+        startingResearchJobs: [],
         // common game state
         game: {},
         player: {},
@@ -32,6 +33,7 @@ const store = new Vuex.Store({
         isChangingResearchOrder: state => state.changingResearchOrder,
         isChangingResearchPriority: state => state.changingResearchPriority,
         deletingResearchJobs: state => state.deletingResearchJobs || [],
+        startingResearchJobs: state => state.startingResearchJobs || [],
         // common game state
         game: state => state.game || {},
         player: state => state.player || {},

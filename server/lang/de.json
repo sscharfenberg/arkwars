@@ -645,6 +645,12 @@
             },
             "PRIORITY": {
                 "OUTOFBOUNDS": "Forschungspriorität nicht in erwartetem Bereich (%s)."
+            },
+            "START": {
+                "AREANOTFOUND": "Forschungsgebiet \"%s\" existiert nicht. Hu?",
+                "ALREADYRESEARCHED": "TL%s bereits erforscht oder beauftragt.",
+                "OUTOFBOUNDS": "TL%s ist ausserhalb der erwarteten Grenzen.",
+                "QUEUEFULL": "Maximal %s Forschungsaufträge gleichzeitig erlaubt."
             }
         }
     }

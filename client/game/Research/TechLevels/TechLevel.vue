@@ -31,10 +31,12 @@ export default {
          * "enqueue" button is disabled if
          * a) level is >= max level
          * b) queue.length >= queue maxlength
-         * TODO: c) currently requesting "enqueue"
+         * c) currently requesting "enqueue"
          */
         disableEnqueue: function () {
-            return this.level >= techRules.bounds[1] || this.$store.getters.playerResearches.length >= techRules.queue;
+            return this.level >= techRules.bounds[1]
+                || this.$store.getters.playerResearches.length >= techRules.queue
+                || this.$store.getters.startingResearchJobs.includes(this.tlType);
         },
         getStartLabel: function () { return this.$t("research.start", {tl: this.nextLevel}); },
         nextLevel: function () {
@@ -69,7 +71,7 @@ export default {
                 :on-click="startResearch"
                 class="start-research"
                 :label="getStartLabel"
-                :text-string="getStartLabel"/>
+                :text-string="getStartLabel" />
             <level-overview
                 :tl-type="tlType"
                 :level="level" />

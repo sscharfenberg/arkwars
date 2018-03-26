@@ -44,4 +44,14 @@ router.post(
     catchErrors(researchController.doChangePriority) // 4. change research priority
 );
 
+// add research job
+router.post(
+    "/start",
+    jsonParser, // 1. add JSON parameters to req.body
+    catchErrors(apiController.gameProcessing), // 2. verify game is not processing.
+    catchErrors(researchController.verifyStartResearch), // 3. verify request is valid
+    catchErrors(researchController.doStartResearch), // 4. add research job
+    catchErrors(researchController.sendResearches) // 5. get research jobs from DB and send to client via JSON
+);
+
 module.exports = router;

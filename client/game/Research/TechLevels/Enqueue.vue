@@ -45,7 +45,8 @@ export default {
     methods: {
         cancelStart () { this.$modal.hide(`start-${this.area}`); },
         confirmStart () {
-            alert("confirm");
+            this.$store.dispatch("START_RESEARCH_JOB", {area: this.area});
+            this.$modal.hide(`start-${this.area}`);
         }
     }
 };

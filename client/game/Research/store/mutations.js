@@ -67,9 +67,9 @@ const MUTATIONS = {
      */
     DELETING_RESEARCH_JOB: (state, payload) => {
         if (payload.deleting) {
-            state.deletingResearchJobs.push(payload.id); // add ID to array
+            state.deletingResearchJobs.push(payload.id);
         } else {
-            state.deletingResearchJobs.splice(state.deletingResearchJobs.indexOf(payload.id), 1); // remove ID from array
+            state.deletingResearchJobs.splice(state.deletingResearchJobs.indexOf(payload.id), 1);
         }
     },
 
@@ -89,7 +89,32 @@ const MUTATIONS = {
      */
     SET_RESEARCH_PRIORITY: (state, payload) => {
         state.player.researchPriority = payload;
+    },
+
+    /*
+     * SET/UNSET "starting research job" for a specific area
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {String} payload.area
+     * @param {Boolean} payload.starting
+     */
+    STARTING_RESEARCH_JOB: (state, payload) => {
+        if (payload.starting) {
+            state.startingResearchJobs.push(payload.area);
+        } else {
+            state.startingResearchJobs.splice(state.startingResearchJobs.indexOf(payload.area), 1);
+        }
+    },
+
+    /*
+     * ADD new research job to queue
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload - new research object from API
+     */
+    ADD_RESEARCH_JOB: (state, payload) => {
+        state.startingResearchJobs.push(payload);
     }
+
 };
 
 export default MUTATIONS;

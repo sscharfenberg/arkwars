@@ -161,7 +161,7 @@ exports.verifyDeleteResearch = async (req, res, next) => {
     req.body.id = strip(req.body.id);
     logger.info(
         `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]"
-        )} deleting research order ${chalk.yellow("#"+req.body.id)}`
+        )} deleting research job ${chalk.yellow("#"+req.body.id)}`
     );
 
     // 1. check if the research job is owned by the player
@@ -215,7 +215,7 @@ exports.sendResearches = async (req, res) => {
 };
 
 /*
- * verify if change research priority request is valid =================================================================
+ * verify "change research priority" request is valid ==================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  * @param {callback} next
@@ -259,7 +259,96 @@ exports.doChangePriority = async (req, res) => {
                 updatedPlayer.researchPriority
             )}.`
         );
-        res.json({researchPriority: updatedPlayer.researchPriority});
+        return res.json({researchPriority: updatedPlayer.researchPriority});
     }
     res.status(500).end();
+};
+
+
+/*
+ * verify "start research job" request is valid ========================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.verifyStartResearch = async (req, res, next) => {
+    // sanitize user inputs
+    req.body.area = strip(req.body.area);
+    const techLevel = req.user.selectedPlayer.tech[req.body.area];
+    const researches = await Research.find({
+        player: req.user.selectedPlayer
+    });
+    const areaResearches = researches.filter(res => res.area === req.body.area);
+    const nextLevel = () => {
+        if (areaResearches.length === 0) return techLevel + 1;
+        return areaResearches.map(research => research.newLevel).sort((a, b) => {
+            if (a > b) return -1;
+            if (a < b) return 1;
+            return 0;
+        })[0] + 1;
+    };
+    req.body.newLevel = nextLevel();
+    logger.info(
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]"
+        )} add research job ${chalk.yellow(req.body.area)} ${chalk.red("TL"+req.body.newLevel)} to queue.`
+    );
+
+    // 1) Check if the area supplied exists
+    const validAreas = cfg.tech.areas.map(tech => tech.area);
+    if (!validAreas.includes(req.body.area)) {
+        logger.error(`[App] supplied techLevel area ${chalk.yellow(req.body.area)} does not exist.`);
+        return res.json({error: i18n.__("API.RESEARCH.START.AREANOTFOUND", req.body.area)});
+    }
+
+    // 2) Make sure the new level is not already researched or enqueued
+    const enqueued = areaResearches.map(research => research.newLevel).includes(req.body.newLevel);
+    if (techLevel >= req.body.newLevel || enqueued) {
+        logger.error(`[App] new TL ${chalk.yellow(req.body.newLevel)} already researched or enqueued.`);
+        return res.json({error: i18n.__("API.RESEARCH.START.ALREADYRESEARCHED", req.body.newLevel)});
+    }
+
+    // 3) Ensure new level is within bounds
+    if (req.body.newLevel < cfg.tech.bounds[0] || req.body.newLevel > cfg.tech.bounds[1]) {
+        logger.error(`[App] new TL ${chalk.yellow(req.body.newLevel)} is out of bounds ${chalk.red(cfg.tech.bounds.join(","))}.`);
+        return res.json({error: i18n.__("API.RESEARCH.START.OUTOFBOUNDS", req.body.newLevel)});
+    }
+
+    // 4) Verify queue max length is not exceeded
+    if (researches.length >= cfg.tech.queue) {
+        logger.error(`[App] research queue maximum (${cfg.tech.queue}) reached.`);
+        return res.json({error: i18n.__("API.RESEARCH.START.QUEUEFULL", cfg.tech.queue)});
+    }
+
+    // no error so far => proceed.
+    return next();
+};
+
+/*
+ * add research to database ============================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.doStartResearch = async (req, res, next) => {
+    const lastResearch = await Research.findOne({
+        player: req.user.selectedPlayer
+    }).sort({order: "desc"});
+    const newResearch = new Research({
+        game: req.user.selectedPlayer.game._id,
+        player: req.user.selectedPlayer._id,
+        area: req.body.area,
+        newLevel: req.body.newLevel,
+        remaining: cfg.tech.areas.find(tech => tech.area === req.body.area).costs[req.body.newLevel - 1],
+        order: lastResearch && lastResearch.order ? lastResearch.order + 1 : 0
+    });
+    const dbResearch = await newResearch.save();
+    if (dbResearch) {
+        logger.success(
+            `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} started research ${chalk.yellow(
+                dbResearch.area + " TL" + dbResearch.newLevel
+            )}.`
+        );
+        return next();
+    }
+    return res.json({error: "DB Error"});
 };

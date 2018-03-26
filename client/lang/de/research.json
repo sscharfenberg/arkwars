@@ -25,7 +25,7 @@
         "enqueue": {
             "title": "Forschung Starten",
             "start": "Starten",
-            "explanation": "Nur der oberste Forschungsauftrag wird bearbeitet. Forschung wird kontinuierlich über {turns} Runden investiert."
+            "explanation": "Nur der oberste Forschungsauftrag wird bearbeitet. Resourcen werden kontinuierlich nach Forschungspriorität investiert."
         },
         "priority": {
             "label": "Forschungs Priorität",

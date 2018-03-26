@@ -25,7 +25,7 @@
         "enqueue": {
             "title": "Start research",
             "start": "Start",
-            "explanation": "Only the top research job is being worked on. Research is invested continuously over {turns} turns."
+            "explanation": "Only the top research job is being worked on. Resources are invested continuously according to research priority."
         },
         "priority": {
             "label": "Research Priority",

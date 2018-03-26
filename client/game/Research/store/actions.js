@@ -132,6 +132,32 @@ const ACTIONS = {
                 console.error(error);
                 ctx.commit("CHANGING_RESEARCH_PRIORITY", false);
             });
+    },
+
+    /*
+     * request "start research job"
+     * @param {Object} ctx - Vuex $store context
+     * @param {Objewct} payload
+     * @param {String} payload.area
+     */
+    START_RESEARCH_JOB: function(ctx, payload) {
+        DEBUG && console.log("requesting start research job: ", payload);
+        ctx.commit("STARTING_RESEARCH_JOB", {area: payload.area, starting: true});
+        axios
+            .post("/api/game/research/start", payload)
+            .then(response => {
+                if (response.data && !response.data.error) {
+                    ctx.commit("SET_RESEARCHES", response.data);
+                }
+                if (response.data && response.data.error) { // server has error message ?
+                    this._vm.$snotify.error(response.data.error);
+                }
+                ctx.commit("STARTING_RESEARCH_JOB", {area: payload.area, starting: false});
+            })
+            .catch(error => {
+                console.error(error);
+                ctx.commit("STARTING_RESEARCH_JOB", {area: payload.area, starting: false});
+            });
     }
 
 };
