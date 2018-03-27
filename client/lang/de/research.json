@@ -12,10 +12,6 @@
         "missile": "Raketen",
         "shields": "Schutzschilde",
         "armour": "Panzerung",
-        "energy": "Energieproduktion und Lagerung",
-        "food": "Nahrungsproduktion und Lagerung",
-        "minerals": "Mineralien Förderung und Lagerung",
-        "research": "Erzeugung und Lagerung von Forschungs-Resourcen",
         "status": {
             "researched": "erforscht",
             "queued": "in Warteschlange",

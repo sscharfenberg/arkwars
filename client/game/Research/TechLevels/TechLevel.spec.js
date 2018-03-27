@@ -31,6 +31,9 @@ const store = new Vuex.Store({
                 {area: "shields", order: 2, newLevel: 5},
                 {area: "shields", order: 3, newLevel: 6}
             ];
+        },
+        startingResearchJobs() {
+            return ["laser", "armour"];
         }
     }
 });

@@ -4,6 +4,7 @@
  ******************************************************************************************************************/
 import FetchGameDataButton from "./FetchGameDataButton.vue";
 import Resource from "./Resource.vue";
+import StorageLevelsModal from "./StorageLevels/StorageLevelsModal.vue";
 export default {
     props: {
         areaTitle: {
@@ -17,7 +18,8 @@ export default {
     },
     components: {
         "fetch-button": FetchGameDataButton,
-        Resource
+        Resource,
+        StorageLevelsModal
     },
     computed: {
         player () { return this.$store.getters.player; },
@@ -41,18 +43,21 @@ export default {
                 {{ player.name }}
             </small>
         </h1>
-        <ul
+        <div
             class="resources"
             v-if="resources.length">
-            <li
+            <resource
                 v-for="resource in resources"
-                :key="resource.type">
-                <resource
-                    :type="resource.type"
-                    :current="resource.current"
-                    :max="resource.max" />
-            </li>
-        </ul>
+                :key="resource.type"
+                :type="resource.type"
+                :current="resource.current"
+                :max="resource.max"
+                :storage-level="resource.storageLevel" />
+            <storage-levels-modal
+                v-for="resource in resources"
+                :key="`modal-${resource.type}`"
+                :resource-type="resource.type" />
+        </div>
     </header>
 </template>
 
@@ -110,10 +115,7 @@ export default {
         display: flex;
         flex-wrap: wrap;
 
-        padding: 0;
         margin: 0 1.6rem 1.6rem 1.6rem;
-
-        list-style: none;
     }
 </style>
 

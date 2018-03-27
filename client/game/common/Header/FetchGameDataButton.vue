@@ -31,13 +31,13 @@ export default {
         :aria-disabled="fetching"
         :aria-expanded="fetching"
         :aria-label="fetching ? $t('common.header.refreshGameDataBtn.fetching') : $t('common.header.refreshGameDataBtn.fetch')">
-        <span v-if="fetching">
+        <span v-show="fetching">
             <spinner
                 :size="20"
                 :depth="2" />
             {{ $t("common.header.refreshGameDataBtn.fetching") }} ...
         </span>
-        <span v-else>
+        <span v-show="!fetching">
             <icon
                 class="refresh-icon"
                 name="sync" />

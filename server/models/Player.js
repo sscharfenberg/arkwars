@@ -43,57 +43,76 @@ const playerSchema = new mongoose.Schema(
         /*
          * player resources. we define default and max values for all of them
          * so we at least have database errors if something goes wrong.
-         * CAUTION: this references resType by index; this needs to be synced to the order of player resTypes
-         * the advantage of this object syntax is that we can get certain resources much faster and easier
-         * than as an array
+         * "storageLevel" is used as reference for upgrades
+         * "current" and "max" are used as references for payments/harvesting
          */
         resources: {
             energy: {
                 current: {
                     type: Number,
-                    default: resTypes[0].start,
-                    max: resTypes[0].max.start + resTypes[0].max.increase.steps * resTypes[0].max.increase.by
+                    default: resTypes.find(res => res.type === "energy").default,
+                    max: resTypes.find(res => res.type === "energy").storageLevels.slice(-1)[0].amount
                 },
                 max: {
                     type: Number,
-                    default: resTypes[0].max.start,
-                    max: resTypes[0].max.start + resTypes[0].max.increase.steps * resTypes[0].max.increase.by
+                    default: resTypes.find(res => res.type === "energy").storageLevels.find(lvl => lvl.default).amount,
+                    max:  resTypes.find(res => res.type === "energy").storageLevels.slice(-1)[0].amount
+                },
+                storageLevel: {
+                    type: Number,
+                    default: resTypes.find(res => res.type === "energy").storageLevels.find(lvl => lvl.default).lvl,
+                    max: resTypes.find(res => res.type === "energy").storageLevels.length - 1
                 }
             },
             food: {
                 current: {
                     type: Number,
-                    default: resTypes[1].start,
-                    max: resTypes[1].max.start + resTypes[1].max.increase.steps * resTypes[1].max.increase.by
+                    default: resTypes.find(res => res.type === "food").default,
+                    max: resTypes.find(res => res.type === "food").storageLevels.slice(-1)[0].amount
                 },
                 max: {
                     type: Number,
-                    default: resTypes[1].max.start,
-                    max: resTypes[1].max.start + resTypes[1].max.increase.steps * resTypes[1].max.increase.by
+                    default: resTypes.find(res => res.type === "food").storageLevels.find(lvl => lvl.default).amount,
+                    max:  resTypes.find(res => res.type === "food").storageLevels.slice(-1)[0].amount
+                },
+                storageLevel: {
+                    type: Number,
+                    default: resTypes.find(res => res.type === "food").storageLevels.find(lvl => lvl.default).lvl,
+                    max: resTypes.find(res => res.type === "food").storageLevels.length - 1
                 }
             },
             minerals: {
                 current: {
                     type: Number,
-                    default: resTypes[2].start,
-                    max: resTypes[2].max.start + resTypes[2].max.increase.steps * resTypes[2].max.increase.by
+                    default: resTypes.find(res => res.type === "minerals").default,
+                    max: resTypes.find(res => res.type === "minerals").storageLevels.slice(-1)[0].amount
                 },
                 max: {
                     type: Number,
-                    default: resTypes[2].max.start,
-                    max: resTypes[2].max.start + resTypes[2].max.increase.steps * resTypes[2].max.increase.by
+                    default: resTypes.find(res => res.type === "minerals").storageLevels.find(lvl => lvl.default).amount,
+                    max:  resTypes.find(res => res.type === "minerals").storageLevels.slice(-1)[0].amount
+                },
+                storageLevel: {
+                    type: Number,
+                    default: resTypes.find(res => res.type === "minerals").storageLevels.find(lvl => lvl.default).lvl,
+                    max: resTypes.find(res => res.type === "minerals").storageLevels.length - 1
                 }
             },
             research: {
                 current: {
                     type: Number,
-                    default: resTypes[3].start,
-                    max: resTypes[3].max.start + resTypes[3].max.increase.steps * resTypes[3].max.increase.by
+                    default: resTypes.find(res => res.type === "research").default,
+                    max: resTypes.find(res => res.type === "research").storageLevels.slice(-1)[0].amount
                 },
                 max: {
                     type: Number,
-                    default: resTypes[3].max.start,
-                    max: resTypes[3].max.start + resTypes[3].max.increase.steps * resTypes[3].max.increase.by
+                    default: resTypes.find(res => res.type === "research").storageLevels.find(lvl => lvl.default).amount,
+                    max:  resTypes.find(res => res.type === "research").storageLevels.slice(-1)[0].amount
+                },
+                storageLevel: {
+                    type: Number,
+                    default: resTypes.find(res => res.type === "research").storageLevels.find(lvl => lvl.default).lvl,
+                    max: resTypes.find(res => res.type === "research").storageLevels.length - 1
                 }
             }
         },
@@ -138,30 +157,6 @@ const playerSchema = new mongoose.Schema(
                 min: cfg.tech.bounds[0],
                 max: cfg.tech.bounds[1],
                 default: cfg.tech.areas.find(tl => tl.area === "armour").initial
-            },
-            energy: {
-                type: Number,
-                min: cfg.tech.bounds[0],
-                max: cfg.tech.bounds[1],
-                default: cfg.tech.areas.find(tl => tl.area === "energy").initial
-            },
-            food: {
-                type: Number,
-                min: cfg.tech.bounds[0],
-                max: cfg.tech.bounds[1],
-                default: cfg.tech.areas.find(tl => tl.area === "food").initial
-            },
-            minerals: {
-                type: Number,
-                min: cfg.tech.bounds[0],
-                max: cfg.tech.bounds[1],
-                default: cfg.tech.areas.find(tl => tl.area === "minerals").initial
-            },
-            research: {
-                type: Number,
-                min: cfg.tech.bounds[0],
-                max: cfg.tech.bounds[1],
-                default: cfg.tech.areas.find(tl => tl.area === "research").initial
             }
         },
         // end tech levels

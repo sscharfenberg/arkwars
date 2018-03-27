@@ -3,6 +3,19 @@
         "refreshGameDataBtn" : {
             "fetching": "Lade Daten",
             "fetch": "Neu Laden"
+        },
+        "storageUpgrades": {
+            "label": "{num} Lager Erweiterungen installiert",
+            "buttonAriaLabel": "Klicken um Lager zu verbessern",
+            "title": {
+                "energy": "Energie-Speicher verbessern",
+                "food": "Nahrungs-Silos erweitern",
+                "minerals": "Mineralien-Lager erweitern",
+                "research": "Forschungs-Vorrat vergrößern"
+            },
+            "currentStorage": "Aktueller Speicher",
+            "newStorage": "Neuer Speicher",
+            "confirm": "Verbesserung Installieren"
         }
     },
     "resourceTypes": {

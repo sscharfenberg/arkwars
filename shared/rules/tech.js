@@ -43,30 +43,6 @@ const RULES = {
             icon: "armour",
             initial: 0,
             costs: [1500, 1800, 2160, 2512, 3072, 3720, 4800, 6720, 10080, 16500]
-        },
-        {
-            area: "energy",
-            icon: "res-energy",
-            initial: 0,
-            costs: [1000, 1200, 1440, 1720, 2048, 2480, 3200, 4480, 6720, 11000]
-        },
-        {
-            area: "food",
-            icon: "res-food",
-            initial: 0,
-            costs: [1000, 1200, 1440, 1720, 2048, 2480, 3200, 4480, 6720, 11000]
-        },
-        {
-            area: "minerals",
-            icon: "res-minerals",
-            initial: 0,
-            costs: [1000, 1200, 1440, 1720, 2048, 2480, 3200, 4480, 6720, 11000]
-        },
-        {
-            area: "research",
-            icon: "res-research",
-            initial: 0,
-            costs: [1000, 1200, 1440, 1720, 2048, 2480, 3200, 4480, 6720, 11000]
         }
     ]
 };

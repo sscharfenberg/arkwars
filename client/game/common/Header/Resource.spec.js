@@ -22,6 +22,11 @@ const i18n = new VueI18n({
                     minerals: "Mineralien",
                     research: "Forschung",
                     turns: "Runden"
+                },
+                header: {
+                    storageUpgrades: {
+                        buttonAriaLabel: "Click to show info"
+                    }
                 }
             }
         }
@@ -41,7 +46,8 @@ describe("Resource.vue", () => {
             propsData: {
                 type: "energy",
                 current: 140,
-                max: 500
+                max: 500,
+                storageLevel: 2
             }
         });
     });

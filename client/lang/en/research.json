@@ -12,10 +12,6 @@
         "missile": "Missile",
         "shields": "Shields",
         "armour": "Armour",
-        "energy": "Energy production and storage",
-        "food": "Food production and storage",
-        "minerals": "Mineral harvesting and storage",
-        "research": "Harvesting research resources and storage",
         "status": {
             "researched": "researched",
             "queued": "in queue",

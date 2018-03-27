@@ -22,7 +22,7 @@ export default {
         <Summary />
         <Stars />
         <vue-snotify />
-        TODO: reports? show citadel? build shipyard?
+        TODO: reports - here or in galnet? show citadel. build shipyard.
     </div>
 </template>
 

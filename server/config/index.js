@@ -78,7 +78,7 @@ const appConfig = {
         }
     },
 
-    player: require("./game/player"),
+    player: require("../../shared/rules/player"),
 
     games: require("./game/games"),
 

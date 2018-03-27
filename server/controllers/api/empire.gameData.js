@@ -45,12 +45,32 @@ exports.fetch = async player => {
             researchPriority: player.researchPriority,
             totalPopulation
         },
+        // un-flatten resource data into an array for VueJS
         resources: [
-            // un-flatten resource data into an array for VueJS
-            {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
-            {type: "food", current: player.resources.food.current, max: player.resources.food.max},
-            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
-            {type: "research", current: player.resources.research.current, max: player.resources.research.max}
+            {
+                type: "energy",
+                current: player.resources.energy.current,
+                max: player.resources.energy.max,
+                storageLevel: player.resources.energy.storageLevel
+            },
+            {
+                type: "food",
+                current: player.resources.food.current,
+                max: player.resources.food.max,
+                storageLevel: player.resources.food.storageLevel
+            },
+            {
+                type: "minerals",
+                current: player.resources.minerals.current,
+                max: player.resources.minerals.max,
+                storageLevel: player.resources.minerals.storageLevel
+            },
+            {
+                type: "research",
+                current: player.resources.research.current,
+                max: player.resources.research.max,
+                storageLevel: player.resources.research.storageLevel
+            }
         ],
         // avoid specific properties on the star and add an array of planetids
         stars: player.stars.map(star => {

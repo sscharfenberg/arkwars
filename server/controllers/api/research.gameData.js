@@ -18,7 +18,7 @@ const Planet = mongoose.model("Planet");
  * so we massage the data a bit.
  * @param {Object} playedr - Mongoose.model("Player")
  */
-exports.fetch = async (player) => {
+exports.fetch = async player => {
     const stars = player.stars.map(star => star.id);
     const colonyPromise = Planet.find({star: {$in: stars}, population: {$gte: 1}});
     const researchPromise = Research.find({player: player._id}).sort({order: "asc"});
@@ -43,12 +43,32 @@ exports.fetch = async (player) => {
             researchPriority: player.researchPriority,
             totalPopulation
         },
+        // un-flatten resource data into an array for VueJS
         resources: [
-            // un-flatten resource data into an array for VueJS
-            {type: "energy", current: player.resources.energy.current, max: player.resources.energy.max},
-            {type: "food", current: player.resources.food.current, max: player.resources.food.max},
-            {type: "minerals", current: player.resources.minerals.current, max: player.resources.minerals.max},
-            {type: "research", current: player.resources.research.current, max: player.resources.research.max}
+            {
+                type: "energy",
+                current: player.resources.energy.current,
+                max: player.resources.energy.max,
+                storageLevel: player.resources.energy.storageLevel
+            },
+            {
+                type: "food",
+                current: player.resources.food.current,
+                max: player.resources.food.max,
+                storageLevel: player.resources.food.storageLevel
+            },
+            {
+                type: "minerals",
+                current: player.resources.minerals.current,
+                max: player.resources.minerals.max,
+                storageLevel: player.resources.minerals.storageLevel
+            },
+            {
+                type: "research",
+                current: player.resources.research.current,
+                max: player.resources.research.max,
+                storageLevel: player.resources.research.storageLevel
+            }
         ],
         techLevels: [
             {type: "plasma", level: player.tech.plasma},
@@ -56,11 +76,7 @@ exports.fetch = async (player) => {
             {type: "missile", level: player.tech.missile},
             {type: "laser", level: player.tech.laser},
             {type: "shields", level: player.tech.shields},
-            {type: "armour", level: player.tech.armour},
-            {type: "energy", level: player.tech.energy},
-            {type: "food", level: player.tech.food},
-            {type: "minerals", level: player.tech.minerals},
-            {type: "research", level: player.tech.research}
+            {type: "armour", level: player.tech.armour}
         ],
         researches: researches.map(research => {
             return {

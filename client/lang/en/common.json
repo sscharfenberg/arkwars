@@ -3,10 +3,24 @@
         "refreshGameDataBtn" : {
             "fetching": "Loading",
             "fetch": "Refresh"
+        },
+        "storageUpgrades": {
+            "label": "{num} storage upgrades installed",
+            "buttonAriaLabel": "Click to upgrade storage",
+            "title": {
+                "energy": "Increase energy storage",
+                "food": "Enlarge food silos",
+                "minerals": "Increase mineral storage",
+                "research": "Enlarge research stash"
+            },
+            "currentStorage": "Current storage",
+            "newStorage": "New storage",
+            "confirm": "Install upgrade"
         }
     },
     "resourceTypes": {
         "label": "Resource type",
+
         "minerals": "minerals",
         "energy": "energy",
         "food": "food",

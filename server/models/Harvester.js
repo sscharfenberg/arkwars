@@ -31,7 +31,7 @@ const harvesterSchema = new mongoose.Schema({
     // type of resource that is harvested
     resourceType: {
         type: String,
-        enum: cfg.player.resourceTypes.map(resource => resource.type)
+        enum: cfg.player.resourceTypes.map(res => res.type)
     },
 
     // number of turns until the harvester has finished building
