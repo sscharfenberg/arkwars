@@ -11,6 +11,7 @@ const popFoodConsumption = require("./foodConsumption");
 const harvesterProduction = require("./harvesterProduction");
 const pduConstruction = require("./pduConstruction");
 const harvesterConstruction = require("./harvesterConstruction");
+const researchTechLevels = require("./researchTechLevels");
 const logTurn = require("../../handlers/logger/turn");
 require("../../models/");
 const Game = mongoose.model("Game");
@@ -61,6 +62,15 @@ const turnProcessingOrder = async game => {
         logger.error(e);
     }
 
+    /*******************************************************************************************************************
+     * 5) research jobs
+     ******************************************************************************************************************/
+    try {
+        log = await researchTechLevels(game, log);
+    } catch (e) {
+        logger.error(e);
+    }
+
     logger.debug(`finished turn steps for ${chalk.red("g" + game.number)}${chalk.yellow("t" + game.turn)}`);
     return log;
 };
@@ -102,11 +112,11 @@ const processGameTurn = async game => {
         {new: true, runValidators: true}
     );
     logger.debug(`processing turn ${chalk.red("g" + game.number)}${chalk.yellow("t" + (game.turn + 1))}.`);
-    game.turn++;
+    await game.save(); // save game with processing and OLD turn
+    game.turn++; // new turn!
 
     // process game data
     try {
-        // TODO: set processing to true
         game = await processTurnData(game);
     } catch (err) {
         logger.error(err);
