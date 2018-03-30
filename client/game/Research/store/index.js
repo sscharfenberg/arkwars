@@ -7,37 +7,30 @@ import Vue from "vue";
 import Vuex from "vuex";
 import actions from "./actions";
 import mutations from "./mutations";
+import {commonState, commonGetters} from "../../common/store/";
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
+        ...commonState,
         // App state
-        fetchingGameDataFromApi: false,
         changingResearchOrder: false,
         changingResearchPriority: false,
         deletingResearchJobs: [],
         startingResearchJobs: [],
-        // common game state
-        game: {},
-        player: {},
-        resources: [],
         // area game state
         techLevels: [],
         researches: [],
         researchRollBacks: []
     },
     getters: {
+        ...commonGetters,
         // App state
-        fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
         isChangingResearchOrder: state => state.changingResearchOrder,
         isChangingResearchPriority: state => state.changingResearchPriority,
         deletingResearchJobs: state => state.deletingResearchJobs || [],
         startingResearchJobs: state => state.startingResearchJobs || [],
-        // common game state
-        game: state => state.game || {},
-        player: state => state.player || {},
-        playerResources: state => state.resources || [],
         // area game state
         playerTechLevels: state => state.techLevels || [],
         playerResearches: state => state.researches || [],

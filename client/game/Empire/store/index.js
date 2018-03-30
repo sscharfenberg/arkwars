@@ -7,22 +7,21 @@ import Vue from "vue";
 import Vuex from "vuex";
 import actions from "./actions";
 import mutations from "./mutations";
+import {commonState, commonGetters} from "../../common/store/";
+
+
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
+        ...commonState,
         // App state
-        fetchingGameDataFromApi: false,
         savingStarName: [],
         editingStarName: [],
         installingResourceTypes: [],
         savingBuildPduPlanets: [],
         savingFoodConsumption: [],
-        // common game state
-        game: {},
-        player: {},
-        resources: [],
         // area game state
         stars: [],
         planets: [],
@@ -30,20 +29,17 @@ const store = new Vuex.Store({
         pdus: []
     },
     getters: {
+        ...commonGetters,
         // App state
-        fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
         savingStarNameIds: state => state.savingStarName,
         editingStarNameIds: state => state.editingStarName,
         installingResourceTypes: state => state.installingResourceTypes,
         savingBuildPduPlanetIds: state => state.savingBuildPduPlanets,
         savingFoodConsumptionPlanetIds: state => state.savingFoodConsumption,
         // game state
-        game: state => state.game || {},
         stars: state => state.stars || [],
         planets: state => state.planets || [],
-        player: state => state.player || {},
         harvesters: state => state.harvesters || [],
-        playerResources: state => state.resources || [],
         planetById: state => id => state.planets.find(planet => planet.id === id) || {},
         starById: state => id => state.stars.find(star => star.id === id) || {},
         harvesterById: state => id => state.harvesters.find( harvester => harvester.id === id) || {},

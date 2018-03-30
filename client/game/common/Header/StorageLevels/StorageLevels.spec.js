@@ -2,38 +2,42 @@
  * JEST spec file
  **********************************************************************************************************************/
 import VueI18n from "vue-i18n";
-import Vuex from "vuex";
 import {shallow, createLocalVue} from "@vue/test-utils";
-import FetchGameDataButton from "./FetchGameDataButton.vue";
+import StorageLevels from "./StorageLevels.vue";
+
 /*
  * mock data
  */
 const localVue = createLocalVue();
 localVue.use(VueI18n);
-localVue.use(Vuex);
 const i18n = new VueI18n({
     locale: "de",
-    messages: {de: {common: {header: {refreshGameDataBtn: {fetching: "fetching", fetch: "fetch"}}}}}
-});
-const store = new Vuex.Store({
-    state: {},
-    getters: {
-        fetchingGameDataFromApi() { return false; }
+    messages: {
+        de: {
+            common: {
+                header: {
+                    storageUpgrades: {
+                        label: "{num} Lager Erweiterungen installiert"
+                    }
+                }
+            }
+        }
     }
 });
 
 /*
  * test suite
  */
-describe("FetchGameDataButton.vue", () => {
+describe("StorageLevels.vue", () => {
     let cmp;
 
     beforeEach(() => {
-        cmp = shallow(FetchGameDataButton, {
+        cmp = shallow(StorageLevels, {
             localVue,
             i18n,
-            store,
-            propsData: {area: "empire"}
+            propsData: {
+                level: 3
+            }
         });
     });
 
@@ -45,11 +49,10 @@ describe("FetchGameDataButton.vue", () => {
         expect(cmp.vm.$el).toMatchSnapshot();
     });
 
-    it("calls the click function", () => {
-        cmp.setMethods({fetchGameData: jest.fn()});
-        const spy = jest.spyOn(cmp.vm, "fetchGameData");
-        cmp.update(); // Forces to re-render, applying changes on template
-        cmp.find("button").trigger("click");
-        expect(cmp.vm.fetchGameData).toBeCalled();
+    it("shows the correct amount of active bubbles", () => {
+        expect(cmp.findAll(".upgrade.active").length).toBe(3);
+        cmp.setProps({level: 0});
+        expect(cmp.findAll(".upgrade.active").length).toBe(0);
+        expect(cmp.findAll(".upgrade").length).toBe(4);
     });
 });

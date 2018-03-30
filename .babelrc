@@ -6,22 +6,13 @@
                 "targets": {
                     "browsers": ["last 2 versions", "ie >= 11", "safari >= 10"]
                 },
-                "useBuiltIns": "usage",
-                "plugins": [
-                    "@babel/plugin-transform-modules-commonjs",
-                    "@babel/plugin-syntax-object-rest-spread"
-                ]
+                "useBuiltIns": "usage"
             }
         ]
     ],
-    "env": {
-        "test": {
-            "plugins": [
-                "@babel/plugin-transform-modules-commonjs",
-                "@babel/plugin-syntax-object-rest-spread"
-            ]
-        },
-        "production": {},
-        "development": {}
-    }
+    "plugins": [
+        "@babel/transform-modules-commonjs",
+        "@babel/syntax-object-rest-spread",
+        "@babel/proposal-object-rest-spread"
+    ]
 }

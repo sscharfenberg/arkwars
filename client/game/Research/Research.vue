@@ -3,12 +3,12 @@
  * Research (entry) Component
  **********************************************************************************************************************/
 import Header from "Game/common/Header/Header.vue";
-import Techs from "./TechLevels/TechLevels.vue";
+import TechLevels from "./TechLevels/TechLevels.vue";
 import Queue from "./Queue/Queue.vue";
 export default {
     components: {
         "app-header": Header,
-        Techs,
+        TechLevels,
         Queue
     }
 };
@@ -20,7 +20,7 @@ export default {
             :area-title="$t('title')"
             area="research" />
         <queue />
-        <techs />
+        <tech-levels />
         <vue-snotify />
     </div>
 </template>

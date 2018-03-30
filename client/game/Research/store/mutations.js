@@ -5,31 +5,11 @@
  * SYNC!!!
  *
  **********************************************************************************************************************/
-import {DEBUG} from "Config";
+import {commonMutations} from "../../common/store/mutations";
 
 const MUTATIONS = {
-    /*
-     * SET gameData
-     * @param {Object} state - Vuex $store.state
-     * @param {Object} payload - game data object from API
-     */
-    SET_GAME_DATA: (state, payload) => {
-        DEBUG && console.log("committing game data to store ", payload);
-        state.game = payload.game;
-        state.player = payload.player;
-        state.resources = payload.resources;
-        state.techLevels = payload.techLevels;
-        state.researches = payload.researches;
-    },
 
-    /*
-     * SET/UNSET "Fetching Game Data From API"
-     * @param {Object} state - Vuex $store.state
-     * @param {Boolean} payload - true for set, false for unset
-     */
-    FETCHING_GAME_DATA_FROM_API: (state, payload) => {
-        state.fetchingGameDataFromApi = payload;
-    },
+    ...commonMutations,
 
     /*
      * SET/UNSET "Changing Research Order"
@@ -104,15 +84,6 @@ const MUTATIONS = {
         } else {
             state.startingResearchJobs.splice(state.startingResearchJobs.indexOf(payload.area), 1);
         }
-    },
-
-    /*
-     * ADD new research job to queue
-     * @param {Object} state - Vuex $store.state
-     * @param {Object} payload - new research object from API
-     */
-    ADD_RESEARCH_JOB: (state, payload) => {
-        state.startingResearchJobs.push(payload);
     }
 
 };

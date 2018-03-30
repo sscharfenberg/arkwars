@@ -40,7 +40,6 @@ describe("Button.vue", () => {
 
     it("calls the passed function on click", () => {
         const spy = jest.spyOn(cmp.vm, "onClick");
-        cmp.update(); // Forces to re-render, applying changes on template
         cmp.find("button").trigger("click");
         expect(cmp.vm.onClick).toBeCalled();
     });
