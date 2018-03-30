@@ -7,7 +7,7 @@ const fs = require("fs"); // https://nodejs.org/api/fs.html
 const path = require("path"); // https://nodejs.org/api/path.html
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
-const apiEmpireGameDataController = require("../api/empire.gameData");
+const apiEmpireGameDataController = require("../api/gameData/empire");
 const cfg = require("../../config");
 
 /*

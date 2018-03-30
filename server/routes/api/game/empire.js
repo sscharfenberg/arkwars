@@ -7,9 +7,9 @@
  **********************************************************************************************************************/
 const express = require("express"); // http://expressjs.com/
 const router = express.Router(); // http://expressjs.com/en/api.html#router
-const empireController = require("../../controllers/api/empire");
-const apiController = require("../../controllers/api");
-const {catchErrors} = require("../../handlers/error");
+const empireController = require("../../../controllers/api/empire");
+const apiController = require("../../../controllers/api");
+const {catchErrors} = require("../../../handlers/error");
 const jsonParser = require("body-parser").json();
 
 // get empire game data for player
