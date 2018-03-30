@@ -9,6 +9,7 @@
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const Planet = mongoose.model("Planet");
+const StorageUpgrade = mongoose.model("StorageUpgrade");
 
 /*
  * fetch game data for player and return API object
@@ -20,7 +21,9 @@ const Planet = mongoose.model("Planet");
 exports.fetch = async player => {
     const stars = player.stars.map(star => star.id);
     // get unsorted array of all planets that belong to the player's stars
-    let planets = await Planet.find({star: {$in: stars}}).populate("harvesters pdus");
+    const planetPromise = await Planet.find({star: {$in: stars}}).populate("harvesters pdus");
+    const storageUpgradePromise = StorageUpgrade.find({player: player._id});
+    const [planets, storageUpgrades] = await Promise.all([planetPromise, storageUpgradePromise]);
     const totalPopulation = planets
         .filter(planet => planet.population >= 1)
         .map(colony => colony.effectivePopulation)
@@ -72,6 +75,22 @@ exports.fetch = async player => {
                 storageLevel: player.resources.research.storageLevel
             }
         ],
+        techLevels: [
+            {type: "plasma", level: player.tech.plasma},
+            {type: "railgun", level: player.tech.railgun},
+            {type: "missile", level: player.tech.missile},
+            {type: "laser", level: player.tech.laser},
+            {type: "shields", level: player.tech.shields},
+            {type: "armour", level: player.tech.armour}
+        ],
+        storageUpgrades: storageUpgrades.map( upgrade => {
+            return {
+                id: upgrade._id,
+                area: upgrade.area,
+                newLevel: upgrade.newLevel,
+                turnsUntilComplete: upgrade.turnsUntilComplete
+            }
+        }),
         // avoid specific properties on the star and add an array of planetids
         stars: player.stars.map(star => {
             return {

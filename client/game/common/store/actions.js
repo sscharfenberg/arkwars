@@ -45,6 +45,33 @@ export const commonActions = {
                 ctx.commit("FETCHING_GAME_DATA_FROM_API", false);
             });
     },
+
+    /*
+     * request "upgrade storage levels"
+     * @param {Object} ctx - Vuex $store context
+     * @param {String} payload
+     */
+    UPGRADE_STORAGE_LEVELS: function(ctx, payload) {
+        DEBUG && console.log(`upgrading storage level for ${payload}`);
+        ctx.commit("UPGRADING_STORAGE_LEVEL", {upgrading: true, area: payload});
+        axios
+            .post(`/api/game/storage-upgrade/${payload}`)
+            .then(response => {
+                if (response.status === 200 && response.data && response.data.storageUpgrade) {
+                    const upgrade = response.data.storageUpgrade;
+                    ctx.commit("PAY_STORAGE_UPGRADE", {area: upgrade.area, newLevel: upgrade.newLevel});
+                    ctx.commit("ADD_STORAGE_UPGRADE", upgrade);
+                }
+                if (response.data && response.data.error) { // server has error message ?
+                    this._vm.$snotify.error(response.data.error);
+                }
+                ctx.commit("UPGRADING_STORAGE_LEVEL", {upgrading: false, area: payload});
+            })
+            .catch(error => {
+                console.error(error);
+                ctx.commit("UPGRADING_STORAGE_LEVEL", {upgrading: false, area: payload});
+            });
+    }
 };
 
 

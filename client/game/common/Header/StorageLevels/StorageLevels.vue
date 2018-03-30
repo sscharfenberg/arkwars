@@ -9,6 +9,10 @@ export default {
         level: {
             type: Number,
             required: true
+        },
+        area: {
+            type: String,
+            required: true
         }
     },
     computed: {
@@ -18,7 +22,13 @@ export default {
         }
     },
     methods: {
-        installedClass (n) { return n <= this.level ? "active" : ""; }
+        installedClass (n) {
+            let classList = n <= this.level ? "active" : "";
+            const upgrading = this.$store.getters.storageUpgrades
+                .find(upgrade => upgrade.area === this.area && upgrade.newLevel === n);
+            classList += upgrading ? " building" : "";
+            return classList;
+        }
     }
 };
 </script>
@@ -67,6 +77,10 @@ export default {
                         palette("state", "success") 0%,
                         palette("brand", "gorse") 100%
                     );
+            }
+
+            &.building {
+                background-color: rgba(palette("state", "warning"), 0.7);
             }
         }
     }

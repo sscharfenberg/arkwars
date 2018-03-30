@@ -15,7 +15,9 @@
             },
             "currentStorage": "Aktueller Speicher",
             "newStorage": "Neuer Speicher",
-            "confirm": "Verbesserung Installieren"
+            "confirm": "Verbesserung Installieren",
+            "building": "Im Bau",
+            "untilComplete": "Runde(n) bis zur Fertigstellung"
         }
     },
     "resourceTypes": {

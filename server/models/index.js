@@ -8,6 +8,7 @@ require("./Suspension");
 require("./Game");
 require("./Turn");
 require("./Player");
+require("./StorageUpgrade");
 require("./Research");
 require("./Star");
 require("./Planet");

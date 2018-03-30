@@ -611,7 +611,11 @@
 
     "API": {
         "GAME": {
-            "PROCESSING": "Server berechnet gerade die aktuelle Runde."
+            "PROCESSING": "Server berechnet gerade die aktuelle Runde.",
+            "STORAGEUPGRADE": {
+                "OUTOFBOUNDS": "Nächste Stufe ist ungültig (%s).",
+                "FUNDS": "Ihre Vorräte reichen nicht aus für diese Verbesserung."
+            }
         },
         "EMPIRE": {
             "STAR": {

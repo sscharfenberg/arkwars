@@ -4,6 +4,7 @@
 import VueI18n from "vue-i18n";
 import {shallow, createLocalVue} from "@vue/test-utils";
 import Resource from "./Resource.vue";
+import Vuex from "vuex";
 
 /*
  * mock data
@@ -32,6 +33,16 @@ const i18n = new VueI18n({
         }
     }
 });
+localVue.use(Vuex);
+const store = new Vuex.Store({
+    state: {},
+    getters: {
+        upgradingStorageLevels() {
+            return ["food"];
+        }
+    }
+});
+
 
 /*
  * test suite
@@ -43,6 +54,7 @@ describe("Resource.vue", () => {
         cmp = shallow(Resource, {
             localVue,
             i18n,
+            store,
             propsData: {
                 type: "energy",
                 current: 140,

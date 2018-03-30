@@ -10,14 +10,18 @@ export const commonState = {
     // common game state
     game: {},
     player: {},
-    resources: []
+    resources: [],
+    storageUpgrades: [],
+    upgradingStorageLevels: []
 };
 
 export const commonGetters = {
     // App state
     fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
+    upgradingStorageLevels: state => state.upgradingStorageLevels,
     // game state
     game: state => state.game || {},
     player: state => state.player || {},
-    playerResources: state => state.resources || []
+    playerResources: state => state.resources || [],
+    storageUpgrades: state => state.storageUpgrades || []
 };

@@ -4,10 +4,9 @@
   *
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
-const cfg = require("../config");
 mongoose.Promise = global.Promise;
 
-const researchSchema = new mongoose.Schema({
+const storageUpgradeSchema = new mongoose.Schema({
 
     // reference to game id
     game: {
@@ -28,26 +27,19 @@ const researchSchema = new mongoose.Schema({
         required: true
     },
 
-    // new level when research is finished
+    // new Level after installing is finished
     newLevel: {
         type: Number,
         required: true,
-        min: cfg.tech.bounds[0] + 1,
-        max: cfg.tech.bounds[1]
+        min: 1,
+        max: 4
     },
 
-    // research work remaining to finish this project
-    remaining: {
-        type: Number,
-        required: true
-    },
-
-    // order of research projects. only the research project with the lowest order is worked on
-    order: {
+    turnsUntilComplete: {
         type: Number,
         required: true
     }
 
 });
 
-module.exports = mongoose.model("Research", researchSchema);
+module.exports = mongoose.model("StorageUpgrade", storageUpgradeSchema);

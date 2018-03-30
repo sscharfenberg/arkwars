@@ -36,7 +36,9 @@ export default {
         getResourceBarWidth () { return `${100 - (this.current / this.max) * 100}%`; },
         getResourceTypeIcon () { return "res-" + this.type; },
         getProgressBarPct () { return Math.round(this.current / this.max * 100); },
-        buttonDisabled () { return this.storageLevel >= this.maxLevel; },
+        buttonDisabled () {
+            return this.storageLevel >= this.maxLevel || this.$store.getters.upgradingStorageLevels.includes(this.type);
+        },
         getFullTypeLabel () {
             return this.buttonDisabled
                 ? ""
@@ -45,7 +47,11 @@ export default {
         buttonAriaLabel () {
             return this.buttonDisabled ? "" : this.$t("common.header.storageUpgrades.buttonAriaLabel");
         },
-        buttonClass () { return this.buttonDisabled ? "disabled" : ""; }
+        buttonClass () {
+            let classList = this.storageLevel >= this.maxLevel ? "disabled" : "";
+            classList += this.$store.getters.upgradingStorageLevels.includes(this.type) ? " upgrading" : "";
+            return classList;
+        }
     },
     methods: {
         showInfo () {
@@ -84,7 +90,9 @@ export default {
             </span>
             <span class="res__amount">{{ current }} / {{ max }} ({{ getProgressBarPct }}%)</span>
         </span>
-        <storage-levels :level="storageLevel" />
+        <storage-levels
+            :level="storageLevel"
+            :area="type" />
     </button>
 </template>
 
@@ -115,7 +123,12 @@ export default {
         &[disabled],
         &.disabled {
             cursor: default;
-            pointer-events: none;
+        }
+
+        &.upgrading {
+            opacity: 0.8;
+
+            cursor: not-allowed;
         }
     }
 

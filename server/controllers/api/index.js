@@ -13,6 +13,8 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const Game = mongoose.model("Game");
+const Player = mongoose.model("Player");
+const StorageUpgrade = mongoose.model("StorageUpgrade");
 const logger = require("../../handlers/logger/console");
 const cfg = require("../../config");
 
@@ -124,7 +126,6 @@ exports.getTextStrings = async (req, res) => {
     }
 };
 
-
 /*
  * check if game is processing =========================================================================================
  * @param {ExpressHTTPRequest} req
@@ -142,4 +143,104 @@ exports.gameProcessing = async (req, res, next) => {
         return res.json({error: i18n.__("API.GAME.PROCESSING")});
     }
     return next();
+};
+
+/*
+ * verify "request storage upgrade" request is valid ===================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.verifyStorageUpgrade = async (req, res, next) => {
+    req.body.resRules = cfg.player.resourceTypes.find(res => res.type === req.params.area).storageLevels;
+    logger.info(
+        `[App] ${chalk.cyan("@" + req.user.username)} Player ${chalk.red(
+            "[" + req.user.selectedPlayer.ticker + "]"
+        )} requested storage upgrade for ${chalk.yellow(req.params.area)}`
+    );
+
+    // 1) verify next level is within bounds
+    const nextLevel = req.user.selectedPlayer.resources[req.params.area].storageLevel + 1;
+    if (
+        !nextLevel ||
+        nextLevel < req.body.resRules[0].lvl ||
+        nextLevel > req.body.resRules[req.body.resRules.length - 1].lvl
+    ) {
+        logger.error(`[App] nextLevel ${chalk.red(nextLevel)} is out of bounds.`);
+        return res.json({
+            error: i18n.__(
+                "API.GAME.STORAGEUPGRADE.OUTOFBOUNDS",
+                `${req.body.resRules[0].lvl} - ${req.body.resRules[req.body.resRules.length - 1].lvl}`
+            )
+        });
+    }
+
+    // 2) verify player has sufficient funds to pay for the upgrade
+    const costs = req.body.resRules
+        .find(res => res.lvl === nextLevel)
+        .costs // find correct object with the costs
+        .filter(res => res.resourceType !== "turns"); // ignore "turns" since it is not a cost that can be paid
+    let insufficientFunds = false;
+    costs.forEach(slot => {
+        const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
+        if (slot.amount > stockpile) insufficientFunds = true;
+    });
+    if (insufficientFunds) {
+        logger.error(`[App] insufficient funds to upgrade storage.`);
+        return res.json({error: i18n.__("API.GAME.STORAGEUPGRADE.FUNDS")});
+    }
+
+    // no errors -> proceed.
+    req.body.nextLevel = nextLevel;
+    return next();
+};
+
+/*
+ * update database for new storage upgrade =============================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.doStorageUpgrade = async (req, res) => {
+
+    // prepare storage upgrade for db
+    const installingStorageUpgrade = new StorageUpgrade({
+        game: req.user.selectedPlayer.game._id,
+        player: req.user.selectedPlayer._id,
+        area: req.params.area,
+        newLevel: req.body.nextLevel,
+        turnsUntilComplete: req.body.resRules
+            .find(res => res.lvl === req.body.nextLevel)
+            .costs.find(cost => cost.resourceType === "turns").amount
+    });
+    const storageUpgradePromise = installingStorageUpgrade.save();
+
+    // prepare player update to pay for upgrade
+    const costs = req.body.resRules
+        .find(res => res.lvl === req.body.nextLevel)
+        .costs.filter(cost => cost.resourceType !== "turns");
+    let dbSet = {};
+    costs.forEach(slot => {
+        dbSet["resources." + slot.resourceType + ".current"] =
+            req.user.selectedPlayer.resources[slot.resourceType].current - Math.floor(slot.amount);
+    });
+    logger.info("[App] setting resources to " + JSON.stringify(dbSet, null, 2));
+    const playerPromise = Player.findOneAndUpdate(
+        {_id: req.user.selectedPlayer._id},
+        {$set: dbSet},
+        {new: true, runValidators: true, context: "query"}
+    );
+
+    // execute DB updates
+    const [storageUpgrade, updatedPlayer] = await Promise.all([storageUpgradePromise, playerPromise]);
+
+    if (storageUpgrade && updatedPlayer) {
+        logger.success(
+            `[App] Player ${chalk.red(
+                "[" + req.user.selectedPlayer.ticker + "]"
+            )} started building storage upgrade ${chalk.yellow(storageUpgrade.area + "+" + storageUpgrade.newLevel)}.`
+        );
+        return res.json({storageUpgrade});
+    }
+    return res.json({error: "DB Error"});
 };

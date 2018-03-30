@@ -15,7 +15,9 @@
             },
             "currentStorage": "Current storage",
             "newStorage": "New storage",
-            "confirm": "Install upgrade"
+            "confirm": "Install upgrade",
+            "building": "Upgrading",
+            "untilComplete": "Turns until completion"
         }
     },
     "resourceTypes": {

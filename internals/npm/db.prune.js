@@ -18,6 +18,7 @@ const Game = mongoose.model("Game");
 const User = mongoose.model("User");
 const Player = mongoose.model("Player");
 const Research = mongoose.model("Research");
+const StorageUpgrade = mongoose.model("StorageUpgrade");
 const Star = mongoose.model("Star");
 const Planet = mongoose.model("Planet");
 const Turn = mongoose.model("Turn");
@@ -32,6 +33,8 @@ const pruneDatabase = async () => {
     logger.info("[node] deleting collections ...");
     await Research.remove();
     logger.debug("[node] researches removed.");
+    await StorageUpgrade.remove();
+    logger.debug("[node] storage upgrades in build.");
     await Turn.remove();
     logger.debug("[node] turns removed.");
     await Suspension.remove();

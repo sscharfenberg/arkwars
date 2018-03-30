@@ -10,6 +10,7 @@
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const Research = mongoose.model("Research");
 const Planet = mongoose.model("Planet");
+const StorageUpgrade = mongoose.model("StorageUpgrade");
 
 /*
  * fetch game data for player and return API object
@@ -22,7 +23,8 @@ exports.fetch = async player => {
     const stars = player.stars.map(star => star.id);
     const colonyPromise = Planet.find({star: {$in: stars}, population: {$gte: 1}});
     const researchPromise = Research.find({player: player._id}).sort({order: "asc"});
-    const [colonies, researches] = await Promise.all([colonyPromise, researchPromise]);
+    const storageUpgradePromise = StorageUpgrade.find({player: player._id});
+    const [colonies, researches, storageUpgrades] = await Promise.all([colonyPromise, researchPromise, storageUpgradePromise]);
     const totalPopulation = colonies.map(colony => colony.effectivePopulation).reduce((acc, val) => acc + val);
 
     return {
@@ -86,6 +88,14 @@ exports.fetch = async player => {
                 order: research.order,
                 remaining: research.remaining
             };
+        }),
+        storageUpgrades: storageUpgrades.map( upgrade => {
+            return {
+                id: upgrade._id,
+                area: upgrade.area,
+                newLevel: upgrade.newLevel,
+                turnsUntilComplete: upgrade.turnsUntilComplete
+            }
         })
     };
 };

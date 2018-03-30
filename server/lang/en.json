@@ -591,7 +591,11 @@
 
     "API": {
         "GAME": {
-            "PROCESSING": "Server is currently calculating the turn."
+            "PROCESSING": "Server is currently calculating the turn.",
+            "STORAGEUPGRADE": {
+                "OUTOFBOUNDS": "Next level is out of bounds (%s).",
+                "FUNDS": "Insufficient funds to install the upgrade."
+            }
         },
         "EMPIRE": {
             "STAR": {

@@ -6,6 +6,7 @@
  *
  **********************************************************************************************************************/
 import {DEBUG} from "Config";
+import {playerRules} from "Config";
 
 export const commonMutations = {
     /*
@@ -19,6 +20,8 @@ export const commonMutations = {
         if (payload.game) state.game = payload.game;
         if (payload.player) state.player = payload.player;
         if (payload.resources) state.resources = payload.resources;
+        if (payload.upgradingStorageLevels) state.upgradingStorageLevels = payload.upgradingStorageLevels;
+        if (payload.storageUpgrades) state.storageUpgrades = payload.storageUpgrades;
         // area = empire
         if (payload.stars) state.stars = payload.stars;
         if (payload.planets) state.planets = payload.planets;
@@ -36,6 +39,53 @@ export const commonMutations = {
      */
     FETCHING_GAME_DATA_FROM_API: (state, payload) => {
         state.fetchingGameDataFromApi = payload;
-    }
+    },
+
+    /*
+     * SET/UNSET "upgrading storage level" for a specific area
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {String} payload.area
+     * @param {Booleaen} payload.upgrading
+     */
+    UPGRADING_STORAGE_LEVEL: (state, payload) => {
+        if (payload.upgrading) {
+            state.upgradingStorageLevels.push(payload.area);
+        } else {
+            state.upgradingStorageLevels.splice(state.upgradingStorageLevels.indexOf(payload.area), 1);
+        }
+    },
+
+    /*
+     * ADD new storage upgrade (building) to state
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {String} payload.id
+     * @param {String} payload.area
+     * @param {Number} payload.newLevel
+     * @param {Number} payload.turnsUntilComplete
+     */
+    ADD_STORAGE_UPGRADE: (state, payload) => {
+        state.storageUpgrades.push(payload);
+    },
+
+    /*
+     * pay for PDUs by changing player resources.
+     * this is clientside, but it is enforeced by the server.
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {String} payload.area
+     * @param {Number} payload.newLevel
+     */
+    PAY_STORAGE_UPGRADE: (state, payload) => {
+        const costs = playerRules.resourceTypes
+            .find(res => res.type === payload.area)
+            .storageLevels.find(cost => cost.lvl === payload.newLevel)
+            .costs.filter(cost => cost.resourceType !== "turns");
+        console.log(state.resources, costs);
+        costs.forEach(slot => {
+            state.resources.find(resource => resource.type === slot.resourceType).current -= Math.floor(slot.amount);
+        });
+    },
 
 };

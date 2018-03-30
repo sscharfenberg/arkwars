@@ -202,6 +202,13 @@ playerSchema.virtual("researches", {
     foreignField: "player" // which field on the Research?
 });
 
+// find storage upgrades that are owned by this player
+playerSchema.virtual("storageUpgrades", {
+    ref: "StorageUpgrade", // what model to link?
+    localField: "_id", // which field on the Player?
+    foreignField: "player" // which field on the StorageUpgrade?
+});
+
 // auto populate games
 function autopopulate(next) {
     this.populate("game");

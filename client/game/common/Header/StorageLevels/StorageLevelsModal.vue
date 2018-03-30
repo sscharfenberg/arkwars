@@ -27,6 +27,10 @@ export default {
             if ( nextLevel > maxLevel ) return -1;
             return nextLevel;
         },
+        installingUpgrades () {
+            return this.$store.getters.storageUpgrades
+                .find(upgrade => upgrade.area === this.resourceType);
+        },
         costs () {
             return playerRules.resourceTypes
                 .find(res => res.type === this.resourceType).storageLevels[this.nextLevel].costs;
@@ -48,7 +52,7 @@ export default {
     methods: {
         closeMe () { this.$modal.hide(`storage-levels-${this.resourceType}`); },
         confirmUpgrade () {
-            alert("upgrade confirmed, ask server!");
+            this.$store.dispatch("UPGRADE_STORAGE_LEVELS", this.resourceType);
             this.$modal.hide(`storage-levels-${this.resourceType}`);
         }
     }
@@ -68,8 +72,29 @@ export default {
         <div class="modal__text">
             {{ $t("common.header.storageUpgrades.currentStorage") }}: {{ resourceStats.max }}
         </div>
+        <ul
+            class="modal__building"
+            v-if="installingUpgrades">
+            <li class="modal__building-label">
+                <div class="text">
+                    {{ $t("common.header.storageUpgrades.building") }}
+                </div>
+                <div class="dots">
+                    <div
+                        v-for="n in installingUpgrades.turnsUntilComplete"
+                        class="modal__build-turn"
+                        role="presentation"
+                        aria-hidden="true"
+                        :key="n">•</div>
+                </div>
+            </li>
+            <li class="modal__building-turns">
+                {{ $t("common.header.storageUpgrades.untilComplete") }}:
+                {{ installingUpgrades.turnsUntilComplete }}
+            </li>
+        </ul>
         <div
-            v-if="nextLevel !== -1"
+            v-if="nextLevel !== -1 && !installingUpgrades"
             class="modal__costs">
             <costs :costs="costs" />
         </div>
@@ -79,7 +104,7 @@ export default {
             {{ $t("common.header.storageUpgrades.newStorage") }}: {{ newStorage }}
         </div>
         <div
-            v-if="nextLevel !== -1"
+            v-if="nextLevel !== -1 && !installingUpgrades"
             class="modal__actions">
             <btn
                 :on-click="confirmUpgrade"
@@ -109,12 +134,12 @@ export default {
 
         &__costs {
             padding: 1rem;
+            border-top: 1px solid palette("brand", "viking");
             border-bottom: 1px solid palette("brand", "viking");
         }
 
         &__text {
             padding: 1rem;
-            border-bottom: 1px solid palette("brand", "viking");
         }
 
         &__actions {
@@ -134,6 +159,56 @@ export default {
                     margin-right: 0;
                 }
             }
+        }
+
+        &__building {
+            padding: 1rem;
+            border-top: 1px solid palette("brand", "viking");
+            border-bottom: 1px solid palette("brand", "viking");
+            margin: 0;
+
+            list-style: none;
+        }
+
+        &__building-label {
+            display: flex;
+            align-items: center;
+
+            box-sizing: border-box;
+            width: 100%;
+            padding: 0.1rem 1rem;
+            border: 1px solid palette("grey", "abbey");
+            margin-bottom: 0.2rem;
+
+            background: palette("grey", "raven");
+
+            > .dots {
+                display: flex;
+                flex-wrap: wrap;
+
+                padding-top: 4px;
+                margin-left: 1rem;
+            }
+        }
+
+        &__building-turns {
+            padding: 0.5rem 1rem;
+
+            border: 1px solid palette("grey", "abbey");
+
+            background: palette("grey", "deep");
+        }
+
+        &__build-turn {
+            width: 4px;
+            height: 4px;
+            margin: 0 4px 4px 0;
+
+            background: linear-gradient(to bottom, palette("state", "warning") 0%, palette("state", "error") 100%);
+
+            border-radius: 50%;
+
+            text-indent: -1000em;
         }
     }
 </style>
