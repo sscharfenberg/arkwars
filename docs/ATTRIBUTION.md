@@ -27,8 +27,18 @@ http://hubblesite.org/image/3999/gallery
 ### Galaxy M106 (fleets)
 http://hubblesite.org/image/3143/news/91-astronomical
 
-### Carina Nebula (shipyards, research, starmap, galnet)
+### Supernova 1987A (shipyards)
+http://hubblesite.org/image/3987/gallery
+
+### Carina Nebula (research)
 http://hubblesite.org/image/2099/news_release/2007-16
+
+### Spiral Galaxy M74 (starchart)
+http://hubblesite.org/image/2210/category/37-spiral-galaxies
+
+### The Bubble Nebula (galnet)
+http://hubblesite.org/image/3849/wallpaper
+
 
 # Planets
 

@@ -76,7 +76,7 @@ export default {
         &.fleets { background-image: url("bg/fleets.jpg"); }
         &.shipyards { background-image: url("bg/shipyards.jpg"); }
         &.research { background-image: url("bg/research.jpg"); }
-        &.starmap { background-image: url("bg/starmap.jpg"); }
+        &.starchart { background-image: url("bg/starchart.jpg"); }
         &.galnet { background-image: url("bg/galnet.jpg"); }
     }
 

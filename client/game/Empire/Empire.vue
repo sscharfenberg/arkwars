@@ -20,6 +20,7 @@ export default {
             :area-title="$t('title')"
             area="empire" />
         <Summary />
+        TODO: -20 durch Forschung nur bei vorhandener Forschung in Warteschlange
         <Stars />
         <vue-snotify />
         TODO: reports - here or in galnet? show citadel. build shipyard.

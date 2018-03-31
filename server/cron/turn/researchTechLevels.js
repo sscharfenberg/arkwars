@@ -141,7 +141,7 @@ module.exports = async (game, log) => {
             if (researchWriteCounter % BULK_WRITES === 0) {
                 const updatedResearches = await Research.bulkWrite(researchBulkUpdates, {ordered: true, w: 1});
                 newLog.researchWrites.matched += updatedResearches.matchedCount;
-                newLog.researchWrites.modified += updatedResearches.modifiedCount;
+                newLog.researchWrites.modified += updatedResearches.modifiedCount + updatedResearches.deletedCount;
                 researchBulkUpdates = []; // reset bulk writes for next batch
                 researchBatches++;
             }
@@ -170,11 +170,12 @@ module.exports = async (game, log) => {
     if (researchWriteCounter % BULK_WRITES !== 0) {
         const updatedResearches = await Research.bulkWrite(researchBulkUpdates, {ordered: true, w: 1});
         newLog.researchWrites.matched += updatedResearches.matchedCount;
-        newLog.researchWrites.modified += updatedResearches.modifiedCount;
+        newLog.researchWrites.modified += updatedResearches.modifiedCount + updatedResearches.deletedCount;
         researchBatches++;
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    console.log(newLog.researchWrites);
     logger.info(
         `updated ${chalk.yellow(newLog.researchWrites.modified)} ${chalk.cyan("research job(s)")} for ${chalk.cyan(
             newLog.playerWrites.modified
