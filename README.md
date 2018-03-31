@@ -36,7 +36,7 @@ Use at your own risk.
 
 ## Documentation
 
-* [Dev Diary](./wiki/DevDiary)
+* [Dev Diary](https://github.com/sscharfenberg/arkwars/wiki/DevDiary)
 * [Attribution](./docs/ATTRIBUTION.md)
 * [Todos](./docs/TODO.md)
 * [Installation](./docs/INSTALLATION.md)
