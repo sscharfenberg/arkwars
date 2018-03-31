@@ -21,7 +21,6 @@ const MUTATIONS = {
      * @param {Mongoose.ObjectId} payload
      */
     TOGGLE_SHOW_PLANETS: (state, payload) => {
-        console.log(state.userSettings.empire.toggledStars);
         if (state.userSettings.empire.toggledStars.indexOf(payload) === -1) {
             state.userSettings.empire.toggledStars.push(payload);
         } else {

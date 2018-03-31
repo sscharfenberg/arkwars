@@ -15,7 +15,9 @@ Vector Icons used throughout the site are taken from [Google Material Design Ico
 
 **Weapontypes**: `missile`, `laser`, `plasma`, `railgun` by [Nizamettin Kocaaga](http://www.effectdesign.de/). Used with explicit permission.
 
-**PDU**: "Defense Satellite" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/delapouite/originals/defense-satellite.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+**Shipyard**: "Defense Satellite" by [Delapouite](http://delapouite.com/) from [game-icons.net](http://game-icons.net/delapouite/originals/defense-satellite.html), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
+**PDU**: "Satellite" by [Hea Poh Lin from the Noun Project](https://thenounproject.com), licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 
 # Game Header Images 
 are Hubble Images taken from the [Hubblesite](http://hubblesite.org/images/gallery). All Images are credited to STScI and are therefore in the public domain:

@@ -35,6 +35,17 @@ exports.fetch = async player => {
         .map(colony => colony.effectivePopulation)
         .reduce((acc, val) => acc + val);
 
+    // sort stars by population. getting population of a star system is a bit complicated ^.^
+    player.stars = player.stars.sort((a,b) => {
+        const planetPopA = planets.filter(planet => planet.population >= 1 && `${planet.star}` === `${a._id}`)
+            .map(colony => colony.effectivePopulation);
+        const popA = planetPopA.length ? planetPopA.reduce((acc, val) => acc + val) : 0;
+        const planetPopB = planets.filter(planet => planet.population >= 1 && `${planet.star}` === `${b._id}`)
+            .map(colony => colony.effectivePopulation);
+        const popB = planetPopB.length ? planetPopB.reduce((acc, val) => acc + val) : 0;
+        return popB - popA;
+    });
+
     // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const returnData = {
         game: {

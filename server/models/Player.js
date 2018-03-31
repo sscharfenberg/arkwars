@@ -209,6 +209,13 @@ playerSchema.virtual("storageUpgrades", {
     foreignField: "player" // which field on the StorageUpgrade?
 });
 
+// find shipyards that are owned by this player
+playerSchema.virtual("shipyards", {
+    ref: "Shipyard", // what model to link?
+    localField: "_id", // which field on the Player?
+    foreignField: "owner" // which field on the Shipyard?
+});
+
 // auto populate games
 function autopopulate(next) {
     this.populate("game");

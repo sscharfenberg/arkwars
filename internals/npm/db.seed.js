@@ -25,12 +25,14 @@ const Suspension = mongoose.model("Suspension");
 const Harvester = mongoose.model("Harvester");
 const Pdu = mongoose.model("Pdu");
 const Research = mongoose.model("Research");
+const Shipyard = mongoose.model("Shipyard");
 const games = require("../mockdata/games");
 const users = require("../mockdata/users");
 const players = require("../mockdata/players");
 const turns = require("../mockdata/turns");
 const map = require("../mockdata/mapData");
 const researches = require("../mockdata/research");
+let shipyards = require("../mockdata/shipyards");
 const stars = map.stars;
 const planets = map.planets;
 let playerHomeSystems = [];
@@ -61,6 +63,8 @@ const seedDatabase = async () => {
         await Pdu.insertMany(pdus);
         logger.debug(`[node] inserting ${researches.length} research projects.`);
         await Research.insertMany(researches);
+        logger.debug(`[node] inserting ${shipyards.length} pdus.`);
+        await Shipyard.insertMany(shipyards);
         logger.debug("[node] done inserting.");
         logger.success("[node] finished seeding database.");
     } catch (e) {
@@ -113,6 +117,12 @@ players.forEach(player => {
 playerHomeSystems.forEach(system => {
     let starPlanets = planets.filter(planet => planet.star === system._id && planet.resources.length);
     let colonyId = seed.selectPlayerStartingColony(starPlanets);
+    // assign the two mock shipyards.
+    shipyards.forEach(function(yard) {
+        if (`${yard.owner}` === `${system.owner}`) {
+            yard.planet = colonyId;
+        }
+    });
     planets.forEach(function(planet) {
         if (planet._id === colonyId) {
             planet.population = 10;

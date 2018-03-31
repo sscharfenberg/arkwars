@@ -92,6 +92,10 @@ const appConfig = {
 
     tech: require("../../shared/rules/tech"),
 
+    ships: require("../../shared/rules/ships"),
+
+    shipyards: require("../../shared/rules/shipyards"),
+
     defaultPagination: {
         admin: {
             users: 20,

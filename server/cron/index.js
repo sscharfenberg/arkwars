@@ -25,7 +25,7 @@ const processGameStarts = async () => {
         return moment().diff(game.startDate) + TURNDUE_THRESHOLD > 0;
     });
     if (gamesToStart.length) {
-        logger.info(`starting ${chalk.red(gamesToStart.length)} game(s).`);
+        logger.debug(`starting ${chalk.red(gamesToStart.length)} game(s).`);
         gamesToStart.forEach(async game => {
             try {
                 await doStartGame(game);
@@ -45,13 +45,13 @@ const processGameStarts = async () => {
  * 3) process the filtered games.
  */
 const processGameTurns = async () => {
-    logger.info("processing game turns.");
+    logger.info("🚧 processing game turns 🚧");
     const activeGames = await Game.find({active: true}).populate("turns");
     activeGames.length &&
-        logger.info(
-            `found ${chalk.red(activeGames.length)} active games: ${chalk.cyan(
+        logger.debug(
+            `${chalk.cyan("🚩")} found ${chalk.red(activeGames.length)} active games: ${chalk.cyan(
                 "[" + activeGames.map(game => game.number) + "]"
-            )}`
+            )} ${chalk.cyan("🚩")}`
         );
 
     // filter active games and remove the ones that we do not need to process
@@ -93,13 +93,13 @@ const processGameTurns = async () => {
 
     // nothing to process
     if (!gamesToProcess.length) {
-        logger.debug("nothing to process.");
+        logger.debug(`${chalk.red("❌")} nothing to process ${chalk.red("❌")}`);
         return;
     }
 
     let processingGameNumbers = gamesToProcess.map(game => game.number);
-    logger.success(
-        `processing games: ${chalk.cyan("[ " + processingGameNumbers + " ]")}.`
+    logger.debug(
+        `${chalk.yellow("⚡")} processing games: ${chalk.cyan("[ " + processingGameNumbers + " ]")}. ${chalk.yellow("⚡")}`
     );
     gamesToProcess.forEach(async game => {
         try {

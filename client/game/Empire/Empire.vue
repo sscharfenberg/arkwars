@@ -6,6 +6,7 @@ import Header from "Game/common/Header/Header.vue";
 import Stars from "./Stars/Stars.vue";
 import Summary from "./Summary/Summary.vue";
 import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
+//import {shipyardRules} from "Config";
 export default {
     components: {
         "app-header": Header,

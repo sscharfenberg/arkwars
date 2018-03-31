@@ -55,7 +55,10 @@ export default {
             return this.$store.getters.savingStarNameIds.includes(this.id);
         },
         isStarNameEditing () { return this.$store.getters.editingStarNameIds.includes(this.id); },
-        showPlanets () { return this.$store.getters.userSettings.empire.toggledStars.includes(this.id); }
+        showPlanets () {
+            if (this.$store.getters.stars.length < 2) return true;
+            return this.$store.getters.userSettings.empire.toggledStars.includes(this.id);
+        }
     },
     components: {
         Icon,
@@ -81,7 +84,10 @@ export default {
             if (this.starName.length < 4) return;
             return this.$store.dispatch("SAVE_STAR_NAME", {id: this.id, starName: this.starName});
         },
-        togglePlanets() { return this.$store.dispatch("TOGGLE_SHOW_PLANETS", this.id); }
+        togglePlanets() {
+            if (this.$store.getters.stars.length < 2) return;
+            return this.$store.dispatch("TOGGLE_SHOW_PLANETS", this.id);
+        }
     }
 };
 </script>
@@ -91,6 +97,7 @@ export default {
         <header class="star__header">
             <star-spectral :spectral="spectral" />
             <btn
+                v-if="$store.getters.stars.length > 1"
                 :on-click="togglePlanets"
                 :icon-name="showPlanets ? 'less' : 'more'"
                 class="star__toggle"

@@ -7,7 +7,6 @@
  **********************************************************************************************************************/
 import axios from "axios";
 import {applyServerPulse} from "../../../components/game/time";
-import {persistUserSettings} from "../../handlers/userSettings";
 import {DEBUG} from "../../../config";
 
 export const commonActions = {
@@ -29,16 +28,6 @@ export const commonActions = {
      */
     SET_USER_SETTINGS: function(ctx, payload) {
         ctx.commit("SET_USER_SETTINGS", payload);
-        persistUserSettings(payload);
-    },
-
-    /*
-     * persist user settings in local storage
-     * @param {Object} ctx - Vuex $store context
-     * @param {Object} payload
-     */
-    PERSIST_USER_SETTINGS: function(ctx, payload) {
-        persistUserSettings(payload);
     },
 
     /*

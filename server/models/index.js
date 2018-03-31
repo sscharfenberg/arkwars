@@ -14,4 +14,5 @@ require("./Star");
 require("./Planet");
 require("./Harvester");
 require("./Pdu");
+require("./Shipyard");
 

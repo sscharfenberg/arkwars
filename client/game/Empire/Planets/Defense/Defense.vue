@@ -23,7 +23,8 @@ export default {
     computed: {
         pdus () { return this.$store.getters.pdusByPlanetId(this.planetId); },
         activePdus () { return this.$store.getters.pdusByPlanetId(this.planetId).filter(pdu => pdu.isActive); },
-        btnClass () { return this.activePdus.length > 0 ? "military" : "civilian"; }
+        btnClass () { return this.activePdus.length > 0 ? "military" : "civilian"; },
+        buttonLabel () { return this.$t("common.pdu.namesLong"); }
     },
     methods: {
         openDetails () { return this.$modal.show(`defense-${this.planetId}`); }
@@ -36,7 +37,9 @@ export default {
         <button
             class="pdu__btn"
             :class="btnClass"
-            @click="openDetails()">
+            @click="openDetails()"
+            :title="buttonLabel"
+            :aria-label="buttonLabel">
             <icon
                 class="pdu__icon"
                 name="pdu" />
@@ -61,7 +64,7 @@ export default {
             height: 2.6rem;
             padding: 0.5rem 1rem;
             border: 1px solid palette("grey", "abbey");
-            margin: 0 0 0.8rem 0;
+            margin: 0 0.8rem 0.8rem 0;
 
             background: transparent;
             color: palette("text");

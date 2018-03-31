@@ -23,6 +23,14 @@ const ANIMATION_DURATION = 150;
 const isLoggedIn = () => document.querySelector("body").getAttribute("data-user") === "1";
 
 /*
+ * simple way to find out if the drawer covers the content (<768px width) or pushes it to the side (>= 768opx)
+ * remembering that the drawer is open is totes awesome for clients with enough viewport width
+ * it is not helping if the drawer covers the content anyway - navigation would be very awkward,
+ * since you would have to close the drawer again
+ */
+const isSmallViewPort = () => window.innerWidth < 768;
+
+/*
  * @function open the drawer
  * @param {DOMNode} drawer
  * @param {DOMNode} button
@@ -35,7 +43,7 @@ const openDrawer = (drawer, button) => {
         drawer.classList.remove(CLASSNAME_OPENING);
         drawer.classList.add(CLASSNAME_OPEN);
         drawer.setAttribute("aria-hidden", "false");
-        isLoggedIn() &&
+        isLoggedIn() && !isSmallViewPort() &&
             axios
                 .post("/api/user/opendrawer")
                 .then(response => {
@@ -63,7 +71,7 @@ const closeDrawer = (drawer, button) => {
     setTimeout(() => {
         drawer.classList.remove(CLASSNAME_OPEN, CLASSNAME_CLOSING);
         drawer.setAttribute("aria-hidden", "true");
-        isLoggedIn() &&
+        isLoggedIn() && !isSmallViewPort() &&
             axios
                 .post("/api/user/closedrawer")
                 .then(response => {
@@ -88,6 +96,10 @@ const initDrawer = () => {
 
     // return if no drawer or no trigger
     if (!drawer || !button) return;
+
+    // for smaller screens, remove open class since it covers part of the content anyway
+    if (isSmallViewPort()) drawer.classList.remove(CLASSNAME_OPEN);
+
     // click event
     button.addEventListener("click", function() {
         if (drawer.classList.contains(CLASSNAME_OPEN)) {

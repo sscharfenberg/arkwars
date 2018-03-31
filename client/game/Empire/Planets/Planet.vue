@@ -1,13 +1,14 @@
 <script>
-/*******************************************************************************************************************
+/***********************************************************************************************************************
  * Planet
  * this component displays a single planet
- ******************************************************************************************************************/
+ **********************************************************************************************************************/
 import {latinToRoman} from "../../handlers/format";
 import Icon from "Game/common/Icon/Icon.vue";
 import Resources from "./Resources/Resources.vue";
 import Population from "./Population/Population.vue";
 import Defense from "./Defense/Defense.vue";
+import Shipyard from "./Shipyard/Shipyard.vue";
 export default {
     props: {
         id: {
@@ -39,7 +40,8 @@ export default {
         Resources,
         Icon,
         Defense,
-        Population
+        Population,
+        Shipyard
     }
 };
 </script>
@@ -70,6 +72,7 @@ export default {
             <defense
                 :planet-id="id"
                 :star-name="starName" />
+            <shipyard />
         </div>
     </div>
 </template>

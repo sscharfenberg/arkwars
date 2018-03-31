@@ -1,40 +1,44 @@
 /***********************************************************************************************************************
  *
- * Harvester model
- * Extractors that belong to Planets and extract resources.
+ * Shipyard model
  *
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
-const cfg = require("../config");
 mongoose.Promise = global.Promise;
+const cfg = require("../config");
 
-const harvesterSchema = new mongoose.Schema({
+const shipyardSchema = new mongoose.Schema({
 
     // reference to planet id
     planet: {
         type: mongoose.Schema.ObjectId,
-        ref: "Planet"
+        ref: "Planet",
+        required: true
     },
 
     // reference to game id
     game: {
         type: mongoose.Schema.ObjectId,
-        ref: "Game"
+        ref: "Game",
+        required: true
     },
 
     // reference to player id
     owner: {
         type: mongoose.Schema.ObjectId,
-        ref: "player"
+        ref: "Player",
+        required: true
     },
 
-    // type of resource that is harvested
-    resourceType: {
-        type: String,
-        enum: cfg.player.resourceTypes.map(res => res.type)
-    },
+    // maximum ship hulltype that can be constructed here
+    hullTypes: [
+        {
+            type: String,
+            enum: cfg.shipyards.hullTypes.map(hull => hull.name)
+        }
+    ],
 
-    // number of turns until the harvester has finished building
+    // turns until the shipyard is constructed/upgraded
     turnsUntilComplete: {
         type: Number
     }
@@ -45,8 +49,8 @@ const harvesterSchema = new mongoose.Schema({
  * virtual function to find out if the harvester is actually producing resources
  * @returns {Boolean}
  */
-harvesterSchema.virtual("isHarvesting").get(function() {
+shipyardSchema.virtual("isActive").get(function() {
     return !this.turnsUntilComplete || this.turnsUntilComplete === 0;
 });
 
-module.exports = mongoose.model("Harvester", harvesterSchema);
+module.exports = mongoose.model("Shipyard", shipyardSchema);

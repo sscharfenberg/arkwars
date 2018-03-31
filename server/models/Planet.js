@@ -76,6 +76,13 @@ planetSchema.virtual("pdus", {
     foreignField: "planet" // which field on the Pdu?
 });
 
+// find Shipyards where shipyard.planet = planet._id
+planetSchema.virtual("shipyards", {
+    ref: "Shipyard", // what model to link?
+    localField: "_id", // which field on the Planet?
+    foreignField: "planet" // which field on the Shipyard?
+});
+
 /*
  * virtual function to find out if the harvester is actually producing resources
  * @returns {Boolean}
