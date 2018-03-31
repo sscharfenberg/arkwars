@@ -15,6 +15,14 @@ const getMessagesVersion = () =>
         .add(99, "years")
         .toISOString();
 const getAreaSlug = () => document.getElementById("gameData").getAttribute("data-area");
-const getInitialState = () => JSON.parse(document.getElementById("gameData").getAttribute("data-initial"));
+
+// get initial state
+// @sideeffect: removes attribute from DOM to free memory
+const getInitialState = () => {
+    const gameData = document.getElementById("gameData");
+    const state = JSON.parse(gameData.getAttribute("data-initial"));
+    gameData.removeAttribute("data-initial");
+    return state;
+};
 
 export {getPlayerId, getGameId, getLocale, getMessagesVersion, getAreaSlug, getInitialState};

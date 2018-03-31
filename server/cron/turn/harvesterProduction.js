@@ -97,7 +97,7 @@ const harvesterProduction = async (game, log) => {
         playerBatches++;
     }
 
-    logger.info(
+    logger.debug(
         `updated ${chalk.yellow(playerLog.modified)} ${chalk.cyan(
             "player(s)"
         )} in ${chalk.yellow(playerBatches)} batches.`

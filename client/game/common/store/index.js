@@ -7,6 +7,7 @@
 export const commonState = {
     // App state
     fetchingGameDataFromApi: false,
+    userSettings: {},
     // common game state
     game: {},
     player: {},
@@ -19,6 +20,7 @@ export const commonGetters = {
     // App state
     fetchingGameDataFromApi: state => state.fetchingGameDataFromApi,
     upgradingStorageLevels: state => state.upgradingStorageLevels,
+    userSettings: state => state.userSettings,
     // game state
     game: state => state.game || {},
     player: state => state.player || {},

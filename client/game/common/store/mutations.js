@@ -1,8 +1,7 @@
 /***********************************************************************************************************************
  *
- * VUEX STATE MUTATIONS
- *
- * SYNC!!!
+ * VUEX STATE COMMON MUTATIONS
+ * synchronous
  *
  **********************************************************************************************************************/
 import {DEBUG} from "Config";
@@ -15,7 +14,7 @@ export const commonMutations = {
      * @param {Object} payload - game data object from api
      */
     SET_GAME_DATA: (state, payload) => {
-        DEBUG && console.log("committing game data to store ", payload);
+        DEBUG && console.log("set game data", payload);
         // common
         if (payload.game) state.game = payload.game;
         if (payload.player) state.player = payload.player;
@@ -23,13 +22,23 @@ export const commonMutations = {
         if (payload.upgradingStorageLevels) state.upgradingStorageLevels = payload.upgradingStorageLevels;
         if (payload.storageUpgrades) state.storageUpgrades = payload.storageUpgrades;
         // area = empire
-        if (payload.stars) state.stars = payload.stars;
-        if (payload.planets) state.planets = payload.planets;
-        if (payload.harvesters) state.harvesters = payload.harvesters;
-        if (payload.pdus) state.pdus = payload.pdus;
+        if (payload.stars && payload.stars.length) state.stars = payload.stars;
+        if (payload.planets && payload.planets.length) state.planets = payload.planets;
+        if (payload.harvesters && payload.harvesters.length) state.harvesters = payload.harvesters;
+        if (payload.pdus && payload.pdus.length) state.pdus = payload.pdus;
         // area = research
         if (payload.techLevels) state.techLevels = payload.techLevels;
-        if (payload.researches) state.researches = payload.researches;
+        if (payload.researches && payload.researches.length) state.researches = payload.researches;
+    },
+
+    /*
+     * SET gameData
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload - userSettings object - either from localStorage or from default obj
+     */
+    SET_USER_SETTINGS: (state, payload) => {
+        DEBUG && console.log("set user settings", payload);
+        state.userSettings = payload;
     },
 
     /*

@@ -13,8 +13,7 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
     data: function() {
         return {
-            starName: this.name,
-            showPlanets: false
+            starName: this.name
         };
     },
     validations: {
@@ -55,7 +54,8 @@ export default {
         isStarNameSaving () {
             return this.$store.getters.savingStarNameIds.includes(this.id);
         },
-        isStarNameEditing () { return this.$store.getters.editingStarNameIds.includes(this.id); }
+        isStarNameEditing () { return this.$store.getters.editingStarNameIds.includes(this.id); },
+        showPlanets () { return this.$store.getters.userSettings.empire.toggledStars.includes(this.id); }
     },
     components: {
         Icon,
@@ -81,7 +81,7 @@ export default {
             if (this.starName.length < 4) return;
             return this.$store.dispatch("SAVE_STAR_NAME", {id: this.id, starName: this.starName});
         },
-        togglePlanets() { this.showPlanets = !this.showPlanets; }
+        togglePlanets() { return this.$store.dispatch("TOGGLE_SHOW_PLANETS", this.id); }
     }
 };
 </script>

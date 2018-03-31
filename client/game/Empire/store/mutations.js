@@ -9,10 +9,26 @@ import Vue from "vue";
 import {pduRules} from "Config";
 import {harvesterRules} from "Config";
 import {commonMutations} from "../../common/store/mutations";
+import {persistUserSettings} from "../../handlers/userSettings";
 
 const MUTATIONS = {
 
     ...commonMutations,
+
+    /*
+     * SET/UNSET "show planets" for a specific star
+     * @param {Object} state - Vuex $store.state
+     * @param {Mongoose.ObjectId} payload
+     */
+    TOGGLE_SHOW_PLANETS: (state, payload) => {
+        console.log(state.userSettings.empire.toggledStars);
+        if (state.userSettings.empire.toggledStars.indexOf(payload) === -1) {
+            state.userSettings.empire.toggledStars.push(payload);
+        } else {
+            state.userSettings.empire.toggledStars.splice(state.userSettings.empire.toggledStars.indexOf(payload.id), 1);
+        }
+        persistUserSettings(state.userSettings); // persist settings in localstorage
+    },
 
     /*
      * SET/UNSET "Editing star name" for a specific star

@@ -36,55 +36,36 @@ const cleanChalkedMessage = message => {
 moment.locale("de"); // TODO: make config setting
 
 exports.info = message => {
-    const data = `📞 ${message}`;
-    console.log(
-        `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.white(
-            data
-        )}`
-    );
-    fs.appendFile(logFilePath, cleanChalkedMessage(data), "utf8", err => {
+    console.log(`${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.yellow("🔍")} ${message}`);
+    fs.appendFile(logFilePath, cleanChalkedMessage(message), "utf8", err => {
         if (err) throw err;
     });
 };
 
 exports.debug = message => {
-    const data = `🔧 ${message}`;
-    console.log(
-        `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.cyan(data)}`
-    );
-    fs.appendFile(logFilePath, cleanChalkedMessage(data), "utf8", err => {
+    console.log(`${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.cyan("🔧")} ${message}`);
+    fs.appendFile(logFilePath, cleanChalkedMessage(message), "utf8", err => {
         if (err) throw err;
     });
 };
 
 exports.warn = message => {
-    const data = `🔥 ${message}`;
-    console.log(
-        `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.yellow(
-            data
-        )}`
-    );
-    fs.appendFile(logFilePath, cleanChalkedMessage(data), "utf8", err => {
+    console.log(`${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.yellow("🔥")} ${message}`);
+    fs.appendFile(logFilePath, cleanChalkedMessage(message), "utf8", err => {
         if (err) throw err;
     });
 };
 
 exports.error = message => {
-    const data = `💀 ${message}`;
-    console.log(
-        `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.red(data)}`
-    );
-    fs.appendFile(logFilePath, cleanChalkedMessage(data), "utf8", err => {
+    console.log(`${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.red("💀 ")} ${message}`);
+    fs.appendFile(logFilePath, cleanChalkedMessage(message), "utf8", err => {
         if (err) throw err;
     });
 };
 
 exports.success = message => {
-    const data = `👍 ${message}`;
-    console.log(
-        `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.blue(data)}`
-    );
-    fs.appendFile(logFilePath, cleanChalkedMessage(data), "utf8", err => {
+    console.log(`${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.green("√ " + message + " √")}`);
+    fs.appendFile(logFilePath, cleanChalkedMessage(message), "utf8", err => {
         if (err) throw err;
     });
 };

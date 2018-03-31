@@ -13,6 +13,7 @@ import Research from "./Research.vue";
 import {DEBUG} from "Config";
 import {getAreaMessages} from "../handlers/messages";
 import {getLocale, getAreaSlug, getMessagesVersion, getInitialState} from "../handlers/gameConstants";
+import {getUserSettings} from "../handlers/userSettings";
 
 if (document.getElementById("gameRoot")) {
     const locale = getLocale();
@@ -40,7 +41,8 @@ if (document.getElementById("gameRoot")) {
             template: "<Research/>",
             components: {Research},
             beforeCreate: function() {
-                return this.$store.dispatch("SET_INITIAL_STATE", getInitialState());
+                this.$store.dispatch("SET_USER_SETTINGS", getUserSettings());
+                this.$store.dispatch("SET_INITIAL_STATE", getInitialState());
             }
         });
     });

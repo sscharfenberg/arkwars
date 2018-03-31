@@ -76,7 +76,7 @@ module.exports = async (game, log) => {
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if (storageUpgradesBulkUpdates.length && playerBulkUpdates.length) {
-        logger.info(`finished ${chalk.yellow(newLog.upgradeWrites.modified)} ${chalk.cyan("storage upgrades")}.`);
+        logger.debug(`finished ${chalk.yellow(newLog.upgradeWrites.modified)} ${chalk.cyan("storage upgrades")}.`);
     }
 
     // all done

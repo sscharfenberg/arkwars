@@ -7,6 +7,7 @@
  **********************************************************************************************************************/
 import axios from "axios";
 import {applyServerPulse} from "../../../components/game/time";
+import {persistUserSettings} from "../../handlers/userSettings";
 import {DEBUG} from "../../../config";
 
 export const commonActions = {
@@ -18,8 +19,26 @@ export const commonActions = {
      * @param {String} payload.area
      */
     SET_INITIAL_STATE: function(ctx, payload) {
-        DEBUG && console.log("setting intial state");
         ctx.commit("SET_GAME_DATA", payload);
+    },
+
+    /*
+     * set user settings
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     */
+    SET_USER_SETTINGS: function(ctx, payload) {
+        ctx.commit("SET_USER_SETTINGS", payload);
+        persistUserSettings(payload);
+    },
+
+    /*
+     * persist user settings in local storage
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     */
+    PERSIST_USER_SETTINGS: function(ctx, payload) {
+        persistUserSettings(payload);
     },
 
     /*

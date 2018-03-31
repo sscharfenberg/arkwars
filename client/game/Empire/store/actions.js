@@ -14,7 +14,19 @@ const ACTIONS = {
     ...commonActions,
 
     /*
+     * SET/UNSET "toggled stars"
+     * @param {Object} ctx - Vuex $store context
+     * @param {Mongoose.ObjectId} payload
+     */
+    TOGGLE_SHOW_PLANETS: function(ctx, payload) {
+        ctx.commit("TOGGLE_SHOW_PLANETS", payload);
+    },
+
+    /*
      * toggle editing star name
+     * @param {Object} ctx - Vuex $store context
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Boolean} payload.editing
      */
     EDIT_STAR_NAME: function(ctx, payload) {
         DEBUG && console.log(`${payload.editing ? "editing" : "canceled editing"} star name of id ${payload.id}`);
@@ -23,6 +35,8 @@ const ACTIONS = {
 
     /*
      * post xhr "change star name" request
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Boolean} payload.saving
      */
     SAVE_STAR_NAME: function(ctx, payload) {
         DEBUG && console.log("save changed star name");
@@ -50,6 +64,8 @@ const ACTIONS = {
 
     /*
      * post "install harvester on planet" request
+     * @param {Mongoose.ObjectId} payload.resourceId
+     * @param {Boolean} payload.saving
      */
     INSTALL_HARVESTER: function(ctx, payload) {
         DEBUG && console.log("requesting install harvestester", payload);

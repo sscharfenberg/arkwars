@@ -140,12 +140,12 @@ module.exports = async (game, log) => {
         playerBatches++;
     }
 
-    logger.info(
+    logger.debug(
         `updated ${chalk.yellow(newLog.colonyWrites.modified)} ${chalk.cyan("colony updates")} in ${chalk.yellow(
             planetBatches
         )} batches.`
     );
-    logger.info(
+    logger.debug(
         `updated ${chalk.yellow(newLog.playerWrites.modified)} ${chalk.cyan("player updates")} in ${chalk.yellow(
             playerBatches
         )} batches.`

@@ -4,6 +4,7 @@
  *  we use only named exports so we can seperate and minify bundles better
  *
  **********************************************************************************************************************/
+export const localStorageKey = "user-settings";
 
 // needs to match /server/config/index.js
 // first locale is the default

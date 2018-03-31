@@ -175,12 +175,12 @@ module.exports = async (game, log) => {
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    logger.info(
+    logger.debug(
         `updated ${chalk.yellow(newLog.researchWrites.modified)} ${chalk.cyan("research job(s)")} in ${chalk.yellow(
             researchBatches
         )} batches.`
     );
-    logger.info(
+    logger.debug(
         `updated ${chalk.yellow(newLog.playerWrites.modified)} ${chalk.cyan("player(s)")} in ${chalk.yellow(
             playerBatches
         )} batches `
