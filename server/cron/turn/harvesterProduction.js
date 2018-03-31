@@ -99,7 +99,7 @@ const harvesterProduction = async (game, log) => {
 
     logger.info(
         `updated ${chalk.yellow(playerLog.modified)} ${chalk.cyan(
-            "harvester production player updates"
+            "player(s)"
         )} in ${chalk.yellow(playerBatches)} batches.`
     );
 

@@ -35,11 +35,10 @@ Use at your own risk.
 * `npm run db.seed`: seed MongoDB with mock data.
 
 ## Documentation
-(this needs work!)
 
-* [Changelog](https://github.com/sscharfenberg/arkwars/blob/master/docs/CHANGELOG.md)
-* [Todos](https://github.com/sscharfenberg/arkwars/blob/master/docs/TODO.md)
-* [Installation](https://github.com/sscharfenberg/arkwars/blob/master/docs/INSTALLATION.md)
+* [Attribution](./docs/ATTRIBUTION.md)
+* [Todos](./docs/TODO.md)
+* [Installation](./docs/INSTALLATION.md)
 
 ## Attribution
 

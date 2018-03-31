@@ -36,7 +36,7 @@ const cleanChalkedMessage = message => {
 moment.locale("de"); // TODO: make config setting
 
 exports.info = message => {
-    const data = `📞 INFO 📞 → ${message}`;
+    const data = `📞 ${message}`;
     console.log(
         `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.white(
             data
@@ -48,7 +48,7 @@ exports.info = message => {
 };
 
 exports.debug = message => {
-    const data = `🔧 DEBUG 🔧 → ${message}`;
+    const data = `🔧 ${message}`;
     console.log(
         `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.cyan(data)}`
     );
@@ -58,7 +58,7 @@ exports.debug = message => {
 };
 
 exports.warn = message => {
-    const data = `🔥 WARN 🔥 → ${message}`;
+    const data = `🔥 ${message}`;
     console.log(
         `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.yellow(
             data
@@ -70,7 +70,7 @@ exports.warn = message => {
 };
 
 exports.error = message => {
-    const data = `💀 ERROR 💀 → ${message}`;
+    const data = `💀 ${message}`;
     console.log(
         `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.red(data)}`
     );
@@ -80,7 +80,7 @@ exports.error = message => {
 };
 
 exports.success = message => {
-    const data = `👍 SUCCESS 👍 → ${message}`;
+    const data = `👍 ${message}`;
     console.log(
         `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.blue(data)}`
     );

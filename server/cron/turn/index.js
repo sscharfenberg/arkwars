@@ -7,9 +7,10 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../../handlers/logger/console");
-const popFoodConsumption = require("./foodConsumption");
-const harvesterProduction = require("./harvesterProduction");
 const pduConstruction = require("./pduConstruction");
+const constructStorageUpgrade = require("./constructStorageUpgrade");
+const harvesterProduction = require("./harvesterProduction");
+const popFoodConsumption = require("./foodConsumption");
 const harvesterConstruction = require("./harvesterConstruction");
 const researchTechLevels = require("./researchTechLevels");
 const logTurn = require("../../handlers/logger/turn");
@@ -30,42 +31,61 @@ const turnProcessingOrder = async game => {
      * 1) PDU construction
      ******************************************************************************************************************/
     try {
+        logger.info(`${chalk.green("1")} starting ${chalk.magenta("pdu construction")}`);
         log = await pduConstruction(game, log);
     } catch (e) {
         logger.error(e);
     }
 
     /*******************************************************************************************************************
-     * 2) harvester production
+     * 2) StorageUpgrades
      ******************************************************************************************************************/
     try {
+        logger.info(`${chalk.green("2")} starting ${chalk.magenta("storage upgrade construction")}`);
+        log = await constructStorageUpgrade(game, log);
+    } catch (e) {
+        logger.error(e);
+    }
+
+    /*******************************************************************************************************************
+     * 3) harvester production
+     ******************************************************************************************************************/
+    try {
+        logger.info(`${chalk.green("3")} starting ${chalk.magenta("harvester resource production")}`);
         log = await harvesterProduction(game, log);
     } catch (e) {
         logger.error(e);
     }
 
     /*******************************************************************************************************************
-     * 3) food consumption and population growth
+     * 4) food consumption and population growth
      ******************************************************************************************************************/
     try {
+        logger.info(
+            `${chalk.green("4")} starting ${chalk.magenta("population food consumption")} and ${chalk.magenta(
+                "population growth"
+            )}`
+        );
         log = await popFoodConsumption(game, log);
     } catch (e) {
         logger.error(e);
     }
 
     /*******************************************************************************************************************
-     * 4) harvesters construction
+     * 5) harvesters construction
      ******************************************************************************************************************/
     try {
+        logger.info(`${chalk.green("5")} starting ${chalk.magenta("harvester construction")}`);
         log = await harvesterConstruction(game, log);
     } catch (e) {
         logger.error(e);
     }
 
     /*******************************************************************************************************************
-     * 5) research jobs
+     * 6) research jobs
      ******************************************************************************************************************/
     try {
+        logger.info(`${chalk.green("6")} starting ${chalk.magenta("research job processing")}`);
         log = await researchTechLevels(game, log);
     } catch (e) {
         logger.error(e);
@@ -106,11 +126,7 @@ const processTurnData = async game => {
  */
 const processGameTurn = async game => {
     let startTime = moment(); // remember the starting time so we can calculate runtime.
-    game = await Game.findOneAndUpdate(
-        {_id: game._id},
-        {$set: {processing: true}},
-        {new: true, runValidators: true}
-    );
+    game = await Game.findOneAndUpdate({_id: game._id}, {$set: {processing: true}}, {new: true, runValidators: true});
     logger.debug(`processing turn ${chalk.red("g" + game.number)}${chalk.yellow("t" + (game.turn + 1))}.`);
     await game.save(); // save game with processing and OLD turn
     game.turn++; // new turn!

@@ -21,7 +21,7 @@ const pduConstruction = async (game, log) => {
         {$inc: {turnsUntilComplete: -1}},
         {new: true, runValidators: true, context: "query"}
     );
-    logger.info(`processed ${chalk.yellow(processedPdus.nModified)} ${chalk.cyan("PDUs under construction")}.`);
+    logger.info(`processed construction of ${chalk.yellow(processedPdus.nModified)} ${chalk.cyan("PDUs")}.`);
     return {
         ...log,
         pduConstruction: processedPdus.nModified || 0

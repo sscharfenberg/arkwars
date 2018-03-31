@@ -175,13 +175,15 @@ module.exports = async (game, log) => {
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    console.log(newLog.researchWrites);
     logger.info(
-        `updated ${chalk.yellow(newLog.researchWrites.modified)} ${chalk.cyan("research job(s)")} for ${chalk.cyan(
-            newLog.playerWrites.modified
-        )} player(s) in ${chalk.yellow(playerBatches)} player batches and ${chalk.yellow(
+        `updated ${chalk.yellow(newLog.researchWrites.modified)} ${chalk.cyan("research job(s)")} in ${chalk.yellow(
             researchBatches
-        )} research batches.`
+        )} batches.`
+    );
+    logger.info(
+        `updated ${chalk.yellow(newLog.playerWrites.modified)} ${chalk.cyan("player(s)")} in ${chalk.yellow(
+            playerBatches
+        )} batches `
     );
 
     // all done
