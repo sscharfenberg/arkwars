@@ -75,7 +75,7 @@ export default {
         border: 1px solid palette("grey", "asher");
 
         background: palette("grey", "raven");
-        color: palette("text", "tint");
+        color: palette("text", "light");
         cursor: pointer;
 
         transition:
@@ -99,6 +99,7 @@ export default {
         &--icon {
             width: $btnBaseHeight;
 
+            color: palette("text", "tint");
             border-radius: 50%;
 
             &.tiny { width: 2.6rem; }

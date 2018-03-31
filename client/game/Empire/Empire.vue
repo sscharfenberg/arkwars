@@ -5,11 +5,13 @@
 import Header from "Game/common/Header/Header.vue";
 import Stars from "./Stars/Stars.vue";
 import Summary from "./Summary/Summary.vue";
+import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
 export default {
     components: {
         "app-header": Header,
         Stars,
-        Summary
+        Summary,
+        ScreenSection
     }
 };
 </script>
@@ -19,10 +21,14 @@ export default {
         <app-header
             :area-title="$t('title')"
             area="empire" />
-        <Summary />
-        <Stars />
+        <screen-section>
+            <Summary />
+        </screen-section>
+        <screen-section :hdl="$t('stars')">
+            <Stars />
+        </screen-section>
         <vue-snotify />
-        TODO: reports - here or in galnet? show citadel. build shipyard.
+        TODO: reports - here or in galnet? show citadel? build shipyard.
     </div>
 </template>
 

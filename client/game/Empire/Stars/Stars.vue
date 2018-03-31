@@ -4,34 +4,30 @@
  * this component lists the stars
  ******************************************************************************************************************/
 import Star from "./Star.vue";
-import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
 export default {
     computed: {
         stars: function () { return this.$store.getters.stars; }
     },
     components: {
-        Star,
-        ScreenSection
+        Star
     }
 };
 </script>
 
 <template>
-    <screen-section :hdl="$t('stars')">
-        <ul v-if="stars.length > 0">
-            <li
-                v-for="star in stars"
-                :key="star.id">
-                <star
-                    :id="star.id"
-                    :name="star.name"
-                    :coord-x="star.coordX"
-                    :coord-y="star.coordY"
-                    :spectral="star.spectral"
-                    :planets="star.planets" />
-            </li>
-        </ul>
-    </screen-section>
+    <ul v-if="stars.length > 0">
+        <li
+            v-for="star in stars"
+            :key="star.id">
+            <star
+                :id="star.id"
+                :name="star.name"
+                :coord-x="star.coordX"
+                :coord-y="star.coordY"
+                :spectral="star.spectral"
+                :planets="star.planets" />
+        </li>
+    </ul>
 </template>
 
 <style lang="scss" scoped>

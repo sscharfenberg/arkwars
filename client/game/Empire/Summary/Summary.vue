@@ -6,7 +6,6 @@
 import Icon from "Game/common/Icon/Icon.vue";
 import Resources from "./Resources.vue";
 import Population from "./Population.vue";
-import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
 export default {
     computed: {
         resources: function () { return this.$store.getters.playerResources.map(resource => resource.type); }
@@ -14,23 +13,20 @@ export default {
     components: {
         Icon,
         Resources,
-        Population,
-        ScreenSection
+        Population
     }
 };
 </script>
 
 <template>
-    <screen-section>
-        <ul class="stats">
-            <resources
-                v-if="resources.length"
-                v-for="resource in resources"
-                :key="resource"
-                :res-type="resource" />
-            <population />
-        </ul>
-    </screen-section>
+    <ul class="stats">
+        <resources
+            v-if="resources.length"
+            v-for="resource in resources"
+            :key="resource"
+            :res-type="resource" />
+        <population />
+    </ul>
 </template>
 
 <style lang="scss" scoped>

@@ -6,12 +6,15 @@
 import Icon from "Game/common/Icon/Icon.vue";
 import Button from "Game/common/Button/Button.vue";
 import Spinner from "Game/common/Spinner/Spinner.vue";
+import StarLocation from "./StarLocation.vue";
+import StarSpectral from "./StarSpectral.vue";
 import Planets from "../Planets/Planets.vue";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
     data: function() {
         return {
-            starName: this.name
+            starName: this.name,
+            showPlanets: false
         };
     },
     validations: {
@@ -49,8 +52,6 @@ export default {
         }
     },
     computed: {
-        spectralClassName () { return `star__spectral--${this.spectral}`; },
-        spectralTypeString () { return this.$t("star.spectralType") + ": " + this.spectral; },
         isStarNameSaving () {
             return this.$store.getters.savingStarNameIds.includes(this.id);
         },
@@ -60,7 +61,9 @@ export default {
         Icon,
         "btn": Button,
         Spinner,
-        Planets
+        Planets,
+        StarLocation,
+        StarSpectral
     },
     methods: {
         startEditStarName() {
@@ -77,7 +80,8 @@ export default {
         saveStarName() {
             if (this.starName.length < 4) return;
             return this.$store.dispatch("SAVE_STAR_NAME", {id: this.id, starName: this.starName});
-        }
+        },
+        togglePlanets() { this.showPlanets = !this.showPlanets; }
     }
 };
 </script>
@@ -85,12 +89,13 @@ export default {
 <template>
     <article class="star">
         <header class="star__header">
-            <div
-                class="star__spectral"
-                :class="spectralClassName"
-                :aria-label="spectralTypeString"
-                :title="spectralTypeString">•</div>
-
+            <star-spectral :spectral="spectral" />
+            <btn
+                :on-click="togglePlanets"
+                :icon-name="showPlanets ? 'less' : 'more'"
+                class="star__toggle"
+                :scale="1"
+                :label="$t('star.name.edit')" />
             <h1 class="star__name">
                 <span
                     class="star__name-text"
@@ -102,7 +107,6 @@ export default {
                     class="star__btn star__btn--edit"
                     :scale="1"
                     :label="$t('star.name.edit')" />
-
                 <div
                     v-show="isStarNameEditing"
                     class="star__edit">
@@ -137,18 +141,9 @@ export default {
                     <spinner v-if="isStarNameSaving" />
                 </div>
             </h1>
-
-            <aside
-                class="star__location"
-                :aria-label="$t('star.location')"
-                :title="$t('star.location')">
-                <div class="star__location-inner">
-                    <icon
-                        class="location-icon"
-                        name="location" />
-                    <span>{{ coordX }}/{{ coordY }}</span>
-                </div>
-            </aside>
+            <star-location
+                :coord-x="coordX"
+                :coord-y="coordY" />
         </header>
         <div
             v-if="$v.starName.$error"
@@ -164,8 +159,10 @@ export default {
             </div>
         </div>
         <planets
+            v-if="planets"
+            v-show="showPlanets"
             :planets="planets"
-            :star-name="name"/>
+            :star-name="name" />
     </article>
 </template>
 
@@ -182,31 +179,13 @@ export default {
 
         &__header {
             display: flex;
+            align-items: center;
 
             height: 48px;
         }
 
-        &__spectral {
-            z-index: z("form");
-
-            height: 48px;
-            flex: 0 0 48px;
-
-            background: url("./spectral-types.png") 0 0 no-repeat;
-            background-size: 48px;
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-
-            text-indent: -1000em;
-
-            &--O { background-position: 0 0; }
-            &--B { background-position: 0 -48px; }
-            &--A { background-position: 0 -96px; }
-            &--F { background-position: 0 -144px; }
-            &--G { background-position: 0 -192px; }
-            &--K { background-position: 0 -240px; }
-            &--M { background-position: 0 -288px; }
-            &--Y { background-position: 0 -336px; }
+        &__toggle {
+            margin-right: 1rem;
         }
 
         &__name {
@@ -215,25 +194,13 @@ export default {
 
             overflow: hidden;
 
-            padding-left: 3.5rem;
-            margin: 0 0 0 -2rem;
+            margin: 0;
             flex: 1 1 auto;
 
-            background:
-                radial-gradient(
-                    ellipse 35px 35px at -7px 50%,
-                    transparent 0%,
-                    transparent 99%,
-                    palette("grey", "sunken") 100%
-                );
             color: palette("text");
 
             font-weight: 300;
             line-height: 1;
-
-            @include respond-to("small") {
-                margin-left: -1rem;
-            }
         }
 
         &__name-text {
@@ -289,48 +256,6 @@ export default {
             &--cancel,
             &--save {
                 margin-left: 1rem;
-            }
-        }
-
-        &__location {
-            display: flex;
-            align-items: center;
-
-            padding: 0 0 0 0.5rem;
-
-            background-color: palette("grey", "sunken");
-            color: palette("text", "subdued");
-
-            @include respond-to("small") {
-                padding: 0 1rem;
-            }
-        }
-
-        &__location-inner {
-            display: flex;
-            align-items: center;
-
-            padding: 0.5rem;
-
-            background-color: palette("grey", "bunker");
-
-            > .location-icon {
-                margin-right: 1rem;
-
-                color: darken(palette("text", "subdued"), 25%);
-            }
-
-            > span {
-                width: 3rem;
-
-                font-size: 0.8em;
-                text-align: center;
-
-                @include respond-to("small") {
-                    width: 4rem;
-
-                    font-size: 1em;
-                }
             }
         }
 
