@@ -6,14 +6,13 @@ import draggable from "vuedraggable";
 import QueueItem from "./QueueItem.vue";
 import AbortResearch from "./AbortResearch.vue";
 import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
-import ResearchPriority from "./ResearchPriority.vue";
+
 export default {
     components: {
         draggable,
         QueueItem,
         AbortResearch,
-        ScreenSection,
-        ResearchPriority
+        ScreenSection
     },
     computed: {
         researches: {
@@ -29,7 +28,6 @@ export default {
     <screen-section
         v-if="researches.length"
         :hdl="$t('queue.label')">
-        <research-priority />
         <draggable
             v-if="researches.length"
             v-model="researches"

@@ -4,12 +4,14 @@
  **********************************************************************************************************************/
 import Header from "Game/common/Header/Header.vue";
 import TechLevels from "./TechLevels/TechLevels.vue";
+import ResearchPriority from "./ResearchPriority/ResearchPriority.vue";
 import Queue from "./Queue/Queue.vue";
 export default {
     components: {
         "app-header": Header,
         TechLevels,
-        Queue
+        Queue,
+        ResearchPriority
     }
 };
 </script>
@@ -19,6 +21,7 @@ export default {
         <app-header
             :area-title="$t('title')"
             area="research" />
+        <research-priority />
         <queue />
         <tech-levels />
         <vue-snotify />

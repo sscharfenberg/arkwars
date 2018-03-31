@@ -26,6 +26,7 @@ const store = new Vuex.Store({
         stars: [],
         planets: [],
         harvesters: [],
+        researches: [],
         pdus: []
     },
     getters: {
@@ -36,12 +37,13 @@ const store = new Vuex.Store({
         installingResourceTypes: state => state.installingResourceTypes,
         savingBuildPduPlanetIds: state => state.savingBuildPduPlanets,
         savingFoodConsumptionPlanetIds: state => state.savingFoodConsumption,
-        // game state
+        // area game state
         stars: state => state.stars || [],
         planets: state => state.planets || [],
         harvesters: state => state.harvesters || [],
         planetById: state => id => state.planets.find(planet => planet.id === id) || {},
         starById: state => id => state.stars.find(star => star.id === id) || {},
+        playerResearches: state => state.researches || [],
         harvesterById: state => id => state.harvesters.find( harvester => harvester.id === id) || {},
         pdusByPlanetId: state => id => state.pdus.filter(pdu => pdu.planet === id) || []
     },

@@ -3,8 +3,12 @@
  * allows modification of research speed
  **********************************************************************************************************************/
 import {techRules} from "Config";
+import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
 import {effectiveResearch} from "Shared/calculations";
 export default {
+    components: {
+        ScreenSection
+    },
     data: function() {
         return {
             setPriority: this.$store.getters.player.researchPriority
@@ -24,41 +28,43 @@ export default {
 </script>
 
 <template>
-    <div class="research-speed">
-        <div class="set">
-            <label for="researchSpeedNumber">{{ $t("research.priority.label") }}</label>
-            <input
-                type="range"
-                id="researchSpeedSlider"
-                :min="sliderSettings[0]"
-                :aria-valuemin="sliderSettings[0]"
-                :max="sliderSettings[1]"
-                :aria-valuemax="sliderSettings[1]"
-                step="0.1"
-                v-model="setPriority"
-                :disabled="isRequesting"
-                @change="changePriority()">
-            <input
-                type="number"
-                id="researchSpeedNumber"
-                :min="sliderSettings[0]"
-                :aria-valuemin="sliderSettings[0]"
-                :max="sliderSettings[1]"
-                :aria-valuemax="sliderSettings[1]"
-                step="0.5"
-                v-model="setPriority"
-                :disabled="isRequesting"
-                @change="changePriority()">
-        </div>
-        <div class="result">
-            <div class="costs">
-                {{ $t("research.priority.costs") }}: {{ calculatedCosts }}
+    <screen-section :hdl="$t('research.priority.label')">
+        <div class="research-speed">
+            <div class="set">
+                <label for="researchSpeedNumber">{{ $t("research.priority.label") }}</label>
+                <input
+                    type="range"
+                    id="researchSpeedSlider"
+                    :min="sliderSettings[0]"
+                    :aria-valuemin="sliderSettings[0]"
+                    :max="sliderSettings[1]"
+                    :aria-valuemax="sliderSettings[1]"
+                    step="0.1"
+                    v-model="setPriority"
+                    :disabled="isRequesting"
+                    @change="changePriority()">
+                <input
+                    type="number"
+                    id="researchSpeedNumber"
+                    :min="sliderSettings[0]"
+                    :aria-valuemin="sliderSettings[0]"
+                    :max="sliderSettings[1]"
+                    :aria-valuemax="sliderSettings[1]"
+                    step="0.5"
+                    v-model="setPriority"
+                    :disabled="isRequesting"
+                    @change="changePriority()">
             </div>
-            <div class="work">
-                {{ $t("research.priority.work") }}: {{ calculatedWork }}
+            <div class="result">
+                <div class="costs">
+                    {{ $t("research.priority.costs") }}: {{ calculatedCosts }}
+                </div>
+                <div class="work">
+                    {{ $t("research.priority.work") }}: {{ calculatedWork }}
+                </div>
             </div>
         </div>
-    </div>
+    </screen-section>
 </template>
 
 <style lang="scss" scoped>

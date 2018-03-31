@@ -9,6 +9,7 @@
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const Planet = mongoose.model("Planet");
+const Research = mongoose.model("Research");
 const StorageUpgrade = mongoose.model("StorageUpgrade");
 
 /*
@@ -23,7 +24,12 @@ exports.fetch = async player => {
     // get unsorted array of all planets that belong to the player's stars
     const planetPromise = await Planet.find({star: {$in: stars}}).populate("harvesters pdus");
     const storageUpgradePromise = StorageUpgrade.find({player: player._id});
-    const [planets, storageUpgrades] = await Promise.all([planetPromise, storageUpgradePromise]);
+    const researchPromise = Research.find({player: player._id}).sort({order: "asc"});
+    const [planets, storageUpgrades, researches] = await Promise.all([
+        planetPromise,
+        storageUpgradePromise,
+        researchPromise
+    ]);
     const totalPopulation = planets
         .filter(planet => planet.population >= 1)
         .map(colony => colony.effectivePopulation)
@@ -83,13 +89,22 @@ exports.fetch = async player => {
             {type: "shields", level: player.tech.shields},
             {type: "armour", level: player.tech.armour}
         ],
-        storageUpgrades: storageUpgrades.map( upgrade => {
+        researches: researches.map(research => {
+            return {
+                id: research._id,
+                area: research.area,
+                newLevel: research.newLevel,
+                order: research.order,
+                remaining: research.remaining
+            };
+        }),
+        storageUpgrades: storageUpgrades.map(upgrade => {
             return {
                 id: upgrade._id,
                 area: upgrade.area,
                 newLevel: upgrade.newLevel,
                 turnsUntilComplete: upgrade.turnsUntilComplete
-            }
+            };
         }),
         // avoid specific properties on the star and add an array of planetids
         stars: player.stars.map(star => {

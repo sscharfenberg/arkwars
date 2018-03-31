@@ -27,6 +27,7 @@ export default {
                 .reduce((accumulator, currentValue) => { return accumulator + currentValue; }, 0);
         },
         researchConsumption: function () {
+            if (this.$store.getters.playerResearches.length === 0) return 0;
             return Math.ceil(this.$store.getters.player.totalPopulation * this.$store.getters.player.researchPriority);
         },
         numHarvesters: function () {
