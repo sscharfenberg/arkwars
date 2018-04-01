@@ -39,6 +39,10 @@
             "carbon": "Karbon",
             "tomb": "Grabwelt"
         },
+        "meta": {
+            "shipyards": "Werften in {name}",
+            "population": "System Bevölkerung"
+        },
         "name": "Planeten Name",
         "harvesters": {
             "names": {
@@ -84,6 +88,12 @@
                 "perPop": "pro Bevölkerung und Runde",
                 "total": "Gesamt",
                 "change": "Bevölkerungszuwachs"
+            }
+        },
+        "shipyard": {
+            "button": {
+                "construct": "Werft errichten",
+                "info": "Werft {planetName}"
             }
         }
     }

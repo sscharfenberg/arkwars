@@ -39,6 +39,10 @@
             "carbon": "Carbon",
             "tomb": "Tomb"
         },
+        "meta": {
+            "shipyards": "Shipyards in {name}",
+            "population": "System population"
+        },
         "name": "Planet name",
         "harvesters": {
             "names": {
@@ -84,6 +88,12 @@
                 "perPop": "per population and turn",
                 "total": "total",
                 "change": "population change"
+            }
+        },
+        "shipyard": {
+            "button": {
+                "construct": "Construct shipyard",
+                "info": "Shipyard {planetName}"
             }
         }
     }

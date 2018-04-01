@@ -1,13 +1,14 @@
 <script>
-/*******************************************************************************************************************
+/***********************************************************************************************************************
  * Star
  * this component displays a single star
- ******************************************************************************************************************/
+ **********************************************************************************************************************/
 import Icon from "Game/common/Icon/Icon.vue";
 import Button from "Game/common/Button/Button.vue";
 import Spinner from "Game/common/Spinner/Spinner.vue";
 import StarLocation from "./StarLocation.vue";
 import StarSpectral from "./StarSpectral.vue";
+import StarMeta from "./StarMeta.vue";
 import Planets from "../Planets/Planets.vue";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
@@ -66,7 +67,8 @@ export default {
         Spinner,
         Planets,
         StarLocation,
-        StarSpectral
+        StarSpectral,
+        StarMeta
     },
     methods: {
         startEditStarName() {
@@ -106,7 +108,12 @@ export default {
             <h1 class="star__name">
                 <span
                     class="star__name-text"
-                    v-show="!isStarNameEditing">{{ name }}</span>
+                    v-show="!isStarNameEditing">
+                    {{ name }}
+                </span>
+                <star-meta
+                    :id="id"
+                    :name="name" />
                 <btn
                     v-show="!isStarNameEditing"
                     :on-click="startEditStarName"
@@ -269,7 +276,6 @@ export default {
         .error-message {
             padding: 0.2rem 1rem;
 
-            background: palette("grey", "sunken");
             color: palette("state", "error");
 
             font-size: 1.2rem;

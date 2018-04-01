@@ -179,7 +179,7 @@
             "^vue$": "vue/dist/vue.common.js",
             "^Theme/(.*)$": "<rootDir>/client/theme/$1",
             "^Game/(.*)$": "<rootDir>/client/game/$1",
-            "^Config$": "<rootDir>/client/config/index.js",
+            "^Config$": "<rootDir>/client/config.js",
             "^Shared/(.*)$": "<rootDir>/shared/$1"
         },
         "moduleFileExtensions": [

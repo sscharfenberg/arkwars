@@ -110,7 +110,7 @@ export default {
         height: 2.6rem;
         padding: 0.5rem 1rem;
         border: 1px solid palette("grey", "abbey");
-        margin: 0 0.4rem 0.4rem 0;
+        margin: 0 0 0.4rem 0.4rem;
 
         background: transparent;
 

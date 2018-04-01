@@ -142,7 +142,7 @@ const assignRandomStar = stars => {
 /*
  * create and return a random planet ===================================================================================
  * @param {Mongoose.ObjectId} gameId
- * @param {Mongoose.ObjectId} starId
+ * @param {Mongoose.ObjectId} id
  * @param {Integer} orbitalIndex
  * @param {Boolean} npc - optional, true for npc systems, falsy for player systems.
  * @returns {Mongoose.model("Planet")}

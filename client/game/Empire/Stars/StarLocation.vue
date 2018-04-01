@@ -61,20 +61,22 @@ export default {
         background-color: palette("grey", "bunker");
 
         > .location-icon {
+            display: none;
+
             margin-right: 1rem;
 
             color: darken(palette("text", "subdued"), 25%);
+
+            @include respond-to("medium") { display: block; }
         }
 
         > span {
-            width: 3rem;
+            width: 4rem;
 
             font-size: 0.8em;
             text-align: center;
 
             @include respond-to("small") {
-                width: 4rem;
-
                 font-size: 1em;
             }
         }

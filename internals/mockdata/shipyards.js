@@ -14,5 +14,6 @@ const shipyards = [
         hullTypes: ["small"]
     }
 ];
+// the correct planet is assigned in db.seed.js
 
 module.exports = shipyards;

@@ -22,7 +22,7 @@ const StorageUpgrade = mongoose.model("StorageUpgrade");
 exports.fetch = async player => {
     const stars = player.stars.map(star => star.id);
     // get unsorted array of all planets that belong to the player's stars
-    const planetPromise = await Planet.find({star: {$in: stars}}).populate("harvesters pdus");
+    const planetPromise = Planet.find({star: {$in: stars}}).populate("harvesters pdus shipyards");
     const storageUpgradePromise = StorageUpgrade.find({player: player._id});
     const researchPromise = Research.find({player: player._id}).sort({order: "asc"});
     const [planets, storageUpgrades, researches] = await Promise.all([
@@ -44,6 +44,20 @@ exports.fetch = async player => {
             .map(colony => colony.effectivePopulation);
         const popB = planetPopB.length ? planetPopB.reduce((acc, val) => acc + val) : 0;
         return popB - popA;
+    });
+
+    // prepare shipyards. they exist as an array on the planet, so we need to extract them to their own array
+    let shipyards = [];
+    const shipyardPlanets = planets.filter(planet => planet.shipyards.length);
+    shipyardPlanets.forEach(planet => {
+        // we care only about the first shipyard since there should only be one
+        shipyards.push({
+            id: planet.shipyards[0]._id,
+            planet: planet.shipyards[0].planet,
+            hullTypes: planet.shipyards[0].hullTypes,
+            turnsUntilComplete: planet.shipyards[0].turnsUntilComplete || 0,
+            active: planet.shipyards[0].isActive
+        });
     });
 
     // prepare return data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -130,8 +144,10 @@ exports.fetch = async player => {
         }),
         harvesters: [],
         planets: [],
-        pdus: []
+        pdus: [],
+        shipyards
     };
+
 
     // add mapped planets
     returnData.planets = planets.map(planet => {
@@ -155,6 +171,7 @@ exports.fetch = async player => {
             population: planet.population,
             effectivePopulation: planet.effectivePopulation,
             foodConsumption: planet.foodConsumptionPerPop,
+            shipyard: planet.shipyards.map(yard => yard.id)[0], // one shipyard per planet
             resourceSlots: planet.resources.map(slot => {
                 // harvester data into returnData.harvesters array
                 returnData.harvesters = planet.harvesters

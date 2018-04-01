@@ -46,7 +46,7 @@ const shipyardSchema = new mongoose.Schema({
 });
 
 /*
- * virtual function to find out if the harvester is actually producing resources
+ * virtual function to find out if the shipyard is active
  * @returns {Boolean}
  */
 shipyardSchema.virtual("isActive").get(function() {

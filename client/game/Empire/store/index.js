@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
  *
- * VUEX STORE
+ * Vuex store for area `EMPIRE`
  *
  **********************************************************************************************************************/
 import Vue from "vue";
@@ -8,8 +8,6 @@ import Vuex from "vuex";
 import actions from "./actions";
 import mutations from "./mutations";
 import {commonState, commonGetters} from "../../common/store/";
-
-
 
 Vue.use(Vuex);
 
@@ -27,7 +25,8 @@ const store = new Vuex.Store({
         planets: [],
         harvesters: [],
         researches: [],
-        pdus: []
+        pdus: [],
+        shipyards: []
     },
     getters: {
         ...commonGetters,
@@ -39,13 +38,14 @@ const store = new Vuex.Store({
         savingFoodConsumptionPlanetIds: state => state.savingFoodConsumption,
         // area game state
         stars: state => state.stars || [],
-        planets: state => state.planets || [],
-        harvesters: state => state.harvesters || [],
-        planetById: state => id => state.planets.find(planet => planet.id === id) || {},
         starById: state => id => state.stars.find(star => star.id === id) || {},
-        playerResearches: state => state.researches || [],
+        planets: state => state.planets || [],
+        planetById: state => id => state.planets.find(planet => planet.id === id) || {},
+        harvesters: state => state.harvesters || [],
         harvesterById: state => id => state.harvesters.find( harvester => harvester.id === id) || {},
-        pdusByPlanetId: state => id => state.pdus.filter(pdu => pdu.planet === id) || []
+        pdusByPlanetId: state => id => state.pdus.filter(pdu => pdu.planet === id) || [],
+        playerResearches: state => state.researches || [],
+        shipyards: state => state.shipyards || []
     },
     mutations,
     actions

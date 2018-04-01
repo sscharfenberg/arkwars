@@ -34,7 +34,10 @@ export default {
             return `${this.starName} - ${latinToRoman(this.$store.getters.planetById(this.id).orbitalIndex)}`;
         },
         effectivePopulation () { return this.$store.getters.planetById(this.id).effectivePopulation; },
-        resourceSlots () { return this.$store.getters.planetById(this.id).resourceSlots; }
+        resourceSlots () { return this.$store.getters.planetById(this.id).resourceSlots; },
+        shipYardId () {
+            return this.$store.getters.planetById(this.id).shipyard;
+        }
     },
     components: {
         Resources,
@@ -60,19 +63,25 @@ export default {
                 class="planet__name"
                 :label="$t('planet.name')"
                 :title="$t('planet.name')">{{ getPlanetName }}</div>
+            <defense
+                :planet-id="id"
+                :star-name="starName" />
             <population
                 v-if="effectivePopulation > 0"
                 :planet-id="id"
                 :star-name="starName"/>
+            <shipyard
+                v-if="shipYardId"
+                :id="shipYardId"
+                :planet-name="getPlanetName" />
             <resources
                 v-if="resourceSlots.length"
                 :resources="resourceSlots"
                 :planet-id="id"
                 :planet-name="getPlanetName" />
-            <defense
-                :planet-id="id"
-                :star-name="starName" />
-            <shipyard />
+            <shipyard
+                v-if="!shipYardId"
+                :planet-name="getPlanetName" />
         </div>
     </div>
 </template>
@@ -122,7 +131,7 @@ export default {
             height: 2.6rem;
             padding: 0.5rem 1rem;
             border: 1px solid palette("grey", "abbey");
-            margin: 0 0.8rem 0.8rem 0;
+            margin: 0 0 0.8rem 0;
 
             background: rgba(palette("grey", "mystic"), 0.05);
             color: palette("text", "lighter");

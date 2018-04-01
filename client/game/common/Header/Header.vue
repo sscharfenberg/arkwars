@@ -1,7 +1,8 @@
 <script>
-/*******************************************************************************************************************
+/***********************************************************************************************************************
  * Common Header Component
- ******************************************************************************************************************/
+ **********************************************************************************************************************/
+import Icon from "Game/common/Icon/Icon.vue";
 import FetchGameDataButton from "./FetchGameDataButton.vue";
 import Resource from "./Resource.vue";
 import StorageLevelsModal from "./StorageLevels/StorageLevelsModal.vue";
@@ -19,7 +20,8 @@ export default {
     components: {
         "fetch-button": FetchGameDataButton,
         Resource,
-        StorageLevelsModal
+        StorageLevelsModal,
+        Icon
     },
     computed: {
         player () { return this.$store.getters.player; },
@@ -37,10 +39,14 @@ export default {
             class="fetch-data-button"
             :area="area" />
         <h1>
-            {{ areaTitle }}
+            <span class="area">
+                <icon
+                    :name="area"
+                    :size="3" />
+                {{ areaTitle }}
+            </span>
             <small>
-                <br>[{{ player.ticker }}]
-                {{ player.name }}
+                [{{ player.ticker }}] {{ player.name }}
             </small>
         </h1>
         <div
@@ -108,6 +114,21 @@ export default {
                 -1px -1px 0 palette("grey", "bunker"),
                 1px -1px 0 palette("grey", "bunker");
             text-transform: none;
+        }
+
+        .area {
+            display: flex;
+            align-items: center;
+
+            > svg {
+                width: 3.6rem;
+                height: 3.6rem;
+                margin-right: 1rem;
+
+                color: palette("brand", "christine");
+
+                @include respond-to("medium") { margin-right: 2rem; }
+            }
         }
     }
 

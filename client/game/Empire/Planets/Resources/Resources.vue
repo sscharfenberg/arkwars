@@ -48,7 +48,7 @@ export default {
         display: flex;
 
         padding: 0;
-        margin: 0 0.4rem 0.8rem 0;
+        margin: 0 0 0.8rem 0.4rem;
 
         list-style: none;
     }

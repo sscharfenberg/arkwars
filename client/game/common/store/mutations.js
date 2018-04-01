@@ -26,6 +26,7 @@ export const commonMutations = {
         if (payload.planets && payload.planets.length) state.planets = payload.planets;
         if (payload.harvesters && payload.harvesters.length) state.harvesters = payload.harvesters;
         if (payload.pdus && payload.pdus.length) state.pdus = payload.pdus;
+        if (payload.shipyards) state.shipyards = payload.shipyards;
         // area = research
         if (payload.techLevels) state.techLevels = payload.techLevels;
         if (payload.researches && payload.researches.length) state.researches = payload.researches;
