@@ -111,9 +111,6 @@ export default {
                     v-show="!isStarNameEditing">
                     {{ name }}
                 </span>
-                <star-meta
-                    :id="id"
-                    :name="name" />
                 <btn
                     v-show="!isStarNameEditing"
                     :on-click="startEditStarName"
@@ -121,6 +118,9 @@ export default {
                     class="star__btn star__btn--edit"
                     :scale="1"
                     :label="$t('star.name.edit')" />
+                <star-meta
+                    :id="id"
+                    :name="name" />
                 <div
                     v-show="isStarNameEditing"
                     class="star__edit">

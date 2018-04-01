@@ -76,9 +76,9 @@ export default {
         display: flex;
         align-items: center;
 
-        margin: 0 0.5rem;
+        margin: 0 0 0 1rem;
 
-        @include respond-to("medium") { margin: 0 2rem 0 1rem; }
+        @include respond-to("medium") { margin: 0 0.5rem 0 1.5rem; }
 
         &__single {
             display: flex;

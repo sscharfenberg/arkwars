@@ -1,7 +1,7 @@
-<svg version="1.1" viewBox="5.852840423583984 7.943151235580444 83.89 83.89" xmlns="http://www.w3.org/2000/svg">
-    <title>Resource: Power</title>
-    <desc>Lightning Bolt by Rémy Médard from the Noun Project</desc>
-    <g transform="rotate(15, 42, 42)">
-        <polygon fill="#ffe64d" points="34.279,91.558 46.355,58.155 22.843,52.056 65.098,8 49.561,41.696 73.072,47.796" stroke="#000" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title>Resource: Energy</title>
+    <desc>Energy Icon showing a lightning bolt (author: Sven Scharfenberg)</desc>
+    <g>
+        <path d="M20,1 L5,11 L11,14 L4,23 L19,13 L13,10z" stroke="#000" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" fill="#ffe64d" />
     </g>
 </svg>

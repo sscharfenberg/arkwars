@@ -42,7 +42,7 @@ export default {
         display: flex;
         align-items: center;
 
-        padding: 0 0 0 0.5rem;
+        padding: 0;
 
         background-color: palette("grey", "sunken");
         color: palette("text", "subdued");

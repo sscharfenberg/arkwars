@@ -24,7 +24,7 @@ const MUTATIONS = {
         if (state.userSettings.empire.toggledStars.indexOf(payload) === -1) {
             state.userSettings.empire.toggledStars.push(payload);
         } else {
-            state.userSettings.empire.toggledStars.splice(state.userSettings.empire.toggledStars.indexOf(payload.id), 1);
+            state.userSettings.empire.toggledStars.splice(state.userSettings.empire.toggledStars.indexOf(payload), 1);
         }
         persistUserSettings(state.userSettings); // persist settings in localstorage
     },

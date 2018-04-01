@@ -173,14 +173,14 @@ body(data-user=(user ? 1 : 0))
                             href="/game/1/fleets",
                             class=(currentPath.split("/").pop() === "fleets" ? "aw-drawer__link--active" : "")
                         )
-                            != h.icon("fleet", ["small"])
+                            != h.icon("fleets", ["small"])
                             != h.__("GAME.FLEETS.LABEL")
                     li.aw-drawer__list-item
                         a.aw-drawer__link(
                             href="/game/1/shipyards",
                             class=(currentPath.split("/").pop() === "shipyards" ? "aw-drawer__link--active" : "")
                         )
-                            != h.icon("build", ["small"])
+                            != h.icon("shipyard", ["small"])
                             != h.__("GAME.SHIPYARDS.LABEL")
                     li.aw-drawer__list-item
                         a.aw-drawer__link(
