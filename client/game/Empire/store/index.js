@@ -45,7 +45,8 @@ const store = new Vuex.Store({
         harvesterById: state => id => state.harvesters.find( harvester => harvester.id === id) || {},
         pdusByPlanetId: state => id => state.pdus.filter(pdu => pdu.planet === id) || [],
         playerResearches: state => state.researches || [],
-        shipyards: state => state.shipyards || []
+        shipyards: state => state.shipyards || [],
+        shipyardById: state => id => state.shipyards.find(shipyard => shipyard.id === id) || {}
     },
     mutations,
     actions

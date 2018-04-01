@@ -35,9 +35,32 @@
     "buttons": {
         "cancel": "Abbrechen",
         "install": "Installieren",
+        "construct": "Errichten",
         "ok": "Ok",
         "confirm": "Bestätigen",
         "proceed": "Fortfahren"
+    },
+    "shipyards": {
+        "name": "{planetName} Werft",
+        "status": {
+            "label": "Status",
+            "ready": "Aktiv",
+            "constructing": "Im Bau"
+        },
+        "shipTypes": "Schiffstypen",
+        "types": {
+            "small": "Zerstörer-Werft",
+            "medium": "Kreuzer-Werft",
+            "large": "Schlachtschiff-Wert"
+        }
+    },
+    "ships": {
+        "hullTypes": {
+            "small": "Zerstörer",
+            "medium": "Kreuzer",
+            "large": "Schlachtschiff",
+            "ark": "Arche"
+        }
     },
     "pdu": {
         "nameShort": "PDU",

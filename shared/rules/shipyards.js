@@ -11,8 +11,8 @@ const RULES = {
                 build: [
                     {resourceType: "energy", amount: 400},
                     {resourceType: "minerals", amount: 600},
-                    {resourceType: "resaerch", amount: 200},
-                    {resourceType: "turns", amount: 32}
+                    {resourceType: "research", amount: 200},
+                    {resourceType: "turns", amount: 96}
                 ]
             }
         },
@@ -22,14 +22,14 @@ const RULES = {
                 build: [
                     {resourceType: "energy", amount: 800},
                     {resourceType: "minerals", amount: 1200},
-                    {resourceType: "resaerch", amount: 400},
-                    {resourceType: "turns", amount: 64}
+                    {resourceType: "research", amount: 400},
+                    {resourceType: "turns", amount: 192}
                 ],
                 upgrade: [
                     {resourceType: "energy", amount: 600},
                     {resourceType: "minerals", amount: 900},
-                    {resourceType: "resaerch", amount: 300},
-                    {resourceType: "turns", amount: 64}
+                    {resourceType: "research", amount: 300},
+                    {resourceType: "turns", amount: 144}
                 ]
             }
         },
@@ -39,14 +39,14 @@ const RULES = {
                 build: [
                     {resourceType: "energy", amount: 1200},
                     {resourceType: "minerals", amount: 1800},
-                    {resourceType: "resaerch", amount: 600},
-                    {resourceType: "turns", amount: 128}
+                    {resourceType: "research", amount: 600},
+                    {resourceType: "turns", amount: 384}
                 ],
                 upgrade: [
                     {resourceType: "energy", amount: 700},
                     {resourceType: "minerals", amount: 1050},
-                    {resourceType: "resaerch", amount: 350},
-                    {resourceType: "turns", amount: 128}
+                    {resourceType: "research", amount: 350},
+                    {resourceType: "turns", amount: 288}
                 ]
             }
         }

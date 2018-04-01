@@ -8,7 +8,7 @@ import Icon from "Game/common/Icon/Icon.vue";
 import Resources from "./Resources/Resources.vue";
 import Population from "./Population/Population.vue";
 import Defense from "./Defense/Defense.vue";
-import Shipyard from "./Shipyard/Shipyard.vue";
+import ShipyardButton from "./Shipyard/ShipyardButton.vue";
 export default {
     props: {
         id: {
@@ -44,7 +44,7 @@ export default {
         Icon,
         Defense,
         Population,
-        Shipyard
+        ShipyardButton
     }
 };
 </script>
@@ -70,18 +70,20 @@ export default {
                 v-if="effectivePopulation > 0"
                 :planet-id="id"
                 :star-name="starName"/>
-            <shipyard
+            <shipyard-button
                 v-if="shipYardId"
                 :id="shipYardId"
-                :planet-name="getPlanetName" />
+                :planet-name="getPlanetName"
+                :planet-id="id" />
             <resources
                 v-if="resourceSlots.length"
                 :resources="resourceSlots"
                 :planet-id="id"
                 :planet-name="getPlanetName" />
-            <shipyard
+            <shipyard-button
                 v-if="!shipYardId"
-                :planet-name="getPlanetName" />
+                :planet-name="getPlanetName"
+                :planet-id="id" />
         </div>
     </div>
 </template>
@@ -108,7 +110,7 @@ export default {
 
             text-indent: -1000em;
 
-            // these need to be synced with /server/config/config.js
+            // these classes need to be synced with /server/config/config.js
             &--gas { background-position: 0 -48px; }
             &--ice { background-position: 0 -96px; }
             &--iron { background-position: 0 -144px; }

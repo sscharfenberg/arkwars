@@ -1,0 +1,7 @@
+<svg version="1.1" viewBox="0 0 24 12" xmlns="http://www.w3.org/2000/svg">
+    <title>Ark</title>
+    <desc>"Ark" Icon (author: Sven Scharfenberg)</desc>
+    <g>
+        <path d="M8,0.5 l8,0 c6,0 6,11 0,11 l-8,0 c-6,0 -6,-11 0,-11z" fill="#e1d37f" stroke="#ff0000" stroke-width="0.5" stroke-linejoin="round" />
+    </g>
+</svg>

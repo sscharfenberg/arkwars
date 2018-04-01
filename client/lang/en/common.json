@@ -36,9 +36,32 @@
     "buttons": {
         "cancel": "Cancel",
         "install": "Install",
+        "construct": "Construct",
         "ok": "Ok",
         "confirm": "Confirm",
         "proceed": "Proceed"
+    },
+    "shipyards": {
+        "name": "Shipyard {planetName}",
+        "status": {
+            "label": "Status",
+            "ready": "Active",
+            "constructing": "Constructing"
+        },
+        "shipTypes": "Ship types",
+        "types": {
+            "small": "Destroyer shipyard",
+            "medium": "Cruiser shipyard",
+            "large": "Battleship shipyard"
+        }
+    },
+    "ships": {
+        "hullTypes": {
+            "small": "Destroyer",
+            "medium": "Cruiser",
+            "large": "Battleship",
+            "ark": "Ark"
+        }
     },
     "pdu": {
         "nameShort": "PDU",

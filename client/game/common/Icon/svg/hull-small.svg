@@ -1,0 +1,7 @@
+<svg version="1.1" viewBox="0 0 24 12" xmlns="http://www.w3.org/2000/svg">
+    <title>Destroyer</title>
+    <desc>"Destroyer" Icon (author: Sven Scharfenberg)</desc>
+    <g>
+        <path d="M6,0.5 l12,5.5 l-12,5.5z" fill="#e1d37f" stroke="#ff0000" stroke-width="0.5" stroke-linejoin="round" />
+    </g>
+</svg>

@@ -4,11 +4,15 @@
  * this component shows the shipyard status
  **********************************************************************************************************************/
 import Icon from "Game/common/Icon/Icon.vue";
-//import {shipyardRules} from "Config";
+import ShipyardModal from "./ShipyardModal.vue";
 export default {
     props: {
         id: {
             type: String
+        },
+        planetId: {
+            type: String,
+            required: true
         },
         planetName: {
             type: String,
@@ -16,10 +20,15 @@ export default {
         }
     },
     components: {
-        Icon
+        Icon,
+        ShipyardModal
     },
     computed: {
-        btnClass () { return this.id ? "active" : ""; },
+        shipyard () { return this.$store.getters.shipyardById(this.id); },
+        btnClass () {
+            if (this.shipyard.id) return this.shipyard.active ? "active" : "building";
+            return "";
+        },
         btnLabel () {
             return this.id
                 ? this.$t("planet.shipyard.button.info", {planetName: this.planetName})
@@ -27,7 +36,7 @@ export default {
         }
     },
     methods: {
-        openDetails () { alert("doh"); }
+        openDetails () { this.$modal.show(`shipyard-modal-${this.planetId}`); }
     }
 };
 </script>
@@ -44,6 +53,10 @@ export default {
                 class="shipyard__icon"
                 name="shipyard" />
         </button>
+        <shipyard-modal
+            :id="id"
+            :planet-id="planetId"
+            :planet-name="planetName" />
     </div>
 </template>
 
@@ -69,9 +82,11 @@ export default {
             background-color map-get($animation-speeds, "fast") linear,
             border-color map-get($animation-speeds, "fast") linear;
 
-        &.active {
+        &.active,
+        &.building {
             background-color: rgba(palette("grey", "mystic"), 0.05);
             color: palette("text");
+            border-color: palette("state", "building");
 
             &:hover,
             &:focus {
@@ -80,9 +95,11 @@ export default {
                 border-color: palette("grey", "asher");
             }
 
-            > .shipyard__icon {
-                opacity: 1;
-            }
+            .shipyard__icon { opacity: 1; }
+        }
+
+        &.active {
+            border-color: palette("grey", "abbey");
         }
 
         &:hover,
@@ -96,9 +113,5 @@ export default {
         }
     }
 
-    .shipyard__icon {
-        opacity: 0.3;
-
-        color: palette("state", "error");
-    }
+    .shipyard__icon { opacity: 0.3; }
 </style>

@@ -23,7 +23,10 @@ export default {
     computed: {
         pdus () { return this.$store.getters.pdusByPlanetId(this.planetId); },
         activePdus () { return this.$store.getters.pdusByPlanetId(this.planetId).filter(pdu => pdu.isActive); },
-        btnClass () { return this.activePdus.length > 0 ? "military" : "civilian"; },
+        btnClass () {
+            if (this.pdus.length === 0) return "civilian";
+            return this.activePdus.length === this.pdus.length ? "military" : "building";
+        },
         buttonLabel () { return this.$t("common.pdu.namesLong"); }
     },
     methods: {
@@ -43,7 +46,9 @@ export default {
             <icon
                 class="pdu__icon"
                 name="pdu" />
-            <span v-if="activePdus.length">
+            <span
+                v-if="activePdus.length"
+                class="pdu__num">
                 {{ activePdus.length }}
             </span>
         </button>
@@ -92,10 +97,6 @@ export default {
                     background-color: palette("grey", "ebony");
                     color: palette("grey", "white");
                 }
-
-                > svg {
-                    margin-right: 0.6rem;
-                }
             }
 
             &.civilian {
@@ -104,9 +105,7 @@ export default {
                     background-color: rgba(palette("grey", "mystic"), 0.05);
                     border-color: palette("grey", "abbey");
 
-                    .pdu__icon {
-                        opacity: 1;
-                    }
+                    .pdu__icon { opacity: 1; }
                 }
 
                 &:active {
@@ -114,14 +113,19 @@ export default {
                     color: palette("grey", "white");
                 }
 
-                .pdu__icon {
-                    opacity: 0.3;
-                }
+                .pdu__icon { opacity: 0.3; }
             }
 
-            &[disabled] {
-                cursor: not-allowed;
+            &.building {
+                background-color: rgba(palette("grey", "mystic"), 0.05);
+                border-color: palette("state", "building");
+
+                .pdu__icon { opacity: 0.7; }
             }
+
+            &[disabled] { cursor: not-allowed; }
         }
+
+        &__num { margin-left: 1rem; }
     }
 </style>
