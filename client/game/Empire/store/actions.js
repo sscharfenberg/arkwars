@@ -163,6 +163,70 @@ const ACTIONS = {
                 console.error(error);
                 ctx.commit("SAVING_FOOD_CONSUMPTION", {planet: payload.planet, saving: false});
             });
+    },
+
+    /*
+     * REQUEST SHIPYARD CONSTRUCTION
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {String} payload.type
+     */
+    CONSTRUCT_SHIPYARD: function(ctx, payload) {
+        DEBUG && console.log(`requesting ${payload.type} shipyard construction on planet #${payload.planet}`);
+        ctx.commit("SHIPYARD_REQUESTING", {id: payload.planet, requesting: true});
+        axios
+            .post("/api/game/empire/shipyard/new", payload)
+            .then(response => {
+                if (response.status === 200 && response.data && !response.data.error && response.data.shipyard) {
+                    DEBUG && console.log("recieved new shipyard from server ", response.data);
+                    ctx.commit("ADD_SHIPYARD", response.data.shipyard);
+                    ctx.commit(
+                        "PAY_NEW_SHIPYARD",
+                        response.data.shipyard.hullTypes[response.data.shipyard.hullTypes.length - 1]
+                    );
+                }
+                if (response.data && response.data.error) {
+                    this._vm.$snotify.error(response.data.error);
+                }
+                ctx.commit("SHIPYARD_REQUESTING", {id: payload.planet, requesting: false});
+            })
+            .catch(error => {
+                console.error(error);
+                ctx.commit("SHIPYARD_REQUESTING", {id: payload.planet, requesting: false});
+            });
+    },
+
+    /*
+     * REQUEST SHIPYARD UPGRADE
+     * @param {Object} ctx - Vuex $store context
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Mongoose.ObjectId} payload.planet
+     */
+    UPGRADE_SHIPYARD: function(ctx, payload) {
+        DEBUG && console.log(`requesting upgrade of shipyard ${JSON.stringify(payload)}`);
+        ctx.commit("SHIPYARD_REQUESTING", {id: payload.planet, requesting: true});
+        axios
+            .post("/api/game/empire/shipyard/upgrade", {id: payload.id})
+            .then(response => {
+                if (response.status === 200 && response.data && !response.data.error && response.data.shipyard) {
+                    DEBUG && console.log("recieved updated shipyard from server ", response.data.shipyard);
+                    ctx.commit("UPDATE_SHIPYARD", response.data.shipyard);
+                    ctx.commit(
+                        "PAY_UPGRADED_SHIPYARD",
+                        response.data.shipyard.hullTypes[response.data.shipyard.hullTypes.length - 1]
+                    );
+                }
+                if (response.data && response.data.error) {
+                    this._vm.$snotify.error(response.data.error);
+                }
+                ctx.commit("SHIPYARD_REQUESTING", {id: payload.planet, requesting: false});
+            })
+            .catch(error => {
+                console.error(error);
+                ctx.commit("SHIPYARD_REQUESTING", {id: payload.planet, requesting: false});
+            });
     }
 };
 

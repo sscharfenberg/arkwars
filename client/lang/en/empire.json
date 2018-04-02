@@ -94,6 +94,10 @@
             "button": {
                 "construct": "Construct shipyard",
                 "info": "Shipyard {planetName}"
+            },
+            "upgrade": {
+                "title": "Upgrade shipyard to {type}",
+                "explanation": "Shipyards can not be used while the upgrade is constructing."
             }
         }
     }

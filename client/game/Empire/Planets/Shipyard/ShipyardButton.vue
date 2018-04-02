@@ -33,7 +33,8 @@ export default {
             return this.id
                 ? this.$t("planet.shipyard.button.info", {planetName: this.planetName})
                 : this.$t("planet.shipyard.button.construct");
-        }
+        },
+        btnDisabled () { return this.$store.getters.requestingShipyardPlanets.includes(this.planetId); }
     },
     methods: {
         openDetails () { this.$modal.show(`shipyard-modal-${this.planetId}`); }
@@ -48,7 +49,9 @@ export default {
             :class="btnClass"
             @click="openDetails()"
             :title="btnLabel"
-            :aria-label="btnLabel">
+            :aria-label="btnLabel"
+            :disabled="btnDisabled"
+            :aria-disabled="btnDisabled">
             <icon
                 class="shipyard__icon"
                 name="shipyard" />
@@ -82,6 +85,14 @@ export default {
             background-color map-get($animation-speeds, "fast") linear,
             border-color map-get($animation-speeds, "fast") linear;
 
+        &[disabled] {
+            border-color: palette("grey", "deep");
+
+            cursor: not-allowed;
+
+            .shipyard__icon { opacity: 0.2; }
+        }
+
         &.active,
         &.building {
             background-color: rgba(palette("grey", "mystic"), 0.05);
@@ -102,8 +113,8 @@ export default {
             border-color: palette("grey", "abbey");
         }
 
-        &:hover,
-        &:focus {
+        &:hover:not([disabled]),
+        &:focus:not([disabled]) {
             background-color: rgba(palette("grey", "mystic"), 0.05);
             border-color: palette("grey", "abbey");
 

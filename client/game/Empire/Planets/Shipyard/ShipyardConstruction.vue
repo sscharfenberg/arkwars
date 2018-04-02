@@ -30,7 +30,6 @@ export default {
             if (!this.selectedType) return [];
             return shipyardRules.hullTypes.find(hullType => hullType.name === this.selectedType).costs.build;
         },
-        confirmDisabled () { return this.selectedType === "" || !this.sufficientFunds; },
         stockpile () { return this.$store.getters.playerResources; },
         sufficientFunds () {
             let canInstall = true;
@@ -40,14 +39,16 @@ export default {
                 if ( cost.amount > stockpile ) canInstall = false;
             });
             return canInstall;
-        }
+        },
+        confirmDisabled () { return this.selectedType === "" || !this.sufficientFunds; }
     },
     methods: {
         selectType (type) { this.selectedType = this.selectedType !== type ? type : ""; },
         typeClass (type) { return this.selectedType === type ? "selected" : ""; },
         typeLabel (type) { return this.$t("common.shipyards.types." + type); },
         constructionConfirmed () {
-            alert("construct " + this.selectedType + " on " + this.planetId);
+            this.$modal.hide(`shipyard-modal-${this.planetId}`);
+            return this.$store.dispatch("CONSTRUCT_SHIPYARD", {planet: this.planetId, type: this.selectedType});
         }
     }
 };

@@ -635,6 +635,20 @@
             "FOOD": {
                 "NOTOWNER": "Sie sind nicht der Besitzer dieses Systems.",
                 "OUTOFBOUNDS": "Nahrungszuweisung nicht innerhalb des erwarteten Bereichs (%s)."
+            },
+            "SHIPYARD": {
+                "NEW": {
+                    "INVALIDTYPE": "Typ der Werft ist ungültig.",
+                    "EXISTINGSHIPYARD": "Planet hat bereits eine Werft.",
+                    "NOTOWNER": "Sie sind nicht der Besitzer des Planeten.",
+                    "FUNDS": "Nicht genug Resourcen um die Werft zu errichten."
+                },
+                "UPGRADE": {
+                    "NOTFOUND": "Werft existiert nicht (mehr?).",
+                    "NOUPGRADE": "Werft kann nicht mehr erweitert werden",
+                    "NOTOWNER": "Sie sind nicht der Besitzer des Planeten.",
+                    "FUNDS": "Nicht genug Resourcen um die Werft zu erweitern."
+                }
             }
         },
         "RESEARCH": {

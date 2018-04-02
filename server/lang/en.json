@@ -594,7 +594,7 @@
             "PROCESSING": "Server is currently calculating the turn.",
             "STORAGEUPGRADE": {
                 "OUTOFBOUNDS": "Next level is out of bounds (%s).",
-                "FUNDS": "Insufficient funds to install the upgrade."
+                "FUNDS": "Insufficient resources to install the upgrade."
             }
         },
         "EMPIRE": {
@@ -615,6 +615,20 @@
             "FOOD": {
                 "NOTOWNER": "You are not the owner of this star.",
                 "OUTOFBOUNDS": "Food consumption not within expected values (%s)."
+            },
+            "SHIPYARD": {
+                "NEW": {
+                    "INVALIDTYPE": "Shipyard type invalid.",
+                    "EXISTINGSHIPYARD": "There is already a shipyard on this planet.",
+                    "NOTOWNER": "You are not the owner of the planet.",
+                    "FUNDS": "Insufficient resources to construct shipyard."
+                },
+                "UPGRADE": {
+                    "NOTFOUND": "Shipyard does not exist (anymore?).",
+                    "NOUPGRADE": "Shipyard can not be upgraded anymore.",
+                    "NOTOWNER": "You are not the owner of the planet.",
+                    "FUNDS": "Insufficient resources to upgrade shipyard."
+                }
             }
         },
         "RESEARCH": {

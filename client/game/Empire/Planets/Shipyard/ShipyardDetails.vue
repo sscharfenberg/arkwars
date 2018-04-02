@@ -26,6 +26,12 @@ export default {
         <div class="label">{{ $t("common.shipyards.shipTypes") }}:</div>
         <ul class="hulls">
             <li
+                class="hull"
+                :class="hullTypeClass">
+                {{ $t("common.ships.hullTypes.ark") }}
+                <icon name="hull-ark" />
+            </li>
+            <li
                 v-for="hullType in shipyard.hullTypes"
                 :key="hullType"
                 class="hull"
@@ -33,13 +39,6 @@ export default {
                 {{ $t("common.ships.hullTypes." + hullType) }}
                 <icon :name="`hull-${hullType}`" />
             </li>
-            <li
-                class="hull"
-                :class="hullTypeClass">
-                {{ $t("common.ships.hullTypes.ark") }}
-                <icon name="hull-ark" />
-            </li>
-
         </ul>
     </div>
 </template>

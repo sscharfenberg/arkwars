@@ -20,6 +20,7 @@ const store = new Vuex.Store({
         installingResourceTypes: [],
         savingBuildPduPlanets: [],
         savingFoodConsumption: [],
+        requestingShipyardPlanets: [],
         // area game state
         stars: [],
         planets: [],
@@ -36,6 +37,7 @@ const store = new Vuex.Store({
         installingResourceTypes: state => state.installingResourceTypes,
         savingBuildPduPlanetIds: state => state.savingBuildPduPlanets,
         savingFoodConsumptionPlanetIds: state => state.savingFoodConsumption,
+        requestingShipyardPlanets: state => state.requestingShipyardPlanets,
         // area game state
         stars: state => state.stars || [],
         starById: state => id => state.stars.find(star => star.id === id) || {},

@@ -36,12 +36,13 @@
         "cancel": "Abbrechen",
         "install": "Installieren",
         "construct": "Errichten",
+        "installUpgrade": "Erweiterung installieren",
         "ok": "Ok",
         "confirm": "Bestätigen",
         "proceed": "Fortfahren"
     },
     "shipyards": {
-        "name": "{planetName} Werft",
+        "name": "{yardType} {planetName} Werft",
         "status": {
             "label": "Status",
             "ready": "Aktiv",

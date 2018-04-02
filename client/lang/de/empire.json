@@ -94,6 +94,10 @@
             "button": {
                 "construct": "Werft errichten",
                 "info": "Werft {planetName}"
+            },
+            "upgrade": {
+                "title": "Werft zur {type} erweitern",
+                "explanation": "Werften können nicht verwendet werden während die Erweiterung gebaut wird."
             }
         }
     }

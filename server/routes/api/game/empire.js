@@ -50,4 +50,22 @@ router.post(
     catchErrors(empireController.setFoodConsumption) // do db updates
 );
 
+// construct new shipyard
+router.post(
+    "/shipyard/new",
+    jsonParser,
+    catchErrors(apiController.gameProcessing), // verify game is not processing.
+    catchErrors(empireController.verifyNewShipyard), // verify request is valid
+    catchErrors(empireController.doCreateNewShipyard) // execute request
+);
+
+// upgrade existing shipyard
+router.post(
+    "/shipyard/upgrade",
+    jsonParser,
+    catchErrors(apiController.gameProcessing), // verify game is not processing.
+    catchErrors(empireController.verifyUpgradeShipyard), // verify request is valid
+    catchErrors(empireController.doUpgradeShipyard) // execute request
+);
+
 module.exports = router;

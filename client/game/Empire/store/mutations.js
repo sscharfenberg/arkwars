@@ -8,6 +8,7 @@
 import Vue from "vue";
 import {pduRules} from "Config";
 import {harvesterRules} from "Config";
+import {shipyardRules} from "Config";
 import {commonMutations} from "../../common/store/mutations";
 import {persistUserSettings} from "../../handlers/userSettings";
 
@@ -213,14 +214,96 @@ const MUTATIONS = {
      * @param {Number} payload.consumption
      */
     CHANGE_FOOD_CONSUMPTION: (state, payload) => {
-        console.log("committing change food consumption", payload);
         state.planets.forEach((planet, index) => {
             if (planet.id === payload.planet) {
                 planet.foodConsumption = payload.consumption;
                 Vue.set(state.planets, index, planet);
             }
         });
+    },
+
+    /*
+     * SET/UNSET a planet as "shipyard requesting"
+     * @param {Object} state - Vuex $store.state
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Boolean} payload.requesting
+     */
+    SHIPYARD_REQUESTING: (state, payload) => {
+        if (payload.requesting) {
+            state.requestingShipyardPlanets.push(payload.id);
+        } else {
+            state.requestingShipyardPlanets.splice(state.requestingShipyardPlanets.indexOf(payload.id), 1);
+        }
+    },
+
+    /*
+     * ADD a new shipyard
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Boolean} payload.active
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {Array} payload.hullTypes
+     * @param {Number} payload.turnsUntilComplete
+     */
+    ADD_SHIPYARD: (state, payload) => {
+        state.shipyards.push(payload);
+        state.planets.forEach((planet, index) => {
+            if (planet.id === payload.planet) {
+                planet.shipyard = payload.id;
+                Vue.set(state.planets, index, planet);
+            }
+        });
+    },
+
+    /*
+     * PAY for the new shipyard
+     * this is clientside, but it is enforeced by the server.
+     * @param {Object} state - Vuex $store.state
+     * @param {String} payload
+     */
+    PAY_NEW_SHIPYARD: (state, payload) => {
+        const costs = shipyardRules.hullTypes.find(type => type.name === payload).costs.build
+            .filter(cost => cost.resourceType !== "turns");
+        costs.forEach(slot => {
+            state.resources.find(resource => resource.type === slot.resourceType).current -= slot.amount;
+        });
+    },
+
+    /*
+     * UPDATE an existing shipyard that is being built
+     * @param {Object} state - Vuex $store.state
+     * @param {Object} payload
+     * @param {Mongoose.ObjectId} payload.id
+     * @param {Boolean} payload.active
+     * @param {Mongoose.ObjectId} payload.planet
+     * @param {Array} payload.hullTypes
+     * @param {Number} payload.turnsUntilComplete
+     */
+    UPDATE_SHIPYARD: (state, payload) => {
+        state.shipyards.forEach((shipyard, index) => {
+            if (shipyard.id === payload.id) {
+                shipyard = payload;
+                console.log(shipyard);
+                Vue.set(state.shipyards, index, shipyard);
+            }
+        });
+    },
+
+    /*
+     * PAY for the upgraded shipyard
+     * this is clientside, but it is enforeced by the server.
+     * @param {Object} state - Vuex $store.state
+     * @param {String} payload
+     */
+    PAY_UPGRADED_SHIPYARD: (state, payload) => {
+        const costs = shipyardRules.hullTypes.find(type => type.name === payload).costs.upgrade
+            .filter(cost => cost.resourceType !== "turns");
+        costs.forEach(slot => {
+            state.resources.find(resource => resource.type === slot.resourceType).current -= slot.amount;
+        });
     }
+
 };
 
 export default MUTATIONS;

@@ -15,6 +15,7 @@ const Player = mongoose.model("Player");
 const Star = mongoose.model("Star");
 const Harvester = mongoose.model("Harvester");
 const Pdu = mongoose.model("Pdu");
+const Shipyard = mongoose.model("Shipyard");
 const logger = require("../../handlers/logger/console");
 const cfg = require("../../config");
 
@@ -332,4 +333,245 @@ exports.setFoodConsumption = async (req, res) => {
         );
         return res.status(200).json({foodConsumptionPerPop: updatedPlanet.foodConsumptionPerPop});
     }
+};
+
+/*
+ * check if XHR POST "construct new shipyard" request is ===============================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.verifyNewShipyard = async (req, res, next) => {
+    req.body.planet = strip(req.body.planet);
+    req.body.type = strip(req.body.type);
+
+    logger.info(
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} requesting ${
+            req.body.type
+        } shipyard construction on planet #${req.body.planet}`
+    );
+
+    // 1) emsire that the type passed exists
+    if (!cfg.shipyards.hullTypes.map(hullType => hullType.name).includes(req.body.type)) {
+        logger.error(`[App] shipyard type ${req.body.type} does not exist.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.NEW.INVALIDTYPE")});
+    }
+
+    // 2) verify the planet belongs to one of the players stars
+    const playerStars = req.user.selectedPlayer.stars.map(star => star._id);
+    const dbPlanet = await Planet.findOne({_id: req.body.planet, star: {$in: playerStars}});
+    if (!dbPlanet) {
+        logger.error(`[App] planet does not belong to player.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.NEW.NOTOWNER")});
+    }
+
+    // 3) verify the planet does not already have a shipyard
+    if (dbPlanet.shipyards && dbPlanet.shipyards.length > 0) {
+        logger.error(`[App] planet already has a shipyard.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.NEW.EXISTINGSHIPYARD")});
+    }
+
+    // 4) verify the player has sufficient funds to install shipyard
+    const costs = cfg.shipyards.hullTypes
+        .find(hullType => hullType.name === req.body.type)
+        .costs.build.filter(cost => cost.resourceType !== "turns");
+    let fundsError = false;
+    costs.forEach(slot => {
+        const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
+        if (slot.amount > stockpile) fundsError = true;
+    });
+    if (fundsError) {
+        logger.error(`[App] insufficient funds to construct shipyard.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.NEW.FUNDS")});
+    }
+
+    // no errors => proceed.
+    return next();
+};
+
+/*
+ * check if XHR POST "construct new shipyard" request is valid =========================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ */
+exports.doCreateNewShipyard = async (req, res) => {
+    const turnsUntilComplete = cfg.shipyards.hullTypes
+        .find(hullType => hullType.name === req.body.type)
+        .costs.build.find(cost => cost.resourceType === "turns").amount;
+    const allTypes = cfg.shipyards.hullTypes.map(hullType => hullType.name);
+    const hullTypes = [];
+    let cont = true;
+
+    // prepare shipyard with types. we want the array to have all available types; so for a "medium" shipyard
+    // we want ["small", "medium"]
+    allTypes.forEach(type => {
+        cont && hullTypes.push(type); // add type if we should continue
+        if (type === req.body.type) cont = false; // do not continue if we have found our type
+    });
+    const shipyardPromise = new Shipyard({
+        planet: req.body.planet,
+        game: req.user.selectedPlayer.game._id,
+        owner: req.user.selectedPlayer._id,
+        hullTypes,
+        turnsUntilComplete
+    }).save();
+
+    // prepare cost updates to the player
+    const costs = cfg.shipyards.hullTypes
+        .find(hullType => hullType.name === req.body.type)
+        .costs.build.filter(cost => cost.resourceType !== "turns");
+    let set = {};
+    costs.forEach(resource => {
+        set["resources." + resource.resourceType + ".current"] =
+            req.user.selectedPlayer.resources[resource.resourceType].current - resource.amount;
+    });
+    const playerPromise = Player.findOneAndUpdate(
+        {_id: req.user.selectedPlayer._id},
+        {$set: set},
+        {new: true, runValidators: true}
+    );
+
+    // do db updates
+    const [newShipyard, updatedPlayer] = await Promise.all([shipyardPromise, playerPromise]);
+
+    if (!newShipyard || !updatedPlayer) {
+        logger.error(
+            `[App] DB Error. Shipyard: ${JSON.stringify(newShipyard)}, Player: ${JSON.stringify(
+                updatedPlayer
+            )}, Set: ${JSON.stringify(set)}`
+        );
+        return res.json({error: "DB Error"});
+    }
+
+    // all done.
+    logger.success(
+        `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" + req.user.username} began constructing of a ${
+            req.body.type
+        } shipyard on Planet ${chalk.cyan("#" + req.body.planet)}`
+    );
+    return res.status(200).json({
+        shipyard: {
+            id: newShipyard._id,
+            planet: newShipyard.planet,
+            hullTypes: newShipyard.hullTypes,
+            turnsUntilComplete: newShipyard.turnsUntilComplete,
+            active: newShipyard.isActive
+        }
+    });
+};
+
+/*
+ * check if XHR POST "upgrade shipyard" request is valid ===============================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.verifyUpgradeShipyard = async (req, res, next) => {
+    req.body.id = strip(req.body.id);
+
+    logger.info(
+        `[App] Player ${chalk.red("[" + req.user.selectedPlayer.ticker + "]")} requesting shipyard upgrade.`
+    );
+
+    // 1) verify that the shipyard exists and is owned by the player
+    const dbShipyard = await Shipyard.findOne({_id: req.body.id, owner: req.user.selectedPlayer._id});
+    if (!dbShipyard) {
+        logger.error(`[App] shipyard not found.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.UPGRADE.NOTFOUND")});
+    }
+
+    // 2) ensure the planet belongs to one of the players stars
+    const playerStars = req.user.selectedPlayer.stars.map(star => star._id);
+    const dbPlanet = await Planet.findOne({_id: dbShipyard.planet, star: {$in: playerStars}});
+    if (!dbPlanet) {
+        logger.error(`[App] planet does not belong to player.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.UPGRADE.NOTOWNER")});
+    }
+
+    // 3) verify that there is an upgrade available
+    const allTypes = cfg.shipyards.hullTypes.map(type => type.name);
+    req.body.newHullTypes = dbShipyard.hullTypes;
+    if (dbShipyard.hullTypes.length >= allTypes.length) {
+        logger.error(`[App] shipyard can not be upgraded any further.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.UPGRADE.NOUPGRADE")});
+    }
+    req.body.newHullTypes.push(allTypes[req.body.newHullTypes.length]);
+
+    // 4) make sure the player has enough resources to pay for the upgrade
+    const costs = cfg.shipyards.hullTypes
+        .find(hullType => hullType.name === req.body.newHullTypes[req.body.newHullTypes.length - 1])
+        .costs.build.filter(cost => cost.resourceType !== "turns");
+    let fundsError = false;
+    costs.forEach(slot => {
+        const stockpile = req.user.selectedPlayer.resources[slot.resourceType].current;
+        if (slot.amount > stockpile) fundsError = true;
+    });
+    if (fundsError) {
+        logger.error(`[App] insufficient funds to upgrade shipyard.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.UPGRADE.FUNDS")});
+    }
+
+    // no errors => proceed.
+    return next();
+};
+
+/*
+ * execute "upgrade shipyard" request ==================================================================================
+ * @param {ExpressHTTPRequest} req
+ * @param {ExpressHTTPResponse} res
+ * @param {callback} next
+ */
+exports.doUpgradeShipyard = async (req, res) => {
+    const turnsUntilComplete = cfg.shipyards.hullTypes[req.body.newHullTypes.length - 1].costs.upgrade.find(
+        cost => cost.resourceType === "turns"
+    ).amount;
+
+    // prepare shipyard update
+    const shipyardPromise = Shipyard.findOneAndUpdate(
+        {_id: req.body.id},
+        {$set: {turnsUntilComplete, hullTypes: req.body.newHullTypes}},
+        {new: true, runValidators: true}
+    );
+
+    // prepare player update
+    const costs = cfg.shipyards.hullTypes[req.body.newHullTypes.length - 1].costs.upgrade.filter(
+        cost => cost.resourceType !== "turns"
+    );
+    let set = {};
+    costs.forEach(resource => {
+        set["resources." + resource.resourceType + ".current"] =
+            req.user.selectedPlayer.resources[resource.resourceType].current - resource.amount;
+    });
+    const playerPromise = Player.findOneAndUpdate(
+        {_id: req.user.selectedPlayer._id},
+        {$set: set},
+        {new: true, runValidators: true}
+    );
+
+    // execute db updates
+    const [updatedShipyard, updatedPlayer] = await Promise.all([shipyardPromise, playerPromise]);
+    if (!updatedShipyard || !updatedPlayer) {
+        logger.error(
+            `[App] DB Error. Shipyard: ${JSON.stringify(updatedShipyard)}, Player: ${JSON.stringify(
+                updatedPlayer
+            )}, Set: ${JSON.stringify(set)}`
+        );
+        return res.json({error: "DB Error"});
+    }
+
+    // all done.
+    logger.success(
+        `[App] player ${chalk.red(req.user.selectedPlayer.ticker)} ${"@" + req.user.username} began ${
+            req.body.newHullTypes[req.body.newHullTypes.length - 1]
+        } shipyard upgrade for #${req.body.id}`
+    );
+    return res.status(200).json({
+        shipyard: {
+            id: updatedShipyard._id,
+            planet: updatedShipyard.planet,
+            hullTypes: updatedShipyard.hullTypes,
+            turnsUntilComplete: updatedShipyard.turnsUntilComplete,
+            active: updatedShipyard.isActive
+        }
+    });
 };

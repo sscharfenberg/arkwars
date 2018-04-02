@@ -22,7 +22,6 @@
     },
     "resourceTypes": {
         "label": "Resource type",
-
         "minerals": "minerals",
         "energy": "energy",
         "food": "food",
@@ -37,6 +36,7 @@
         "cancel": "Cancel",
         "install": "Install",
         "construct": "Construct",
+        "installUpgrade": "Install upgrade",
         "ok": "Ok",
         "confirm": "Confirm",
         "proceed": "Proceed"
