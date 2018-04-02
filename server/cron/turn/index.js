@@ -8,11 +8,12 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const logger = require("../../handlers/logger/console");
 const pduConstruction = require("./pduConstruction");
-const constructStorageUpgrade = require("./constructStorageUpgrade");
+const storageUpgradeConstruction = require("./storageUpgradeConstruction");
 const harvesterProduction = require("./harvesterProduction");
 const popFoodConsumption = require("./foodConsumption");
 const harvesterConstruction = require("./harvesterConstruction");
-const researchTechLevels = require("./researchTechLevels");
+const techLevelResearch = require("./techLevelResearch");
+const shipyardConstruction = require("./shipyardConstruction");
 const logTurn = require("../../handlers/logger/turn");
 require("../../models/");
 const Game = mongoose.model("Game");
@@ -31,7 +32,7 @@ const turnProcessingOrder = async game => {
      * 1) PDU construction
      ******************************************************************************************************************/
     try {
-        logger.info(`${chalk.green("1")} starting ${chalk.magenta("pdu construction")}`);
+        logger.info(`${chalk.green("1")} starting ${chalk.magenta("pdu")} ${chalk.cyan("construction")}`);
         log = await pduConstruction(game, log);
     } catch (e) {
         logger.error(e);
@@ -41,8 +42,8 @@ const turnProcessingOrder = async game => {
      * 2) StorageUpgrades
      ******************************************************************************************************************/
     try {
-        logger.info(`${chalk.green("2")} starting ${chalk.magenta("storage upgrade construction")}`);
-        log = await constructStorageUpgrade(game, log);
+        logger.info(`${chalk.green("2")} starting ${chalk.magenta("storage upgrade")} ${chalk.cyan("construction")}`);
+        log = await storageUpgradeConstruction(game, log);
     } catch (e) {
         logger.error(e);
     }
@@ -51,7 +52,7 @@ const turnProcessingOrder = async game => {
      * 3) harvester production
      ******************************************************************************************************************/
     try {
-        logger.info(`${chalk.green("3")} starting ${chalk.magenta("harvester resource production")}`);
+        logger.info(`${chalk.green("3")} starting ${chalk.magenta("harvester")} ${chalk.cyan("production")}`);
         log = await harvesterProduction(game, log);
     } catch (e) {
         logger.error(e);
@@ -62,9 +63,9 @@ const turnProcessingOrder = async game => {
      ******************************************************************************************************************/
     try {
         logger.info(
-            `${chalk.green("4")} starting ${chalk.magenta("population food consumption")} and ${chalk.magenta(
-                "population growth"
-            )}`
+            `${chalk.green("4")} starting ${chalk.magenta("food")} ${chalk.cyan("consumption")} and ${chalk.magenta(
+                "population"
+            )} ${chalk.cyan("growth")}`
         );
         log = await popFoodConsumption(game, log);
     } catch (e) {
@@ -75,18 +76,28 @@ const turnProcessingOrder = async game => {
      * 5) harvesters construction
      ******************************************************************************************************************/
     try {
-        logger.info(`${chalk.green("5")} starting ${chalk.magenta("harvester construction")}`);
+        logger.info(`${chalk.green("5")} starting ${chalk.magenta("harvester")} ${chalk.cyan("construction")}`);
         log = await harvesterConstruction(game, log);
     } catch (e) {
         logger.error(e);
     }
 
     /*******************************************************************************************************************
-     * 6) research jobs
+     * 6) shipyard construction
      ******************************************************************************************************************/
     try {
-        logger.info(`${chalk.green("6")} starting ${chalk.magenta("research job processing")}`);
-        log = await researchTechLevels(game, log);
+        logger.info(`${chalk.green("6")} starting ${chalk.magenta("shipyard")} ${chalk.cyan("construction")}`);
+        log = await shipyardConstruction(game, log);
+    } catch (e) {
+        logger.error(e);
+    }
+
+    /*******************************************************************************************************************
+     * 7) research jobs
+     ******************************************************************************************************************/
+    try {
+        logger.info(`${chalk.green("7")} starting ${chalk.magenta("tech level")} ${chalk.cyan("research")}`);
+        log = await techLevelResearch(game, log);
     } catch (e) {
         logger.error(e);
     }

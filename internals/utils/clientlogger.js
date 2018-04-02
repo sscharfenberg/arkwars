@@ -12,36 +12,27 @@ const moment = require("moment"); // https://momentjs.com/
 moment.locale("de");
 
 exports.info = message => {
-    console.log(
-        chalk.magenta(moment().format("HH:mm:ss.SSSS")) +
-            chalk.white(` 📞 INFO 📞 → ${message}`)
-    );
+    console.log(`${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.yellow("🔍")} ${message}`);
 };
 
 exports.debug = message => {
-    console.log(
-        chalk.magenta(moment().format("HH:mm:ss.SSSS")) +
-            chalk.cyan(` 🔧 DEBUG 🔧 → ${message}`)
-    );
+    console.log(`${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.cyan("🔧")} ${message}`);
 };
 
 exports.warn = message => {
-    console.log(
-        chalk.magenta(moment().format("HH:mm:ss.SSSS")) +
-            chalk.yellow(` 🔥 WARN 🔥 → ${message}`)
-    );
+    console.log(`${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.yellow("🔥")} ${message}`);
 };
 
 exports.error = message => {
     console.log(
-        chalk.magenta(moment().format("HH:mm:ss.SSSS")) +
-            chalk.red(` 💀 ERROR 💀 → ${message}`)
+        `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.red("💀💀")} ${message} ${chalk.red("💀💀")}`
     );
 };
 
 exports.success = message => {
     console.log(
-        chalk.magenta(moment().format("HH:mm:ss.SSSS")) +
-            chalk.blue(` 👍 SUCCESS 👍 → ${message}`)
+        `${chalk.magenta(moment().format("HH:mm:ss.SSSS"))} ${chalk.green("👌👏")} ${chalk.green(
+            message
+        )} ${chalk.green("√√")}`
     );
 };
