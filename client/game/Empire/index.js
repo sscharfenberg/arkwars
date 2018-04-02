@@ -23,7 +23,7 @@ if (document.getElementById("gameRoot")) {
     Vue.use(Snotify, {
         toast: {
             position: SnotifyPosition.rightTop,
-            timeout: 4000
+            timeout: 8000
         }
     });
     DEBUG && console.log(`bootstrapping VueJS, locale ${locale}.`);

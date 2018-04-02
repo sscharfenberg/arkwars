@@ -10,6 +10,6 @@
 - [ ] game not active: make all features visible but disabled?
 
 ## Frontend
-- [ ] PostCSS currently not working, probably a vue-loader issue? https://github.com/vuejs/vue-loader/issues/1160
+
 
 

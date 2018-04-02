@@ -3,9 +3,12 @@
 
 Frontend and Backend for Arkwars (**working title, will change!**) - a strategic turn-based game of galactic conquest. 
 
-![Empire Screen](./docs/empire.jpg)
+Number of times `.env` file got submitted to github: **2**
 
-Number of times `.env` file got submitted to github: **2** 
+## Screenshots
+
+* [Empire Screen](./docs/empire.jpg)
+* [Research Screen](./docs/research.jpg) 
 
 ### Warning
 
