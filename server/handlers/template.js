@@ -23,7 +23,11 @@ exports.dump = obj => JSON.stringify(obj, null, 2);
 //exports.staticMap = ([lng, lat]) => `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=800x150&key=${process.env.MAP_KEY}&markers=${lat},${lng}&scale=2`;
 
 // inserting a SVG image
-exports.image = path => fs.readFileSync(`./server/public/assets/images/${path}`);
+exports.image = path => {
+    const filePath = `./server/public/assets/images/${path}`;
+    if (!fs.existsSync(filePath)) return;
+    return fs.readFileSync(filePath);
+};
 
 /*
  * inserting a SVG icon with <use>
@@ -45,12 +49,12 @@ exports.icon = (name, modifiers) => {
  * progressbar helper function
  */
 exports.progressbar = (max, value, active) => {
+    const svgPath = "./server/public/assets/images/progressbar.svg";
+    if (!fs.existsSync(svgPath)) return;
     //let pct;
     //let colorClass = "aw-progress__bar-value--";
-    let svg = fs.readFileSync("./server/public/assets/images/progressbar.svg", {
-        encoding: "utf-8"
-    });
-    if (value > max) value = max; // just to make sure.
+    let svg = fs.readFileSync(svgPath, {encoding: "utf-8"});
+    //if (value > max) value = max; // just to make sure.
     //pct = parseInt(100 - parseInt(value, 10) / parseInt(max, 10) * 100, 10);
     //if (pct > 0 && pct <= 20) colorClass += "1";
     //if (pct > 21 && pct <= 40) colorClass += "2";
