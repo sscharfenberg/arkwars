@@ -1,8 +1,10 @@
 extends ../layout
 
 block head
-    link(rel='stylesheet', href='/public/assets/styles.css')
-    include ../webpack/empire.header.pug
+    link(
+        rel="stylesheet",
+        href=(h.hashedAsset("empire.css"))
+    )
 
 block content
 
@@ -18,4 +20,8 @@ block content
             div#gameRoot
 
 block scripts
-    include ../webpack/empire.footer.pug
+    script(
+        src=(h.hashedAsset("empire.js")),
+        defer,
+        nonce=(nonce)
+    )

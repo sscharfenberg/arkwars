@@ -82,7 +82,7 @@ npm run js.prod
 Start the servers:
 
 ```
-npm run server.start
+npm start
 ```
 Your should get messages like these:
 
@@ -94,7 +94,7 @@ Your should get messages like these:
 To start the turn 'clock', start a new console/screen and:
 
 ```
-npm run cron.start
+npm run cron
 ```
 
 Now, open your browser and point it to [http://localhost:7777](http://localhost:7777). Email of admin user is `ashaltiriak@gmail.com`, password for all users is `123123`.

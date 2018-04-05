@@ -3,7 +3,7 @@ extends ../layout
 block head
     link(
         rel="stylesheet",
-        href=(h.hashedAsset("research.css"))
+        href=(h.hashedAsset("shipyards.css"))
     )
 
 
@@ -15,14 +15,18 @@ block content
             data-playerid=(user.selectedPlayer._id),
             data-gameid=(user.selectedPlayer.game._id),
             data-locale=(session.locale),
-            data-area="research",
+            data-area="shipyards",
             data-initial=(gameData)
         )
             div#gameRoot
 
+    div
+        != h.hashedAsset("planets.png")
+        != h.hashedAsset("trest.png")
+        != h.hashedAsset("common.js")
+
 block scripts
-    script(
-        src=(h.hashedAsset("research.js")),
-        defer,
-        nonce=(nonce)
+    link(
+        rel="stylesheet",
+        href=(h.hashedAsset("shipyards.js"))
     )

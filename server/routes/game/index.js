@@ -12,6 +12,7 @@ const authController = require("../../controllers/auth");
 const gameController = require("../../controllers/game");
 const empireController = require("../../controllers/game/empire");
 const researchController = require("../../controllers/game/research");
+const shipyardsController = require("../../controllers/game/shipyards");
 const {catchErrors} = require("../../handlers/error");
 
 router.use("/", authController.isValidUser);
@@ -57,6 +58,12 @@ router.get(
     "/:game/research",
     catchErrors(gameController.verifyGameAuth), // 1. check if game exists and user is enlisted
     catchErrors(researchController.showIndex) // 2. show index page
+);
+
+router.get(
+    "/:game/shipyards",
+    catchErrors(gameController.verifyGameAuth), // 1. check if game exists and user is enlisted
+    catchErrors(shipyardsController.showIndex) // 2. show index page
 );
 
 module.exports = router;

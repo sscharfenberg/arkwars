@@ -105,7 +105,6 @@ module.exports = {
         cleanup: [
             "server/public/**",
             "server/logs/**",
-            "server/views/webpack/**",
             ".babel-cache/**"
         ]
     }

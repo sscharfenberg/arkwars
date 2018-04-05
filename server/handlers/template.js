@@ -8,8 +8,10 @@
  *
  **********************************************************************************************************************/
 const fs = require("fs-extra"); // https://nodejs.org/api/fs.html
+const path = require("path");
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const cfg = require("../config");
+
 
 // moment.js is a handy library for displaying dates. We need this in our templates to display things like "Posted 5 minutes ago"
 exports.moment = require("moment");
@@ -78,3 +80,41 @@ exports.getAvatar = (avatar, size) => {
         return `<img class="aw-show-avatar aw-show-avatar--${size}" src="/public/assets/images/user-anon.svg">`;
     }
 };
+
+
+/*
+ * helper function that utilizes the hashes in manifest.json to output hashed filenames
+ */
+exports.hashedAsset = name => {
+    // chunks where we return nothing in dev mode, since webpack-dev-server injects styles into head directly.
+    const cssDevChunks = [
+        "common.css",
+        "empire.css",
+        "research.css",
+        "shipyards.css",
+        "fleets.css",
+        "starchart.css",
+        "galnet.css"
+    ];
+    const manifestPath = path.join(cfg.app.projectDir, "server", "public", "assets", "manifest.json");
+    let manifest = {};
+    let clientIsDev = false;
+    if (fs.existsSync(manifestPath)) {
+        manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+    }
+    for (let asset in manifest) {
+        if (manifest[asset].indexOf("localhost") > -1) {
+            clientIsDev = true;
+            break;
+        }
+    }
+    // for dev mode, we return nothing for our hashed css chunks, since they are not emitted anyway.
+    if (clientIsDev && cssDevChunks.includes(name)) return;
+    // webpack-dev-server is only needed in dev mode
+    // TODO: find a way to not have an empty script tag in production because of this.
+    if (name === "webpack-dev-server.js") {
+        return clientIsDev ? "http://localhost:8000/" + name : "";
+    }
+    return manifest.hasOwnProperty(name) ? manifest[name] : "/public/assets/" + name;
+};
+

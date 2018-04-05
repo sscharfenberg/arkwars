@@ -10,7 +10,7 @@
 const path = require("path"); // https://www.npmjs.com/package/path
 const webpack = require("webpack"); // https://www.npmjs.com/package/webpack
 // https://www.npmjs.com/package/html-webpack-plugin
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+//const HtmlWebpackPlugin = require("html-webpack-plugin");
 // https://github.com/webpack-contrib/extract-text-webpack-plugin
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 // https://github.com/JaKXz/stylelint-webpack-plugin
@@ -220,6 +220,7 @@ const webpackConfig = {
             reporters: [{ formatter: "verbose", console: true }],
             configFile: path.join(cfg.projectRoot, ".stylelintrc")
         })
+
     ],
 
     // shamelessly copied from
@@ -237,45 +238,5 @@ const webpackConfig = {
         child_process: "empty"
     }
 };
-
-// HTML Webpack Plugins for FOOTER
-// https://github.com/jantimon/html-webpack-plugin
-for (let chunk in cfg.chunks) {
-    webpackConfig.plugins.push(
-        new HtmlWebpackPlugin({
-            // write the pug SCRIPT includes (footer)
-            template: path.join(cfg.projectRoot, "internals", "webpack", "templates", `${chunk}.footer.ejs`),
-            filename: path.join(cfg.projectRoot, "server", "views", "webpack", `${chunk}.footer.pug`),
-            showErrors: true,
-            inject: false,
-            alwaysWriteToDisk: true,
-            meta: {
-                isProd: isProd, // make sure we have information in the template if prod or dev
-                webPackPort: cfg.webPackPort
-            }
-        })
-    );
-}
-
-// HTML Webpack Plugin for HEADER
-// prod extracts styles to css file and we need the header include with content hash
-// https://github.com/jantimon/html-webpack-plugin
-const invalidChunks = ["admin", "app"]; // non-Vue gulp chunks that do not need to extract css
-const validChunks = Object.keys(cfg.chunks).filter(chunk => !invalidChunks.includes(chunk));
-validChunks.forEach(chunk => {
-    webpackConfig.plugins.push(
-        new HtmlWebpackPlugin({
-            template: path.join(cfg.projectRoot, "internals", "webpack", "templates", `${chunk}.header.ejs`),
-            filename: path.join(cfg.projectRoot, "server", "views", "webpack", `${chunk}.header.pug`),
-            showErrors: true,
-            inject: false,
-            alwaysWriteToDisk: true,
-            meta: {
-                isProd: isProd, // make sure we have information in the template if prod or dev
-                webPackPort: cfg.webPackPort
-            }
-        })
-    );
-});
 
 module.exports = webpackConfig;

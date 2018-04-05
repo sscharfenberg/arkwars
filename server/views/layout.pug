@@ -5,8 +5,15 @@ html(lang=(session.locale))
         title= `${title} | ${cfg.app.title}`
         meta(name="viewport" content="width=device-width, initial-scale=1")
         //- head block for seperate stylesheets (admin)
+        link(
+            rel="stylesheet",
+            href=(h.hashedAsset("styles.css"))
+        )
+        link(
+            rel="stylesheet",
+            href=(h.hashedAsset("common.css"))
+        )
         block head
-            link(rel='stylesheet', href='/public/assets/styles.css')
 
 body(data-user=(user ? 1 : 0))
 
@@ -251,7 +258,28 @@ body(data-user=(user ? 1 : 0))
                         a#footerJumpTop.aw-footer__link.aw-footer__link--icon(href="#main")
                             != h.icon("arrow_up")
 
-    //- app scripts - app.js and dev-server
-    include webpack/app.footer.pug
+
+    //- app scripts, used everywhere
+    script(
+        src=(h.hashedAsset("webpack-dev-server.js")),
+        defer,
+        nonce=(nonce)
+    )
+    script(
+        src=(h.hashedAsset("vendor.js")),
+        defer,
+        nonce=(nonce)
+    )
+    script(
+        src=(h.hashedAsset("common.js")),
+        defer,
+        nonce=(nonce)
+    )
+    script(
+        src=(h.hashedAsset("app.js")),
+        defer,
+        nonce=(nonce)
+    )
     //- scripts block, additional scripts from templates.
     block scripts
+

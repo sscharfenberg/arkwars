@@ -14,7 +14,6 @@ const paths = [
     //path.join(cfg.app.projectDir, "server", "config", "https"), soon.
     path.join(cfg.app.projectDir, "server", "logs"),
     path.join(cfg.app.projectDir, "server", "logs", "turns"),
-    path.join(cfg.app.projectDir, "server", "views", "webpack"),
     path.join(cfg.app.projectDir, "server", "public"),
     path.join(cfg.app.projectDir, "server", "public", "assets"),
     path.join(cfg.app.projectDir, "server", "public", "assets", "fonts"),

@@ -92,6 +92,8 @@ export default {
 
             .refresh-icon {
                 margin-right: 1rem;
+
+                color: palette("brand", "viking");
             }
 
             .spinner {

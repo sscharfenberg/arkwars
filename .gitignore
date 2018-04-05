@@ -8,5 +8,4 @@ webpack-bundles.report.html
 webpack-stats.json
 server/public
 server/logs
-server/views/webpack
 server/config/https

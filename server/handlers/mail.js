@@ -8,7 +8,6 @@ const path = require("path");
 const pug = require("pug");
 const juice = require("juice");
 const htmlToText = require("html-to-text");
-const promisify = require("es6-promisify");
 const i18n = require("i18n");
 const cfg = require("../config");
 
@@ -58,6 +57,5 @@ exports.send = async options => {
         html,
         text
     };
-    const sendMail = promisify(transport.sendMail, transport);
-    return sendMail(mailOptions);
+    await transport.sendMail(mailOptions);
 };

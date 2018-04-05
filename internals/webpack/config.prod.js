@@ -21,8 +21,8 @@ const ImageminPlugin = require("imagemin-webpack-plugin").default;
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 // https://github.com/imagemin/imagemin-mozjpeg
 const imageminMozjpeg = require("imagemin-mozjpeg");
-
-
+// https://www.npmjs.com/package/webpack-manifest-plugin
+const ManifestPlugin = require("webpack-manifest-plugin");
 const baseWebpackConfig = require("./config.base"); // base webpack config
 const config = require("../config");
 
@@ -154,6 +154,15 @@ let webpackConfig = merge(baseWebpackConfig, {
             //statsOptions: null,
             // Log level. Can be "info", "warn", "error" or "silent".
             //logLevel: "info"
+        }),
+
+        // https://www.npmjs.com/package/webpack-manifest-plugin
+        new ManifestPlugin({
+            writeToFileEmit: true,
+            map: asset => {
+                asset.path = "/public/assets/" + asset.path;
+                return asset;
+            }
         })
 
     ]

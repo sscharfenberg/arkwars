@@ -18,8 +18,8 @@
         "npm": "5.7.1"
     },
     "scripts": {
-        "server.start": "node server/monitor-backend.js",
-        "cron.start": "node server/monitor-cron.js",
+        "start": "node server/monitor-backend.js",
+        "cron": "node server/monitor-cron.js",
         "app.static.build": "gulp build:static",
         "app.static.watch": "gulp watch",
         "js.prod": "node internals/npm/js.prod.js",
@@ -117,8 +117,6 @@
         "gulp-sourcemaps": "^2.6.4",
         "gulp-stylelint": "^7.0.0",
         "gulp-svgstore": "^6.1.1",
-        "html-webpack-harddisk-plugin": "^0.2.0",
-        "html-webpack-plugin": "^3.1.0",
         "imagemin-mozjpeg": "^7.0.0",
         "imagemin-webpack-plugin": "^2.1.1",
         "jest": "^22.4.3",
@@ -152,6 +150,7 @@
         "webpack": "^4.4.1",
         "webpack-bundle-analyzer": "^2.11.1",
         "webpack-dev-server": "^3.1.1",
+        "webpack-manifest-plugin": "^2.0.0-rc.2",
         "webpack-merge": "^4.1.2"
     },
     "browsers": [

@@ -1,8 +1,14 @@
 extends ../layout
 
 block head
-    link(rel='stylesheet', href='/public/assets/styles.css')
-    link(rel='stylesheet', href='/public/assets/admin.css')
+    link(
+        rel="stylesheet",
+        href=(h.hashedAsset("styles.css"))
+    )
+    link(
+        rel="stylesheet",
+        href=(h.hashedAsset("admin.css"))
+    )
 
 block content
     main.aw-content__inner
@@ -24,4 +30,8 @@ block content
                 .admin-cta__item-desc= h.__("ADMIN.INDEX.TEMPLATES")
 
 block scripts
-    include ../webpack/admin.footer.pug
+    script(
+        src=(h.hashedAsset("admin.js")),
+        defer,
+        nonce=(nonce)
+    )

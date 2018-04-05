@@ -17,11 +17,15 @@ const monitor = nodemon({
     script: path.join(__dirname, "start.js"),
     ext: "js,json",
     watch: [
-        "server",
+        "server/controllers",
+        "server/config",
+        "server/handlers",
+        "server/lang",
+        "server/models",
+        "server/routes",
         "shared",
         "client/lang"
     ],
-    ignore: ["server/public/", "server/cron", "server/logs", "server/views", "server/public"],
     verbose: true
 });
 

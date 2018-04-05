@@ -70,18 +70,13 @@ export default {
                 v-if="effectivePopulation > 0"
                 :planet-id="id"
                 :star-name="starName"/>
-            <shipyard-button
-                v-if="shipYardId"
-                :id="shipYardId"
-                :planet-name="getPlanetName"
-                :planet-id="id" />
             <resources
                 v-if="resourceSlots.length"
                 :resources="resourceSlots"
                 :planet-id="id"
                 :planet-name="getPlanetName" />
             <shipyard-button
-                v-if="!shipYardId"
+                :id="shipYardId"
                 :planet-name="getPlanetName"
                 :planet-id="id" />
         </div>

@@ -10,8 +10,8 @@ const path = require("path");
 const webpack = require("webpack"); // https://webpack.js.org/
 const merge = require("webpack-merge"); // https://www.npmjs.com/package/webpack-merge
 const baseWebpackConfig = require("./config.base"); // base webpack config
-// https://www.npmjs.com/package/html-webpack-harddisk-plugin
-const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
+// https://www.npmjs.com/package/webpack-manifest-plugin
+const ManifestPlugin = require("webpack-manifest-plugin");
 const cfg = require("../config");
 
 let webpackConfig = merge(baseWebpackConfig, {
@@ -36,7 +36,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         // https://www.npmjs.com/package/html-webpack-harddisk-plugin
         // webpack-dev-server does not write to disk. use harddisk plugin to force write to disk
         // so we can update paths to webpack-dev-server js files in pug script include
-        new HtmlWebpackHarddiskPlugin(),
+        //new HtmlWebpackHarddiskPlugin(),
 
         // https://webpack.js.org/plugins/define-plugin/
         new webpack.DefinePlugin({
@@ -46,7 +46,16 @@ let webpackConfig = merge(baseWebpackConfig, {
         }),
 
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+
+        // https://www.npmjs.com/package/webpack-manifest-plugin
+        new ManifestPlugin({
+            writeToFileEmit: true,
+            //map: asset => {
+            //    asset.path = "/public/assets/" + asset.path;
+            //    return asset;
+            //}
+        })
     ]
 });
 

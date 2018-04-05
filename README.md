@@ -26,8 +26,8 @@ Use at your own risk.
 
 ## Usage: npm Scripts
 
-* `npm run server.start`: starts the backend server that serves rendered HTML pages, static assets and provides the REST API. 
-* `npm run server.cron`: starts the cron server that checks each minute if there are turns to process, games to start etc. If this task does not run, no turns will be calculated.
+* `npm start`: starts the backend server that serves rendered HTML pages, static assets and provides the REST API. 
+* `npm run cron`: starts the cron server that checks each minute if there are turns to process, games to start etc. If this task does not run, no turns will be calculated.
 * `npm run app.static.build`: cleanup, then generates static app assets - fonts, images, styles, icon spritesheet.
 * `npm run app.static.watch`: watch static (gulp) assets and recompile / start tasks as needed.
 * `npm run js.prod`: generate webpack bundles (including templates) for a **production** environment.
