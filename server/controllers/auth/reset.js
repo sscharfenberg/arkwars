@@ -8,7 +8,6 @@ const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
 const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
-const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const {getCaptcha} = require("../../handlers/captcha");
 const logger = require("../../handlers/logger/console");
@@ -277,8 +276,7 @@ exports.validateChangeForm = async (req, res, next) => {
  */
 exports.resetChangePassword = async (req, res) => {
     const user = req._user; // comes from validateResetToken
-    const setPassword = promisify(user.setPassword, user); // setPassword needs to be promisified
-    await setPassword(req.body.password);
+    await user.setPassword(req.body.password);
     user.resetPasswordToken = undefined; // clear token
     user.resetPasswordExpires = undefined;
     user.attempts = 0;

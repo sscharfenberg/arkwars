@@ -5,7 +5,6 @@
  **********************************************************************************************************************/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const moment = require("moment"); // https://momentjs.com/
-const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
 const crypto = require("crypto"); // https://nodejs.org/api/crypto.html
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const i18n = require("i18n"); // https://github.com/mashpie/i18n-node
@@ -139,8 +138,7 @@ exports.doRegistration = async (req, res, next) => {
         emailConfirmationToken: crypto.randomBytes(20).toString("hex"),
         emailConfirmationExpires: moment().add(1, "hours")
     });
-    const register = promisify(User.register, User);
-    await register(user, req.body.password);
+    await User.register(user, req.body.password);
     req.session.captcha = undefined; // cleanup
     req._user = user;
     logger.success(`[App] saved user ${chalk.red("@" + user.username)}.`);

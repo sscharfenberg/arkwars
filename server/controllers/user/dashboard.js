@@ -12,7 +12,6 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const multer = require("multer"); // https://github.com/expressjs/multer
 const path = require("path"); // https://www.npmjs.com/package/path
-const promisify = require("es6-promisify"); // https://www.npmjs.com/package/es6-promisify
 const uuid = require("uuid"); // https://www.npmjs.com/package/uuid
 const strip = require("mongo-sanitize"); // https://www.npmjs.com/package/mongo-sanitize
 const User = mongoose.model("User");
@@ -217,14 +216,13 @@ exports.validateChangePassword = async (req, res, next) => {
 };
 
 /*
- * change email address request: update user ===========================================================================
+ * update password request =============================================================================================
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  */
 exports.updatePassword = async (req, res) => {
     const user = req.user;
-    const setPassword = promisify(user.setPassword, req.user); // setPassword needs to be promisified
-    await setPassword(req.body.password);
+    await user.setPassword(req.body.password);
     await user.save(); // save to db
     logger.info(
         `[App] user ${chalk.red("@" + user.username)} changed password.`

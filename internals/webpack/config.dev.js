@@ -49,13 +49,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         new webpack.HotModuleReplacementPlugin(),
 
         // https://www.npmjs.com/package/webpack-manifest-plugin
-        new ManifestPlugin({
-            writeToFileEmit: true,
-            //map: asset => {
-            //    asset.path = "/public/assets/" + asset.path;
-            //    return asset;
-            //}
-        })
+        new ManifestPlugin({ writeToFileEmit: true })
     ]
 });
 
