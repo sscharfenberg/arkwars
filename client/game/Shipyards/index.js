@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
  *
- * Research entrypoint
+ * Shipyards entrypoint
  *
  **********************************************************************************************************************/
 import Vue from "vue";
@@ -8,7 +8,7 @@ import VueI18n from "vue-i18n";
 import VModal from "vue-js-modal";
 import Snotify, {SnotifyPosition} from "vue-snotify";
 import store from "./store";
-import Research from "./Research.vue";
+import Shipyards from "./Shipyards.vue";
 import {DEBUG} from "Config";
 import {getAreaMessages} from "../handlers/messages";
 import {getLocale, getAreaSlug, getMessagesVersion, getInitialState} from "../handlers/gameConstants";
@@ -36,8 +36,8 @@ if (document.getElementById("gameRoot")) {
             el: "#gameRoot",
             store,
             i18n,
-            template: "<Research/>",
-            components: {Research},
+            template: "<Shipyards/>",
+            components: {Shipyards},
             beforeCreate: function() {
                 this.$store.dispatch("SET_USER_SETTINGS", getUserSettings());
                 this.$store.dispatch("SET_INITIAL_STATE", getInitialState());

@@ -68,7 +68,7 @@ export default {
             box-sizing: content-box;
             height: 2.6rem;
             padding: 0.5rem 1rem;
-            border: 1px solid palette("grey", "abbey");
+            border: 2px solid palette("grey", "abbey");
             margin: 0 0 0.8rem 0.8rem;
 
             background: transparent;
@@ -102,8 +102,8 @@ export default {
             &.civilian {
                 &:hover,
                 &:focus {
-                    background-color: rgba(palette("grey", "mystic"), 0.05);
-                    border-color: palette("grey", "abbey");
+                    background: palette("grey", "bunker");
+                    border-color: palette("grey", "asher");
 
                     .pdu__icon { opacity: 1; }
                 }
@@ -117,8 +117,9 @@ export default {
             }
 
             &.building {
+                border: 2px dashed palette("state", "building");
+
                 background-color: rgba(palette("grey", "mystic"), 0.05);
-                border-color: palette("state", "building");
 
                 .pdu__icon { opacity: 0.7; }
             }

@@ -1,4 +1,18 @@
 {
-    "title": "Werften"
+    "title": "Werften",
+    "summary": {
+        "num": "Aktive Werften",
+        "prod": "Aktuelle Produktion"
+    },
+    "switch": {
+        "design": {
+            "text": "Entwerfen",
+            "label": "Klicken um Schiffsklassen zu entwerfen"
+        },
+        "construct": {
+            "text": "Bauen",
+            "label": "Klicken um Schiffe zu bauen"
+        }
+    }
 }
 

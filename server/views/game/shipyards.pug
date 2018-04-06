@@ -20,13 +20,9 @@ block content
         )
             div#gameRoot
 
-    div
-        != h.hashedAsset("planets.png")
-        != h.hashedAsset("trest.png")
-        != h.hashedAsset("common.js")
-
 block scripts
-    link(
-        rel="stylesheet",
-        href=(h.hashedAsset("shipyards.js"))
+    script(
+        src=(h.hashedAsset("shipyards.js")),
+        defer,
+        nonce=(nonce)
     )

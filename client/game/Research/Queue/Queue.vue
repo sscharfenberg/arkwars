@@ -6,7 +6,6 @@ import draggable from "vuedraggable";
 import QueueItem from "./QueueItem.vue";
 import AbortResearch from "./AbortResearch.vue";
 import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
-
 export default {
     components: {
         draggable,

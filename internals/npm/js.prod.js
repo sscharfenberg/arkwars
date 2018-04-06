@@ -16,11 +16,7 @@ const webpackConfig = require("../webpack/config.prod");
 const logger = require("../utils/clientlogger");
 const config = require("../config");
 
-logger.debug(
-    `[node] preparing client assets for ${chalk.yellow(
-        process.env.NODE_ENV.toUpperCase()
-    )}`
-);
+logger.debug(`[node] preparing client assets for ${chalk.yellow(process.env.NODE_ENV.toUpperCase())}`);
 
 webpack(webpackConfig, (err, stats) => {
     if (err) {
@@ -28,17 +24,7 @@ webpack(webpackConfig, (err, stats) => {
     } else {
         process.stdout.write(stats.toString(config.webPackStats) + "\n");
         logger.debug("[webpack] done.");
-        logger.success(
-            `[webpack] site is now in ${chalk.yellow(
-                process.env.NODE_ENV.toUpperCase()
-            )} mode.`
-        );
-        logger.info(
-            "[webpack] pug footer include points to local, app-served static files."
-        );
-        logger.info(
-            "[webpack] css is served via local, app-served static files."
-        );
-        //process.exit(0); // signal everything went ok if we got this far.
+        logger.success(`[webpack] site is now in ${chalk.yellow(process.env.NODE_ENV.toUpperCase())} mode.`);
+        logger.info("[webpack] css is served via local, app-served static files.");
     }
 });

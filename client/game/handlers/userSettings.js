@@ -11,9 +11,12 @@ import {localStorageKey} from "../../config";
  * default settings
  */
 export const defaultSettings = {
-    version: 3,
+    version: 4,
     empire: {
         toggledStars: []
+    },
+    shipyards: {
+        selectedSection: "design"
     }
 };
 

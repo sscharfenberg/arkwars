@@ -1,4 +1,18 @@
 {
-    "title": "Shipyards"
+    "title": "Shipyards",
+    "summary": {
+        "num": "Active Shipyards",
+        "prod": "Current production"
+    },
+    "switch": {
+        "design": {
+            "text": "Design",
+            "label": "Click to design ship classes"
+        },
+        "construct": {
+            "text": "Construct",
+            "label": "Click to construct ships"
+        }
+    }
 }
 

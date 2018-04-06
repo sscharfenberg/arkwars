@@ -62,7 +62,8 @@ module.exports = {
         app: path.join(PROJECTROOT, "client", "app.js"),
         admin: path.join(PROJECTROOT, "client", "admin.js"),
         empire: path.join(PROJECTROOT, "client", "game", "Empire", "index.js"),
-        research: path.join(PROJECTROOT, "client", "game", "Research", "index.js")
+        research: path.join(PROJECTROOT, "client", "game", "Research", "index.js"),
+        shipyards: path.join(PROJECTROOT, "client", "game", "Shipyards", "index.js")
     },
 
     // https://webpack.js.org/configuration/stats/

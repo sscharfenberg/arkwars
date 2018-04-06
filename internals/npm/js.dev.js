@@ -49,28 +49,13 @@ let devServer = new WebpackDevServer(compiler, {
 // serve files on webPackPort
 devServer.listen(config.webPackPort, "localhost", err => {
     if (err) throw err;
-    logger.debug(
-        `[webpack] now serving files on port ${chalk.yellow(
-            config.webPackPort
-        )}.`
-    );
-    logger.success(
-        `[webpack] site is now in ${chalk.yellow(
-            process.env.NODE_ENV.toUpperCase()
-        )} mode.`
-    );
-    logger.info(
-        "[webpack] pug footer include points to webpack-dev-server for Hot-Module-Reloading."
-    );
-    logger.info(
-        "[webpack] css is served via webpack-dev-server injected as style blob into head."
-    );
+    logger.debug(`[webpack] now serving files on port ${chalk.yellow(config.webPackPort)}.`);
+    logger.success(`[webpack] site is now in ${chalk.yellow(process.env.NODE_ENV.toUpperCase())} mode.`);
+    logger.info("[webpack] css is served via webpack-dev-server injected as style blob into head.");
 });
 
 // log finished compilations to console
 compiler.plugin("done", () => {
-    logger.debug(
-        `[webpack] ${initialCompile ? "initial" : "change"} compilation done:`
-    );
+    logger.debug(`[webpack] ${initialCompile ? "initial" : "change"} compilation done:`);
     initialCompile = false;
 });

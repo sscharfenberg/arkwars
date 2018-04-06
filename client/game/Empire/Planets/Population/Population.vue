@@ -59,7 +59,7 @@ export default {
         box-sizing: content-box;
         height: 2.6rem;
         padding: 0.5rem 1rem;
-        border: 1px solid palette("grey", "abbey");
+        border: 2px solid palette("grey", "abbey");
         margin: 0 0 0.8rem 0.8rem;
 
         background: rgba(palette("grey", "mystic"), 0.05);

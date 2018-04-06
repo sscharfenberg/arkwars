@@ -31,5 +31,6 @@ router.post("/storage-upgrade/:area",
 // api/game routes
 router.use("/empire/", require("./empire"));
 router.use("/research/", require("./research"));
+router.use("/shipyards/", require("./shipyards"));
 
 module.exports = router;

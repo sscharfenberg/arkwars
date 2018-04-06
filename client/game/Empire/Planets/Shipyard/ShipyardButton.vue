@@ -71,7 +71,7 @@ export default {
         box-sizing: content-box;
         height: 2.6rem;
         padding: 0.5rem 1rem;
-        border: 1px solid palette("grey", "abbey");
+        border: 2px solid palette("grey", "abbey");
         margin: 0 0 0.8rem 0.8rem;
 
         background: transparent;
@@ -95,9 +95,10 @@ export default {
 
         &.active,
         &.building {
+            border: 2px dashed palette("state", "building");
+
             background-color: rgba(palette("grey", "mystic"), 0.05);
             color: palette("text");
-            border-color: palette("state", "building");
 
             &:hover,
             &:focus {
@@ -110,13 +111,14 @@ export default {
         }
 
         &.active {
-            border-color: palette("grey", "abbey");
+            border: 2px solid palette("grey", "abbey");
         }
 
         &:hover:not([disabled]),
         &:focus:not([disabled]) {
-            background-color: rgba(palette("grey", "mystic"), 0.05);
-            border-color: palette("grey", "abbey");
+            background: palette("grey", "bunker");
+            outline: 0;
+            border-color: palette("grey", "asher");
 
             .shipyard__icon {
                 opacity: 1;
