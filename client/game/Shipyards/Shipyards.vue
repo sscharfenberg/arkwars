@@ -6,16 +6,16 @@ import Header from "Game/common/Header/Header.vue";
 import ScreenSection from "Game/common/ScreenSection/ScreenSection.vue";
 import Summary from "./Summary/Summary.vue";
 import SectionSwitcher from "./Summary/SectionSwitcher.vue";
-import Design from "./Design/Design.vue";
-import Construct from "./Construct/Construct.vue";
+import DesignSection from "./Design/DesignSection.vue";
+import ConstructSection from "./Construct/ConstructSection.vue";
 export default {
     components: {
         ScreenSection,
         SectionSwitcher,
         "app-header": Header,
         "shipyard-summary": Summary,
-        Design,
-        Construct
+        DesignSection,
+        ConstructSection
     },
     computed: {
         currentSection () { return this.$store.getters.userSettings.shipyards.selectedSection; }
@@ -32,8 +32,8 @@ export default {
             <shipyard-summary />
             <section-switcher />
         </screen-section>
-        <design v-if="currentSection === 'design'" />
-        <construct v-if="currentSection === 'construct'" />
+        <design-section v-if="currentSection === 'design'" />
+        <construct-section v-if="currentSection === 'construct'" />
     </div>
 </template>
 

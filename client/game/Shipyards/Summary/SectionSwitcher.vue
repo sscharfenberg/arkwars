@@ -61,7 +61,7 @@ export default {
         align-items: center;
         justify-content: center;
 
-        width: calc(50% - 1rem);
+        width: calc(50% - 0.5rem);
         padding: 1rem;
         border: 2px solid palette("grey", "abbey");
         margin-right: 1rem;

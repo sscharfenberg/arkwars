@@ -10,6 +10,7 @@
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const Planet = mongoose.model("Planet");
 const StorageUpgrade = mongoose.model("StorageUpgrade");
+const Shipyard = mongoose.model("Shipyard");
 
 /*
  * fetch game data for player and return API object
@@ -19,11 +20,24 @@ const StorageUpgrade = mongoose.model("StorageUpgrade");
  * @param {Object} playedr - Mongoose.model("Player")
  */
 exports.fetch = async player => {
-    const stars = player.stars.map(star => star.id);
-    const colonyPromise = Planet.find({star: {$in: stars}, population: {$gte: 1}});
+    const stars = player.stars;
+    const starIds = stars.map(star => star.id);
+    const planetPromise = Planet.find({star: {$in: starIds}}).populate("shipyards");
     const storageUpgradePromise = StorageUpgrade.find({player: player._id});
-    const [colonies, storageUpgrades] = await Promise.all([colonyPromise, storageUpgradePromise]);
-    const totalPopulation = colonies.map(colony => colony.effectivePopulation).reduce((acc, val) => acc + val);
+    const [planets, storageUpgrades] = await Promise.all([planetPromise, storageUpgradePromise]);
+    const totalPopulation = planets.map(colony => colony.effectivePopulation).reduce((acc, val) => acc + val);
+    const shipyards = planets.filter(planet => planet.shipyards.length > 0).map(planet => {
+        const star = stars.find(star => `${star._id}` === `${planet.star}`);
+        return {
+            id: planet.shipyards[0]._id,
+            planet: planet.shipyards[0].planet,
+            hullTypes: planet.shipyards[0].hullTypes,
+            turnsUntilComplete: planet.shipyards[0].turnsUntilComplete || 0,
+            active: planet.shipyards[0].isActive,
+            starName: star ? star.name : "",
+            planetOrbitalIndex: planet.orbitalIndex
+        };
+    });
 
     return {
         game: {
@@ -78,13 +92,14 @@ exports.fetch = async player => {
             {type: "shields", level: player.tech.shields},
             {type: "armour", level: player.tech.armour}
         ],
-        storageUpgrades: storageUpgrades.map( upgrade => {
+        storageUpgrades: storageUpgrades.map(upgrade => {
             return {
                 id: upgrade._id,
                 area: upgrade.area,
                 newLevel: upgrade.newLevel,
                 turnsUntilComplete: upgrade.turnsUntilComplete
-            }
-        })
+            };
+        }),
+        shipyards
     };
 };

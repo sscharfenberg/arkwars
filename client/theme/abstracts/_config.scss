@@ -47,6 +47,7 @@ $palettes: (
         "5": #86e01e
     ),
     "state": (
+        "active": #757c84,
         "online": #195529,
         "success": #4b9b29,
         "warning": #f2b01e,
@@ -56,6 +57,9 @@ $palettes: (
     "borders": (
         "lightbg": rgba(#000, 0.1),
         "darkbg": rgba(#fff, 0.1)
+    ),
+    "item": (
+        "shipyard": #4a759a
     )
 );
 

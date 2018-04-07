@@ -54,7 +54,7 @@ export default {
             :aria-disabled="btnDisabled">
             <icon
                 class="shipyard__icon"
-                name="shipyard" />
+                name="shipyards" />
         </button>
         <shipyard-modal
             :id="id"
@@ -111,14 +111,16 @@ export default {
         }
 
         &.active {
-            border: 2px solid palette("grey", "abbey");
+            border: 2px solid palette("state", "active");
+
+            .shipyard__icon { color: palette("item", "shipyard"); }
         }
 
         &:hover:not([disabled]),
         &:focus:not([disabled]) {
             background: palette("grey", "bunker");
             outline: 0;
-            border-color: palette("grey", "asher");
+            border-color: palette("grey", "fog");
 
             .shipyard__icon {
                 opacity: 1;
@@ -126,5 +128,9 @@ export default {
         }
     }
 
-    .shipyard__icon { opacity: 0.3; }
+    .shipyard__icon {
+        opacity: 0.3;
+
+        color: palette("text");
+    }
 </style>

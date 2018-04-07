@@ -72,7 +72,7 @@ export default {
             width: 2.4rem;
             height: 2.6rem;
             padding: 0.5rem 1rem;
-            border: 2px solid palette("state", "online");
+            border: 2px solid palette("state", "active");
             margin: 0 0 0.4rem 0.4rem;
 
             background: rgba(palette("grey", "mystic"), 0.05);
@@ -86,7 +86,7 @@ export default {
             &:focus:not([disabled]) {
                 background: palette("grey", "bunker");
                 outline: 0;
-                border-color: palette("grey", "asher");
+                border-color: palette("grey", "fog");
             }
 
             &:active:not([disabled]) {

@@ -1,7 +1,11 @@
 {
     "title": "Shipyards",
     "summary": {
-        "num": "Active Shipyards",
+        "num": {
+            "label": "Shipyards",
+            "titleActive": "Active shipyards",
+            "titleBuilding": "Shipyards in build"
+        },
         "prod": "Current production"
     },
     "switch": {

@@ -84,13 +84,13 @@ export default {
 
             &.military {
                 background-color: rgba(palette("grey", "mystic"), 0.05);
-                border-color: palette("grey", "abbey");
+                border-color: palette("state", "active");
 
                 &:hover,
                 &:focus {
                     background-color: palette("grey", "bunker");
                     outline: 0;
-                    border-color: palette("grey", "asher");
+                    border-color: palette("grey", "fog");
                 }
 
                 &:active {
@@ -103,7 +103,7 @@ export default {
                 &:hover,
                 &:focus {
                     background: palette("grey", "bunker");
-                    border-color: palette("grey", "asher");
+                    border-color: palette("grey", "fog");
 
                     .pdu__icon { opacity: 1; }
                 }

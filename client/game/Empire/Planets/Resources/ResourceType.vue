@@ -109,7 +109,7 @@ export default {
         width: 2.4rem;
         height: 2.6rem;
         padding: 0.5rem 1rem;
-        border: 2px solid palette("grey", "abbey");
+        border: 2px solid palette("grey", "raven");
         margin: 0 0 0.4rem 0.4rem;
 
         background: transparent;
@@ -131,7 +131,7 @@ export default {
 
             background: rgba(palette("grey", "mystic"), 0.05);
             outline: 0;
-            border-color: palette("grey", "charcoal");
+            border-color: palette("grey", "fog");
 
             > svg {
                 opacity: 1;

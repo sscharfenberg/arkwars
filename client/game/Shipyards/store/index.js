@@ -18,6 +18,7 @@ const store = new Vuex.Store({
 
         // area game state
         techLevels: [],
+        shipyards: []
     },
     getters: {
         ...commonGetters,
@@ -25,6 +26,7 @@ const store = new Vuex.Store({
 
         // area game state
         playerTechLevels: state => state.techLevels || [],
+        shipyards: state => state.shipyards || []
     },
     mutations,
     actions

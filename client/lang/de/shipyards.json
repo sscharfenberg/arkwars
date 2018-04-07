@@ -1,7 +1,11 @@
 {
     "title": "Werften",
     "summary": {
-        "num": "Aktive Werften",
+        "num": {
+            "label": "Werften",
+            "titleActive": "Aktive Werften",
+            "titleBuilding": "Werften im Bau"
+        },
         "prod": "Aktuelle Produktion"
     },
     "switch": {
