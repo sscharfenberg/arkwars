@@ -137,32 +137,34 @@ exports.enlistUser = async (req, res, next) => {
  * @param {ExpressHTTPRequest} req
  * @param {ExpressHTTPResponse} res
  */
-exports.prepareHomeSystem = async (req, res) => {
+exports.selectHomeSystem = async (req, res) => {
     const game = await Game.findById(req._player.game).populate("stars");
     const availableStars = game.stars.filter(star => {
         return star.homeSystem && !star.owner;
     });
     logger.info(`[App] select random star from ${chalk.yellow(availableStars.length)} available stars.`);
     const homeSystem = seed.assignRandomStar(availableStars);
-    const homePlanets = await Planet.find({star: homeSystem._id});
-    logger.info(
-        `[App] Decided on using Star ${chalk.cyan(homeSystem.name)} as home system for player ${chalk.magenta(
-            req._player.name
-        )}.`
-    );
-    const colony = seed.selectPlayerStartingColony(homePlanets);
+    //const homePlanets = await Planet.find({star: homeSystem._id});
+    //logger.info(
+    //    `[App] Decided on using Star ${chalk.cyan(homeSystem.name)} as home system for player ${chalk.magenta(
+    //        req._player.name
+    //    )}.`
+    //);
+    //const colony = seed.selectPlayerStartingColony(homePlanets);
     const starPromise = Star.findOneAndUpdate(
         {_id: homeSystem.id},
         {$set: {owner: req._player._id}},
         {new: true, runValidators: true}
     );
-    const planetPromise = Planet.findOneAndUpdate(
-        {_id: colony},
-        {$set: {population: cfg.planets.population.startingColony}},
-        {new: true, runValidators: true}
-    );
-    const [updatedStar, updatedPlanet] = await Promise.all([starPromise, planetPromise]);
-    if (updatedStar && updatedPlanet) {
+    //const planetPromise = Planet.findOneAndUpdate(
+    //    {_id: colony},
+    //    {$set: {population: cfg.planets.population.startingColony}},
+    //    {new: true, runValidators: true}
+    //);
+    //const [updatedStar, updatedPlanet] = await Promise.all([starPromise, planetPromise]);
+    const [updatedStar] = await Promise.all([starPromise]);
+    //if (updatedStar && updatedPlanet) {
+    if (updatedStar) {
         logger.success(
             `[App] user ${chalk.red("@" + req.user.username)} enlisted to ${chalk.yellow("g" + req.params.game)}.`
         );
@@ -276,8 +278,7 @@ exports.validateWithdraw = async (req, res, next) => {
  * @param {ExpressHTTPResponse} res
  */
 exports.withdrawEnlistedUser = async (req, res) => {
-    // we only need to remove the player.
-
+    // we remove the player first.
     const removedPlayer = await Player.findOneAndRemove({
         user: req.user.id,
         game: req._game.id // from previous middleware
@@ -290,15 +291,16 @@ exports.withdrawEnlistedUser = async (req, res) => {
             {new: false, runValidators: true}
         );
     }
-    // remove ownership of stars if necessary
+    // remove ownership of homesystem if necessary
+    let updatedStars = {};
     if (removedPlayer.stars && removedPlayer.stars.length) {
-        await Star.updateMany(
+        updatedStars = await Star.updateMany(
             {owner: removedPlayer.id},
             {$set: {owner: null}},
             {runValidators: true, context: "query"}
         );
     }
-    if (!removedPlayer) {
+    if (!removedPlayer || !updatedStars) {
         logger.debug(
             `[App] user ${chalk.red("@" + req.user.username)} failed to withdraw enlistment from ${chalk.yellow(
                 "g" + req._game.number

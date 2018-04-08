@@ -50,7 +50,7 @@ const shipyardSchema = new mongoose.Schema({
  * @returns {Boolean}
  */
 shipyardSchema.virtual("isActive").get(function() {
-    return !this.turnsUntilComplete || this.turnsUntilComplete === 0;
+    return this.turnsUntilComplete === 0;
 });
 
 module.exports = mongoose.model("Shipyard", shipyardSchema);

@@ -7,6 +7,7 @@ const moment = require("moment"); // https://momentjs.com/
 const mongoose = require("mongoose"); // http://mongoosejs.com/
 const chalk = require("chalk"); // https://www.npmjs.com/package/chalk
 const cron = require("node-schedule"); // https://www.npmjs.com/package/node-schedule
+const gameHandlers = require("./game/index");
 const logger = require("../handlers/logger/console");
 const turnHandlers = require("./turn");
 const Game = mongoose.model("Game");
@@ -28,7 +29,7 @@ const processGameStarts = async () => {
         logger.debug(`starting ${chalk.red(gamesToStart.length)} game(s).`);
         gamesToStart.forEach(async game => {
             try {
-                await doStartGame(game);
+                await gameHandlers.start(game);
             } catch (e) {
                 logger.error(e);
             }
@@ -111,49 +112,28 @@ const processGameTurns = async () => {
 };
 
 /*
- * start a specific game
- */
-const doStartGame = async game => {
-    let updatedGame = game;
-    logger.debug(
-        `starting ${chalk.red("g" + game.number)} startDate @ ${chalk.yellow(
-            moment(game.startDate).format("LLLL")
-        )} ${chalk.cyan(moment(game.startDate).fromNow())}`
-    );
-    // TODO: seed starting values
-    updatedGame.active = true;
-    updatedGame.processing = false;
-    updatedGame.canEnlist = false;
-    try {
-        // after the game data has been processed, save to db
-        await Game.findOneAndUpdate({_id: updatedGame._id}, updatedGame, {
-            runValidators: true
-        }).exec();
-        logger.success(
-            `game ${chalk.red(updatedGame.number)} started: ${chalk.yellow(
-                JSON.stringify(updatedGame, null, 2)
-            )}`
-        );
-        // process first turn
-        await turnHandlers.processTurnData(updatedGame);
-    } catch (e) {
-        logger.error(e);
-        logger.error(JSON.stringify(updatedGame, null, 2));
-    }
-};
-
-/*
  * event handler for server ticks:
  * fn to be called when the server processes a server tick
  */
 const onServerTick = async () => {
-    logger.debug("processing server tick.");
+    logger.debug(`${chalk.magenta("⌛⌛")} processing server tick ${chalk.magenta("⌛⌛")}`);
+
     try {
+        logger.info(`${chalk.magenta("⌛⌛")} processing game starts ${chalk.magenta("⌛⌛")}`);
         await processGameStarts(); // start games if necessary
-        await processGameTurns(); // check if turns need to be processed.
+        logger.info(`${chalk.magenta("⌛⌛")} game starts processed ${chalk.magenta("⌛⌛")}`);
     } catch (e) {
         logger.error(e);
     }
+
+    try {
+        logger.info(`${chalk.magenta("⌛⌛")} processing game turns ${chalk.magenta("⌛⌛")}`);
+        await processGameTurns(); // check if turns need to be processed.
+        logger.info(`${chalk.magenta("⌛⌛")} game turns processed ${chalk.magenta("⌛⌛")}`);
+    } catch (e) {
+        logger.error(e);
+    }
+
 };
 
 /*
@@ -173,4 +153,5 @@ const startup = async () => {
 /*
  * export public fn
  */
+exports.processGameTurns = processGameTurns;
 exports.startup = startup;

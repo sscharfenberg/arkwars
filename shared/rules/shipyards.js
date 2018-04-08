@@ -7,6 +7,7 @@ const RULES = {
     hullTypes: [
         {
             name: "small",
+            default: true, // = shipType for starting shipyard
             costs: {
                 build: [
                     {resourceType: "energy", amount: 400},
