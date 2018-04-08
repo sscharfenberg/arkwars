@@ -11,7 +11,7 @@
         },
         "designs": {
             "label": "Available ship designs",
-            "classLabel": "Available "
+            "classLabel": "class(es)"
         }
     },
     "switch": {

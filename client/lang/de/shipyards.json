@@ -10,7 +10,8 @@
             "label": "Schiffe im Bau"
         },
         "designs": {
-            "label": "Verfügbare Schiffsklassen"
+            "label": "Verfügbare Schiffsklassen",
+            "classLabel": "Klasse(n)"
         }
     },
     "switch": {

@@ -8,8 +8,9 @@ const shipClasses = [
         player: mongoose.Types.ObjectId("5990c7871e8258089436d748"),
         hullType: "medium",
         name: names.randomShipClassName(),
-        jumpDrive: true,
-        speed: 8,
+        ftl: true,
+        speed: 4,
+        kto: 80,
         modules: ["LASER_SMALL", "LASER_SMALL", "ARMOUR_SMALL"]
     },
     {
@@ -18,8 +19,9 @@ const shipClasses = [
         player: mongoose.Types.ObjectId("5990c7871e8258089436d748"),
         hullType: "medium",
         name: names.randomShipClassName(),
-        jumpDrive: true,
-        speed: 8,
+        ftl: true,
+        speed: 6,
+        kto: 60,
         modules: ["LASER_SMALL", "LASER_SMALL", "ARMOUR_SMALL"]
     },
     {
@@ -28,8 +30,9 @@ const shipClasses = [
         player: mongoose.Types.ObjectId("5990c7871e8258089436d748"),
         hullType: "small",
         name: names.randomShipClassName(),
-        jumpDrive: true,
+        ftl: true,
         speed: 8,
+        kto: 10,
         modules: ["LASER_SMALL", "LASER_SMALL", "ARMOUR_SMALL"]
     },
     {
@@ -38,8 +41,9 @@ const shipClasses = [
         player: mongoose.Types.ObjectId("5990c7871e8258089436d748"),
         hullType: "small",
         name: names.randomShipClassName(),
-        jumpDrive: true,
-        speed: 8,
+        ftl: true,
+        speed: 9,
+        kto: 20,
         modules: ["LASER_SMALL", "LASER_SMALL", "ARMOUR_SMALL"]
     },
     {
@@ -48,8 +52,9 @@ const shipClasses = [
         player: mongoose.Types.ObjectId("5990c7871e8258089436d748"),
         hullType: "ark",
         name: names.randomShipClassName(),
-        jumpDrive: true,
-        speed: 8,
+        ftl: true,
+        speed: 1,
+        kto: 25,
         modules: ["COLONY"]
     }
 ];

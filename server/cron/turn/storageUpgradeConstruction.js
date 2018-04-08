@@ -22,7 +22,7 @@ module.exports = async (game, log) => {
     const newLog = {
         constructing: 0,
         upgradeWrites: {matched: 0, modified: 0},
-        playerWrites: {matched: 0, modified: 0},
+        playerWrites: {matched: 0, modified: 0}
     };
     const processedUpgrades = await StorageUpgrade.updateMany(
         {turnsUntilComplete: {$ne: 0}, game: game._id},
@@ -30,8 +30,10 @@ module.exports = async (game, log) => {
         {new: true, runValidators: true, context: "query"}
     );
     newLog.constructing = processedUpgrades.nModified;
-    logger.info(
-        `processed construction of ${chalk.yellow(newLog.constructing)} ${chalk.cyan("storage upgrades")}.`
+    logger.debug(
+        `${chalk.red("g" + game.number + "t" + game.turn)} processed construction of ${chalk.yellow(
+            newLog.constructing
+        )} ${chalk.cyan("storage upgrades")}.`
     );
 
     // check for finished upgrades
@@ -49,8 +51,8 @@ module.exports = async (game, log) => {
         let set = {};
         set["resources." + upgrade.area + ".storageLevel"] = upgrade.newLevel;
         set["resources." + upgrade.area + ".max"] = cfg.player.resourceTypes
-            .find(res => res.type === upgrade.area).storageLevels
-            .find(lvl => lvl.lvl === upgrade.newLevel).amount;
+            .find(res => res.type === upgrade.area)
+            .storageLevels.find(lvl => lvl.lvl === upgrade.newLevel).amount;
         playerBulkUpdates.push({
             updateOne: {
                 filter: {_id: upgrade.player},
@@ -65,7 +67,10 @@ module.exports = async (game, log) => {
     // execute batch ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // we only use one batch because it is hard to believe that 100+ storage upgrades finish at the same time
     if (storageUpgradesBulkUpdates.length > 0) {
-        const updatedStorageUpgrades = await StorageUpgrade.bulkWrite(storageUpgradesBulkUpdates, {ordered: true, w: 1});
+        const updatedStorageUpgrades = await StorageUpgrade.bulkWrite(storageUpgradesBulkUpdates, {
+            ordered: true,
+            w: 1
+        });
         newLog.upgradeWrites.matched = updatedStorageUpgrades.matchedCount;
         newLog.upgradeWrites.modified = updatedStorageUpgrades.modifiedCount + updatedStorageUpgrades.deletedCount;
     }
@@ -76,7 +81,11 @@ module.exports = async (game, log) => {
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if (storageUpgradesBulkUpdates.length && playerBulkUpdates.length) {
-        logger.debug(`finished ${chalk.yellow(newLog.upgradeWrites.modified)} ${chalk.cyan("storage upgrades")}.`);
+        logger.debug(
+            `${chalk.red("g" + game.number + "t" + game.turn)} finished ${chalk.yellow(
+                newLog.upgradeWrites.modified
+            )} ${chalk.cyan("storage upgrades")}.`
+        );
     }
 
     // all done

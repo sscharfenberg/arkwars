@@ -21,7 +21,11 @@ module.exports = async (game, log) => {
         {$inc: {turnsUntilComplete: -1}},
         {new: true, runValidators: true, context: "query"}
     );
-    logger.debug(`processed construction of ${chalk.yellow(processedShipyards.nModified)} ${chalk.cyan("shipyards")}.`);
+    logger.debug(
+        `${chalk.red("g" + game.number + "t" + game.turn)} processed construction of ${chalk.yellow(
+            processedShipyards.nModified
+        )} ${chalk.cyan("shipyards")}.`
+    );
     return {
         ...log,
         shipyardConstruction: processedShipyards.nModified || 0

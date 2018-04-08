@@ -32,6 +32,14 @@ const shipClassSchema = new mongoose.Schema({
         required: true
     },
 
+    // (kilo) tonnage of ship
+    kto: {
+        type: Number,
+        min: cfg.shipClasses.tonnage[0],
+        max: cfg.shipClasses.tonnage[1],
+        required: true
+    },
+
     // name of the ship class
     name: {
         type: String,
@@ -40,8 +48,8 @@ const shipClassSchema = new mongoose.Schema({
         required: true
     },
 
-    // jump drive equipped?
-    jumpDrive: {
+    // FTL capable?
+    ftl: {
         type: Boolean
     },
 

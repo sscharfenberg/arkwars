@@ -112,7 +112,8 @@ exports.fetch = async player => {
                 id: sc._id,
                 hullType: sc.hullType,
                 name: sc.name,
-                jumpDrive: sc.jumpDrive,
+                kto: sc.kto,
+                ftl: sc.ftl,
                 speed: sc.speed,
                 modules: sc.modules
             }

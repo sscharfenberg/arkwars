@@ -43,9 +43,9 @@ module.exports = async (game, log) => {
         };
     });
     logger.info(
-        `processing population ${chalk.cyan("food consumption")} for ${chalk.cyan(colonies.length)} colonies and ${chalk.yellow(
-            players.length
-        )} player.`
+        `${chalk.red("g" + game.number + "t" + game.turn)} processing population ${chalk.cyan(
+            "food consumption"
+        )} for ${chalk.cyan(colonies.length)} colonies and ${chalk.yellow(players.length)} player.`
     );
 
     /*
@@ -141,14 +141,14 @@ module.exports = async (game, log) => {
     }
 
     logger.debug(
-        `updated ${chalk.yellow(newLog.colonyWrites.modified)} ${chalk.cyan("colony updates")} in ${chalk.yellow(
-            planetBatches
-        )} batches.`
+        `${chalk.red("g" + game.number + "t" + game.turn)} updated ${chalk.yellow(
+            newLog.colonyWrites.modified
+        )} ${chalk.cyan("colony updates")} in ${chalk.yellow(planetBatches)} batches.`
     );
     logger.debug(
-        `updated ${chalk.yellow(newLog.playerWrites.modified)} ${chalk.cyan("player updates")} in ${chalk.yellow(
-            playerBatches
-        )} batches.`
+        `${chalk.red("g" + game.number + "t" + game.turn)} updated ${chalk.yellow(
+            newLog.playerWrites.modified
+        )} ${chalk.cyan("player updates")} in ${chalk.yellow(playerBatches)} batches.`
     );
 
     // all done

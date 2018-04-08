@@ -31,7 +31,9 @@ export default {
     },
     methods: {
         classLabel(hullType) {
-            return `${this.$t("common.ships.hullTypes." + hullType)}: ${this.shipClasses[hullType]}`;
+            return `${this.$t("common.ships.hullTypes." + hullType)}: ${
+                this.shipClasses[hullType]
+            } ${this.$t("summary.designs.classLabel")}`;
         }
     }
 };
@@ -56,12 +58,6 @@ export default {
                 {{ numShipyards[1] }}
             </span>
         </li>
-        <li class="item production">
-            {{ $t("summary.prod.label") }} (faked):
-            <span class="hull-type"><icon name="hull-small" /></span>
-            <span class="hull-type"><icon name="hull-small" /></span>
-            <span class="hull-type"><icon name="hull-medium" /></span>
-        </li>
         <li class="item classes">
             {{ $t("summary.designs.label") }}:
             <span
@@ -73,6 +69,12 @@ export default {
                 :key="hullType">
                 <icon :name="`hull-${hullType}`" /> {{ shipClasses[hullType] }}
             </span>
+        </li>
+        <li class="item production">
+            {{ $t("summary.prod.label") }} (faked):
+            <span class="hull-type"><icon name="hull-small" /></span>
+            <span class="hull-type"><icon name="hull-small" /></span>
+            <span class="hull-type"><icon name="hull-medium" /></span>
         </li>
     </ul>
 </template>

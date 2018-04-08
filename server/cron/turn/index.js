@@ -25,7 +25,7 @@ const Turn = mongoose.model("Turn");
  * @returns {object} log
  */
 const turnProcessingOrder = async game => {
-    logger.debug(`beginning turn steps for ${chalk.red("g" + game.number)}${chalk.yellow("t" + game.turn)}`);
+    logger.debug(`${chalk.red("g" + game.number + "t" + game.turn)} beginning turn steps.`);
     let log = {};
 
     /*******************************************************************************************************************
@@ -126,7 +126,7 @@ const turnProcessingOrder = async game => {
         logger.error(e);
     }
 
-    logger.debug(`finished turn steps for ${chalk.red("g" + game.number)}${chalk.yellow("t" + game.turn)}`);
+    logger.debug(`${chalk.red("g" + game.number + "t" + game.turn)} finished turn steps`);
     return log;
 };
 
@@ -143,7 +143,7 @@ const processTurnData = async game => {
         slug: `g${game.number}t${game.turn}`,
         dateProcessed: moment().toISOString()
     });
-    logger.info(`processing turn data for ${chalk.red("g" + game.number)}${chalk.yellow("t" + turn.number)}`);
+    logger.info(`${chalk.red("g" + game.number + "t" + game.turn)} processing turn data`);
     try {
         // PROCESS TURN
         const log = await turnProcessingOrder(game);
@@ -162,8 +162,8 @@ const processTurnData = async game => {
 const processGameTurn = async game => {
     let startTime = moment(); // remember the starting time so we can calculate runtime.
     game = await Game.findOneAndUpdate({_id: game._id}, {$set: {processing: true}}, {new: true, runValidators: true});
-    logger.debug(`processing turn ${chalk.red("g" + game.number)}${chalk.yellow("t" + (game.turn + 1))}.`);
-    await game.save(); // save game with processing and OLD turn
+    logger.debug(`${chalk.red("g" + game.number + "t" + (game.turn + 1))} processing turn`);
+    //await game.save(); // save game with processing and OLD turn
     game.turn++; // new turn!
 
     // process game data

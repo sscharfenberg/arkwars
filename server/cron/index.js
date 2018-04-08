@@ -118,22 +118,10 @@ const processGameTurns = async () => {
 const onServerTick = async () => {
     logger.debug(`${chalk.magenta("⌛⌛")} processing server tick ${chalk.magenta("⌛⌛")}`);
 
-    try {
-        logger.info(`${chalk.magenta("⌛⌛")} processing game starts ${chalk.magenta("⌛⌛")}`);
-        await processGameStarts(); // start games if necessary
-        logger.info(`${chalk.magenta("⌛⌛")} game starts processed ${chalk.magenta("⌛⌛")}`);
-    } catch (e) {
-        logger.error(e);
-    }
-
-    try {
-        logger.info(`${chalk.magenta("⌛⌛")} processing game turns ${chalk.magenta("⌛⌛")}`);
-        await processGameTurns(); // check if turns need to be processed.
-        logger.info(`${chalk.magenta("⌛⌛")} game turns processed ${chalk.magenta("⌛⌛")}`);
-    } catch (e) {
-        logger.error(e);
-    }
-
+    logger.info(`${chalk.magenta("⌛⌛")} processing game starts ${chalk.magenta("⌛⌛")}`);
+    await processGameStarts(); // start games if necessary
+    logger.info(`${chalk.magenta("⌛⌛")} processing game turns ${chalk.magenta("⌛⌛")}`);
+    await processGameTurns(); // check if turns need to be processed.
 };
 
 /*

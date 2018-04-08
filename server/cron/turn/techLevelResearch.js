@@ -149,7 +149,7 @@ module.exports = async (game, log) => {
         } else {
             // player is unable to pay for the research ================================================================
             logger.debug(
-                `Player ${chalk.yellow(
+                `${chalk.red("g" + game.number + "t" + game.turn)} Player ${chalk.yellow(
                     "[" + player.ticker + "]"
                 )} does not have enough resources (${resToPay}) for research, skipping.`
             );
@@ -176,14 +176,14 @@ module.exports = async (game, log) => {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     logger.debug(
-        `updated ${chalk.yellow(newLog.researchWrites.modified)} ${chalk.cyan("research job(s)")} in ${chalk.yellow(
-            researchBatches
-        )} batches.`
+        `${chalk.red("g" + game.number + "t" + game.turn)} updated ${chalk.yellow(
+            newLog.researchWrites.modified
+        )} ${chalk.cyan("research job(s)")} in ${chalk.yellow(researchBatches)} batches.`
     );
     logger.debug(
-        `updated ${chalk.yellow(newLog.playerWrites.modified)} ${chalk.cyan("player(s)")} in ${chalk.yellow(
-            playerBatches
-        )} batches `
+        `${chalk.red("g" + game.number + "t" + game.turn)} updated ${chalk.yellow(
+            newLog.playerWrites.modified
+        )} ${chalk.cyan("player(s)")} in ${chalk.yellow(playerBatches)} batches `
     );
 
     // all done

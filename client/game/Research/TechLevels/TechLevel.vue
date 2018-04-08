@@ -84,7 +84,7 @@ export default {
         display: flex;
         align-items: center;
 
-        padding: 1rem;
+        padding: 0.5rem;
         margin-top: 1rem;
         flex-basis: 4.8rem;
 

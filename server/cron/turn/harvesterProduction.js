@@ -55,7 +55,11 @@ const harvesterProduction = async (game, log) => {
         });
     });
     changedPlayerResources = enforceStockPileMax(changedPlayerResources);
-    logger.info(`processed ${chalk.yellow(producingHarvesters)} ${chalk.cyan("producing harvesters")}.`);
+    logger.info(
+        `${chalk.red("g" + game.number + "t" + game.turn)} processed ${chalk.yellow(producingHarvesters)} ${chalk.cyan(
+            "producing harvesters"
+        )}.`
+    );
 
     /*
      * loop players - async because we might need to do a batch write
@@ -98,7 +102,7 @@ const harvesterProduction = async (game, log) => {
     }
 
     logger.debug(
-        `updated ${chalk.yellow(playerLog.modified)} ${chalk.cyan(
+        `${chalk.red("g" + game.number + "t" + game.turn)} updated ${chalk.yellow(playerLog.modified)} ${chalk.cyan(
             "player(s)"
         )} in ${chalk.yellow(playerBatches)} batches.`
     );
