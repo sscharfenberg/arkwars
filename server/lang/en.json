@@ -621,7 +621,8 @@
                     "INVALIDTYPE": "Shipyard type invalid.",
                     "EXISTINGSHIPYARD": "There is already a shipyard on this planet.",
                     "NOTOWNER": "You are not the owner of the planet.",
-                    "FUNDS": "Insufficient resources to construct shipyard."
+                    "FUNDS": "Insufficient resources to construct shipyard.",
+                    "POPULATION": "Insufficient population on planet to support a shipyard."
                 },
                 "UPGRADE": {
                     "NOTFOUND": "Shipyard does not exist (anymore?).",

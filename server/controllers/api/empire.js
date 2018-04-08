@@ -385,6 +385,12 @@ exports.verifyNewShipyard = async (req, res, next) => {
         return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.NEW.FUNDS")});
     }
 
+    // 5) ensure the shipyard is installed on a planet with population
+    if (dbPlanet.effectivePopulation < 1) {
+        logger.error(`[App] planet population insufficient to support a shipyard.`);
+        return res.json({error: i18n.__("API.EMPIRE.SHIPYARD.NEW.POPULATION")});
+    }
+
     // no errors => proceed.
     return next();
 };

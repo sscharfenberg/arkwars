@@ -641,7 +641,8 @@
                     "INVALIDTYPE": "Typ der Werft ist ungültig.",
                     "EXISTINGSHIPYARD": "Planet hat bereits eine Werft.",
                     "NOTOWNER": "Sie sind nicht der Besitzer des Planeten.",
-                    "FUNDS": "Nicht genug Resourcen um die Werft zu errichten."
+                    "FUNDS": "Nicht genug Resourcen um die Werft zu errichten.",
+                    "POPULATION": "Bevölkerung des Planeten nicht ausreichend um eine Werft zu errichten."
                 },
                 "UPGRADE": {
                     "NOTFOUND": "Werft existiert nicht (mehr?).",

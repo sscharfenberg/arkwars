@@ -35,9 +35,7 @@ export default {
         },
         effectivePopulation () { return this.$store.getters.planetById(this.id).effectivePopulation; },
         resourceSlots () { return this.$store.getters.planetById(this.id).resourceSlots; },
-        shipYardId () {
-            return this.$store.getters.planetById(this.id).shipyard;
-        }
+        shipYardId () { return this.$store.getters.planetById(this.id).shipyard; }
     },
     components: {
         Resources,
@@ -77,6 +75,7 @@ export default {
                 :planet-name="getPlanetName" />
             <shipyard-button
                 :id="shipYardId"
+                v-if="effectivePopulation >= 1"
                 :planet-name="getPlanetName"
                 :planet-id="id" />
         </div>

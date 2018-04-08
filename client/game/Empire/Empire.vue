@@ -31,7 +31,6 @@ export default {
         <vue-snotify />
         TODO:
         <ul>
-            <li>Shipyards only on planets with population?</li>
             <li>reports - here or in galnet?</li>
             <li>show citadel?</li>
         </ul>
