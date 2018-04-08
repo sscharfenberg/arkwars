@@ -26,12 +26,14 @@ const Harvester = mongoose.model("Harvester");
 const Pdu = mongoose.model("Pdu");
 const Research = mongoose.model("Research");
 const Shipyard = mongoose.model("Shipyard");
+const ShipClass = mongoose.model("ShipClass");
 const games = require("../mockdata/games");
 const users = require("../mockdata/users");
 const players = require("../mockdata/players");
 const turns = require("../mockdata/turns");
 const map = require("../mockdata/mapData");
 const researches = require("../mockdata/research");
+const shipClasses = require("../mockdata/shipClasses");
 let shipyards = require("../mockdata/shipyards");
 const stars = map.stars;
 const planets = map.planets;
@@ -65,6 +67,8 @@ const seedDatabase = async () => {
         await Research.insertMany(researches);
         logger.debug(`[node] inserting ${shipyards.length} pdus.`);
         await Shipyard.insertMany(shipyards);
+        logger.debug(`[node] inserting ${shipClasses.length} ship classes.`);
+        await ShipClass.insertMany(shipClasses);
         logger.debug("[node] done inserting.");
         logger.success("[node] finished seeding database.");
     } catch (e) {

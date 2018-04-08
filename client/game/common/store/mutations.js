@@ -22,14 +22,16 @@ export const commonMutations = {
         if (payload.upgradingStorageLevels) state.upgradingStorageLevels = payload.upgradingStorageLevels;
         if (payload.storageUpgrades) state.storageUpgrades = payload.storageUpgrades;
         // area = empire
-        if (payload.stars && payload.stars.length) state.stars = payload.stars;
-        if (payload.planets && payload.planets.length) state.planets = payload.planets;
-        if (payload.harvesters && payload.harvesters.length) state.harvesters = payload.harvesters;
-        if (payload.pdus && payload.pdus.length) state.pdus = payload.pdus;
+        if (payload.stars) state.stars = payload.stars;
+        if (payload.planets) state.planets = payload.planets;
+        if (payload.harvesters) state.harvesters = payload.harvesters;
+        if (payload.pdus) state.pdus = payload.pdus;
         if (payload.shipyards) state.shipyards = payload.shipyards;
         // area = research
         if (payload.techLevels) state.techLevels = payload.techLevels;
         if (payload.researches && payload.researches.length) state.researches = payload.researches;
+        // area = shipyards
+        if (payload.shipClasses) state.shipClasses = payload.shipClasses;
     },
 
     /*

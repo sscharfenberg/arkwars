@@ -6,17 +6,34 @@
             "titleActive": "Aktive Werften",
             "titleBuilding": "Werften im Bau"
         },
-        "prod": "Aktuelle Produktion"
+        "prod": {
+            "label": "Schiffe im Bau"
+        },
+        "designs": {
+            "label": "Verfügbare Schiffsklassen"
+        }
     },
     "switch": {
         "design": {
-            "text": "Entwerfen",
+            "text": "Klassen",
             "label": "Klicken um Schiffsklassen zu entwerfen"
         },
         "construct": {
-            "text": "Bauen",
+            "text": "Schiffe",
             "label": "Klicken um Schiffe zu bauen"
         }
+    },
+    "design": {
+        "available": {
+            "title": "Verfügbare Schiffsklassen"
+        },
+        "new": {
+            "title": "Neue Schiffsklasse",
+            "label": "Neue Schiffsklasse entwerfen"
+        }
+    },
+    "construct": {
+        "title": "Schiffsbau-Aufträge"
     }
 }
 

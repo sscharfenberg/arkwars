@@ -216,6 +216,13 @@ playerSchema.virtual("shipyards", {
     foreignField: "owner" // which field on the Shipyard?
 });
 
+// find shipClasses that belong to this class
+playerSchema.virtual("shipClasses", {
+    ref: "ShipClass", // what model to link?
+    localField: "_id", // which field on the player?
+    foreignField: "player" // which field on the shipClass?
+});
+
 // auto populate games
 function autopopulate(next) {
     this.populate("game");

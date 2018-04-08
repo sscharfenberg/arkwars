@@ -3,6 +3,7 @@
  * Shipyards Summary Component
  **********************************************************************************************************************/
 import Icon from "Game/common/Icon/Icon.vue";
+import {shipClassRules} from "Config";
 export default {
     components: {
         Icon
@@ -15,8 +16,23 @@ export default {
                 shipyards.filter(shipyard => !shipyard.active).length
             ];
         },
+        hullTypes () { return shipClassRules.hullTypes.map(ht => ht.name); },
+        shipClasses () {
+            const shipClasses = this.$store.getters.shipClasses.map(sc => sc.hullType); // we only care about hullType
+            // prepare dynamic hullTypes object to count
+            let hullTypes = {};
+            this.hullTypes.forEach(ht => { hullTypes[ht] = 0; });
+            // if hullType exists, increase count
+            shipClasses.forEach(sc => { hullTypes.hasOwnProperty(sc) && hullTypes[sc]++; });
+            return hullTypes;
+        },
         titleActive () { return this.$t("summary.num.titleActive") + ": " + this.numShipyards[0]; },
         titleBuilding () { return this.$t("summary.num.titleBuilding") + ": " + this.numShipyards[1]; }
+    },
+    methods: {
+        classLabel(hullType) {
+            return `${this.$t("common.ships.hullTypes." + hullType)}: ${this.shipClasses[hullType]}`;
+        }
     }
 };
 </script>
@@ -41,13 +57,22 @@ export default {
             </span>
         </li>
         <li class="item production">
-            Currently in Production (faked):
-            <icon name="hull-small" />
-            <icon name="hull-small" />
-            <icon name="hull-medium" />
+            {{ $t("summary.prod.label") }} (faked):
+            <span class="hull-type"><icon name="hull-small" /></span>
+            <span class="hull-type"><icon name="hull-small" /></span>
+            <span class="hull-type"><icon name="hull-medium" /></span>
         </li>
-        <li>
-            Currently available designed shipclasses (faked): 6
+        <li class="item classes">
+            {{ $t("summary.designs.label") }}:
+            <span
+                class="hull-type"
+                v-for="hullType in hullTypes"
+                v-if="shipClasses[hullType] !== 0"
+                :title="classLabel(hullType)"
+                :aria-label="classLabel(hullType)"
+                :key="hullType">
+                <icon :name="`hull-${hullType}`" /> {{ shipClasses[hullType] }}
+            </span>
         </li>
     </ul>
 </template>
@@ -68,8 +93,9 @@ export default {
     .item {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
 
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.5rem;
 
         &:last-child {
             margin-bottom: 0;
@@ -90,5 +116,19 @@ export default {
         &.production > svg {
             margin: 0 0 0 0.5rem;
         }
+
+        &.classes .hull-type > svg {
+            margin-right: 0.5rem;
+        }
+    }
+
+    .hull-type {
+        display: flex;
+        align-items: center;
+
+        padding: 0 0.5rem;
+        margin-left: 1rem;
+
+        background-color: palette("grey", "deep");
     }
 </style>

@@ -15,4 +15,5 @@ require("./Planet");
 require("./Harvester");
 require("./Pdu");
 require("./Shipyard");
+require("./ShipClass");
 

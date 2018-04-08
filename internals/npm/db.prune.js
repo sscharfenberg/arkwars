@@ -26,6 +26,7 @@ const Suspension = mongoose.model("Suspension");
 const Harvester = mongoose.model("Harvester");
 const Pdu = mongoose.model("Pdu");
 const Shipyard = mongoose.model("Shipyard");
+const ShipClass = mongoose.model("ShipClass");
 
 /*
  * prune database and throw everything away.
@@ -46,6 +47,8 @@ const pruneDatabase = async () => {
     logger.debug("[node] pdus removed.");
     await Shipyard.remove();
     logger.debug("[node] shipyards removed.");
+    await ShipClass.remove();
+    logger.debug("[node] ship classes removed.");
     await Planet.remove();
     logger.debug("[node] planets removed.");
     await Star.remove();

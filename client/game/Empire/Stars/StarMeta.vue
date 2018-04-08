@@ -53,7 +53,9 @@ export default {
             class="meta__single"
             :title="shipyardLabel"
             :aria-label="shipyardLabel">
-            <icon name="shipyard" />
+            <icon
+                name="shipyards"
+                class="shipyards" />
             <span class="meta__single--num meta__single--shipyard">
                 {{ shipyards }}
             </span>
@@ -101,6 +103,8 @@ export default {
             }
 
             &--shipyard { margin-left: 0.5rem; }
+
+            > svg.shipyards { color: palette("item", "shipyard"); }
         }
     }
 </style>

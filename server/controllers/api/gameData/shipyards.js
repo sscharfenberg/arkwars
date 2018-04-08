@@ -11,6 +11,7 @@ const mongoose = require("mongoose"); // http://mongoosejs.com/
 const Planet = mongoose.model("Planet");
 const StorageUpgrade = mongoose.model("StorageUpgrade");
 const Shipyard = mongoose.model("Shipyard");
+const ShipClass = mongoose.model("ShipClass");
 
 /*
  * fetch game data for player and return API object
@@ -24,7 +25,12 @@ exports.fetch = async player => {
     const starIds = stars.map(star => star.id);
     const planetPromise = Planet.find({star: {$in: starIds}}).populate("shipyards");
     const storageUpgradePromise = StorageUpgrade.find({player: player._id});
-    const [planets, storageUpgrades] = await Promise.all([planetPromise, storageUpgradePromise]);
+    const shipClassPromise = ShipClass.find({player: player._id});
+    const [planets, storageUpgrades, shipClasses] = await Promise.all([
+        planetPromise,
+        storageUpgradePromise,
+        shipClassPromise
+    ]);
     const totalPopulation = planets.map(colony => colony.effectivePopulation).reduce((acc, val) => acc + val);
     const shipyards = planets.filter(planet => planet.shipyards.length > 0).map(planet => {
         const star = stars.find(star => `${star._id}` === `${planet.star}`);
@@ -100,6 +106,16 @@ exports.fetch = async player => {
                 turnsUntilComplete: upgrade.turnsUntilComplete
             };
         }),
-        shipyards
+        shipyards,
+        shipClasses: shipClasses.map(sc => {
+            return {
+                id: sc._id,
+                hullType: sc.hullType,
+                name: sc.name,
+                jumpDrive: sc.jumpDrive,
+                speed: sc.speed,
+                modules: sc.modules
+            }
+        })
     };
 };

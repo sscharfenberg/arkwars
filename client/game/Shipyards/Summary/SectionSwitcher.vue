@@ -25,6 +25,7 @@ export default {
             class="section"
             :class="sectionClass('design')"
             :aria-checked="currentSection === 'desgin'"
+            :title="$t('switch.design.label')"
             :aria-label="$t('switch.design.label')"
             @click="switchTo('design')">
             <icon
@@ -37,6 +38,7 @@ export default {
             class="section"
             :class="sectionClass('construct')"
             :aria-checked="currentSection === 'construct'"
+            :title="$t('switch.construct.label')"
             :aria-label="$t('switch.construct.label')"
             @click="switchTo('construct')">
             <icon

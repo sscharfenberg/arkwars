@@ -29,7 +29,12 @@ export default {
             <Stars />
         </screen-section>
         <vue-snotify />
-        TODO: reports - here or in galnet? show citadel?
+        TODO:
+        <ul>
+            <li>Shipyards only on planets with population?</li>
+            <li>reports - here or in galnet?</li>
+            <li>show citadel?</li>
+        </ul>
     </div>
 </template>
 

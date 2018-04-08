@@ -92,7 +92,7 @@ const appConfig = {
 
     tech: require("../../shared/rules/tech"),
 
-    ships: require("../../shared/rules/ships"),
+    shipClasses: require("../../shared/rules/shipClasses"),
 
     shipyards: require("../../shared/rules/shipyards"),
 

@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-    <screen-section hdl="Construct ships">
+    <screen-section :hdl="$t('construct.title')">
         Construct
     </screen-section>
 </template>

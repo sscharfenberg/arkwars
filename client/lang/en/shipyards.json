@@ -6,17 +6,35 @@
             "titleActive": "Active shipyards",
             "titleBuilding": "Shipyards in build"
         },
-        "prod": "Current production"
+        "prod": {
+            "label": "Ships building"
+        },
+        "designs": {
+            "label": "Available ship designs",
+            "classLabel": "Available "
+        }
     },
     "switch": {
         "design": {
-            "text": "Design",
+            "text": "Classes",
             "label": "Click to design ship classes"
         },
         "construct": {
-            "text": "Construct",
+            "text": "Ships",
             "label": "Click to construct ships"
         }
+    },
+    "design": {
+        "available": {
+            "title": "Available Shipclasses"
+        },
+        "new": {
+            "title": "New ship class",
+            "label": "Design a new ship class"
+        }
+    },
+    "construct": {
+        "title": "Construct ships"
     }
 }
 
