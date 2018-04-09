@@ -24,7 +24,7 @@ const isProd = process.env.NODE_ENV === "production";
  */
 const baseLoaders = [
     // translates CSS into CommonJS
-    {loader: "css-loader", options: {sourceMap: true}},
+    {loader: "css-loader", options: {sourceMap: true, minimize: true}},
     // compiles SCSS to CSS
     {
         loader: "sass-loader",

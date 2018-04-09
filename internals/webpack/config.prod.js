@@ -39,16 +39,22 @@ let webpackConfig = merge(baseWebpackConfig, {
     // https://webpack.js.org/configuration/devtool/
     devtool: "source-map",
 
+    optimization: {
+        nodeEnv: "production",
+        minimize: true,
+        concatenateModules: true
+    },
+
     // https://webpack.js.org/configuration/plugins/
     // https://webpack.js.org/plugins/
     plugins: [
         // Define Plugin
         // https://webpack.js.org/plugins/define-plugin/
-        new webpack.DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify("production") // This has effect on the library size
-            }
-        }),
+        //new webpack.DefinePlugin({
+        //    "process.env": {
+        //        NODE_ENV: JSON.stringify("production") // This has effect on the library size
+        //    }
+        //}),
 
         // https://github.com/Klathmon/imagemin-webpack-plugin
         // match options to /internals/gulp/sync.js
