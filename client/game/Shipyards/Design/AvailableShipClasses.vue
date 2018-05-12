@@ -27,12 +27,13 @@ export default {
             <div class="ship-class__kto">
                 {{ sc.kto }}.000to
             </div>
-            <div class="ship__speed">
+            <div class="ship-class__speed">
                 {{ sc.speed }}g
             </div>
             <div class="ship-class__ftl">
-                {{ sc.ftl }}
+                {{ sc.ftl ? "ftl" : "" }}
             </div>
+            <div class="ship-class__actions">actions</div>
             <div class="ship-class__modules">
                 {{ sc.modules }}
             </div>
@@ -52,12 +53,21 @@ export default {
     .ship-class {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
 
         padding: 0.5rem 1rem;
         border: 1px solid palette("grey", "abbey");
         margin: 1rem 0 0 0;
 
         background-color: palette("grey", "bunker");
+
+        &__name,
+        &__kto,
+        &__speed,
+        &__ftl,
+        &__modules {
+            margin-left: 0.5rem;
+        }
 
         &__name {
             display: flex;
@@ -67,7 +77,27 @@ export default {
         }
 
         &__modules {
+            //margin-left: auto;
+            flex-basis: 100%;
+
+            @include respond-to("medium") {
+                margin-left: auto;
+                flex-basis: auto;
+            }
+        }
+
+        &__actions {
+            //order: 6;
+
             margin-left: auto;
+
+            background: palette("brand", "viking");
+
+            @include respond-to("medium") {
+                order: 6;
+
+                margin-left: 0.5rem;
+            }
         }
     }
 </style>
