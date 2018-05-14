@@ -17,6 +17,7 @@ export const techRules = require("../shared/rules/tech");
 export const playerRules = require("../shared/rules/player");
 export const shipyardRules = require("../shared/rules/shipyards");
 export const shipClassRules = require("../shared/rules/shipClasses");
+export const moduleRules = require("../shared/rules/modules");
 
 // output console.log info messages. warn and error are always printed.
 export const DEBUG = true;

@@ -96,6 +96,8 @@ const appConfig = {
 
     shipyards: require("../../shared/rules/shipyards"),
 
+    modules: require("../../shared/rules/modules"),
+
     defaultPagination: {
         admin: {
             users: 20,

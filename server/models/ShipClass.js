@@ -64,7 +64,8 @@ const shipClassSchema = new mongoose.Schema({
     // installed modules - armor, weapons etc
     modules: [
         {
-            type: String
+            type: String,
+            enum: cfg.modules.map(module => module.stub)
         }
     ]
 

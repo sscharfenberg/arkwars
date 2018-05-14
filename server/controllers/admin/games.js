@@ -194,6 +194,7 @@ exports.deleteGame = async (req, res) => {
             `[Admin ${chalk.cyan("@" + req.user.username)}]: removing ${playerIds.length} playerIDs from users.`
         );
         // update users and remove SelectedPlayer if player is enlisted to this game
+        // TODO: only remove selectedPlayer if it is identical to req.params.id
         await User.updateMany(
             {selectedPlayer: {$in: playerIds}},
             { $set: {selectedPlayer: undefined}},
@@ -212,6 +213,8 @@ exports.deleteGame = async (req, res) => {
     await Planet.deleteMany({game: req.params.id});
     // delete planets
     await Star.deleteMany({game: req.params.id});
+
+    // todo: delete harvesters, pdus, researches, shipClasses, shipyards, storageUpgrades, turns
 
     // finally, delete the game
     const deletedGame = await Game.findByIdAndRemove(req.params.id);

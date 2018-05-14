@@ -47,6 +47,6 @@ router.post("/:id/seed/save",
 
 
 // delete game request
-router.get("/:id/delete", catchErrors(manageGamesController.deleteGame)); // TODO: remove systems
+router.get("/:id/delete", catchErrors(manageGamesController.deleteGame)); // TODO: remove collections from the game
 
 module.exports = router;
