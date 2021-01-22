@@ -1,3 +1,5 @@
+## project is archived and will not be maintained anymore.
+
 # ArkWars
 ![](./docs/badges/license.svg) ![](./docs/badges/mongodb.svg) ![](./docs/badges/node.svg) ![](./docs/badges/npm.svg)
 
